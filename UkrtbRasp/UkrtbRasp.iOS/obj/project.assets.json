@@ -1252,11 +1252,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\UKRTB_all\\UKRTB_all-main\\UkrtbRasp\\UkrtbRasp.iOS\\UkrtbRasp.iOS.csproj",
+      "projectUniqueName": "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp.iOS\\UkrtbRasp.iOS.csproj",
       "projectName": "UkrtbRasp.iOS",
-      "projectPath": "F:\\UKRTB_all\\UKRTB_all-main\\UkrtbRasp\\UkrtbRasp.iOS\\UkrtbRasp.iOS.csproj",
+      "projectPath": "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp.iOS\\UkrtbRasp.iOS.csproj",
       "packagesPath": "C:\\Users\\1\\.nuget\\packages\\",
-      "outputPath": "F:\\UKRTB_all\\UKRTB_all-main\\UkrtbRasp\\UkrtbRasp.iOS\\obj\\",
+      "outputPath": "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp.iOS\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
@@ -1277,8 +1277,8 @@
       "frameworks": {
         "xamarinios10": {
           "projectReferences": {
-            "F:\\UKRTB_all\\UKRTB_all-main\\UkrtbRasp\\UkrtbRasp\\UkrtbRasp.csproj": {
-              "projectPath": "F:\\UKRTB_all\\UKRTB_all-main\\UkrtbRasp\\UkrtbRasp\\UkrtbRasp.csproj"
+            "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp\\UkrtbRasp.csproj": {
+              "projectPath": "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp\\UkrtbRasp.csproj"
             }
           }
         }

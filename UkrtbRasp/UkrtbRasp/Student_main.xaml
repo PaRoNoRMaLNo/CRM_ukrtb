@@ -545,7 +545,8 @@
                             <yummy:PancakeView.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="Open_spravka_Tapped" />
                             </yummy:PancakeView.GestureRecognizers>
-                            <StackLayout>
+                            <StackLayout HorizontalOptions="CenterAndExpand"
+                                         VerticalOptions="CenterAndExpand">
                                 <Image Source="https://study.ukrtb.ru/views/img/ico/ico2.png"
                                        HorizontalOptions="CenterAndExpand" />
                                 <Label Text="Справка"
@@ -559,7 +560,11 @@
                                            VerticalOptions="FillAndExpand"
                                            HorizontalOptions="FillAndExpand"
                                            Padding="10">
-                            <StackLayout>
+                            <yummy:PancakeView.GestureRecognizers>
+                                <TapGestureRecognizer x:Name="Student_exit_btn"
+                                                      Tapped="Student_exit_btn_Tapped" />
+                            </yummy:PancakeView.GestureRecognizers>
+                            <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
                                 <Image Source="https://study.ukrtb.ru/views/img/ico/ico3.png"
                                        HorizontalOptions="CenterAndExpand" />
                                 <Label Text="Выход"
@@ -588,31 +593,71 @@
                                            HorizontalOptions="FillAndExpand"
                                            VerticalOptions="FillAndExpand"
                                            Padding="10">
-                            <yummy:PancakeView.GestureRecognizers>
-                                <TapGestureRecognizer x:Name="getProgress"
-                                                      Tapped="getProgress_Tapped" />
-                            </yummy:PancakeView.GestureRecognizers>
                             <StackLayout>
                                 <!--<Image Source="https://study.ukrtb.ru/views/img/ico/ico3.png"
                                        HorizontalOptions="CenterAndExpand" />-->
                                 <Label Text="Успеваемость"
                                        FontFamily="Montserrat_SemiBold.ttf"
                                        HorizontalOptions="CenterAndExpand" />
-                                <Picker
-                                    TextColor="{DynamicResource Text_light}"
-                                    x:Name="Progress_period">
-                                    <Picker.Items>
-                                        
-                                    </Picker.Items>
-                                </Picker>
+                                <StackLayout Orientation="Horizontal"
+                                             BackgroundColor="{DynamicResource Secondary_dark}">
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer x:Name="OpenSettings"
+                                                              Tapped="OpenSettings_Tapped" />
+                                    </StackLayout.GestureRecognizers>
+                                    <Image Source="outline_keyboard_arrow_down_white_24dp.png"
+                                           x:Name="Settings_arrow"
+                                           Margin="5,0,0,0"
+                                           HeightRequest="30"/>
+                                    <Label Text="Настроить"
+                                           VerticalOptions="CenterAndExpand"
+                                           FontFamily="Montserrat_SemiBold.ttf"/>
+                                </StackLayout>
+                                <StackLayout IsVisible="false"
+                                             x:Name="Stack_settings">
+                                    <Picker TextColor="{DynamicResource Text_light}"
+                                            x:Name="Progress_period"
+                                            Title="Семестр"
+                                            TitleColor="{DynamicResource Primary_light}">
+                                        <Picker.Items>
 
-                                <Picker
-                                    TextColor="{DynamicResource Text_light}"
-                                    x:Name="Progress_disc">
-                                    <Picker.Items>
-                                        
-                                    </Picker.Items>
-                                </Picker>
+                                        </Picker.Items>
+                                    </Picker>
+
+                                    <Picker TextColor="{DynamicResource Text_light}"
+                                            x:Name="Progress_disc"
+                                            Title="Предмет"
+                                            TitleColor="{DynamicResource Primary_light}">
+                                        <Picker.Items>
+
+                                        </Picker.Items>
+                                    </Picker>
+
+                                    <Picker TextColor="{DynamicResource Text_light}"
+                                            x:Name="Progress_type_ball"
+                                            Title="Тип оценки"
+                                            TitleColor="{DynamicResource Primary_light}">
+                                        <Picker.Items>
+
+                                        </Picker.Items>
+                                    </Picker>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Switch OnColor="{DynamicResource Secondary_dark}"
+                                                ThumbColor="DarkRed"
+                                                VerticalOptions="CenterAndExpand"
+                                                x:Name="Progress_diplom" />
+                                        <Label Text="В диплом"
+                                               HorizontalOptions="StartAndExpand"
+                                               VerticalOptions="CenterAndExpand"
+                                               FontFamily="Montserrat_SemiBold.ttf" />
+                                    </StackLayout>
+                                </StackLayout>
+                                <Button Text="Показать"
+                                        x:Name="getProgress"
+                                        Clicked="getProgress_Tapped"
+                                        BackgroundColor="{DynamicResource Primary_light}"
+                                        TextColor="{DynamicResource Text_light}">
+                                </Button>
                             </StackLayout>
                         </yummy:PancakeView>
                         

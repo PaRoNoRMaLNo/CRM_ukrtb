@@ -22,6 +22,12 @@ namespace UkrtbRasp
         {
             InitializeComponent();
             Prepod_isCheck = true;
+            DateTime dateTim = DateTime.Now;
+            Select_date_today.Text = $"{dateTim.Day}.{dateTim.Month}";
+            dateTim =  dateTim.AddDays(1);
+            Select_date_tomorow.Text = $"{dateTim.Day}.{dateTim.Month}";
+            dateTim = dateTim.AddDays(1);
+            Select_date_plustwo.Text = $"{dateTim.Day}.{dateTim.Month}";
             Load_data();
         }
         void Clear_but()
@@ -148,7 +154,7 @@ namespace UkrtbRasp
 
         private void User_sign_in_Clicked(object sender, EventArgs e)
         {
-            if(User_login.Text != "" && User_password.Text != "")
+            if (User_login.Text != "" && User_password.Text != "")
             {
                 var param = new NameValueCollection();
                 param["login"] = User_login.Text;
@@ -160,7 +166,7 @@ namespace UkrtbRasp
                 {
                     Student_in_app.Login = User_login.Text;
                     Student_in_app.Password = User_password.Text;
-                    
+
                     foreach (var item in user)
                     {
                         User_year.Text = item.year;
@@ -174,14 +180,14 @@ namespace UkrtbRasp
                     {
                         sum += int.Parse(item.score);
                     }
-                    Ball_average.Text = Math.Round((double)sum / balls.Count,2).ToString();
+                    Ball_average.Text = Math.Round((double)sum / balls.Count, 2).ToString();
                     Load_period_lessons();
                     Login_stack.IsVisible = false;
                     User_info_stack.IsVisible = true;
                 }
-               
+
             }
-            
+
         }
 
         private void Open_spravka_Tapped(object sender, EventArgs e)
@@ -189,25 +195,76 @@ namespace UkrtbRasp
             Navigation.PushModalAsync(new Spravka());
         }
 
+        void Test_group(List<Ball> balls)
+        {
+            var a = from ball in balls
+                    group ball by ball.lessons;
+
+            foreach (var item in a)
+            {
+                Lesson test = new Lesson();
+                test.FindByName<Label>("Number").Text = "";
+                test.FindByName<Label>("Cab").Text = " ";
+                foreach (var t in item)
+                {
+                    if (Progress_period.SelectedItem.ToString() != "")
+                    {
+                        if (t.period == Progress_period.SelectedItem.ToString())
+                        {
+                            test.FindByName<Label>("Number").Text += t.score + " ";
+                            test.FindByName<Label>("Name").Text = t.lessons;
+                            test.FindByName<Label>("Prepod_or_group").Text = t.teacher;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        test.FindByName<Label>("Number").Text += t.score + " ";
+                        test.FindByName<Label>("Name").Text = t.lessons;
+                        test.FindByName<Label>("Prepod_or_group").Text = t.teacher;
+                    }
+                }
+                Stack_for_balls.Children.Add(test);
+            }
+
+        }
+
+
         private void getProgress_Tapped(object sender, EventArgs e)
         {
             Stack_for_balls.Children.Clear();
+            Stack_settings.IsVisible = false;
             var param = new NameValueCollection();
             param["login"] = Student_in_app.Login;
             param["password"] = Student_in_app.Password;
             param["lesson"] = Progress_disc.SelectedItem.ToString();
-            param["type"] = "";
-            param["diplom"] = "";
+            param["type"] = Progress_type_ball.SelectedItem.ToString();
+            param["diplom"] = Progress_diplom.IsToggled ? "1" : "0";
             List<Ball> user = new List<Ball>();
             var json = Post.GetJson("getProgress", param);
             var balls = JsonConvert.DeserializeObject<List<Ball>>(json);
-            foreach (var item in balls)
-            {
-                if (item.type != "Текущая")
+            if (balls != null)
+                foreach (var item in balls)
                 {
-                    if (Progress_period.SelectedItem.ToString() != "")
+                    if (item.type != "Текущая")
                     {
-                        if (item.period == Progress_period.SelectedItem.ToString())
+                        if (Progress_period.SelectedItem.ToString() != "")
+                        {
+                            if (item.period == Progress_period.SelectedItem.ToString())
+                            {
+                                Lesson test = new Lesson();
+                                test.FindByName<Label>("Number").Text = item.score;
+                                test.FindByName<Label>("Cab").Text = item.date;
+                                test.FindByName<Label>("Name").Text = item.lessons + "(" + item.type + ")";
+                                test.FindByName<Label>("Prepod_or_group").Text = item.teacher;
+
+                                Stack_for_balls.Children.Add(test);
+                            }
+                        }
+                        else
                         {
                             Lesson test = new Lesson();
                             test.FindByName<Label>("Number").Text = item.score;
@@ -220,25 +277,24 @@ namespace UkrtbRasp
                     }
                     else
                     {
-                        Lesson test = new Lesson();
-                        test.FindByName<Label>("Number").Text = item.score;
-                        test.FindByName<Label>("Cab").Text = item.date;
-                        test.FindByName<Label>("Name").Text = item.lessons + "(" + item.type + ")";
-                        test.FindByName<Label>("Prepod_or_group").Text = item.teacher;
-
-                        Stack_for_balls.Children.Add(test);
+                        Test_group(balls);
+                        return;
                     }
                 }
-            }
         }
 
 
-        class Period{
+        class Period
+        {
             public string period { get; set; }
         }
         class Disc
         {
             public string disc { get; set; }
+        }
+        class TypeBall
+        {
+            public string typeb { get; set; }
         }
 
 
@@ -298,8 +354,50 @@ namespace UkrtbRasp
 
                 throw;
             }
+            try
+            {
+                Progress_type_ball.Items.Clear();
+                Progress_type_ball.Items.Add("");
+                var param = new NameValueCollection();
+                param["sql"] = $"SELECT DISTINCT st_type_ball.s1_name AS 'typeb' FROM st_generalb LEFT OUTER JOIN st_type_ball ON (st_type_ball.s1_uuid = st_generalb.s1_type_ball) WHERE st_generalb.s1_student = '{Student_in_app.Uuid}' ORDER BY st_type_ball.s1_name ASC";
+                var json = Post.GetJson("manan", param);
+                List<TypeBall> discs = JsonConvert.DeserializeObject<List<TypeBall>>(json);
+                foreach (var item in discs)
+                {
+                    Progress_type_ball.Items.Add(item.typeb);
+                }
+                Progress_type_ball.SelectedIndex = 0;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
 
 
+        }
+
+        private void OpenSettings_Tapped(object sender, EventArgs e)
+        {
+            if(Stack_settings.IsVisible == false)
+            {
+                Settings_arrow.Source = "outline_keyboard_arrow_up_white_24dp.png";
+                Stack_settings.IsVisible = true;
+            }
+            else
+            {
+                Settings_arrow.Source = "outline_keyboard_arrow_down_white_24dp.png";
+                Stack_settings.IsVisible = false;
+            }
+        }
+
+        private void Student_exit_btn_Tapped(object sender, EventArgs e)
+        {
+            User_info_stack.IsVisible = false;
+            Login_stack.IsVisible = true;
+            Student_in_app.Login = "";
+            Student_in_app.Password = "";
+            Student_in_app.Uuid = "";
         }
     }
 }

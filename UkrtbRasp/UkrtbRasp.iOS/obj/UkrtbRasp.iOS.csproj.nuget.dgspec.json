@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\UKRTB_all\\UKRTB_all-main\\UkrtbRasp\\UkrtbRasp.iOS\\UkrtbRasp.iOS.csproj": {}
+    "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp.iOS\\UkrtbRasp.iOS.csproj": {}
   },
   "projects": {
-    "F:\\UKRTB_all\\UKRTB_all-main\\UkrtbRasp\\UkrtbRasp.iOS\\UkrtbRasp.iOS.csproj": {
+    "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp.iOS\\UkrtbRasp.iOS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\UKRTB_all\\UKRTB_all-main\\UkrtbRasp\\UkrtbRasp.iOS\\UkrtbRasp.iOS.csproj",
+        "projectUniqueName": "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp.iOS\\UkrtbRasp.iOS.csproj",
         "projectName": "UkrtbRasp.iOS",
-        "projectPath": "F:\\UKRTB_all\\UKRTB_all-main\\UkrtbRasp\\UkrtbRasp.iOS\\UkrtbRasp.iOS.csproj",
+        "projectPath": "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp.iOS\\UkrtbRasp.iOS.csproj",
         "packagesPath": "C:\\Users\\1\\.nuget\\packages\\",
-        "outputPath": "F:\\UKRTB_all\\UKRTB_all-main\\UkrtbRasp\\UkrtbRasp.iOS\\obj\\",
+        "outputPath": "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp.iOS\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "fallbackFolders": [
@@ -32,8 +32,8 @@
         "frameworks": {
           "xamarinios10": {
             "projectReferences": {
-              "F:\\UKRTB_all\\UKRTB_all-main\\UkrtbRasp\\UkrtbRasp\\UkrtbRasp.csproj": {
-                "projectPath": "F:\\UKRTB_all\\UKRTB_all-main\\UkrtbRasp\\UkrtbRasp\\UkrtbRasp.csproj"
+              "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp\\UkrtbRasp.csproj": {
+                "projectPath": "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp\\UkrtbRasp.csproj"
               }
             }
           }
@@ -69,14 +69,14 @@
         }
       }
     },
-    "F:\\UKRTB_all\\UKRTB_all-main\\UkrtbRasp\\UkrtbRasp\\UkrtbRasp.csproj": {
+    "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp\\UkrtbRasp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\UKRTB_all\\UKRTB_all-main\\UkrtbRasp\\UkrtbRasp\\UkrtbRasp.csproj",
+        "projectUniqueName": "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp\\UkrtbRasp.csproj",
         "projectName": "UkrtbRasp",
-        "projectPath": "F:\\UKRTB_all\\UKRTB_all-main\\UkrtbRasp\\UkrtbRasp\\UkrtbRasp.csproj",
+        "projectPath": "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp\\UkrtbRasp.csproj",
         "packagesPath": "C:\\Users\\1\\.nuget\\packages\\",
-        "outputPath": "F:\\UKRTB_all\\UKRTB_all-main\\UkrtbRasp\\UkrtbRasp\\obj\\",
+        "outputPath": "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"

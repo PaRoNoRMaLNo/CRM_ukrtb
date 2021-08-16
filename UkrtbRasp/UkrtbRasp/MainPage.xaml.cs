@@ -20,5 +20,10 @@ namespace UkrtbRasp
             //new NavigationPage(new Prepod_main());
             Navigation.PushModalAsync(new Prepod_main());
         }
+
+        private void Stud_click_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushModalAsync(new Student_main());
+        }
     }
 }

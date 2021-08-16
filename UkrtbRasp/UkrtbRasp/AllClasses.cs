@@ -51,6 +51,13 @@ namespace UkrtbRasp
        // public string Zoom { get; set; }
     }
 
+    class Cab
+    {
+        public string cab { get; set; }
+        public string hame { get; set; }
+    }
+
+
     class Ball
     {
         public string date { get; set; }

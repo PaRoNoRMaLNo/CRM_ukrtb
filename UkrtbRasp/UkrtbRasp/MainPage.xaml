@@ -1,69 +1,63 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
-        xmlns="http://xamarin.com/schemas/2014/forms"
-        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-        x:Class="UkrtbRasp.MainPage"
-        BackgroundColor="{DynamicResource Primary}">
-        <ContentPage.Resources>
-                <Style
-                        x:Name="Label_main"
-                        TargetType="Label">
-                        <Setter
-                                Property="TextColor"
-                                Value="{DynamicResource Text_light}" />
-                </Style>
-        </ContentPage.Resources>
-        <StackLayout>
-                <Image
-                        Source="logo.png"
-                        HeightRequest="100"
-                        Margin="20,40" />
-                <Label
-                        Text="Выберите Ваш путь:"
-                        FontFamily="Montserrat_SemiBold.ttf"
-                        TextColor="{DynamicResource Text_light}"
-                        FontSize="Medium"
-                        FontAttributes="Bold"
-                        Margin="20,10,20,5" />
-                <Button
-                        x:Name="Prepod_but"
-                        Clicked="Prepod_but_Clicked"
-                        BackgroundColor="{DynamicResource Primary_light}"
-                        HorizontalOptions="FillAndExpand"
-                        Margin="20,5,20,5"
-                        CornerRadius="4"
-                        Padding="20"
-                        Text="Преподаватель"
-                        FontFamily="Montserrat.ttf"
-                        TextTransform="None"
-                        FontSize="Large"
-                        TextColor="{DynamicResource Text_light}">
-                </Button>
-                <Button
-                        BackgroundColor="{DynamicResource Primary_light}"
-                        HorizontalOptions="FillAndExpand"
-                        Margin="20,5"
-                        CornerRadius="4"
-                        Padding="20"
-                        FontFamily="Montserrat.ttf"
-                        Text="Студент"
-                        TextTransform="None"
-                        FontSize="Large"
-                        TextColor="{DynamicResource Text_light}">
-                </Button>
-                <Button
-                        BackgroundColor="{DynamicResource Primary_light}"
-                        HorizontalOptions="FillAndExpand"
-                        Margin="20,5"
-                        CornerRadius="4"
-                        Padding="20"
-                        FontFamily="Montserrat.ttf"
-                        Text="ВЦ"
-                        TextTransform="None"
-                        FontSize="Large"
-                        TextColor="{DynamicResource Text_light}">
-                </Button>
-                <Button
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UkrtbRasp.MainPage"
+             BackgroundColor="{DynamicResource Primary}">
+    <ContentPage.Resources>
+        <Style x:Name="Label_main"
+               TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="{DynamicResource Text_light}" />
+        </Style>
+    </ContentPage.Resources>
+    <StackLayout>
+        <Image Source="logo.png"
+               HeightRequest="100"
+               Margin="20,40" />
+        <Label Text="Выберите Ваш путь:"
+               FontFamily="Montserrat_SemiBold.ttf"
+               TextColor="{DynamicResource Text_light}"
+               FontSize="Medium"
+               FontAttributes="Bold"
+               Margin="20,10,20,5" />
+        <Button x:Name="Prepod_but"
+                Clicked="Prepod_but_Clicked"
+                BackgroundColor="{DynamicResource Primary_light}"
+                HorizontalOptions="FillAndExpand"
+                Margin="20,5,20,5"
+                CornerRadius="4"
+                Padding="20"
+                Text="Преподаватель"
+                FontFamily="Montserrat.ttf"
+                TextTransform="None"
+                FontSize="Large"
+                TextColor="{DynamicResource Text_light}">
+        </Button>
+        <Button BackgroundColor="{DynamicResource Primary_light}"
+                HorizontalOptions="FillAndExpand"
+                x:Name="Stud_click"
+                Clicked="Stud_click_Clicked"
+                Margin="20,5"
+                CornerRadius="4"
+                Padding="20"
+                FontFamily="Montserrat.ttf"
+                Text="Студент"
+                TextTransform="None"
+                FontSize="Large"
+                TextColor="{DynamicResource Text_light}">
+        </Button>
+        <Button BackgroundColor="{DynamicResource Primary_light}"
+                HorizontalOptions="FillAndExpand"
+                Margin="20,5"
+                CornerRadius="4"
+                Padding="20"
+                FontFamily="Montserrat.ttf"
+                Text="ВЦ"
+                TextTransform="None"
+                FontSize="Large"
+                TextColor="{DynamicResource Text_light}">
+        </Button>
+        <!--<Button
                         BackgroundColor="{DynamicResource Primary_light}"
                         HorizontalOptions="FillAndExpand"
                         Margin="20,5"
@@ -74,7 +68,7 @@
                         TextTransform="None"
                         FontSize="Large"
                         TextColor="{DynamicResource Text_light}">
-                </Button>
-        </StackLayout>
+                </Button>-->
+    </StackLayout>
 
 </ContentPage>

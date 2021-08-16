@@ -31,7 +31,12 @@
             <StackLayout>
                 <yummy:PancakeView BackgroundColor="{DynamicResource Secondary}"
                                    CornerRadius="30,30,0,0"
+                                   x:Name="Prepod_pankake"
                                    HeightRequest="80">
+                    <yummy:PancakeView.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="Prep_tap"
+                                              Tapped="Prep_tap_Tapped" />
+                    </yummy:PancakeView.GestureRecognizers>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Преподаватели"
                                FontSize="Medium"
@@ -47,8 +52,13 @@
                 </yummy:PancakeView>
                 <yummy:PancakeView BackgroundColor="{DynamicResource Secondary_dark}"
                                    CornerRadius="30,30,0,0"
+                                   x:Name="Group_pankake"
                                    HeightRequest="80"
                                    Margin="0,-35,0,0">
+                    <yummy:PancakeView.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="Group_tap"
+                                              Tapped="Group_tap_Tapped" />
+                    </yummy:PancakeView.GestureRecognizers>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Группы"
                                FontSize="Medium"
@@ -64,7 +74,12 @@
                 </yummy:PancakeView>
                 <yummy:PancakeView BackgroundColor="{DynamicResource Primary_light}"
                                    CornerRadius="30"
+                                   x:Name="Cab_pankake"
                                    Margin="0,-35,0,0">
+                    <yummy:PancakeView.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="Cab_tap"
+                                              Tapped="Cab_tap_Tapped" />
+                    </yummy:PancakeView.GestureRecognizers>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Кабинеты"
                                FontSize="Medium"
@@ -115,6 +130,7 @@
                                CornerRadius="4">
                 <Picker TextColor="{DynamicResource Text_light}"
                         Margin="10,0"
+                        x:Name="Prepod_or_group_picker"
                         FontFamily="Montserrat.ttf"
                         SelectedIndex="0">
                     <Picker.Items>

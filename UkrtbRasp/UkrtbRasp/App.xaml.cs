@@ -10,7 +10,7 @@ namespace UkrtbRasp
         {
             InitializeComponent();
 
-            MainPage = new Student_main();
+            MainPage = new MainPage();
         }
 
         protected override void OnStart()

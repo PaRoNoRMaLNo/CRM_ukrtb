@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "g7ifxfjBwOVB3n93sUbiXIuyJcW5k4R99v17tR+zx+by+cWBWAu39OLOa/iz5v1O3UgjaPdj7DxlLAgC4ny8vg==",
+  "dgSpecHash": "/yGjYdk4Q/e6gXz4Cbrj0csq+9/C+Vz8kaz4opE9wDVtf7xxsA+UN5JFsTsmTwQjoMSGJAUhPbsi7Nqwj1KNpA==",
   "success": true,
-  "projectFilePath": "F:\\UKRTB_all\\UKRTB_all-main\\UkrtbRasp\\UkrtbRasp.Android\\UkrtbRasp.Android.csproj",
+  "projectFilePath": "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp.Android\\UkrtbRasp.Android.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\1\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\1\\.nuget\\packages\\system.componentmodel\\4.3.0\\system.componentmodel.4.3.0.nupkg.sha512",

@@ -2308,11 +2308,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\UKRTB_all\\UKRTB_all-main\\UkrtbRasp\\UkrtbRasp.Android\\UkrtbRasp.Android.csproj",
+      "projectUniqueName": "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp.Android\\UkrtbRasp.Android.csproj",
       "projectName": "UkrtbRasp.Android",
-      "projectPath": "F:\\UKRTB_all\\UKRTB_all-main\\UkrtbRasp\\UkrtbRasp.Android\\UkrtbRasp.Android.csproj",
+      "projectPath": "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp.Android\\UkrtbRasp.Android.csproj",
       "packagesPath": "C:\\Users\\1\\.nuget\\packages\\",
-      "outputPath": "F:\\UKRTB_all\\UKRTB_all-main\\UkrtbRasp\\UkrtbRasp.Android\\obj\\",
+      "outputPath": "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp.Android\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
@@ -2333,8 +2333,8 @@
       "frameworks": {
         "monoandroid11.0": {
           "projectReferences": {
-            "F:\\UKRTB_all\\UKRTB_all-main\\UkrtbRasp\\UkrtbRasp\\UkrtbRasp.csproj": {
-              "projectPath": "F:\\UKRTB_all\\UKRTB_all-main\\UkrtbRasp\\UkrtbRasp\\UkrtbRasp.csproj"
+            "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp\\UkrtbRasp.csproj": {
+              "projectPath": "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp\\UkrtbRasp.csproj"
             }
           }
         }
