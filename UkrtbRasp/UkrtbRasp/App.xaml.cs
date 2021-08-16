@@ -1,0 +1,28 @@
+﻿using System;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+
+namespace UkrtbRasp
+{
+    public partial class App : Application
+    {
+        public App()
+        {
+            InitializeComponent();
+
+            MainPage = new Student_main();
+        }
+
+        protected override void OnStart()
+        {
+        }
+
+        protected override void OnSleep()
+        {
+        }
+
+        protected override void OnResume()
+        {
+        }
+    }
+}

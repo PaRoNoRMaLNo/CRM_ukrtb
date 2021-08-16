@@ -1,0 +1,555 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="UkrtbRasp.Prepod_main"
+            xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+            xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+            android:TabbedPage.ToolbarPlacement="Bottom"
+            UnselectedTabColor="{DynamicResource Secondary_dark}"
+            BarBackgroundColor="{DynamicResource Primary}"
+            SelectedTabColor="{DynamicResource Secondary}">
+    <TabbedPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="{DynamicResource Text_light}" />
+            <Setter Property="FontFamily"
+                    Value="Montserrat.ttf" />
+            <!--<Setter Property="FontSize"
+                    Value="Body" />-->
+        </Style>
+    </TabbedPage.Resources>
+    <ContentPage BackgroundColor="{DynamicResource Primary}"
+                 x:Name="Prepod_rasp"
+                 Title="Расписание">
+        <StackLayout Margin="20,0">
+            <Label Text="Расписание занятий"
+                   FontSize="Medium"
+                   FontFamily="Montserrat_SemiBold.ttf"
+                   Margin="20"
+                   HorizontalOptions="Center"
+                   TextColor="{DynamicResource Text_light}" />
+            <StackLayout>
+                <yummy:PancakeView BackgroundColor="{DynamicResource Secondary}"
+                                   CornerRadius="30,30,0,0"
+                                   HeightRequest="80">
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Преподаватели"
+                               FontSize="Medium"
+                               TextColor="{DynamicResource Text_light}"
+                               FontFamily="Montserrat.ttf"
+                               Margin="20,15" />
+                        <Image Source="calendar.png"
+                               VerticalOptions="Start"
+                               HorizontalOptions="EndAndExpand"
+                               Margin="20,15" />
+                    </StackLayout>
+
+                </yummy:PancakeView>
+                <yummy:PancakeView BackgroundColor="{DynamicResource Secondary_dark}"
+                                   CornerRadius="30,30,0,0"
+                                   HeightRequest="80"
+                                   Margin="0,-35,0,0">
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Группы"
+                               FontSize="Medium"
+                               TextColor="{DynamicResource Text_light}"
+                               FontFamily="Montserrat.ttf"
+                               Margin="20,15" />
+                        <Image Source="calendar.png"
+                               VerticalOptions="Start"
+                               HorizontalOptions="EndAndExpand"
+                               Margin="20,15" />
+                    </StackLayout>
+
+                </yummy:PancakeView>
+                <yummy:PancakeView BackgroundColor="{DynamicResource Primary_light}"
+                                   CornerRadius="30"
+                                   Margin="0,-35,0,0">
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Кабинеты"
+                               FontSize="Medium"
+                               TextColor="{DynamicResource Text_light}"
+                               FontFamily="Montserrat.ttf"
+                               Margin="20,15" />
+                        <Image Source="calendar.png"
+                               VerticalOptions="Start"
+                               HorizontalOptions="EndAndExpand"
+                               Margin="20,15" />
+                    </StackLayout>
+
+                </yummy:PancakeView>
+            </StackLayout>
+            <DatePicker x:Name="Date_hide"
+                        Format="dd-MM-yyyy"
+                        TextColor="White"
+                        IsVisible="false" />
+            <StackLayout Orientation="Horizontal"
+                         Margin="0,10"
+                         VerticalOptions="Start">
+                <Button Text="10.08"
+                        x:Name="Select_date_today"
+                        Clicked="Select_date_today_Clicked"
+                        FontFamily="Montserrat.ttf"
+                        BackgroundColor="{DynamicResource Secondary_dark}"
+                        TextColor="{DynamicResource Text_light}" />
+                <Button Text="11.08"
+                        Clicked="Select_date_today_Clicked"
+                        x:Name="Select_date_tomorow"
+                        FontFamily="Montserrat.ttf"
+                        BackgroundColor="{DynamicResource Primary_light}"
+                        TextColor="{DynamicResource Text_light}" />
+                <Button Text="12.08"
+                        Clicked="Select_date_today_Clicked"
+                        FontFamily="Montserrat.ttf"
+                        x:Name="Select_date_plustwo"
+                        BackgroundColor="{DynamicResource Primary_light}"
+                        TextColor="{DynamicResource Text_light}" />
+                <ImageButton BackgroundColor="{DynamicResource Primary_light}"
+                             Source="calendar.png"
+                             Clicked="Open_select_date_Clicked"
+                             x:Name="Open_select_date"
+                             HorizontalOptions="FillAndExpand"
+                             Padding="10" />
+            </StackLayout>
+            <yummy:PancakeView BackgroundColor="{DynamicResource Primary_light}"
+                               CornerRadius="4">
+                <Picker TextColor="{DynamicResource Text_light}"
+                        Margin="10,0"
+                        FontFamily="Montserrat.ttf"
+                        SelectedIndex="0">
+                    <Picker.Items>
+                        <x:String>sdfsfdf</x:String>
+                        <x:String>asaa</x:String>
+                        <x:String>vvvvvvv</x:String>
+                    </Picker.Items>
+                </Picker>
+            </yummy:PancakeView>
+            <ScrollView Margin="0,10">
+                <StackLayout>
+                    <yummy:PancakeView BackgroundColor="{DynamicResource Primary_light}"
+                                       CornerRadius="4"
+                                       Padding="0,10">
+                        <yummy:PancakeView.BackgroundGradientStops>
+                            <yummy:GradientStopCollection>
+                                <yummy:GradientStop Color="#242529"
+                                                    Offset="0" />
+                                <yummy:GradientStop Color="#121212"
+                                                    Offset="1" />
+                            </yummy:GradientStopCollection>
+                        </yummy:PancakeView.BackgroundGradientStops>
+                        <StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <yummy:PancakeView BackgroundColor="{DynamicResource Secondary_dark}"
+                                                   CornerRadius="0,15,0,15"
+                                                   HorizontalOptions="Start"
+                                                   VerticalOptions="Start"
+                                                   Margin="0"
+                                                   Padding="20,5">
+                                    <Label Text="1"
+                                           FontFamily="Montserrat_SemiBold.ttf"
+                                           TextColor="{DynamicResource Text_light}" />
+                                </yummy:PancakeView>
+                                <Label Text="303"
+                                       TextColor="{DynamicResource Text_light}"
+                                       VerticalOptions="CenterAndExpand"
+                                       Margin="10,0"
+                                       FontFamily="Montserrat_SemiBold.ttf"
+                                       HorizontalOptions="EndAndExpand" />
+                                <!--<yummy:PancakeView
+                                                                        BackgroundColor="{DynamicResource Secondary_dark}"
+                                                                        CornerRadius="15,0,15,0"
+                                                                        HorizontalOptions="EndAndExpand"
+                                                                        VerticalOptions="Start"
+                                                                        Margin="0,10,0,10"
+                                                                        Padding="20,5">
+                                                                        <Label
+                                                                                Text="14:00"
+                                                                                TextColor="{DynamicResource Text_light}" />
+                                                                </yummy:PancakeView>-->
+                            </StackLayout>
+                            <Label Text="МДК. Разработка программных модулей"
+                                   FontFamily="Montserrat.ttf"
+                                   TextColor="{DynamicResource Text_light}"
+                                   Margin="10,0" />
+                            <Label Text="9ИСП-33-18"
+                                   FontFamily="Montserrat.ttf"
+                                   TextColor="{DynamicResource Text_dark}"
+                                   Margin="10,0" />
+                        </StackLayout>
+                    </yummy:PancakeView>
+
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage>
+
+    <ContentPage BackgroundColor="{DynamicResource Primary}"
+                 Title="Заявка">
+        <StackLayout>
+            <Label Text="Заявка для ВЦ"
+                   HorizontalOptions="Center"
+                   TextColor="{DynamicResource Text_light}"
+                   FontSize="Medium"
+                   Margin="20"
+                   FontFamily="Montserrat_SemiBold.ttf" />
+            <yummy:PancakeView CornerRadius="4"
+                               BackgroundColor="{DynamicResource Primary_light}"
+                               Margin="20"
+                               Padding="10">
+                <StackLayout>
+                    <Label FontFamily="Montserrat.ttf"
+                           TextColor="{DynamicResource Text_light}"
+                           Text="ФИО" />
+                    <Editor Text="sdfsdfsdf"
+                            TextColor="{DynamicResource Text_light}" />
+                    <Label FontFamily="Montserrat.ttf"
+                           TextColor="{DynamicResource Text_light}"
+                           Text="Кабинет" />
+                    <Picker TextColor="{DynamicResource Text_light}">
+                        <Picker.Items>
+                            <x:String>201</x:String>
+                            <x:String>202</x:String>
+                            <x:String>203</x:String>
+                        </Picker.Items>
+                    </Picker>
+                    <Label FontFamily="Montserrat.ttf"
+                           TextColor="{DynamicResource Text_light}"
+                           Text="Что нужно сделать" />
+                    <Editor VerticalOptions="EndAndExpand"
+                            Text=""
+                            HeightRequest="150"
+                            TextColor="{DynamicResource Text_light}" />
+                    <Button Text="Отправить"
+                            FontFamily="Montserrat_SemiBold.ttf"
+                            TextColor="{DynamicResource Text_light}"
+                            BackgroundColor="{DynamicResource Secondary}" />
+                </StackLayout>
+            </yummy:PancakeView>
+        </StackLayout>
+    </ContentPage>
+    <ContentPage BackgroundColor="{DynamicResource Primary}"
+                 Title="Звонки">
+        <yummy:PancakeView Margin="20"
+                           BackgroundColor="{DynamicResource Primary_light}"
+                           VerticalOptions="Start"
+                           CornerRadius="4">
+            <StackLayout VerticalOptions="Start" Margin="10">
+                <Label Text="Расписание звонков (ПН-ПТ)"
+                       Margin="0,5"
+                       HorizontalOptions="CenterAndExpand"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition  />
+                        <ColumnDefinition  />
+                        <ColumnDefinition  />
+                        <ColumnDefinition  />
+                    </Grid.ColumnDefinitions>
+                    
+                    <Label Text="№ пары"
+                           Grid.Column="0"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Row="0" />
+                    <Label Text="Начало"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="1"
+                           Grid.Row="0" />
+                    <Label Text="Конец"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="2"
+                           Grid.Row="0" />
+                    <Label Text="Перемена"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="3"
+                           Grid.Row="0" />
+
+                    <Label Text="1 пара"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="0"
+                           Grid.Row="1" />
+                    <Label Text="8:00"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="1"
+                           Grid.Row="1" />
+                    <Label Text="9:20"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="2"
+                           Grid.Row="1" />
+                    <Label Text="10"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="3"
+                           Grid.Row="1" />
+
+                    <Label Text="2 пара"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="0"
+                           Grid.Row="2" />
+                    <Label Text="9:30"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="1"
+                           Grid.Row="2" />
+                    <Label Text="10:50"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="2"
+                           Grid.Row="2" />
+                    <Label Text="10"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="3"
+                           Grid.Row="2" />
+
+                    <Label Text="3 пара"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="0"
+                           Grid.Row="3" />
+                    <Label Text="11:00"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="1"
+                           Grid.Row="3" />
+                    <Label Text="12:20"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="2"
+                           Grid.Row="3" />
+                    <Label Text="40"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="3"
+                           Grid.Row="3" />
+
+                    <Label Text="Обед"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="0"
+                           Grid.Row="4" />
+                    <Label Text="12:20"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="1"
+                           Grid.Row="4" />
+                    <Label Text="13:00"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="2"
+                           Grid.Row="4" />
+                    <Label Text="40"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="3"
+                           Grid.Row="4" />
+
+                    <Label Text="4 пара"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="0"
+                           Grid.Row="5" />
+                    <Label Text="13:00"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="1"
+                           Grid.Row="5" />
+                    <Label Text="14:20"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="2"
+                           Grid.Row="5" />
+                    <Label Text="10"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="3"
+                           Grid.Row="5" />
+
+                    <Label Text="5 пара"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="0"
+                           Grid.Row="6" />
+                    <Label Text="14:30"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="1"
+                           Grid.Row="6" />
+                    <Label Text="15:50"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="2"
+                           Grid.Row="6" />
+                    <Label Text="10"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="3"
+                           Grid.Row="6" />
+
+                    <Label Text="6 пара"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="0"
+                           Grid.Row="7" />
+                    <Label Text="16:00"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="1"
+                           Grid.Row="7" />
+                    <Label Text="17:20"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="2"
+                           Grid.Row="7" />
+                    <Label Text="10"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="3"
+                           Grid.Row="7" />
+                </Grid>
+
+                <Label Text="Расписание звонков (СБ) сокр."
+                       Margin="0,5"
+                       HorizontalOptions="CenterAndExpand" />
+                <Grid Margin="10,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Text="0 пара"
+                           Grid.Column="0"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Row="0" />
+                    <Label Text="8:00"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="1"
+                           Grid.Row="0" />
+                    <Label Text="9:00"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="2"
+                           Grid.Row="0" />
+                    <Label Text="10"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="3"
+                           Grid.Row="0" />
+
+                    <Label Text="1 пара"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="0"
+                           Grid.Row="1" />
+                    <Label Text="9:10"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="1"
+                           Grid.Row="1" />
+                    <Label Text="10:10"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="2"
+                           Grid.Row="1" />
+                    <Label Text="10"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="3"
+                           Grid.Row="1" />
+
+                    <Label Text="2 пара"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="0"
+                           Grid.Row="2" />
+                    <Label Text="10:20"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="1"
+                           Grid.Row="2" />
+                    <Label Text="11:20"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="2"
+                           Grid.Row="2" />
+                    <Label Text="10"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="3"
+                           Grid.Row="2" />
+
+                    <Label Text="3 пара"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="0"
+                           Grid.Row="3" />
+                    <Label Text="11:30"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="1"
+                           Grid.Row="3" />
+                    <Label Text="12:30"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="2"
+                           Grid.Row="3" />
+                    <Label Text="10"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="3"
+                           Grid.Row="3" />
+
+                    <Label Text="4 пара"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="0"
+                           Grid.Row="4" />
+                    <Label Text="12:40"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="1"
+                           Grid.Row="4" />
+                    <Label Text="13:40"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="2"
+                           Grid.Row="4" />
+                    <Label Text="10"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="3"
+                           Grid.Row="4" />
+
+                    <Label Text="5 пара"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="0"
+                           Grid.Row="5" />
+                    <Label Text="13:50"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="1"
+                           Grid.Row="5" />
+                    <Label Text="14:50"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="2"
+                           Grid.Row="5" />
+                    <Label Text="10"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="3"
+                           Grid.Row="5" />
+
+                    <Label Text="6 пара"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="0"
+                           Grid.Row="6" />
+                    <Label Text="15:00"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="1"
+                           Grid.Row="6" />
+                    <Label Text="16:00"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="2"
+                           Grid.Row="6" />
+                    <Label Text="10"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="3"
+                           Grid.Row="6" />
+
+                    <Label Text="7 пара"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="0"
+                           Grid.Row="7" />
+                    <Label Text="16:10"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="1"
+                           Grid.Row="7" />
+                    <Label Text="17:10"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="2"
+                           Grid.Row="7" />
+                    <Label Text="-"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="3"
+                           Grid.Row="7" />
+                </Grid>
+            </StackLayout>
+        </yummy:PancakeView>
+    </ContentPage>
+</TabbedPage>

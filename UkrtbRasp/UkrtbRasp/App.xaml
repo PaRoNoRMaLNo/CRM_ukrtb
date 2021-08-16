@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UkrtbRasp.App">
+    <Application.Resources>
+        <Color x:Key="Primary">#121212</Color>
+        <!--<Color x:Key="Primary">#162538</Color>-->
+        <!--<Color x:Key="Primary_light">#263042</Color>-->
+        <Color x:Key="Primary_light">#242529</Color>
+        <!--<Color x:Key="Secondary">#263042</Color>-->
+        <Color x:Key="Secondary">#027ff6</Color>
+        <Color x:Key="Secondary_dark">#004c8c</Color>
+        <Color x:Key="Text_light">#ffffff</Color>
+        <Color x:Key="Text_dark">#6d6d6f</Color>
+    </Application.Resources>
+</Application>

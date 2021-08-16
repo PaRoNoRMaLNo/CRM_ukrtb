@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             x:Class="UkrtbRasp.Spravka">
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="{DynamicResource Text_light}" />
+            <Setter Property="FontFamily"
+                    Value="Montserrat.ttf" />
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content >
+        <ScrollView>
+            <StackLayout BackgroundColor="{DynamicResource Primary}">
+                <yummy:PancakeView BackgroundColor="{DynamicResource Primary_light}"
+                                   CornerRadius="0">
+
+                    <Label Text="Заказать справку"
+                           x:Name="User_name"
+                           Margin="20"
+                           FontFamily="Montserrat_SemiBold.ttf"
+                           HorizontalOptions="CenterAndExpand"
+                           VerticalOptions="CenterAndExpand" />
+                </yummy:PancakeView>
+                <StackLayout Margin="20">
+                    <Label Text="В связи с установлением режима 'повышенной готовности' для получения справки необходимо:"
+                           HorizontalTextAlignment="Start" />
+                    <Label Text="1. Заказать справку по указанной форме"
+                           HorizontalTextAlignment="Start" />
+                    <Label Text="2. Выдача справки осуществляется следующим способом:"
+                           HorizontalTextAlignment="Start" />
+                    <Label Text="По Почте России"
+                           Margin="20,0"
+                           HorizontalTextAlignment="Start" />
+                    <Label Text="На указанный Вами Email"
+                           Margin="20,0"
+                           HorizontalTextAlignment="Start" />
+                    <Label Text="Лично при предъявлении студенческого билета по следующему графику: пн-чт с 9:00 - 11:30, 12:30 - 16:00 каб. 112"
+                           Margin="20,0"
+                           HorizontalTextAlignment="Start" />
+                    <Label Text="Справка будет готова в течении 2-х рабочих дней после оформления заявки."
+                           HorizontalTextAlignment="Start" />
+                    <Label Text="Выберите тип справки:"
+                           FontFamily="Montserrat_SemiBold.ttf"
+                           HorizontalTextAlignment="Start" />
+                    <Picker TextColor="{DynamicResource Text_light}"
+                            x:Name="Spravka_type"
+                            SelectedIndexChanged="Spravka_type_SelectedIndexChanged">
+                        <Picker.Items>
+                            <x:String>Справка об обучении в колледже</x:String>
+                            <x:String>Архивная справка</x:String>
+                            <x:String>Справка о размере стипендии</x:String>
+                        </Picker.Items>
+                    </Picker>
+
+                    <StackLayout x:Name="Spravka_stack_type_1">
+                        <!--Для справки об обучении в колледже-->
+                        <Entry Placeholder="ФИО студента"
+                               x:Name="Spravka_type1_fio"
+                               PlaceholderColor="{DynamicResource Text_dark}"
+                               TextColor="{DynamicResource Text_light}" />
+                        <Entry Placeholder="Место требования (например, В школу)"
+                               x:Name="Spravka_type1_demont"
+                               PlaceholderColor="{DynamicResource Text_dark}"
+                               TextColor="{DynamicResource Text_light}" />
+                        <Entry Placeholder="Телефон"
+                               x:Name="Spravka_type1_telephone"
+                               Keyboard="Telephone"
+                               PlaceholderColor="{DynamicResource Text_dark}"
+                               TextColor="{DynamicResource Text_light}" />
+                        <Entry Placeholder="Количество"
+                               x:Name="Spravka_type1_count"
+                               Keyboard="Numeric"
+                               PlaceholderColor="{DynamicResource Text_dark}"
+                               TextColor="{DynamicResource Text_light}" />
+                        <Entry Placeholder="Email (не обязательно)"
+                               x:Name="Spravka_type1_email"
+                               Keyboard="Default"
+                               PlaceholderColor="{DynamicResource Text_dark}"
+                               TextColor="{DynamicResource Text_light}" />
+                        <Button Text="Отправить"
+                                x:Name="Spravka_send"
+                                Clicked="Spravka_send_Clicked"
+                                HorizontalOptions="FillAndExpand"
+                                Padding="10"
+                                TextColor="{DynamicResource Text_light}"
+                                BackgroundColor="{DynamicResource Secondary}" />
+                    </StackLayout>
+
+                    <StackLayout IsVisible="false"
+                                 x:Name="Spravka_stack_type_2">
+                        <!--Архивная справка-->
+                        <Entry Placeholder="ФИО студента"
+                               x:Name="Spravka_type2_fio"
+                               PlaceholderColor="{DynamicResource Text_dark}"
+                               TextColor="{DynamicResource Text_light}" />
+                        <!--<Entry Placeholder="Место требования (например, В школу)"
+                           PlaceholderColor="{DynamicResource Text_dark}"
+                           TextColor="{DynamicResource Text_light}" />-->
+                        <Entry Placeholder="Телефон"
+                               x:Name="Spravka_type2_telephone"
+                               Keyboard="Telephone"
+                               PlaceholderColor="{DynamicResource Text_dark}"
+                               TextColor="{DynamicResource Text_light}" />
+                        <Entry Placeholder="Год начала обучения"
+                               x:Name="Spravka_type2_year_start"
+                               Keyboard="Numeric"
+                               PlaceholderColor="{DynamicResource Text_dark}"
+                               TextColor="{DynamicResource Text_light}" />
+                        <Entry Placeholder="Год окончания обучения"
+                               x:Name="Spravka_type2_year_end"
+                               Keyboard="Numeric"
+                               PlaceholderColor="{DynamicResource Text_dark}"
+                               TextColor="{DynamicResource Text_light}" />
+                        <Entry Placeholder="Email (не обязательно)"
+                               x:Name="Spravka_type2_email"
+                               Keyboard="Default"
+                               PlaceholderColor="{DynamicResource Text_dark}"
+                               TextColor="{DynamicResource Text_light}" />
+                        <Button Text="Отправить"
+                                x:Name="Spravka_type2_send"
+                                Clicked="Spravka_type2_send_Clicked"
+                                HorizontalOptions="FillAndExpand"
+                                Padding="10"
+                                TextColor="{DynamicResource Text_light}"
+                                BackgroundColor="{DynamicResource Secondary}" />
+                    </StackLayout>
+
+                    <StackLayout IsVisible="false"
+                                 x:Name="Spravka_stack_type_3">
+                        <!--Справка о размере стипендии-->
+                        <Entry Placeholder="ФИО студента"
+                               x:Name="Spravka_type3_fio"
+                               PlaceholderColor="{DynamicResource Text_dark}"
+                               TextColor="{DynamicResource Text_light}" />
+                        <!--<Entry Placeholder="Место требования (например, В школу)"
+                               PlaceholderColor="{DynamicResource Text_dark}"
+                               TextColor="{DynamicResource Text_light}" />-->
+                        <Entry Placeholder="Телефон"
+                               x:Name="Spravka_type3_telephone"
+                               Keyboard="Telephone"
+                               PlaceholderColor="{DynamicResource Text_dark}"
+                               TextColor="{DynamicResource Text_light}" />
+                        <Entry Placeholder="Количество"
+                               x:Name="Spravka_type3_count"
+                               Keyboard="Numeric"
+                               PlaceholderColor="{DynamicResource Text_dark}"
+                               TextColor="{DynamicResource Text_light}" />
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Укажите период"
+                                   
+                                   VerticalOptions="CenterAndExpand"
+                                   FontFamily="Montserrat_SemiBold.ttf"
+                                   TextColor="{DynamicResource Text_dark}"/>
+                            <DatePicker x:Name="Spravka_type3_edustart"
+                                        MinimumDate="10.06.2010"
+                                        MaximumDate="10.08.2050"
+                                TextColor="{DynamicResource Text_light}"
+                                HorizontalOptions="StartAndExpand"/>
+                            <DatePicker TextColor="{DynamicResource Text_light}"
+                                        MinimumDate="10.06.2010"
+                                        MaximumDate="10.08.2050"
+                                        x:Name="Spravka_type3_eduend"
+                                        HorizontalOptions="EndAndExpand"/>
+                        </StackLayout>
+                        <Entry Placeholder="Email (не обязательно)"
+                               x:Name="Spravka_type3_email"
+                               Keyboard="Default"
+                               PlaceholderColor="{DynamicResource Text_dark}"
+                               TextColor="{DynamicResource Text_light}" />
+                        <Button Text="Отправить"
+                                x:Name="Spravka_type3_send"
+                                Clicked="Spravka_type3_send_Clicked"
+                                HorizontalOptions="FillAndExpand"
+                                Padding="10"
+                                TextColor="{DynamicResource Text_light}"
+                                BackgroundColor="{DynamicResource Secondary}" />
+                    </StackLayout>
+
+
+                </StackLayout>
+
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
