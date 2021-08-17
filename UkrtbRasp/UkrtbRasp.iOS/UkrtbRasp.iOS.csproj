@@ -138,6 +138,10 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="logo.png" />
+    <BundleResource Include="calendar.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </BundleResource>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="outline_keyboard_arrow_down_white_24dp.png" />
