@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+            xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+            android:TabbedPage.ToolbarPlacement="Bottom"
+            UnselectedTabColor="{DynamicResource Secondary_dark}"
+            BarBackgroundColor="{DynamicResource Primary}"
+            SelectedTabColor="{DynamicResource Secondary}"
+            x:Class="UkrtbRasp.VC_main">
+    <TabbedPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="{DynamicResource Text_light}" />
+            <Setter Property="FontFamily"
+                    Value="Montserrat.ttf" />
+            <!--<Setter Property="FontSize"
+                    Value="Body" />-->
+        </Style>
+    </TabbedPage.Resources>
+    <!--Pages can be added as references or inline-->
+    <ContentPage Title="Tab 1"
+                 BackgroundColor="{DynamicResource Primary}">
+        <StackLayout>
+            <yummy:PancakeView BackgroundColor="{DynamicResource Primary_light}">
+                <Label Text="Заявки преподавателей" 
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       Margin="20"
+                       FontFamily="Montserrat_SemiBold.ttf"
+                       TextColor="{DynamicResource Text_light}"/>
+            </yummy:PancakeView>
+            <StackLayout Orientation="Horizontal"
+                         Margin="20,20,20,0">
+                <StackLayout
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand">
+                    <yummy:PancakeView BackgroundColor="{DynamicResource Primary_light}"
+                                       CornerRadius="4"
+                                       Padding="10">
+                        <StackLayout>
+                            <Label Text="Всего заявок"
+                                   HorizontalTextAlignment="Center"
+                                   TextColor="{DynamicResource Text_light}" />
+                            <Label Text="20"
+                                   HorizontalTextAlignment="Center"
+                                   TextColor="{DynamicResource Text_light}" />
+                        </StackLayout>
+                    </yummy:PancakeView>
+
+                    <yummy:PancakeView BackgroundColor="{DynamicResource Secondary}"
+                                       CornerRadius="4"
+                                       Padding="10">
+                        <StackLayout>
+                            <Label Text="Выполнено"
+                                   HorizontalTextAlignment="Center"
+                                   TextColor="{DynamicResource Text_light}" />
+                            <Label Text="20"
+                                   HorizontalTextAlignment="Center"
+                                   TextColor="{DynamicResource Text_light}" />
+                        </StackLayout>
+                    </yummy:PancakeView>
+                </StackLayout>
+                <StackLayout HorizontalOptions="FillAndExpand"
+                             VerticalOptions="FillAndExpand">
+                    <yummy:PancakeView BackgroundColor="{DynamicResource Primary_light}"
+                                       CornerRadius="4"
+                                       Padding="10">
+                        <StackLayout>
+                            <Label Text="Заявок сегодня"
+                                   HorizontalTextAlignment="Center"
+                                   TextColor="{DynamicResource Text_light}" />
+                            <Label Text="20"
+                                   HorizontalTextAlignment="Center"
+                                   TextColor="{DynamicResource Text_light}" />
+                        </StackLayout>
+                    </yummy:PancakeView>
+
+                    <yummy:PancakeView BackgroundColor="{DynamicResource Secondary}"
+                                       CornerRadius="4"
+                                       Padding="10">
+                        <StackLayout>
+                            <Label Text="Выполнено сегодня"
+                                   HorizontalTextAlignment="Center"
+                                   TextColor="{DynamicResource Text_light}" />
+                            <Label Text="20"
+                                   HorizontalTextAlignment="Center"
+                                   TextColor="{DynamicResource Text_light}" />
+                        </StackLayout>
+                    </yummy:PancakeView>
+                </StackLayout>
+            </StackLayout>
+
+            <StackLayout
+             Margin="20,0"
+                Orientation="Horizontal">
+                <Picker Title="Сортировка"
+                        TextColor="{DynamicResource Text_light}"
+                        TitleColor="{DynamicResource Text_dark}"
+                        HorizontalOptions="FillAndExpand">
+                    <Picker.Items>
+                        <x:String></x:String>
+                        <x:String>Новые</x:String>
+                        <x:String>В процессе</x:String>
+                        <x:String>Выполнены</x:String>
+                    </Picker.Items>
+                </Picker>
+                <DatePicker
+                    TextColor="{DynamicResource Text_light}"
+                    HorizontalOptions="FillAndExpand"/>
+                <Button Text="Все" 
+                        CornerRadius="4"
+                       HorizontalOptions="FillAndExpand"
+                        TextColor="{DynamicResource Text_light}"
+                        BackgroundColor="{DynamicResource Secondary}"/>
+            </StackLayout>
+            <ScrollView>
+                <StackLayout Margin="20,10"
+                             x:Name="Demond_stack">
+                    
+                </StackLayout>
+            </ScrollView>
+
+        </StackLayout>
+    </ContentPage>
+    <ContentPage Title="Tab 2" />
+  <ContentPage Title="Tab 3" />
+</TabbedPage>

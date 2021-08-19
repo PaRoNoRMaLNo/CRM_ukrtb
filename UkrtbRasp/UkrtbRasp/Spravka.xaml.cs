@@ -16,6 +16,7 @@ namespace UkrtbRasp
         public Spravka()
         {
             InitializeComponent();
+            NavigationPage.SetHasNavigationBar(this, false);
             Spravka_type.SelectedIndex = 0;
         }
 

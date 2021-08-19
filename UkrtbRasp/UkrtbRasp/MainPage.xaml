@@ -48,6 +48,8 @@
         </Button>
         <Button BackgroundColor="{DynamicResource Primary_light}"
                 HorizontalOptions="FillAndExpand"
+                x:Name="VC_click"
+                Clicked="VC_click_Clicked"
                 Margin="20,5"
                 CornerRadius="4"
                 Padding="20"

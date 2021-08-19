@@ -515,7 +515,7 @@
                                            HorizontalOptions="Start">
                             <Image Source="https://study.ukrtb.ru/views/img/photo/no-photo.png" />
                         </yummy:PancakeView>
-                        <Label Text="Гильмутдинов Тимур Рушанович"
+                        <Label Text=""
                                x:Name="User_name"
                                FontFamily="Montserrat_SemiBold.ttf"
                                HorizontalOptions="CenterAndExpand"
@@ -532,7 +532,7 @@
                                            HorizontalOptions="FillAndExpand"
                                            BackgroundColor="{DynamicResource Primary_light}">
                             <StackLayout>
-                                <Label Text="2020"
+                                <Label Text=""
                                        x:Name="User_year"
                                        FontFamily="Montserrat_SemiBold.ttf"
                                        FontSize="Body"

@@ -21,6 +21,7 @@ namespace UkrtbRasp
         public Student_main()
         {
             InitializeComponent();
+            NavigationPage.SetHasNavigationBar(this, false);
             Prepod_isCheck = true;
             DateTime dateTim = DateTime.Now;
             Select_date_today.Text = $"{dateTim.Day}.{dateTim.Month}";
@@ -170,6 +171,7 @@ namespace UkrtbRasp
                     foreach (var item in user)
                     {
                         User_year.Text = item.year;
+                        User_name.Text = item.fio;
                     }
                     List<Ball> balls = new List<Ball>();
                     param["diplom"] = "1";
@@ -192,7 +194,7 @@ namespace UkrtbRasp
 
         private void Open_spravka_Tapped(object sender, EventArgs e)
         {
-            Navigation.PushModalAsync(new Spravka());
+            Navigation.PushAsync(new Spravka());
         }
 
         void Test_group(List<Ball> balls)

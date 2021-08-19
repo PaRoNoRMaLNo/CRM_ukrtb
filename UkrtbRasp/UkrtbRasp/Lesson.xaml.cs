@@ -16,5 +16,10 @@ namespace UkrtbRasp
         {
             InitializeComponent();
         }
+
+        private void Lesson_tap_Tapped(object sender, EventArgs e)
+        {
+
+        }
     }
 }

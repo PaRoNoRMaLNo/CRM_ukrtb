@@ -13,6 +13,7 @@ namespace UkrtbRasp
         public Prepod_main()
         {
             InitializeComponent();
+            NavigationPage.SetHasNavigationBar(this, false);
             DateTime dateTim = DateTime.Now;
             Select_date_today.Text = $"{dateTim.Day}.{dateTim.Month}";
             dateTim = dateTim.AddDays(1);

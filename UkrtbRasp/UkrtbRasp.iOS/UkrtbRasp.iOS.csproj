@@ -139,8 +139,10 @@
   <ItemGroup>
     <BundleResource Include="logo.png" />
     <BundleResource Include="calendar.png">
-      <SubType></SubType>
-      <Generator></Generator>
+      <SubType>
+      </SubType>
+      <Generator>
+      </Generator>
     </BundleResource>
   </ItemGroup>
   <ItemGroup>
@@ -148,5 +150,26 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="outline_keyboard_arrow_up_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="demond.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="groups.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="login.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="prepods.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="rasp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="ball.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="cabs.png" />
   </ItemGroup>
 </Project>

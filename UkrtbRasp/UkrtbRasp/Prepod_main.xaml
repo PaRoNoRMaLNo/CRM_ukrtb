@@ -5,6 +5,7 @@
             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
             xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
             android:TabbedPage.ToolbarPlacement="Bottom"
+            Title="Расписание"
             UnselectedTabColor="{DynamicResource Secondary_dark}"
             BarBackgroundColor="{DynamicResource Primary}"
             SelectedTabColor="{DynamicResource Secondary}">
