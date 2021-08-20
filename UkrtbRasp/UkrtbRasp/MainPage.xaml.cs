@@ -13,23 +13,24 @@ namespace UkrtbRasp
         public MainPage()
         {
             InitializeComponent();
+
             NavigationPage.SetHasNavigationBar(this, false);
         }
 
-        void Prepod_but_Clicked(System.Object sender, System.EventArgs e)
+        async void Prepod_but_Clicked(System.Object sender, System.EventArgs e)
         {
             //new NavigationPage(new Prepod_main());
-            Navigation.PushAsync(new Prepod_main());
+            await Navigation.PushAsync(new Prepod_main());
         }
 
-        private void Stud_click_Clicked(object sender, EventArgs e)
+        private async void Stud_click_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new Student_main());
+            await Navigation.PushAsync(new Student_main());
         }
 
-        private void VC_click_Clicked(object sender, EventArgs e)
+        private async void VC_click_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new VC_main());
+            await Navigation.PushAsync(new VC_main());
         }
     }
 }

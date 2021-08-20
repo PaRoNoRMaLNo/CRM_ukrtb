@@ -20,6 +20,7 @@
         </Style>
     </TabbedPage.Resources>
     <ContentPage BackgroundColor="{DynamicResource Primary}"
+                 IconImageSource="calen"
                  x:Name="Prepod_rasp"
                  Title="Расписание">
         <StackLayout Margin="20,0">
@@ -44,10 +45,11 @@
                                TextColor="{DynamicResource Text_light}"
                                FontFamily="Montserrat.ttf"
                                Margin="20,15" />
-                        <Image Source="calendar.png"
+                        <Image Source="prepods.png"
                                VerticalOptions="Start"
+                               HeightRequest="35"
                                HorizontalOptions="EndAndExpand"
-                               Margin="20,15" />
+                               Margin="20,10"/>
                     </StackLayout>
 
                 </yummy:PancakeView>
@@ -66,10 +68,11 @@
                                TextColor="{DynamicResource Text_light}"
                                FontFamily="Montserrat.ttf"
                                Margin="20,15" />
-                        <Image Source="calendar.png"
+                        <Image Source="groups.png"
                                VerticalOptions="Start"
                                HorizontalOptions="EndAndExpand"
-                               Margin="20,15" />
+                               HeightRequest="35"
+                               Margin="20,10" />
                     </StackLayout>
 
                 </yummy:PancakeView>
@@ -87,10 +90,11 @@
                                TextColor="{DynamicResource Text_light}"
                                FontFamily="Montserrat.ttf"
                                Margin="20,15" />
-                        <Image Source="calendar.png"
+                        <Image Source="cabs.png"
                                VerticalOptions="Start"
+                               HeightRequest="35"
                                HorizontalOptions="EndAndExpand"
-                               Margin="20,15" />
+                               Margin="20,10" />
                     </StackLayout>
 
                 </yummy:PancakeView>
@@ -121,11 +125,12 @@
                         BackgroundColor="{DynamicResource Primary_light}"
                         TextColor="{DynamicResource Text_light}" />
                 <ImageButton BackgroundColor="{DynamicResource Primary_light}"
-                             Source="calendar.png"
+                             Source="calen"
+                             HeightRequest="40"
                              Clicked="Open_select_date_Clicked"
                              x:Name="Open_select_date"
                              HorizontalOptions="FillAndExpand"
-                             Padding="10" />
+                             Padding="5" />
             </StackLayout>
             <yummy:PancakeView BackgroundColor="{DynamicResource Primary_light}"
                                CornerRadius="4">
@@ -201,6 +206,7 @@
     </ContentPage>
 
     <ContentPage BackgroundColor="{DynamicResource Primary}"
+                 IconImageSource="demond"
                  Title="Заявка">
         <StackLayout>
             <Label Text="Заявка для ВЦ"
@@ -245,6 +251,7 @@
         </StackLayout>
     </ContentPage>
     <ContentPage BackgroundColor="{DynamicResource Primary}"
+                 IconImageSource="ball"
                  Title="Звонки">
         <yummy:PancakeView Margin="20"
                            BackgroundColor="{DynamicResource Primary_light}"

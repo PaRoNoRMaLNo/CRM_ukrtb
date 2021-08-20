@@ -1166,3 +1166,12 @@ F:\Github\CRM_ukrtb\UkrtbRasp\UkrtbRasp.Android\obj\Debug\110\stamp\_GeneratePac
 F:\Github\CRM_ukrtb\UkrtbRasp\UkrtbRasp.Android\obj\Debug\110\stamp\_ResolveLibraryProjectImports.stamp
 F:\Github\CRM_ukrtb\UkrtbRasp\UkrtbRasp.Android\obj\Debug\110\res\drawable\outline_keyboard_arrow_down_white_24dp.png
 F:\Github\CRM_ukrtb\UkrtbRasp\UkrtbRasp.Android\obj\Debug\110\res\drawable\outline_keyboard_arrow_up_white_24dp.png
+F:\Github\CRM_ukrtb\UkrtbRasp\UkrtbRasp.Android\obj\Debug\110\res\drawable\demond.png
+F:\Github\CRM_ukrtb\UkrtbRasp\UkrtbRasp.Android\obj\Debug\110\res\drawable\groups.png
+F:\Github\CRM_ukrtb\UkrtbRasp\UkrtbRasp.Android\obj\Debug\110\res\drawable\login.png
+F:\Github\CRM_ukrtb\UkrtbRasp\UkrtbRasp.Android\obj\Debug\110\res\drawable\prepods.png
+F:\Github\CRM_ukrtb\UkrtbRasp\UkrtbRasp.Android\obj\Debug\110\res\drawable\rasp.png
+F:\Github\CRM_ukrtb\UkrtbRasp\UkrtbRasp.Android\obj\Debug\110\res\drawable\ball.png
+F:\Github\CRM_ukrtb\UkrtbRasp\UkrtbRasp.Android\obj\Debug\110\res\drawable\cabs.png
+F:\Github\CRM_ukrtb\UkrtbRasp\UkrtbRasp.Android\obj\Debug\110\android\assets\MySqlConnector.dll
+F:\Github\CRM_ukrtb\UkrtbRasp\UkrtbRasp.Android\obj\Debug\110\res\drawable\calen.png

@@ -19,7 +19,9 @@
         </Style>
     </TabbedPage.Resources>
     <!--Pages can be added as references or inline-->
-    <ContentPage Title="Tab 1"
+    <ContentPage Title="Заявки"
+                 IconImageSource="demond"
+                 Appearing="ContentPage_Appearing"
                  BackgroundColor="{DynamicResource Primary}">
         <StackLayout>
             <yummy:PancakeView BackgroundColor="{DynamicResource Primary_light}">
@@ -43,6 +45,7 @@
                                    HorizontalTextAlignment="Center"
                                    TextColor="{DynamicResource Text_light}" />
                             <Label Text="20"
+                                   x:Name="Demands_all_text"
                                    HorizontalTextAlignment="Center"
                                    TextColor="{DynamicResource Text_light}" />
                         </StackLayout>
@@ -56,6 +59,7 @@
                                    HorizontalTextAlignment="Center"
                                    TextColor="{DynamicResource Text_light}" />
                             <Label Text="20"
+                                   x:Name="Demands_all_accept_text"
                                    HorizontalTextAlignment="Center"
                                    TextColor="{DynamicResource Text_light}" />
                         </StackLayout>
@@ -71,6 +75,7 @@
                                    HorizontalTextAlignment="Center"
                                    TextColor="{DynamicResource Text_light}" />
                             <Label Text="20"
+                                   x:Name="Demands_today_text"
                                    HorizontalTextAlignment="Center"
                                    TextColor="{DynamicResource Text_light}" />
                         </StackLayout>
@@ -84,6 +89,7 @@
                                    HorizontalTextAlignment="Center"
                                    TextColor="{DynamicResource Text_light}" />
                             <Label Text="20"
+                                   x:Name="Demands_accept_today_text"
                                    HorizontalTextAlignment="Center"
                                    TextColor="{DynamicResource Text_light}" />
                         </StackLayout>
@@ -97,9 +103,12 @@
                 <Picker Title="Сортировка"
                         TextColor="{DynamicResource Text_light}"
                         TitleColor="{DynamicResource Text_dark}"
-                        HorizontalOptions="FillAndExpand">
+                        HorizontalOptions="FillAndExpand"
+                        x:Name="Demand_sort"
+                        SelectedIndex="0"
+                        SelectedIndexChanged="Demand_sort_SelectedIndexChanged">
                     <Picker.Items>
-                        <x:String></x:String>
+                        <x:String>Не выбрано</x:String>
                         <x:String>Новые</x:String>
                         <x:String>В процессе</x:String>
                         <x:String>Выполнены</x:String>
@@ -107,8 +116,12 @@
                 </Picker>
                 <DatePicker
                     TextColor="{DynamicResource Text_light}"
+                    x:Name="Demand_date_picker"
+                    DateSelected="Demand_date_picker_DateSelected"
                     HorizontalOptions="FillAndExpand"/>
                 <Button Text="Все" 
+                        x:Name="Demands_all_btn"
+                        Clicked="Demands_all_btn_Clicked"
                         CornerRadius="4"
                        HorizontalOptions="FillAndExpand"
                         TextColor="{DynamicResource Text_light}"

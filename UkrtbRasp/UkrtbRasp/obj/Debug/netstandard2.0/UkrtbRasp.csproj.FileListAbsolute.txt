@@ -69,3 +69,4 @@ F:\Github\CRM_ukrtb\UkrtbRasp\UkrtbRasp\obj\Debug\netstandard2.0\UkrtbRasp.pdb
 F:\Github\CRM_ukrtb\UkrtbRasp\UkrtbRasp\obj\Debug\netstandard2.0\UkrtbRasp.csproj.AssemblyReference.cache
 F:\Github\CRM_ukrtb\UkrtbRasp\UkrtbRasp\obj\Debug\netstandard2.0\VC_main.xaml.g.cs
 F:\Github\CRM_ukrtb\UkrtbRasp\UkrtbRasp\obj\Debug\netstandard2.0\Demond_page.xaml.g.cs
+F:\Github\CRM_ukrtb\UkrtbRasp\UkrtbRasp\obj\Debug\netstandard2.0\Demand.xaml.g.cs

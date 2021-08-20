@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              x:Class="UkrtbRasp.Demond_page"
-             BackgroundColor="{DynamicResource Primary}">
+             BackgroundColor="{DynamicResource Primary}"
+             Appearing="ContentPage_Appearing">
     <ContentPage.Resources>
         <Style TargetType="Label">
             <Setter Property="TextColor"
@@ -27,33 +28,39 @@
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Дата:"
                                FontFamily="Montserrat_SemiBold.ttf"/>
-                        <Label Text="24.05.2021" />
+                        <Label Text="24.05.2021" 
+                               x:Name="Demand_date"/>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Статус:"
                                FontFamily="Montserrat_SemiBold.ttf" />
-                        <Label Text="Новый" />
+                        <Label Text="Новый"
+                               x:Name="Demand_status"/>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Препод:"
                                FontFamily="Montserrat_SemiBold.ttf" />
-                        <Label Text="Иванова Ангелина Алексеевна" />
+                        <Label Text="Иванова Ангелина Алексеевна"
+                               x:Name="Demand_prepod"/>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Кабинет:"
                                FontFamily="Montserrat_SemiBold.ttf" />
-                            <Label Text="303" />
+                            <Label Text="303"
+                               x:Name="Demand_cab"/>
                         </StackLayout>
                         
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Что сделать:"
                                FontFamily="Montserrat_SemiBold.ttf" />
-                        <Label Text=" Послать всех за кофе" />
+                        <Label Text=" Послать всех за кофе"
+                               x:Name="Demand_text"/>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Ответственный:"
                                FontFamily="Montserrat_SemiBold.ttf" />
-                        <Label Text="НИКОГО" />
+                        <Label Text="НИКОГО"
+                               x:Name="Demand_vc"/>
                     </StackLayout>
                 </StackLayout>
             </yummy:PancakeView>
@@ -63,6 +70,7 @@
                         BackgroundColor="{DynamicResource Secondary_dark}"
                         HorizontalOptions="FillAndExpand"/>
                 <Button Text="Принять"
+                        x:Name="Btn_accept"
                         TextColor="{DynamicResource Text_light}"
                         BackgroundColor="{DynamicResource Secondary}"
                         HorizontalOptions="FillAndExpand" />

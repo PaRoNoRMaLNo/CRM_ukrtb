@@ -25,6 +25,7 @@
                                        CornerRadius="0,15,0,15"
                                        HorizontalOptions="Start"
                                        VerticalOptions="Start"
+                                       x:Name="Status_color"
                                        Margin="0"
                                        Padding="20,5">
                         <Label Text="1"

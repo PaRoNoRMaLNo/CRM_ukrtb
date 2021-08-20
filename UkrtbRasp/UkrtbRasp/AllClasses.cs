@@ -48,7 +48,7 @@ namespace UkrtbRasp
     {
         public string prepod { get; set; }
         public string uuid { get; set; }
-       // public string Zoom { get; set; }
+        // public string Zoom { get; set; }
     }
 
     class Cab
@@ -66,5 +66,10 @@ namespace UkrtbRasp
         public string lessons { get; set; }
         public string teacher { get; set; }
         public string score { get; set; }
+    }
+    class Connect
+    {
+        public static string String { get; } = "server=mysql77.hostland.ru;userid=host1821757_manan;database=host1821757_ukrtbrasp;password=Id564876681;";
+       
     }
 }
