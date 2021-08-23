@@ -209,6 +209,11 @@
                  IconImageSource="demond"
                  Appearing="ContentPage_Appearing"
                  Title="Заявка">
+        <ContentPage.IconImageSource>
+            <OnPlatform x:TypeArguments="UriImageSource">
+                <On Platform="iOS"></On>
+            </OnPlatform>
+        </ContentPage.IconImageSource>
         <StackLayout>
             <Label Text="Заявка для ВЦ"
                    HorizontalOptions="Center"
