@@ -172,5 +172,10 @@ namespace UkrtbRasp
             }
             Demand_cab.SelectedIndex = 0;
         }
+
+        void Swipe_back_PanUpdated(System.Object sender, Xamarin.Forms.PanUpdatedEventArgs e)
+        {
+            this.Navigation.PopAsync();
+        }
     }
 }

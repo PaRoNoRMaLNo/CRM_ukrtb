@@ -26,11 +26,15 @@ namespace UkrtbRasp {
         private global::Xamarin.Forms.Button Stud_click;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
+        private global::Xamarin.Forms.Button VC_click;
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
         private void InitializeComponent() {
             global::Xamarin.Forms.Xaml.Extensions.LoadFromXaml(this, typeof(MainPage));
             Label_main = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Style>(this, "Label_main");
             Prepod_but = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Button>(this, "Prepod_but");
             Stud_click = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Button>(this, "Stud_click");
+            VC_click = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Button>(this, "VC_click");
         }
     }
 }

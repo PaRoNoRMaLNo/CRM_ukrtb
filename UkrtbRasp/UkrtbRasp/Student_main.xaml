@@ -28,6 +28,9 @@
                         Android="calen" />
         </ContentPage.IconImageSource>
         <StackLayout Margin="20,0">
+                <StackLayout.GestureRecognizers>
+                        <PanGestureRecognizer x:Name="Swipe_back" PanUpdated="Swipe_back_PanUpdated"/>
+                </StackLayout.GestureRecognizers>
             <Label Text="Расписание занятий"
                    FontSize="Medium"
                    FontFamily="Montserrat_SemiBold.ttf"
@@ -146,6 +149,11 @@
                                     iOS="rasp_ios"
                                     Android="calen" />
                     </ImageButton.Source>
+                        <ImageButton.Padding>
+                        <OnPlatform x:TypeArguments="Thickness"
+                                    iOS="0,10"
+                                    Android="20,0" />
+                    </ImageButton.Padding>
                 </ImageButton>
             </StackLayout>
             <yummy:PancakeView BackgroundColor="{DynamicResource Primary_light}"
@@ -210,6 +218,9 @@
                            CornerRadius="4">
             <StackLayout VerticalOptions="Start"
                          Margin="10">
+                    <StackLayout.GestureRecognizers>
+                        <PanGestureRecognizer PanUpdated="Swipe_back_PanUpdated"/>
+                </StackLayout.GestureRecognizers>
                 <Label Text="Расписание звонков (ПН-ПТ)"
                        Margin="0,5"
                        HorizontalOptions="CenterAndExpand" />
@@ -538,6 +549,9 @@
         <Grid>
             <StackLayout IsVisible="false"
                          x:Name="User_info_stack">
+                    <StackLayout.GestureRecognizers>
+                        <PanGestureRecognizer PanUpdated="Swipe_back_PanUpdated"/>
+                </StackLayout.GestureRecognizers>
                 <yummy:PancakeView BackgroundColor="{DynamicResource Primary_light}"
                                    CornerRadius="0">
                     <StackLayout Margin="20"

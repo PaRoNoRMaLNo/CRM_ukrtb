@@ -169,5 +169,10 @@ namespace UkrtbRasp
                 Demond_stack.Children.Add(item);
             }
         }
+
+        void Swipe_back_PanUpdated(System.Object sender, Xamarin.Forms.PanUpdatedEventArgs e)
+        {
+            this.Navigation.PopAsync();
+        }
     }
 }

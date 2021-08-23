@@ -401,5 +401,10 @@ namespace UkrtbRasp
             Student_in_app.Password = "";
             Student_in_app.Uuid = "";
         }
+
+        void Swipe_back_PanUpdated(System.Object sender, Xamarin.Forms.PanUpdatedEventArgs e)
+        {
+            this.Navigation.PopAsync();
+        }
     }
 }

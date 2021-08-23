@@ -15,6 +15,9 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
+                 <StackLayout.GestureRecognizers>
+                        <PanGestureRecognizer x:Name="Swipe_back" PanUpdated="Swipe_back_PanUpdated"/>
+                </StackLayout.GestureRecognizers>
             <yummy:PancakeView BackgroundColor="{DynamicResource Primary_light}">
                 <Label Text="Заявка"
                        HorizontalOptions="Center"
@@ -39,6 +42,7 @@
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Препод:"
+                               MaxLines="1"
                                FontFamily="Montserrat_SemiBold.ttf" />
                         <Label Text="Иванова Ангелина Алексеевна"
                                x:Name="Demand_prepod"/>
@@ -52,12 +56,14 @@
                         
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Что сделать:"
+                               MaxLines="1"
                                FontFamily="Montserrat_SemiBold.ttf" />
                         <Label Text=" Послать всех за кофе"
                                x:Name="Demand_text"/>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Ответственный:"
+                               MaxLines="1"
                                FontFamily="Montserrat_SemiBold.ttf" />
                         <Label Text="НИКОГО"
                                x:Name="Demand_vc"/>
@@ -66,6 +72,8 @@
             </yummy:PancakeView>
             <StackLayout Orientation="Horizontal" Margin="20,0">
                 <Button Text="Отмена"
+                        x:Name="Cancel_btn"
+                        Clicked="Cancel_btn_Clicked"
                         TextColor="{DynamicResource Text_light}"
                         BackgroundColor="{DynamicResource Secondary_dark}"
                         HorizontalOptions="FillAndExpand"/>

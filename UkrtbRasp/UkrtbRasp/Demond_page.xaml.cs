@@ -75,5 +75,15 @@ namespace UkrtbRasp
         {
             LoadDemand();
         }
+
+        void Swipe_back_PanUpdated(System.Object sender, Xamarin.Forms.PanUpdatedEventArgs e)
+        {
+            this.Navigation.PopAsync();
+        }
+
+        void Cancel_btn_Clicked(System.Object sender, System.EventArgs e)
+        {
+            this.Navigation.PopAsync();
+        }
     }
 }
