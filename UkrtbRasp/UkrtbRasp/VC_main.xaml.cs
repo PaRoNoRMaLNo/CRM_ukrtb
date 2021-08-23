@@ -78,7 +78,7 @@ namespace UkrtbRasp
                     return demands;
                 }
                 int a = Demand_sort.SelectedIndex;
-                MySqlCommand command = new MySqlCommand(@"SELECT * FROM `Demand`", connection);
+                MySqlCommand command = new MySqlCommand(@"SELECT * FROM `Demand` order by `Demand_date` DESC", connection);
                 MySqlDataReader reader = command.ExecuteReader();
                 if (reader.HasRows)
                 {
@@ -116,7 +116,7 @@ namespace UkrtbRasp
                 int a = Demand_sort.SelectedIndex;
                 string mouth = DateTime.Now.Month.ToString().Length == 1 ? ("0" + DateTime.Now.Month.ToString()) : DateTime.Now.Month.ToString();
                 string day = DateTime.Now.Day.ToString().Length == 1 ? ("0" + DateTime.Now.Day.ToString()) : DateTime.Now.Day.ToString();
-                MySqlCommand command = new MySqlCommand($@"SELECT DISTINCT (SELECT COUNT(Demand_id) FROM `Demand`),(SELECT COUNT(Demand_id) FROM `Demand` WHERE `Demand_status` = 2),(SELECT COUNT(Demand_id) FROM `Demand` where `Demand_date` like '2021-08-20%'),(SELECT COUNT(Demand_id) FROM `Demand` where `Demand_date` like '{DateTime.Now.Year}-{mouth}-{day}%' and Demand_status = 2) FROM `Demand`", connection);
+                MySqlCommand command = new MySqlCommand($@"SELECT DISTINCT (SELECT COUNT(Demand_id) FROM `Demand`),(SELECT COUNT(Demand_id) FROM `Demand` WHERE `Demand_status` = 2),(SELECT COUNT(Demand_id) FROM `Demand` where `Demand_date` like '{DateTime.Now.Year}-{mouth}-{day}%'),(SELECT COUNT(Demand_id) FROM `Demand` where `Demand_date` like '{DateTime.Now.Year}-{mouth}-{day}%' and Demand_status = 2) FROM `Demand`", connection);
                 MySqlDataReader reader = command.ExecuteReader();
                 if (reader.HasRows)
                 {

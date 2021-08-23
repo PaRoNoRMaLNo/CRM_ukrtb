@@ -207,6 +207,7 @@
 
     <ContentPage BackgroundColor="{DynamicResource Primary}"
                  IconImageSource="demond"
+                 Appearing="ContentPage_Appearing"
                  Title="Заявка">
         <StackLayout>
             <Label Text="Заявка для ВЦ"
@@ -223,26 +224,28 @@
                     <Label FontFamily="Montserrat.ttf"
                            TextColor="{DynamicResource Text_light}"
                            Text="ФИО" />
-                    <Editor Text="sdfsdfsdf"
+                    <Editor Text=""
+                            x:Name="Demand_fio"
                             TextColor="{DynamicResource Text_light}" />
                     <Label FontFamily="Montserrat.ttf"
                            TextColor="{DynamicResource Text_light}"
                            Text="Кабинет" />
-                    <Picker TextColor="{DynamicResource Text_light}">
-                        <Picker.Items>
-                            <x:String>201</x:String>
-                            <x:String>202</x:String>
-                            <x:String>203</x:String>
-                        </Picker.Items>
+                    <Picker TextColor="{DynamicResource Text_light}"
+                            x:Name="Demand_cab">
                     </Picker>
                     <Label FontFamily="Montserrat.ttf"
                            TextColor="{DynamicResource Text_light}"
                            Text="Что нужно сделать" />
                     <Editor VerticalOptions="EndAndExpand"
                             Text=""
+                            x:Name="Demand_text"
                             HeightRequest="150"
                             TextColor="{DynamicResource Text_light}" />
+                    <Label x:Name="Error_text"
+                           TextColor="Red" />
                     <Button Text="Отправить"
+                            x:Name="Demand_send"
+                            Clicked="Demand_send_Clicked"
                             FontFamily="Montserrat_SemiBold.ttf"
                             TextColor="{DynamicResource Text_light}"
                             BackgroundColor="{DynamicResource Secondary}" />

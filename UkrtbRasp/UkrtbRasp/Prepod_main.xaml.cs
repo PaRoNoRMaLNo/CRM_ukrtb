@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MySqlConnector;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -98,15 +99,78 @@ namespace UkrtbRasp
                     cabs = JsonConvert.DeserializeObject<List<Cab>>(json);
                     foreach (var item in cabs)
                     {
-                        if (item.cab != null) Prepod_or_group_picker.Items.Add(item.cab);
+                        if (item.cab != null)
+                        {
+                            Prepod_or_group_picker.Items.Add(item.cab);
+                        }
                     }
                     Prepod_or_group_picker.SelectedIndex = 0;
                     break;
 
                 default:
                     break;
-            }   
-           
+            }
+
+        }
+
+        private void Demand_send_Clicked(object sender, EventArgs e)
+        {
+            #region Date
+            string year, mounth, day, hour, min, sec;
+            DateTime dateTime = DateTime.Now;
+            year = dateTime.Year.ToString();
+            mounth = dateTime.Month.ToString();
+            mounth = mounth.Length == 1 ? "0" + mounth : mounth;
+            day = dateTime.Day.ToString();
+            day = day.Length == 1 ? "0" + day : day;
+            hour = dateTime.Hour.ToString();
+            hour = hour.Length == 1 ? "0" + hour : hour;
+            min = dateTime.Minute.ToString();
+            min = min.Length == 1 ? "0" + min : min;
+            sec = dateTime.Second.ToString();
+            sec = sec.Length == 1 ? "0" + sec : sec;
+            #endregion
+
+            if (Demand_fio.Text.Length >= 5 && Demand_cab.SelectedIndex != -1 && Demand_text.Text != "")
+            {
+                using (MySqlConnection connection = new MySqlConnection(Connect.String))
+                {
+                    try
+                    {
+                        connection.Open();
+                    }
+                    catch
+                    {
+                        return;
+                    }
+                    MySqlCommand command = new MySqlCommand($@"INSERT INTO `Demand` (`Demand_id`, `Demand_date`, `Demand_status`, `Demand_prepod`, `Demand_cab`, `Demand_text`) VALUES (NULL, '{year}-{mounth}-{day} {hour}:{min}:{sec}', b'0', '{Demand_fio.Text}', '{Demand_cab.SelectedItem}', '{Demand_text.Text}');", connection);
+                    command.ExecuteNonQuery();
+                    Error_text.Text = "Ваша заявка отправлена";
+                    Demand_fio.Text = "";
+                    Demand_text.Text = "";
+
+                }
+
+            }
+            else
+                Error_text.Text = "Ошибка проверьте данные";
+        }
+
+        private void ContentPage_Appearing(object sender, EventArgs e)
+        {
+            Demand_cab.Items.Clear();
+            var param = new NameValueCollection();
+            List<Cab> cabs = new List<Cab>();
+            var json = Post.GetJson("getCabs", param);
+            cabs = JsonConvert.DeserializeObject<List<Cab>>(json);
+            foreach (var item in cabs)
+            {
+                if (item.cab != null)
+                {
+                    Demand_cab.Items.Add(item.cab);
+                }
+            }
+            Demand_cab.SelectedIndex = 0;
         }
     }
 }
