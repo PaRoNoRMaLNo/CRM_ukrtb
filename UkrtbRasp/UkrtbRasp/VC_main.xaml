@@ -14,29 +14,31 @@
                     Value="{DynamicResource Text_light}" />
             <Setter Property="FontFamily"
                     Value="Montserrat.ttf" />
-            <!--<Setter Property="FontSize"
-                    Value="Body" />-->
+
         </Style>
     </TabbedPage.Resources>
-    <!--Pages can be added as references or inline-->
     <ContentPage Title="Заявки"
                  IconImageSource="demond"
                  Appearing="ContentPage_Appearing"
                  BackgroundColor="{DynamicResource Primary}">
+        <ContentPage.IconImageSource>
+            <OnPlatform x:TypeArguments="FileImageSource"
+                        iOS="demand_ios"
+                        Android="demond" />
+        </ContentPage.IconImageSource>
         <StackLayout>
             <yummy:PancakeView BackgroundColor="{DynamicResource Primary_light}">
-                <Label Text="Заявки преподавателей" 
+                <Label Text="Заявки преподавателей"
                        HorizontalOptions="Center"
                        VerticalOptions="Center"
                        Margin="20"
                        FontFamily="Montserrat_SemiBold.ttf"
-                       TextColor="{DynamicResource Text_light}"/>
+                       TextColor="{DynamicResource Text_light}" />
             </yummy:PancakeView>
             <StackLayout Orientation="Horizontal"
                          Margin="20,20,20,0">
-                <StackLayout
-                    HorizontalOptions="FillAndExpand"
-                    VerticalOptions="FillAndExpand">
+                <StackLayout HorizontalOptions="FillAndExpand"
+                             VerticalOptions="FillAndExpand">
                     <yummy:PancakeView BackgroundColor="{DynamicResource Primary_light}"
                                        CornerRadius="4"
                                        Padding="10">
@@ -97,9 +99,8 @@
                 </StackLayout>
             </StackLayout>
 
-            <StackLayout
-             Margin="20,0"
-                Orientation="Horizontal">
+            <StackLayout Margin="20,0"
+                         Orientation="Horizontal">
                 <Picker Title="Сортировка"
                         TextColor="{DynamicResource Text_light}"
                         TitleColor="{DynamicResource Text_dark}"
@@ -114,28 +115,27 @@
                         <x:String>Выполнены</x:String>
                     </Picker.Items>
                 </Picker>
-                <DatePicker
-                    TextColor="{DynamicResource Text_light}"
-                    x:Name="Demand_date_picker"
-                    DateSelected="Demand_date_picker_DateSelected"
-                    HorizontalOptions="FillAndExpand"/>
-                <Button Text="Все" 
+                <DatePicker TextColor="{DynamicResource Text_light}"
+                            x:Name="Demand_date_picker"
+                            DateSelected="Demand_date_picker_DateSelected"
+                            HorizontalOptions="FillAndExpand" />
+                <Button Text="Все"
                         x:Name="Demands_all_btn"
                         Clicked="Demands_all_btn_Clicked"
                         CornerRadius="4"
-                       HorizontalOptions="FillAndExpand"
+                        HorizontalOptions="FillAndExpand"
                         TextColor="{DynamicResource Text_light}"
-                        BackgroundColor="{DynamicResource Secondary}"/>
+                        BackgroundColor="{DynamicResource Secondary}" />
             </StackLayout>
             <ScrollView>
                 <StackLayout Margin="20,10"
                              x:Name="Demond_stack">
-                    
+
                 </StackLayout>
             </ScrollView>
 
         </StackLayout>
     </ContentPage>
     <ContentPage Title="Tab 2" />
-  <ContentPage Title="Tab 3" />
+    <ContentPage Title="Tab 3" />
 </TabbedPage>

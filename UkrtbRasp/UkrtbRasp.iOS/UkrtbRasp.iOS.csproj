@@ -141,41 +141,29 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="logo.png" />
-    <BundleResource Include="calendar.png">
-      <SubType>
-      </SubType>
-      <Generator>
-      </Generator>
-    </BundleResource>
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="outline_keyboard_arrow_down_white_24dp.png" />
+    <BundleResource Include="ball_ios.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="outline_keyboard_arrow_up_white_24dp.png" />
+    <BundleResource Include="cabs_ios.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="demond.png" />
+    <BundleResource Include="demand_ios.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="groups.png" />
+    <BundleResource Include="groups_ios.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="login.png" />
+    <BundleResource Include="login_ios.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="prepods.png" />
+    <BundleResource Include="prepods_ios.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="rasp.png" />
+    <BundleResource Include="arrow_up_ios.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="ball.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="cabs.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="calen.png" />
+    <BundleResource Include="rasp_ios.png" />
   </ItemGroup>
 </Project>

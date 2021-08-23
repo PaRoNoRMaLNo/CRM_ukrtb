@@ -20,9 +20,13 @@
         </Style>
     </TabbedPage.Resources>
     <ContentPage BackgroundColor="{DynamicResource Primary}"
-                 IconImageSource="calen"
                  x:Name="Prepod_rasp"
                  Title="Расписание">
+        <ContentPage.IconImageSource>
+            <OnPlatform x:TypeArguments="FileImageSource"
+                        iOS="rasp_ios"
+                        Android="calen" />
+        </ContentPage.IconImageSource>
         <StackLayout Margin="20,0">
             <Label Text="Расписание занятий"
                    FontSize="Medium"
@@ -206,13 +210,12 @@
     </ContentPage>
 
     <ContentPage BackgroundColor="{DynamicResource Primary}"
-                 IconImageSource="demond"
                  Appearing="ContentPage_Appearing"
                  Title="Заявка">
         <ContentPage.IconImageSource>
-            <OnPlatform x:TypeArguments="UriImageSource">
-                <On Platform="iOS"></On>
-            </OnPlatform>
+            <OnPlatform x:TypeArguments="FileImageSource"
+                        iOS="demand_ios"
+                        Android ="demond"/>
         </ContentPage.IconImageSource>
         <StackLayout>
             <Label Text="Заявка для ВЦ"
@@ -259,8 +262,12 @@
         </StackLayout>
     </ContentPage>
     <ContentPage BackgroundColor="{DynamicResource Primary}"
-                 IconImageSource="ball"
                  Title="Звонки">
+        <ContentPage.IconImageSource>
+            <OnPlatform x:TypeArguments="FileImageSource"
+                        iOS="ball_ios"
+                        Android="ball" />
+        </ContentPage.IconImageSource>
         <yummy:PancakeView Margin="20"
                            BackgroundColor="{DynamicResource Primary_light}"
                            VerticalOptions="Start"
