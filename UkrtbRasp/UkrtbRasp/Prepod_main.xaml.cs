@@ -175,7 +175,69 @@ namespace UkrtbRasp
 
         void Swipe_back_PanUpdated(System.Object sender, Xamarin.Forms.PanUpdatedEventArgs e)
         {
-            this.Navigation.PopAsync();
+            if (Device.RuntimePlatform == Device.iOS)
+                this.Navigation.PopAsync();
+        }
+
+        private void Load_lessons()
+        {
+            if (Prepod_or_group_picker.Items.Count != 0)
+            {
+                var param = new NameValueCollection();
+                List<Lessons> lesons = new List<Lessons>();
+
+                switch (What_check)
+                {
+                    case 1:
+                        param["teacher"] = Prepod_or_group_picker.SelectedItem.ToString();
+                        param["date"] = $"{Date_hide.Date.Year}-{Date_hide.Date.Month}-{Date_hide.Date.Day}";
+                        var json = Post.GetJson("getRaspTeacher", param);
+                        lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
+                        break;
+                    case 2:
+                        param = new NameValueCollection();
+                        param["group"] = Prepod_or_group_picker.SelectedItem.ToString();
+                        param["date"] = $"{Date_hide.Date.Year}-{Date_hide.Date.Month}-{Date_hide.Date.Day}";
+                        json = Post.GetJson("getRaspGroup", param);
+                        lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
+                        break;
+                    case 3:
+                        param = new NameValueCollection();
+                        param["cab"] = Prepod_or_group_picker.SelectedItem.ToString();
+                        param["date"] = $"{Date_hide.Date.Year}-{Date_hide.Date.Month}-{Date_hide.Date.Day}";
+                        json = Post.GetJson("getRaspCab", param);
+                        lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
+                        break;
+                    default:
+                        break;
+                }
+
+                Lessons_stack.Children.Clear();
+                if (lesons != null)
+                    foreach (var item in lesons)
+                    {
+                        Lesson lesson = new Lesson();
+                        lesson.FindByName<Label>("Number").Text = item.num;
+                        lesson.FindByName<Label>("Cab").Text = item.cab;
+                        lesson.FindByName<Label>("Name").Text = item.lesson;
+                        lesson.FindByName<Label>("Prepod_or_group").Text = What_check == 1 ? item.group : What_check == 2 ? item.teacher : item.group + " " + item.teacher;
+                        Lessons_stack.Children.Add(lesson);
+                    }
+                else
+                {
+                    Lessons_stack.Children.Add(new Label { Text = "Расписание отсутствует" });
+                }
+            }
+        }
+
+        private void Date_hide_DateSelected(object sender, DateChangedEventArgs e)
+        {
+            Load_lessons();
+        }
+
+        private void Prepod_or_group_picker_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Load_lessons();
         }
     }
 }

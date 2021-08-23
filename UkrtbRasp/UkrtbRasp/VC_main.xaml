@@ -27,9 +27,10 @@
                         Android="demond" />
         </ContentPage.IconImageSource>
         <StackLayout>
-                <StackLayout.GestureRecognizers>
-                        <PanGestureRecognizer x:Name="Swipe_back" PanUpdated="Swipe_back_PanUpdated"/>
-                </StackLayout.GestureRecognizers>
+            <StackLayout.GestureRecognizers>
+                <PanGestureRecognizer x:Name="Swipe_back"
+                                      PanUpdated="Swipe_back_PanUpdated" />
+            </StackLayout.GestureRecognizers>
             <yummy:PancakeView BackgroundColor="{DynamicResource Primary_light}">
                 <Label Text="Заявки преподавателей"
                        HorizontalOptions="Center"
@@ -108,42 +109,40 @@
                                    TextColor="{DynamicResource Text_light}" />
                         </StackLayout>
                     </yummy:PancakeView>
-                       
+
                 </StackLayout>
             </StackLayout>
 
             <StackLayout Margin="20,0"
                          Orientation="Horizontal">
-                        <Picker Title="Сортировка"
+                <Picker Title="Сортировка"
                         TextColor="{DynamicResource Text_light}"
                         TitleColor="{DynamicResource Text_dark}"
                         HorizontalOptions="FillAndExpand"
-                                VerticalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand"
                         BackgroundColor="{DynamicResource Primary}"
                         x:Name="Demand_sort"
-
-
                         SelectedIndex="0"
                         SelectedIndexChanged="Demand_sort_SelectedIndexChanged">
-                            <Picker.Items>
-                                <x:String>Не выбрано</x:String>
-                                <x:String>Новые</x:String>
-                                <x:String>В процессе</x:String>
-                                <x:String>Выполнены</x:String>
-                            </Picker.Items>
+                    <Picker.Items>
+                        <x:String>Не выбрано</x:String>
+                        <x:String>Новые</x:String>
+                        <x:String>В процессе</x:String>
+                        <x:String>Выполнены</x:String>
+                    </Picker.Items>
                 </Picker>
-               <DatePicker TextColor="{DynamicResource Text_light}"
-                                    x:Name="Demand_date_picker"
-                                    BackgroundColor="{DynamicResource Primary}"
-                                    DateSelected="Demand_date_picker_DateSelected"
-                                    HorizontalOptions="FillAndExpand" />
-                      <Button Text="Все"
-                                        x:Name="Demands_all_btn"
-                                        Clicked="Demands_all_btn_Clicked"
-                                        CornerRadius="4"
-                                        HorizontalOptions="FillAndExpand"
-                                        TextColor="{DynamicResource Text_light}"
-                                        BackgroundColor="{DynamicResource Secondary}" />
+                <DatePicker TextColor="{DynamicResource Text_light}"
+                            x:Name="Demand_date_picker"
+                            BackgroundColor="{DynamicResource Primary}"
+                            DateSelected="Demand_date_picker_DateSelected"
+                            HorizontalOptions="FillAndExpand" />
+                <Button Text="Все"
+                        x:Name="Demands_all_btn"
+                        Clicked="Demands_all_btn_Clicked"
+                        CornerRadius="4"
+                        HorizontalOptions="FillAndExpand"
+                        TextColor="{DynamicResource Text_light}"
+                        BackgroundColor="{DynamicResource Secondary}" />
             </StackLayout>
             <ScrollView>
                 <StackLayout Margin="20,10"

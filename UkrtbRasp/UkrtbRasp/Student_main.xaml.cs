@@ -25,7 +25,7 @@ namespace UkrtbRasp
             Prepod_isCheck = true;
             DateTime dateTim = DateTime.Now;
             Select_date_today.Text = $"{dateTim.Day}.{dateTim.Month}";
-            dateTim =  dateTim.AddDays(1);
+            dateTim = dateTim.AddDays(1);
             Select_date_tomorow.Text = $"{dateTim.Day}.{dateTim.Month}";
             dateTim = dateTim.AddDays(1);
             Select_date_plustwo.Text = $"{dateTim.Day}.{dateTim.Month}";
@@ -381,7 +381,7 @@ namespace UkrtbRasp
 
         private void OpenSettings_Tapped(object sender, EventArgs e)
         {
-            if(Stack_settings.IsVisible == false)
+            if (Stack_settings.IsVisible == false)
             {
                 Settings_arrow.Source = "outline_keyboard_arrow_up_white_24dp.png";
                 Stack_settings.IsVisible = true;
@@ -404,7 +404,8 @@ namespace UkrtbRasp
 
         void Swipe_back_PanUpdated(System.Object sender, Xamarin.Forms.PanUpdatedEventArgs e)
         {
-            this.Navigation.PopAsync();
+            if (Device.RuntimePlatform == Device.iOS)
+                this.Navigation.PopAsync();
         }
     }
 }

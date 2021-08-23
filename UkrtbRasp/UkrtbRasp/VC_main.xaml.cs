@@ -172,7 +172,8 @@ namespace UkrtbRasp
 
         void Swipe_back_PanUpdated(System.Object sender, Xamarin.Forms.PanUpdatedEventArgs e)
         {
-            this.Navigation.PopAsync();
+            if (Device.RuntimePlatform == Device.iOS)
+                this.Navigation.PopAsync();
         }
     }
 }

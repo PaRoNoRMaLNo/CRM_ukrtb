@@ -11,9 +11,13 @@
                     Value="Montserrat.ttf" />
         </Style>
     </ContentPage.Resources>
-    <ContentPage.Content >
+    <ContentPage.Content>
         <ScrollView>
             <StackLayout BackgroundColor="{DynamicResource Primary}">
+                <StackLayout.GestureRecognizers>
+                    <PanGestureRecognizer x:Name="Swipe_back"
+                                          PanUpdated="Swipe_back_PanUpdated" />
+                </StackLayout.GestureRecognizers>
                 <yummy:PancakeView BackgroundColor="{DynamicResource Primary_light}"
                                    CornerRadius="0">
 
@@ -150,20 +154,19 @@
                                TextColor="{DynamicResource Text_light}" />
                         <StackLayout Orientation="Horizontal">
                             <Label Text="Укажите период"
-                                   
                                    VerticalOptions="CenterAndExpand"
                                    FontFamily="Montserrat_SemiBold.ttf"
-                                   TextColor="{DynamicResource Text_dark}"/>
+                                   TextColor="{DynamicResource Text_dark}" />
                             <DatePicker x:Name="Spravka_type3_edustart"
                                         MinimumDate="10.06.2010"
                                         MaximumDate="10.08.2050"
-                                TextColor="{DynamicResource Text_light}"
-                                HorizontalOptions="StartAndExpand"/>
+                                        TextColor="{DynamicResource Text_light}"
+                                        HorizontalOptions="StartAndExpand" />
                             <DatePicker TextColor="{DynamicResource Text_light}"
                                         MinimumDate="10.06.2010"
                                         MaximumDate="10.08.2050"
                                         x:Name="Spravka_type3_eduend"
-                                        HorizontalOptions="EndAndExpand"/>
+                                        HorizontalOptions="EndAndExpand" />
                         </StackLayout>
                         <Entry Placeholder="Email (не обязательно)"
                                x:Name="Spravka_type3_email"

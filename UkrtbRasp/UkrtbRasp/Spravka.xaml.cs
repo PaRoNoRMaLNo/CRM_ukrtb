@@ -86,5 +86,11 @@ namespace UkrtbRasp
                 //var json = Post.GetJson("setReference", param);
             }
         }
+
+        private void Swipe_back_PanUpdated(object sender, PanUpdatedEventArgs e)
+        {
+            if (Device.RuntimePlatform == Device.iOS)
+                this.Navigation.PopAsync();
+        }
     }
 }

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              x:Class="UkrtbRasp.Demand">
@@ -40,7 +40,7 @@
                            Margin="10,0"
                            FontFamily="Montserrat_SemiBold.ttf"
                            HorizontalOptions="EndAndExpand" />
-                  
+
                 </StackLayout>
                 <Label Text="МДК. Разработка программных модулей"
                        FontFamily="Montserrat.ttf"

@@ -15,9 +15,10 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
-                 <StackLayout.GestureRecognizers>
-                        <PanGestureRecognizer x:Name="Swipe_back" PanUpdated="Swipe_back_PanUpdated"/>
-                </StackLayout.GestureRecognizers>
+            <StackLayout.GestureRecognizers>
+                <PanGestureRecognizer x:Name="Swipe_back"
+                                      PanUpdated="Swipe_back_PanUpdated" />
+            </StackLayout.GestureRecognizers>
             <yummy:PancakeView BackgroundColor="{DynamicResource Primary_light}">
                 <Label Text="Заявка"
                        HorizontalOptions="Center"
@@ -30,53 +31,54 @@
                 <StackLayout Padding="10">
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Дата:"
-                               FontFamily="Montserrat_SemiBold.ttf"/>
-                        <Label Text="24.05.2021" 
-                               x:Name="Demand_date"/>
+                               FontFamily="Montserrat_SemiBold.ttf" />
+                        <Label Text="24.05.2021"
+                               x:Name="Demand_date" />
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Статус:"
                                FontFamily="Montserrat_SemiBold.ttf" />
                         <Label Text="Новый"
-                               x:Name="Demand_status"/>
+                               x:Name="Demand_status" />
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Препод:"
                                MaxLines="1"
                                FontFamily="Montserrat_SemiBold.ttf" />
                         <Label Text="Иванова Ангелина Алексеевна"
-                               x:Name="Demand_prepod"/>
+                               x:Name="Demand_prepod" />
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Кабинет:"
                                FontFamily="Montserrat_SemiBold.ttf" />
-                            <Label Text="303"
-                               x:Name="Demand_cab"/>
-                        </StackLayout>
-                        
+                        <Label Text="303"
+                               x:Name="Demand_cab" />
+                    </StackLayout>
+
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Что сделать:"
                                MaxLines="1"
                                FontFamily="Montserrat_SemiBold.ttf" />
                         <Label Text=" Послать всех за кофе"
-                               x:Name="Demand_text"/>
+                               x:Name="Demand_text" />
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Ответственный:"
                                MaxLines="1"
                                FontFamily="Montserrat_SemiBold.ttf" />
                         <Label Text="НИКОГО"
-                               x:Name="Demand_vc"/>
+                               x:Name="Demand_vc" />
                     </StackLayout>
                 </StackLayout>
             </yummy:PancakeView>
-            <StackLayout Orientation="Horizontal" Margin="20,0">
+            <StackLayout Orientation="Horizontal"
+                         Margin="20,0">
                 <Button Text="Отмена"
                         x:Name="Cancel_btn"
                         Clicked="Cancel_btn_Clicked"
                         TextColor="{DynamicResource Text_light}"
                         BackgroundColor="{DynamicResource Secondary_dark}"
-                        HorizontalOptions="FillAndExpand"/>
+                        HorizontalOptions="FillAndExpand" />
                 <Button Text="Принять"
                         x:Name="Btn_accept"
                         TextColor="{DynamicResource Text_light}"
