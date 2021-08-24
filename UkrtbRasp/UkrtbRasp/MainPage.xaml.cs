@@ -16,6 +16,17 @@ namespace UkrtbRasp
 
             NavigationPage.SetHasNavigationBar(this, false);
         }
+        public MainPage(string role)
+        {
+            InitializeComponent();
+            if (role == "prepod")
+            {
+                VC_click.IsEnabled = false;
+            }
+            
+
+            NavigationPage.SetHasNavigationBar(this, false);
+        }
 
         async void Prepod_but_Clicked(System.Object sender, System.EventArgs e)
         {

@@ -15,8 +15,6 @@
                     Value="{DynamicResource Text_light}" />
             <Setter Property="FontFamily"
                     Value="Montserrat.ttf" />
-            <!--<Setter Property="FontSize"
-                    Value="Body" />-->
         </Style>
     </TabbedPage.Resources>
     <ContentPage BackgroundColor="{DynamicResource Primary}"
@@ -28,10 +26,6 @@
                         Android="calen" />
         </ContentPage.IconImageSource>
         <StackLayout Margin="20,0">
-            <StackLayout.GestureRecognizers>
-                <PanGestureRecognizer x:Name="Swipe_back"
-                                      PanUpdated="Swipe_back_PanUpdated" />
-            </StackLayout.GestureRecognizers>
             <Label Text="Расписание занятий"
                    FontSize="Medium"
                    FontFamily="Montserrat_SemiBold.ttf"
@@ -155,8 +149,7 @@
                              HeightRequest="40"
                              Clicked="Open_select_date_Clicked"
                              x:Name="Open_select_date"
-                             HorizontalOptions="FillAndExpand"
-                             Padding="20,0">
+                             HorizontalOptions="FillAndExpand">
                     <ImageButton.Source>
                         <OnPlatform x:TypeArguments="FileImageSource"
                                     iOS="rasp_ios"
@@ -199,9 +192,6 @@
                         Android="demond" />
         </ContentPage.IconImageSource>
         <StackLayout>
-            <StackLayout.GestureRecognizers>
-                <PanGestureRecognizer PanUpdated="Swipe_back_PanUpdated" />
-            </StackLayout.GestureRecognizers>
             <Label Text="Заявка для ВЦ"
                    HorizontalOptions="Center"
                    TextColor="{DynamicResource Text_light}"
@@ -261,9 +251,6 @@
                            CornerRadius="4">
             <StackLayout VerticalOptions="Start"
                          Margin="10">
-                <StackLayout.GestureRecognizers>
-                    <PanGestureRecognizer PanUpdated="Swipe_back_PanUpdated" />
-                </StackLayout.GestureRecognizers>
                 <Label Text="Расписание звонков (ПН-ПТ)"
                        Margin="0,5"
                        HorizontalOptions="CenterAndExpand" />

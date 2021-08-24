@@ -15,6 +15,11 @@ namespace UkrtbRasp
         public static string Uuid = "";
     }
 
+    class VC_in_app
+    {
+        public static string VC_id { get; set; }
+        public static string VC_fio { get; set; }
+    }
     class Lessons
     {
         public string num { get; set; }

@@ -28,10 +28,6 @@
                         Android="calen" />
         </ContentPage.IconImageSource>
         <StackLayout Margin="20,0">
-            <StackLayout.GestureRecognizers>
-                <PanGestureRecognizer x:Name="Swipe_back"
-                                      PanUpdated="Swipe_back_PanUpdated" />
-            </StackLayout.GestureRecognizers>
             <Label Text="Расписание занятий"
                    FontSize="Medium"
                    FontFamily="Montserrat_SemiBold.ttf"
@@ -143,8 +139,7 @@
                              HeightRequest="40"
                              Clicked="Open_select_date_Clicked"
                              x:Name="Open_select_date"
-                             HorizontalOptions="FillAndExpand"
-                             Padding="20,0">
+                             HorizontalOptions="FillAndExpand">
                     <ImageButton.Source>
                         <OnPlatform x:TypeArguments="FileImageSource"
                                     iOS="rasp_ios"
@@ -172,36 +167,7 @@
             </yummy:PancakeView>
             <ScrollView Margin="0,10">
                 <StackLayout x:Name="Lessons_stack">
-                    <!--<yummy:PancakeView BackgroundColor="{DynamicResource Primary_light}"
-                                       CornerRadius="4"
-                                       Padding="0,10">
-                        <yummy:PancakeView.BackgroundGradientStops>
-                            <yummy:GradientStopCollection>
-                                <yummy:GradientStop Color="#242529"
-                                                    Offset="0" />
-                                <yummy:GradientStop Color="#121212"
-                                                    Offset="1" />
-                            </yummy:GradientStopCollection>
-                        </yummy:PancakeView.BackgroundGradientStops>
-                        <StackLayout>
-                            <StackLayout Orientation="Horizontal">
-                                <yummy:PancakeView BackgroundColor="{DynamicResource Secondary_dark}"
-                                                   CornerRadius="0,15,0,15"
-                                                   HorizontalOptions="Start"
-                                                   VerticalOptions="Start"
-                                                   Margin="0"
-                                                   Padding="20,5">
-                                    <Label Text="1"
-                                           FontFamily="Montserrat_SemiBold.ttf"
-                                           TextColor="{DynamicResource Text_light}" />
-                                </yummy:PancakeView>
-                                <Label Text="303"
-                                       TextColor="{DynamicResource Text_light}"
-                                       VerticalOptions="CenterAndExpand"
-                                       Margin="10,0"
-                                       FontFamily="Montserrat_SemiBold.ttf"
-                                       HorizontalOptions="EndAndExpand" />
-                                -->
+                  
                 </StackLayout>
             </ScrollView>
         </StackLayout>
@@ -219,9 +185,6 @@
                            CornerRadius="4">
             <StackLayout VerticalOptions="Start"
                          Margin="10">
-                <StackLayout.GestureRecognizers>
-                    <PanGestureRecognizer PanUpdated="Swipe_back_PanUpdated" />
-                </StackLayout.GestureRecognizers>
                 <Label Text="Расписание звонков (ПН-ПТ)"
                        Margin="0,5"
                        HorizontalOptions="CenterAndExpand" />
@@ -550,9 +513,6 @@
         <Grid>
             <StackLayout IsVisible="false"
                          x:Name="User_info_stack">
-                <StackLayout.GestureRecognizers>
-                    <PanGestureRecognizer PanUpdated="Swipe_back_PanUpdated" />
-                </StackLayout.GestureRecognizers>
                 <yummy:PancakeView BackgroundColor="{DynamicResource Primary_light}"
                                    CornerRadius="0">
                     <StackLayout Margin="20"

@@ -1,5 +1,6 @@
 ﻿using MySqlConnector;
 using Newtonsoft.Json;
+using Plugin.Settings;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -21,7 +22,23 @@ namespace UkrtbRasp
             Select_date_tomorow.Text = $"{dateTim.Day}.{dateTim.Month}";
             dateTim = dateTim.AddDays(1);
             Select_date_plustwo.Text = $"{dateTim.Day}.{dateTim.Month}";
+            int a = CrossSettings.Current.GetValueOrDefault("what_check", 0);
+            switch (CrossSettings.Current.GetValueOrDefault("type_check",""))
+            {
+                case "0":
+                    What_check = 1;
+                    break;
+                case "1":
+                    What_check = 2;
+                    break;
+                case "2":
+                    What_check = 3;
+                    break;
+                default:
+                    break;
+            }
             Load_data();
+            Prepod_or_group_picker.SelectedIndex = a;
         }
 
         void Clear_but()
@@ -50,18 +67,21 @@ namespace UkrtbRasp
         private void Prep_tap_Tapped(object sender, EventArgs e)
         {
             What_check = 1;
+            CrossSettings.Current.AddOrUpdateValue("type_check","0");
             Load_data();
         }
 
         private void Group_tap_Tapped(object sender, EventArgs e)
         {
             What_check = 2;
+            CrossSettings.Current.AddOrUpdateValue("type_check", "1");
             Load_data();
         }
 
         private void Cab_tap_Tapped(object sender, EventArgs e)
         {
             What_check = 3;
+            CrossSettings.Current.AddOrUpdateValue("type_check", "2");
             Load_data();
         }
         private void Load_data()
@@ -237,6 +257,7 @@ namespace UkrtbRasp
 
         private void Prepod_or_group_picker_SelectedIndexChanged(object sender, EventArgs e)
         {
+            CrossSettings.Current.AddOrUpdateValue("what_check", Prepod_or_group_picker.SelectedIndex);
             Load_lessons();
         }
     }

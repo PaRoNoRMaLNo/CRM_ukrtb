@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Plugin.Settings;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -29,7 +30,23 @@ namespace UkrtbRasp
             Select_date_tomorow.Text = $"{dateTim.Day}.{dateTim.Month}";
             dateTim = dateTim.AddDays(1);
             Select_date_plustwo.Text = $"{dateTim.Day}.{dateTim.Month}";
+            int a = CrossSettings.Current.GetValueOrDefault("what_check", 0);
+            switch (CrossSettings.Current.GetValueOrDefault("type_check", ""))
+            {
+                case "0":
+                    Prepod_isCheck = true;
+                    break;
+                case "1":
+                    Prepod_isCheck = false;
+                    break;
+                default:
+                    Prepod_isCheck = true;  
+                    break;
+            }
             Load_data();
+            Prepod_or_group_picker.SelectedIndex = a;
+            User_login.Text = CrossSettings.Current.GetValueOrDefault("user_login", "");
+            User_password.Text = CrossSettings.Current.GetValueOrDefault("user_password", "");
         }
         void Clear_but()
         {
@@ -135,6 +152,7 @@ namespace UkrtbRasp
         private void Prepod_tap_Tapped(object sender, EventArgs e)
         {
             Prepod_isCheck = true;
+            CrossSettings.Current.AddOrUpdateValue("type_check", "0");
             Prepod_pankake.BackgroundColor = Color.FromHex("#027ff6");
             Group_pankake.BackgroundColor = Color.FromHex("#004c8c");
             Load_data();
@@ -143,6 +161,7 @@ namespace UkrtbRasp
         private void Group_tap_Tapped(object sender, EventArgs e)
         {
             Prepod_isCheck = false;
+            CrossSettings.Current.AddOrUpdateValue("type_check", "1");
             Group_pankake.BackgroundColor = Color.FromHex("#027ff6");
             Prepod_pankake.BackgroundColor = Color.FromHex("#004c8c");
             Load_data();
@@ -150,6 +169,7 @@ namespace UkrtbRasp
 
         private void Prepod_or_group_picker_SelectedIndexChanged(object sender, EventArgs e)
         {
+            CrossSettings.Current.AddOrUpdateValue("what_check", Prepod_or_group_picker.SelectedIndex);
             Load_lessons();
         }
 
@@ -186,6 +206,8 @@ namespace UkrtbRasp
                     Load_period_lessons();
                     Login_stack.IsVisible = false;
                     User_info_stack.IsVisible = true;
+                    CrossSettings.Current.AddOrUpdateValue("user_login", User_login.Text);
+                    CrossSettings.Current.AddOrUpdateValue("user_password", User_password.Text);
                 }
 
             }
