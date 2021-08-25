@@ -174,7 +174,7 @@
                 </ScrollView>
             </StackLayout>
             <forms:AnimationView x:Name="anim"
-                                 Animation="stud.load.json"
+                                 Animation="studload.json"
                                  AutoPlay="True"
                                  IsVisible="false"
                                  VerticalOptions="Center"

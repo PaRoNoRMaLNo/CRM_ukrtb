@@ -149,7 +149,7 @@
 
             </StackLayout>
             <forms:AnimationView x:Name="anim"
-                                 Animation="vc.load.json"
+                                 Animation="vcload.json"
                                  AutoPlay="True"
                                  IsVisible="false"
                                  VerticalOptions="Center"
@@ -322,7 +322,7 @@
                 </ScrollView>
             </StackLayout>
             <forms:AnimationView x:Name="anim_rasp"
-                                 Animation="vc.load.json"
+                                 Animation="vcload.json"
                                  AutoPlay="True"
                                  IsVisible="false"
                                  VerticalOptions="Center"
@@ -354,7 +354,7 @@
                 </ScrollView>
             </StackLayout>
             <forms:AnimationView x:Name="anim_my_demand"
-                                 Animation="vc.load.json"
+                                 Animation="vcload.json"
                                  AutoPlay="True"
                                  IsVisible="false"
                                  VerticalOptions="Center"
