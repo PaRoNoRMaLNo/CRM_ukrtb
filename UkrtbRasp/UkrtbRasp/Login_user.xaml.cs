@@ -28,7 +28,7 @@ namespace UkrtbRasp
                 (Application.Current).MainPage = new NavigationPage(new Prepod_main());
 
             }
-            else 
+            else
             {
                 using (MySqlConnection connection = new MySqlConnection(Connect.String))
                 {
@@ -50,6 +50,8 @@ namespace UkrtbRasp
                             VC_in_app.VC_fio = reader[1].ToString();
                         }
                         CrossSettings.Current.AddOrUpdateValue("role", "vc");
+                        CrossSettings.Current.AddOrUpdateValue("VC_id", VC_in_app.VC_id);
+                        CrossSettings.Current.AddOrUpdateValue("VC_fio", VC_in_app.VC_fio);
                         (Application.Current).MainPage = new NavigationPage(new VC_main());
                     }
                     else
@@ -58,7 +60,7 @@ namespace UkrtbRasp
                         Error_text.Text = "Неверные данные";
                     }
                 }
-                
+
             }
         }
 

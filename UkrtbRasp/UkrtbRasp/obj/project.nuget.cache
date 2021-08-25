@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "YeFgJi0+ts78quPi15uQ42bCRBJq9VYyKYjqJWY4yTnrTcAuSnR1HrQ8E5H/M1+h6Oe4PhZi3iPyZlrbsmYn1A==",
+  "dgSpecHash": "QjzVYSKiPotE4FA7DlYO1Iy0Tt6VhDUeyuAOczhrf1CyKGyaMT177p7RrcjKcvJVjmj6y/NdnJ7YfccQgqZTVw==",
   "success": true,
   "projectFilePath": "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp\\UkrtbRasp.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\1\\.nuget\\packages\\com.airbnb.xamarin.forms.lottie\\4.0.10\\com.airbnb.xamarin.forms.lottie.4.0.10.nupkg.sha512",
     "C:\\Users\\1\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\1\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "C:\\Users\\1\\.nuget\\packages\\mysqlconnector\\1.3.11\\mysqlconnector.1.3.11.nupkg.sha512",

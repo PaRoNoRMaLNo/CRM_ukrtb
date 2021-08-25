@@ -13,7 +13,8 @@ namespace UkrtbRasp
     public partial class Demand : ContentView
     {
         public string Status;
-        public string Demand_id ;
+        public string Demand_id;
+        public string Demand_vc_id;
         public Demand()
         {
             InitializeComponent();
@@ -21,9 +22,18 @@ namespace UkrtbRasp
 
         private void Demand_tap_Tapped(object sender, EventArgs e)
         {
-            Demond_page demond_Page = new Demond_page();
-            demond_Page.Demand_id = Demand_id;
-            Navigation.PushAsync(demond_Page);
+            if (Demand_vc_id == null)
+            {
+                Demond_page demond_Page = new Demond_page();
+                demond_Page.Demand_id = Demand_id;
+                Navigation.PushAsync(demond_Page);
+            }
+            else
+            {
+                Demond_page demond_Page = new Demond_page(true);
+                demond_Page.Demand_id = Demand_id;
+                Navigation.PushAsync(demond_Page);
+            }
         }
     }
 }

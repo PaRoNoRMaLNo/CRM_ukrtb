@@ -4,6 +4,7 @@ using Plugin.Settings;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
@@ -23,7 +24,7 @@ namespace UkrtbRasp
             dateTim = dateTim.AddDays(1);
             Select_date_plustwo.Text = $"{dateTim.Day}.{dateTim.Month}";
             int a = CrossSettings.Current.GetValueOrDefault("what_check", 0);
-            switch (CrossSettings.Current.GetValueOrDefault("type_check",""))
+            switch (CrossSettings.Current.GetValueOrDefault("type_check", ""))
             {
                 case "0":
                     What_check = 1;
@@ -37,8 +38,8 @@ namespace UkrtbRasp
                 default:
                     break;
             }
-            Load_data();
-            Prepod_or_group_picker.SelectedIndex = a;
+            Load_data(a);
+            //Prepod_or_group_picker.SelectedIndex = a;
         }
 
         void Clear_but()
@@ -67,26 +68,29 @@ namespace UkrtbRasp
         private void Prep_tap_Tapped(object sender, EventArgs e)
         {
             What_check = 1;
-            CrossSettings.Current.AddOrUpdateValue("type_check","0");
-            Load_data();
+            CrossSettings.Current.AddOrUpdateValue("type_check", "0");
+            Load_data(0);
         }
 
         private void Group_tap_Tapped(object sender, EventArgs e)
         {
             What_check = 2;
             CrossSettings.Current.AddOrUpdateValue("type_check", "1");
-            Load_data();
+            Load_data(0);
         }
 
         private void Cab_tap_Tapped(object sender, EventArgs e)
         {
             What_check = 3;
             CrossSettings.Current.AddOrUpdateValue("type_check", "2");
-            Load_data();
+            Load_data(0);
         }
-        private void Load_data()
+
+
+        private List<string> LoadDataASync()
         {
-            Prepod_or_group_picker.Items.Clear();
+            // Prepod_or_group_picker.Items.Clear();
+            List<string> items = new List<string>();
             var param = new NameValueCollection();
             switch (What_check)
             {
@@ -97,9 +101,9 @@ namespace UkrtbRasp
 
                     foreach (var item in teachers)
                     {
-                        if (item.prepod != null) Prepod_or_group_picker.Items.Add(item.prepod);
+                        if (item.prepod != null) items.Add(item.prepod);/* Prepod_or_group_picker.Items.Add(item.prepod);*/
                     }
-                    Prepod_or_group_picker.SelectedIndex = 0;
+                    //Prepod_or_group_picker.SelectedIndex = 0;
                     break;
 
                 case 2:
@@ -108,9 +112,9 @@ namespace UkrtbRasp
                     groups = JsonConvert.DeserializeObject<List<Group>>(json);
                     foreach (var item in groups)
                     {
-                        if (item.group != null) Prepod_or_group_picker.Items.Add(item.group);
+                        if (item.group != null) items.Add(item.group);/* Prepod_or_group_picker.Items.Add(item.group);*/
                     }
-                    Prepod_or_group_picker.SelectedIndex = 0;
+                    //Prepod_or_group_picker.SelectedIndex = 0;
                     break;
 
                 case 3:
@@ -121,16 +125,29 @@ namespace UkrtbRasp
                     {
                         if (item.cab != null)
                         {
-                            Prepod_or_group_picker.Items.Add(item.cab);
+                            items.Add(item.cab);
+                            //Prepod_or_group_picker.Items.Add(item.cab);
                         }
                     }
-                    Prepod_or_group_picker.SelectedIndex = 0;
+                    //Prepod_or_group_picker.SelectedIndex = 0;
                     break;
 
                 default:
                     break;
             }
+            return items;
+        }
 
+
+        private async void Load_data(int a)
+        {
+            List<string> items = await System.Threading.Tasks.Task.Run(() => LoadDataASync());
+            Prepod_or_group_picker.Items.Clear();
+            foreach (var item in items)
+            {
+                Prepod_or_group_picker.Items.Add(item);
+            }
+            Prepod_or_group_picker.SelectedIndex = a;
         }
 
         private void Demand_send_Clicked(object sender, EventArgs e)
@@ -176,21 +193,29 @@ namespace UkrtbRasp
                 Error_text.Text = "Ошибка проверьте данные";
         }
 
+
+
+
+
+
         private void ContentPage_Appearing(object sender, EventArgs e)
         {
-            Demand_cab.Items.Clear();
-            var param = new NameValueCollection();
-            List<Cab> cabs = new List<Cab>();
-            var json = Post.GetJson("getCabs", param);
-            cabs = JsonConvert.DeserializeObject<List<Cab>>(json);
-            foreach (var item in cabs)
+            if (Demand_cab.Items.Count == 0)
             {
-                if (item.cab != null)
+                Demand_cab.Items.Clear();
+                var param = new NameValueCollection();
+                List<Cab> cabs = new List<Cab>();
+                var json = Post.GetJson("getCabs", param);
+                cabs = JsonConvert.DeserializeObject<List<Cab>>(json);
+                foreach (var item in cabs)
                 {
-                    Demand_cab.Items.Add(item.cab);
+                    if (item.cab != null)
+                    {
+                        Demand_cab.Items.Add(item.cab);
+                    }
                 }
+                Demand_cab.SelectedIndex = 0;
             }
-            Demand_cab.SelectedIndex = 0;
         }
 
         void Swipe_back_PanUpdated(System.Object sender, Xamarin.Forms.PanUpdatedEventArgs e)
@@ -199,13 +224,13 @@ namespace UkrtbRasp
                 this.Navigation.PopAsync();
         }
 
-        private void Load_lessons()
+
+        private List<Lessons> LoadLessonsAsync(int count)
         {
-            if (Prepod_or_group_picker.Items.Count != 0)
+            List<Lessons> lesons = new List<Lessons>();
+            if (count != 0)
             {
                 var param = new NameValueCollection();
-                List<Lessons> lesons = new List<Lessons>();
-
                 switch (What_check)
                 {
                     case 1:
@@ -232,21 +257,37 @@ namespace UkrtbRasp
                         break;
                 }
 
-                Lessons_stack.Children.Clear();
-                if (lesons != null)
-                    foreach (var item in lesons)
-                    {
-                        Lesson lesson = new Lesson();
-                        lesson.FindByName<Label>("Number").Text = item.num;
-                        lesson.FindByName<Label>("Cab").Text = item.cab;
-                        lesson.FindByName<Label>("Name").Text = item.lesson;
-                        lesson.FindByName<Label>("Prepod_or_group").Text = What_check == 1 ? item.group : What_check == 2 ? item.teacher : item.group + " " + item.teacher;
-                        Lessons_stack.Children.Add(lesson);
-                    }
-                else
+
+            }
+            return lesons;
+        }
+
+        private async void Load_lessons()
+        {
+            //Stack_all.IsVisible = false;
+            anim.IsVisible = true;
+            anim.RepeatMode = Lottie.Forms.RepeatMode.Infinite;
+            anim.PlayAnimation();
+            List<Lessons> lessons = await Task.Run(() => LoadLessonsAsync(Prepod_or_group_picker.Items.Count));
+            await Task.Delay(500);
+            anim.StopAnimation();
+            anim.IsVisible = false;
+            anim.RepeatMode = Lottie.Forms.RepeatMode.Infinite;
+            //Stack_all.IsVisible = true;
+            Lessons_stack.Children.Clear();
+            if (lessons != null)
+                foreach (var item in lessons)
                 {
-                    Lessons_stack.Children.Add(new Label { Text = "Расписание отсутствует" });
+                    Lesson lesson = new Lesson();
+                    lesson.FindByName<Label>("Number").Text = item.num;
+                    lesson.FindByName<Label>("Cab").Text = item.cab;
+                    lesson.FindByName<Label>("Name").Text = item.lesson;
+                    lesson.FindByName<Label>("Prepod_or_group").Text = What_check == 1 ? item.group : What_check == 2 ? item.teacher : item.group + " " + item.teacher;
+                    Lessons_stack.Children.Add(lesson);
                 }
+            else
+            {
+                Lessons_stack.Children.Add(new Label { Text = "Расписание отсутствует" });
             }
         }
 

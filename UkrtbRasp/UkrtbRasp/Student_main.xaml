@@ -5,6 +5,7 @@
             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
             xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
             xmlns:local="clr-namespace:UkrtbRasp"
+            xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
             android:TabbedPage.ToolbarPlacement="Bottom"
             UnselectedTabColor="{DynamicResource Secondary_dark}"
             BarBackgroundColor="{DynamicResource Primary}"
@@ -27,69 +28,70 @@
                         iOS="rasp_ios"
                         Android="calen" />
         </ContentPage.IconImageSource>
-        <StackLayout Margin="20,0">
-            <Label Text="Расписание занятий"
-                   FontSize="Medium"
-                   FontFamily="Montserrat_SemiBold.ttf"
-                   Margin="20"
-                   HorizontalOptions="Center"
-                   TextColor="{DynamicResource Text_light}" />
-            <StackLayout>
-                <yummy:PancakeView BackgroundColor="{DynamicResource Secondary}"
-                                   CornerRadius="30,30,0,0"
-                                   x:Name="Prepod_pankake"
-                                   HeightRequest="80">
-                    <yummy:PancakeView.GestureRecognizers>
-                        <TapGestureRecognizer x:Name="Prepod_tap"
-                                              Tapped="Prepod_tap_Tapped" />
-                    </yummy:PancakeView.GestureRecognizers>
-                    <StackLayout Orientation="Horizontal">
-                        <Label Text="Преподаватели"
-                               FontSize="Medium"
-                               TextColor="{DynamicResource Text_light}"
-                               FontFamily="Montserrat.ttf"
-                               Margin="20,15" />
-                        <Image VerticalOptions="Start"
-                               HeightRequest="35"
-                               HorizontalOptions="EndAndExpand"
-                               Margin="20,10">
-                            <Image.Source>
-                                <OnPlatform x:TypeArguments="FileImageSource"
-                                            iOS="prepods_ios"
-                                            Android="prepods" />
-                            </Image.Source>
-                        </Image>
-                    </StackLayout>
+        <Grid>
+            <StackLayout Margin="20,0" x:Name="Stack_all">
+                <Label Text="Расписание занятий"
+                       FontSize="Medium"
+                       FontFamily="Montserrat_SemiBold.ttf"
+                       Margin="20"
+                       HorizontalOptions="Center"
+                       TextColor="{DynamicResource Text_light}" />
+                <StackLayout>
+                    <yummy:PancakeView BackgroundColor="{DynamicResource Secondary}"
+                                       CornerRadius="30,30,0,0"
+                                       x:Name="Prepod_pankake"
+                                       HeightRequest="80">
+                        <yummy:PancakeView.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="Prepod_tap"
+                                                  Tapped="Prepod_tap_Tapped" />
+                        </yummy:PancakeView.GestureRecognizers>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Преподаватели"
+                                   FontSize="Medium"
+                                   TextColor="{DynamicResource Text_light}"
+                                   FontFamily="Montserrat.ttf"
+                                   Margin="20,15" />
+                            <Image VerticalOptions="Start"
+                                   HeightRequest="35"
+                                   HorizontalOptions="EndAndExpand"
+                                   Margin="20,10">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="FileImageSource"
+                                                iOS="prepods_ios"
+                                                Android="prepods" />
+                                </Image.Source>
+                            </Image>
+                        </StackLayout>
 
-                </yummy:PancakeView>
-                <yummy:PancakeView BackgroundColor="{DynamicResource Secondary_dark}"
-                                   CornerRadius="30"
-                                   x:Name="Group_pankake"
-                                   Margin="0,-35,0,0">
-                    <yummy:PancakeView.GestureRecognizers>
-                        <TapGestureRecognizer x:Name="Group_tap"
-                                              Tapped="Group_tap_Tapped" />
-                    </yummy:PancakeView.GestureRecognizers>
-                    <StackLayout Orientation="Horizontal">
-                        <Label Text="Группы"
-                               FontSize="Medium"
-                               TextColor="{DynamicResource Text_light}"
-                               FontFamily="Montserrat.ttf"
-                               Margin="20,15" />
-                        <Image VerticalOptions="Start"
-                               HeightRequest="35"
-                               HorizontalOptions="EndAndExpand"
-                               Margin="20,10">
-                            <Image.Source>
-                                <OnPlatform x:TypeArguments="FileImageSource"
-                                            iOS="groups_ios"
-                                            Android="groups" />
-                            </Image.Source>
-                        </Image>
-                    </StackLayout>
+                    </yummy:PancakeView>
+                    <yummy:PancakeView BackgroundColor="{DynamicResource Secondary_dark}"
+                                       CornerRadius="30"
+                                       x:Name="Group_pankake"
+                                       Margin="0,-35,0,0">
+                        <yummy:PancakeView.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="Group_tap"
+                                                  Tapped="Group_tap_Tapped" />
+                        </yummy:PancakeView.GestureRecognizers>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Группы"
+                                   FontSize="Medium"
+                                   TextColor="{DynamicResource Text_light}"
+                                   FontFamily="Montserrat.ttf"
+                                   Margin="20,15" />
+                            <Image VerticalOptions="Start"
+                                   HeightRequest="35"
+                                   HorizontalOptions="EndAndExpand"
+                                   Margin="20,10">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="FileImageSource"
+                                                iOS="groups_ios"
+                                                Android="groups" />
+                                </Image.Source>
+                            </Image>
+                        </StackLayout>
 
-                </yummy:PancakeView>
-                <!--<yummy:PancakeView BackgroundColor="{DynamicResource Primary_light}"
+                    </yummy:PancakeView>
+                    <!--<yummy:PancakeView BackgroundColor="{DynamicResource Primary_light}"
                                    CornerRadius="30"
                                    Margin="0,-35,0,0">
                     <StackLayout Orientation="Horizontal">
@@ -105,72 +107,79 @@
                     </StackLayout>
 
                 </yummy:PancakeView>-->
-            </StackLayout>
-            <DatePicker x:Name="Date_hide"
-                        DateSelected="Date_hide_DateSelected"
-                        Format="dd-MM-yyyy"
-                        TextColor="White"
-                        IsVisible="false" />
-            <StackLayout Orientation="Horizontal"
-                         Margin="0,10"
-                         VerticalOptions="Start">
-                <Button Text="10.08"
-                        x:Name="Select_date_today"
-                        Clicked="Select_date_today_Clicked"
-                        FontFamily="Montserrat.ttf"
-                        HorizontalOptions="FillAndExpand"
-                        BackgroundColor="{DynamicResource Secondary_dark}"
-                        TextColor="{DynamicResource Text_light}" />
-                <Button Text="11.08"
-                        Clicked="Select_date_today_Clicked"
-                        x:Name="Select_date_tomorow"
-                        FontFamily="Montserrat.ttf"
-                        HorizontalOptions="FillAndExpand"
-                        BackgroundColor="{DynamicResource Primary_light}"
-                        TextColor="{DynamicResource Text_light}" />
-                <Button Text="12.08"
-                        Clicked="Select_date_today_Clicked"
-                        FontFamily="Montserrat.ttf"
-                        HorizontalOptions="FillAndExpand"
-                        x:Name="Select_date_plustwo"
-                        BackgroundColor="{DynamicResource Primary_light}"
-                        TextColor="{DynamicResource Text_light}" />
-                <ImageButton BackgroundColor="{DynamicResource Primary_light}"
-                             HeightRequest="40"
-                             Clicked="Open_select_date_Clicked"
-                             x:Name="Open_select_date"
-                             HorizontalOptions="FillAndExpand">
-                    <ImageButton.Source>
-                        <OnPlatform x:TypeArguments="FileImageSource"
-                                    iOS="rasp_ios"
-                                    Android="calen" />
-                    </ImageButton.Source>
-                    <ImageButton.Padding>
-                        <OnPlatform x:TypeArguments="Thickness"
-                                    iOS="0,10"
-                                    Android="20,0" />
-                    </ImageButton.Padding>
-                </ImageButton>
-            </StackLayout>
-            <yummy:PancakeView BackgroundColor="{DynamicResource Primary_light}"
-                               CornerRadius="4">
-                <Picker TextColor="{DynamicResource Text_light}"
-                        BackgroundColor="{DynamicResource Primary_light}"
-                        Margin="10,0"
-                        SelectedIndexChanged="Prepod_or_group_picker_SelectedIndexChanged"
-                        x:Name="Prepod_or_group_picker"
-                        FontFamily="Montserrat.ttf"
-                        SelectedIndex="0">
-                    <Picker.Items>
-                    </Picker.Items>
-                </Picker>
-            </yummy:PancakeView>
-            <ScrollView Margin="0,10">
-                <StackLayout x:Name="Lessons_stack">
-                  
                 </StackLayout>
-            </ScrollView>
-        </StackLayout>
+                <DatePicker x:Name="Date_hide"
+                            DateSelected="Date_hide_DateSelected"
+                            Format="dd-MM-yyyy"
+                            TextColor="White"
+                            IsVisible="false" />
+                <StackLayout Orientation="Horizontal"
+                             Margin="0,10"
+                             VerticalOptions="Start">
+                    <Button Text="10.08"
+                            x:Name="Select_date_today"
+                            Clicked="Select_date_today_Clicked"
+                            FontFamily="Montserrat.ttf"
+                            HorizontalOptions="FillAndExpand"
+                            BackgroundColor="{DynamicResource Secondary_dark}"
+                            TextColor="{DynamicResource Text_light}" />
+                    <Button Text="11.08"
+                            Clicked="Select_date_today_Clicked"
+                            x:Name="Select_date_tomorow"
+                            FontFamily="Montserrat.ttf"
+                            HorizontalOptions="FillAndExpand"
+                            BackgroundColor="{DynamicResource Primary_light}"
+                            TextColor="{DynamicResource Text_light}" />
+                    <Button Text="12.08"
+                            Clicked="Select_date_today_Clicked"
+                            FontFamily="Montserrat.ttf"
+                            HorizontalOptions="FillAndExpand"
+                            x:Name="Select_date_plustwo"
+                            BackgroundColor="{DynamicResource Primary_light}"
+                            TextColor="{DynamicResource Text_light}" />
+                    <ImageButton BackgroundColor="{DynamicResource Primary_light}"
+                                 HeightRequest="40"
+                                 Clicked="Open_select_date_Clicked"
+                                 x:Name="Open_select_date"
+                                 HorizontalOptions="FillAndExpand">
+                        <ImageButton.Source>
+                            <OnPlatform x:TypeArguments="FileImageSource"
+                                        iOS="rasp_ios"
+                                        Android="calen" />
+                        </ImageButton.Source>
+                        <ImageButton.Padding>
+                            <OnPlatform x:TypeArguments="Thickness"
+                                        iOS="0,10"
+                                        Android="20,0" />
+                        </ImageButton.Padding>
+                    </ImageButton>
+                </StackLayout>
+                <yummy:PancakeView BackgroundColor="{DynamicResource Primary_light}"
+                                   CornerRadius="4">
+                    <Picker TextColor="{DynamicResource Text_light}"
+                            BackgroundColor="{DynamicResource Primary_light}"
+                            Margin="10,0"
+                            SelectedIndexChanged="Prepod_or_group_picker_SelectedIndexChanged"
+                            x:Name="Prepod_or_group_picker"
+                            FontFamily="Montserrat.ttf"
+                            SelectedIndex="0">
+                        <Picker.Items>
+                        </Picker.Items>
+                    </Picker>
+                </yummy:PancakeView>
+                <ScrollView Margin="0,10">
+                    <StackLayout x:Name="Lessons_stack">
+
+                    </StackLayout>
+                </ScrollView>
+            </StackLayout>
+            <forms:AnimationView x:Name="anim"
+                                 Animation="stud.load.json"
+                                 AutoPlay="True"
+                                 IsVisible="false"
+                                 VerticalOptions="Center"
+                                 HorizontalOptions="Center" />
+        </Grid>
     </ContentPage>
     <ContentPage BackgroundColor="{DynamicResource Primary}"
                  Title="Звонки">

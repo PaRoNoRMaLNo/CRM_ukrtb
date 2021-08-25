@@ -43,8 +43,7 @@ namespace UkrtbRasp
                     Prepod_isCheck = true;  
                     break;
             }
-            Load_data();
-            Prepod_or_group_picker.SelectedIndex = a;
+            Load_data(a);
             User_login.Text = CrossSettings.Current.GetValueOrDefault("user_login", "");
             User_password.Text = CrossSettings.Current.GetValueOrDefault("user_password", "");
         }
@@ -71,10 +70,9 @@ namespace UkrtbRasp
             Date_hide.Focus();
         }
 
-
-        private void Load_data()
+        private List<string> LoadDataASync()
         {
-            Prepod_or_group_picker.Items.Clear();
+            List<string> items = new List<string>();
             if (Prepod_isCheck)
             {
                 var param = new NameValueCollection();
@@ -84,9 +82,8 @@ namespace UkrtbRasp
 
                 foreach (var item in teachers)
                 {
-                    if (item.prepod != null) Prepod_or_group_picker.Items.Add(item.prepod);
+                    if (item.prepod != null) items.Add(item.prepod); /*Prepod_or_group_picker.Items.Add(item.prepod);*/
                 }
-                Prepod_or_group_picker.SelectedIndex = 0;
             }
             else
             {
@@ -97,47 +94,80 @@ namespace UkrtbRasp
 
                 foreach (var item in groups)
                 {
-                    if (item.group != null) Prepod_or_group_picker.Items.Add(item.group);
+                    if (item.group != null) items.Add(item.group); /*Prepod_or_group_picker.Items.Add(item.group);*/
                 }
-                Prepod_or_group_picker.SelectedIndex = 0;
             }
+            return items;
         }
 
-        private void Load_lessons()
+        private async void Load_data(int a)
         {
-            if (Prepod_or_group_picker.Items.Count != 0)
+            Prepod_or_group_picker.Items.Clear();
+            List<string> items = await Task.Run(() => LoadDataASync());
+            foreach (var item in items)
+            {
+                Prepod_or_group_picker.Items.Add(item);
+            }
+            Prepod_or_group_picker.SelectedIndex = a;
+        }
+
+        private List<Lessons> LoadLessonsAsync(int count)
+        {
+            List<Lessons> lesons = new List<Lessons>();
+            if (count != 0)
             {
                 var param = new NameValueCollection();
-                List<Lessons> lesons = new List<Lessons>();
-                if (Prepod_isCheck)
+                switch (Prepod_isCheck)
                 {
-                    param["teacher"] = Prepod_or_group_picker.SelectedItem.ToString();
-                    param["date"] = $"{Date_hide.Date.Year}-{Date_hide.Date.Month}-{Date_hide.Date.Day}";
-                    var json = Post.GetJson("getRaspTeacher", param);
-                    lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
+                    case true:
+                        param["teacher"] = Prepod_or_group_picker.SelectedItem.ToString();
+                        param["date"] = $"{Date_hide.Date.Year}-{Date_hide.Date.Month}-{Date_hide.Date.Day}";
+                        var json = Post.GetJson("getRaspTeacher", param);
+                        lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
+                        break;
+                    case false:
+                        param = new NameValueCollection();
+                        param["group"] = Prepod_or_group_picker.SelectedItem.ToString();
+                        param["date"] = $"{Date_hide.Date.Year}-{Date_hide.Date.Month}-{Date_hide.Date.Day}";
+                        json = Post.GetJson("getRaspGroup", param);
+                        lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
+                        break;
+                    default:
+                        break;
                 }
-                else
+
+
+            }
+            return lesons;
+        }
+
+
+        private async void Load_lessons()
+        {
+            Stack_all.IsVisible = false;
+            anim.IsVisible = true;
+            anim.RepeatMode = Lottie.Forms.RepeatMode.Infinite;
+            anim.PlayAnimation();
+            List<Lessons> lessons = await Task.Run(() => LoadLessonsAsync(Prepod_or_group_picker.Items.Count));
+            await Task.Delay(500);
+            anim.StopAnimation();
+            anim.IsVisible = false;
+            anim.RepeatMode = Lottie.Forms.RepeatMode.Infinite;
+            Stack_all.IsVisible = true;
+            Lessons_stack.Children.Clear();
+            if (lessons != null)
+                foreach (var item in lessons)
                 {
-                    param["group"] = Prepod_or_group_picker.SelectedItem.ToString();
-                    param["date"] = $"{Date_hide.Date.Year}-{Date_hide.Date.Month}-{Date_hide.Date.Day}";
-                    var json = Post.GetJson("getRaspGroup", param);
-                    lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
+                    Lesson lesson = new Lesson();
+                    lesson.FindByName<Label>("Number").Text = item.num;
+                    lesson.FindByName<Label>("Cab").Text = item.cab;
+                    lesson.FindByName<Label>("Name").Text = item.lesson;
+                    lesson.FindByName<Label>("Prepod_or_group").Text = Prepod_isCheck ? item.group : item.teacher ;
+                    Lessons_stack.Children.Add(lesson);
                 }
-                Lessons_stack.Children.Clear();
-                if (lesons != null)
-                    foreach (var item in lesons)
-                    {
-                        Lesson lesson = new Lesson();
-                        lesson.FindByName<Label>("Number").Text = item.num;
-                        lesson.FindByName<Label>("Cab").Text = item.cab;
-                        lesson.FindByName<Label>("Name").Text = item.lesson;
-                        lesson.FindByName<Label>("Prepod_or_group").Text = Prepod_isCheck ? item.group : item.teacher;
-                        Lessons_stack.Children.Add(lesson);
-                    }
-                else
-                {
-                    Lessons_stack.Children.Add(new Label { Text = "Расписание отсутствует" });
-                }
+            else
+            {
+                Lessons_stack.Children.Add(new Label { Text = "Расписание отсутствует" });
             }
         }
 
@@ -155,7 +185,7 @@ namespace UkrtbRasp
             CrossSettings.Current.AddOrUpdateValue("type_check", "0");
             Prepod_pankake.BackgroundColor = Color.FromHex("#027ff6");
             Group_pankake.BackgroundColor = Color.FromHex("#004c8c");
-            Load_data();
+            Load_data(0);
         }
 
         private void Group_tap_Tapped(object sender, EventArgs e)
@@ -164,7 +194,7 @@ namespace UkrtbRasp
             CrossSettings.Current.AddOrUpdateValue("type_check", "1");
             Group_pankake.BackgroundColor = Color.FromHex("#027ff6");
             Prepod_pankake.BackgroundColor = Color.FromHex("#004c8c");
-            Load_data();
+            Load_data(0);
         }
 
         private void Prepod_or_group_picker_SelectedIndexChanged(object sender, EventArgs e)

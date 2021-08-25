@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "HpqmRzcY2eE+QScbeWjxMhhNSfi/yGvSkiePKbKmGUe48ByZGVWxGHLI+smgG6WA0Yc/GIP4QJxY53EcbZqi4Q==",
+  "dgSpecHash": "n4397PvvVJ3vVriRsoyW46mH0NBk4i804Y2syaJf/lC+dwSbR7i2CKY/fcaYJ9aWkGks9ZcQtfcqZ2uqnW+A8A==",
   "success": true,
   "projectFilePath": "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp.iOS\\UkrtbRasp.iOS.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\1\\.nuget\\packages\\com.airbnb.ios.lottie\\2.5.13\\com.airbnb.ios.lottie.2.5.13.nupkg.sha512",
+    "C:\\Users\\1\\.nuget\\packages\\com.airbnb.xamarin.forms.lottie\\4.0.10\\com.airbnb.xamarin.forms.lottie.4.0.10.nupkg.sha512",
     "C:\\Users\\1\\.nuget\\packages\\mysqlconnector\\1.3.11\\mysqlconnector.1.3.11.nupkg.sha512",
     "C:\\Users\\1\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\1\\.nuget\\packages\\system.componentmodel\\4.3.0\\system.componentmodel.4.3.0.nupkg.sha512",

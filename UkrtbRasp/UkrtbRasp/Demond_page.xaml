@@ -67,6 +67,20 @@
                         <Label Text="НИКОГО"
                                x:Name="Demand_vc" />
                     </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Начало:"
+                               MaxLines="1"
+                               FontFamily="Montserrat_SemiBold.ttf" />
+                        <Label Text="НИКОГО"
+                               x:Name="Demand_vc_start" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Конец:"
+                               MaxLines="1"
+                               FontFamily="Montserrat_SemiBold.ttf" />
+                        <Label Text="НИКОГО"
+                               x:Name="Demand_vc_end" />
+                    </StackLayout>
                 </StackLayout>
             </yummy:PancakeView>
             <StackLayout Orientation="Horizontal"
@@ -79,6 +93,7 @@
                         HorizontalOptions="FillAndExpand" />
                 <Button Text="Принять"
                         x:Name="Btn_accept"
+                        Clicked="Btn_accept_Clicked"
                         TextColor="{DynamicResource Text_light}"
                         BackgroundColor="{DynamicResource Secondary}"
                         HorizontalOptions="FillAndExpand" />

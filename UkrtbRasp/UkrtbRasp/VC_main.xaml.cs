@@ -10,6 +10,7 @@ using Xamarin.Forms.Xaml;
 using MySqlConnector;
 using System.Collections.Specialized;
 using Newtonsoft.Json;
+using Plugin.Settings;
 
 namespace UkrtbRasp
 {
@@ -21,13 +22,18 @@ namespace UkrtbRasp
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
+            VC_in_app.VC_id = CrossSettings.Current.GetValueOrDefault("VC_id", "");
+            VC_in_app.VC_fio = CrossSettings.Current.GetValueOrDefault("VC_fio", "");
+
+
+
             DateTime dateTim = DateTime.Now;
             Select_date_today.Text = $"{dateTim.Day}.{dateTim.Month}";
             dateTim = dateTim.AddDays(1);
             Select_date_tomorow.Text = $"{dateTim.Day}.{dateTim.Month}";
             dateTim = dateTim.AddDays(1);
             Select_date_plustwo.Text = $"{dateTim.Day}.{dateTim.Month}";
-            Load_data_rasp();
+            Load_data_rasp(0);
 
         }
 
@@ -145,8 +151,15 @@ namespace UkrtbRasp
         private async void Async_load_demand()
         {
             List<Demand> demands = new List<Demand>();
+            anim.IsVisible = true;
+            anim.RepeatMode = Lottie.Forms.RepeatMode.Infinite;
+            anim.PlayAnimation();
             Demond_stack.Children.Clear();
             demands = await Task.Run(() => LoadDemand());
+            await Task.Delay(500);
+            anim.StopAnimation();
+            anim.IsVisible = false;
+            anim.RepeatMode = Lottie.Forms.RepeatMode.Infinite;
             foreach (Demand item in demands)
             {
                 Demond_stack.Children.Add(item);
@@ -159,11 +172,6 @@ namespace UkrtbRasp
                 Async_load_demand();
         }
 
-        private void ContentPage_Appearing(object sender, EventArgs e)
-        {
-            Async_load_demand();
-            Load_data();
-        }
 
         private void Demand_date_picker_DateSelected(object sender, DateChangedEventArgs e)
         {
@@ -173,8 +181,14 @@ namespace UkrtbRasp
         private async void Demands_all_btn_Clicked(object sender, EventArgs e)
         {
             List<Demand> demands = new List<Demand>();
+            anim.IsVisible = true;
+            anim.RepeatMode = Lottie.Forms.RepeatMode.Infinite;
+            anim.PlayAnimation();
             Demond_stack.Children.Clear();
             demands = await Task.Run(() => LoadDemand_all());
+            await Task.Delay(500);
+            anim.StopAnimation();
+            anim.IsVisible = false;
             foreach (Demand item in demands)
             {
                 Demond_stack.Children.Add(item);
@@ -213,23 +227,25 @@ namespace UkrtbRasp
         private void Prep_tap_Tapped(object sender, EventArgs e)
         {
             What_check = 1;
-            Load_data_rasp();
+            Load_data_rasp(0);
         }
 
         private void Group_tap_Tapped(object sender, EventArgs e)
         {
             What_check = 2;
-            Load_data_rasp();
+            Load_data_rasp(0);
         }
 
         private void Cab_tap_Tapped(object sender, EventArgs e)
         {
             What_check = 3;
-            Load_data_rasp();
+            Load_data_rasp(0);
         }
-        private void Load_data_rasp()
+
+        private List<string> LoadDataASync()
         {
-            Prepod_or_group_picker.Items.Clear();
+            // Prepod_or_group_picker.Items.Clear();
+            List<string> items = new List<string>();
             var param = new NameValueCollection();
             switch (What_check)
             {
@@ -240,9 +256,9 @@ namespace UkrtbRasp
 
                     foreach (var item in teachers)
                     {
-                        if (item.prepod != null) Prepod_or_group_picker.Items.Add(item.prepod);
+                        if (item.prepod != null) items.Add(item.prepod);/* Prepod_or_group_picker.Items.Add(item.prepod);*/
                     }
-                    Prepod_or_group_picker.SelectedIndex = 0;
+                    //Prepod_or_group_picker.SelectedIndex = 0;
                     break;
 
                 case 2:
@@ -251,9 +267,9 @@ namespace UkrtbRasp
                     groups = JsonConvert.DeserializeObject<List<Group>>(json);
                     foreach (var item in groups)
                     {
-                        if (item.group != null) Prepod_or_group_picker.Items.Add(item.group);
+                        if (item.group != null) items.Add(item.group);/* Prepod_or_group_picker.Items.Add(item.group);*/
                     }
-                    Prepod_or_group_picker.SelectedIndex = 0;
+                    //Prepod_or_group_picker.SelectedIndex = 0;
                     break;
 
                 case 3:
@@ -264,24 +280,40 @@ namespace UkrtbRasp
                     {
                         if (item.cab != null)
                         {
-                            Prepod_or_group_picker.Items.Add(item.cab);
+                            items.Add(item.cab);
+                            //Prepod_or_group_picker.Items.Add(item.cab);
                         }
                     }
-                    Prepod_or_group_picker.SelectedIndex = 0;
+                    //Prepod_or_group_picker.SelectedIndex = 0;
                     break;
 
                 default:
                     break;
             }
+            return items;
+        }
+
+
+
+
+        private async void Load_data_rasp(int a)
+        {
+            List<string> items = await System.Threading.Tasks.Task.Run(() => LoadDataASync());
+            Prepod_or_group_picker.Items.Clear();
+            foreach (var item in items)
+            {
+                Prepod_or_group_picker.Items.Add(item);
+            }
+            Prepod_or_group_picker.SelectedIndex = a;
 
         }
-        private void Load_lessons()
+
+        private List<Lessons> LoadLessonsAsync(int count)
         {
-            if (Prepod_or_group_picker.Items.Count != 0)
+            List<Lessons> lesons = new List<Lessons>();
+            if (count != 0)
             {
                 var param = new NameValueCollection();
-                List<Lessons> lesons = new List<Lessons>();
-
                 switch (What_check)
                 {
                     case 1:
@@ -308,21 +340,36 @@ namespace UkrtbRasp
                         break;
                 }
 
-                Lessons_stack.Children.Clear();
-                if (lesons != null)
-                    foreach (var item in lesons)
-                    {
-                        Lesson lesson = new Lesson();
-                        lesson.FindByName<Label>("Number").Text = item.num;
-                        lesson.FindByName<Label>("Cab").Text = item.cab;
-                        lesson.FindByName<Label>("Name").Text = item.lesson;
-                        lesson.FindByName<Label>("Prepod_or_group").Text = What_check == 1 ? item.group : What_check == 2 ? item.teacher : item.group + " " + item.teacher;
-                        Lessons_stack.Children.Add(lesson);
-                    }
-                else
+
+            }
+            return lesons;
+        }
+
+        private async void Load_lessons()
+        {
+            anim_rasp.IsVisible = true;
+            anim_rasp.RepeatMode = Lottie.Forms.RepeatMode.Infinite;
+            anim_rasp.PlayAnimation();
+            List<Lessons> lessons = await Task.Run(() => LoadLessonsAsync(Prepod_or_group_picker.Items.Count));
+            await Task.Delay(1000);
+            anim_rasp.StopAnimation();
+            anim_rasp.IsVisible = false;
+            anim_rasp.RepeatMode = Lottie.Forms.RepeatMode.Infinite;
+            //Stack_all.IsVisible = true;
+            Lessons_stack.Children.Clear();
+            if (lessons != null)
+                foreach (var item in lessons)
                 {
-                    Lessons_stack.Children.Add(new Label { Text = "Расписание отсутствует" });
+                    Lesson lesson = new Lesson();
+                    lesson.FindByName<Label>("Number").Text = item.num;
+                    lesson.FindByName<Label>("Cab").Text = item.cab;
+                    lesson.FindByName<Label>("Name").Text = item.lesson;
+                    lesson.FindByName<Label>("Prepod_or_group").Text = What_check == 1 ? item.group : What_check == 2 ? item.teacher : item.group + " " + item.teacher;
+                    Lessons_stack.Children.Add(lesson);
                 }
+            else
+            {
+                Lessons_stack.Children.Add(new Label { Text = "Расписание отсутствует" });
             }
         }
 
@@ -334,6 +381,64 @@ namespace UkrtbRasp
         private void Prepod_or_group_picker_SelectedIndexChanged(object sender, EventArgs e)
         {
             Load_lessons();
+        }
+
+        private void TabbedPage_Appearing(object sender, EventArgs e)
+        {
+            Async_load_demand();
+            Load_data();
+        }
+
+        List<Demand> LoadMyDemand()
+        {
+            List<Demand> demands = new List<Demand>();
+            using (MySqlConnection connection = new MySqlConnection(Connect.String))
+            {
+                try
+                {
+                    connection.Open();
+                }
+                catch
+                {
+                    return demands;
+                }
+                int a = Demand_sort.SelectedIndex;
+                MySqlCommand command = new MySqlCommand($@"SELECT * FROM `Demand` INNER join DemandVc on Demand.Demand_id = DemandVc.DemandVc_demand_id where DemandVc.DemandVc_vc_id = {VC_in_app.VC_id} ORDER by `DemandVc_time_start` DESC", connection);
+                MySqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        Demand demand = new Demand();
+                        demand.Demand_id = reader[0].ToString();
+                        demand.FindByName<Label>("Date").Text = "" + reader[1];
+                        demand.FindByName<Label>("Cab").Text = "" + reader[4];
+                        demand.FindByName<Label>("Text").Text = "" + reader[3];
+                        demand.FindByName<Label>("Prepod").Text = "" + reader[5];
+                        demand.FindByName<PancakeView>("Status_color").BackgroundColor = reader[2].ToString() == "0" ? Color.FromHex("#ff0000") :
+                               reader[2].ToString() == "1" ? Color.FromHex("#0000ff") : Color.FromHex("#00ff00");
+                        demand.Demand_vc_id = VC_in_app.VC_id;
+                        demands.Add(demand);
+                    }
+                }
+            }
+            return demands;
+        }
+
+        private async void VC_my_demand_Appearing(object sender, EventArgs e)
+        {
+            anim_my_demand.IsVisible = true;
+            anim_my_demand.RepeatMode = Lottie.Forms.RepeatMode.Infinite;
+            anim_my_demand.PlayAnimation();
+            MyDemond_stack.Children.Clear();
+            List<Demand> demands = await Task.Run(() => LoadMyDemand());
+            await Task.Delay(500);
+            anim_my_demand.StopAnimation();
+            anim_my_demand.IsVisible = false;
+            foreach (var item in demands)
+            {
+                MyDemond_stack.Children.Add(item);
+            }
         }
     }
 }
