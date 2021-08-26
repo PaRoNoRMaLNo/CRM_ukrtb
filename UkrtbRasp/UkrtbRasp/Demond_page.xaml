@@ -5,6 +5,11 @@
              x:Class="UkrtbRasp.Demond_page"
              BackgroundColor="{DynamicResource Primary}"
              Appearing="ContentPage_Appearing">
+        <ContentPage.Padding>
+                <OnPlatform x:TypeArguments="Thickness"
+                            iOS = "0,20,0,0"
+                            Android = "0"/>
+        </ContentPage.Padding>
     <ContentPage.Resources>
         <Style TargetType="Label">
             <Setter Property="TextColor"
@@ -30,26 +35,26 @@
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Дата:"
                                FontFamily="Montserrat_SemiBold.ttf" />
-                        <Label Text="24.05.2021"
+                        <Label Text=""
                                x:Name="Demand_date" />
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Статус:"
                                FontFamily="Montserrat_SemiBold.ttf" />
-                        <Label Text="Новый"
+                        <Label Text=""
                                x:Name="Demand_status" />
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Препод:"
                                MaxLines="1"
                                FontFamily="Montserrat_SemiBold.ttf" />
-                        <Label Text="Иванова Ангелина Алексеевна"
+                        <Label Text=""
                                x:Name="Demand_prepod" />
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Кабинет:"
                                FontFamily="Montserrat_SemiBold.ttf" />
-                        <Label Text="303"
+                        <Label Text=""
                                x:Name="Demand_cab" />
                     </StackLayout>
 
@@ -57,28 +62,28 @@
                         <Label Text="Что сделать:"
                                MaxLines="1"
                                FontFamily="Montserrat_SemiBold.ttf" />
-                        <Label Text=" Послать всех за кофе"
+                        <Label Text=""
                                x:Name="Demand_text" />
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Ответственный:"
                                MaxLines="1"
                                FontFamily="Montserrat_SemiBold.ttf" />
-                        <Label Text="НИКОГО"
+                        <Label Text=""
                                x:Name="Demand_vc" />
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Начало:"
                                MaxLines="1"
                                FontFamily="Montserrat_SemiBold.ttf" />
-                        <Label Text="НИКОГО"
+                        <Label Text=""
                                x:Name="Demand_vc_start" />
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Конец:"
                                MaxLines="1"
                                FontFamily="Montserrat_SemiBold.ttf" />
-                        <Label Text="НИКОГО"
+                        <Label Text=""
                                x:Name="Demand_vc_end" />
                     </StackLayout>
                 </StackLayout>

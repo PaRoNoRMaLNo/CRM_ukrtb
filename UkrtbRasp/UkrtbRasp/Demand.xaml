@@ -28,12 +28,12 @@
                                        x:Name="Status_color"
                                        Margin="0"
                                        Padding="20,5">
-                        <Label Text="1"
+                        <Label Text=""
                                x:Name="Date"
                                FontFamily="Montserrat_SemiBold.ttf"
                                TextColor="{DynamicResource Text_light}" />
                     </yummy:PancakeView>
-                    <Label Text="303"
+                    <Label Text=""
                            x:Name="Cab"
                            TextColor="{DynamicResource Text_light}"
                            VerticalOptions="CenterAndExpand"
@@ -42,13 +42,13 @@
                            HorizontalOptions="EndAndExpand" />
 
                 </StackLayout>
-                <Label Text="МДК. Разработка программных модулей"
+                <Label Text=""
                        FontFamily="Montserrat.ttf"
                        x:Name="Text"
                        MaxLines="2"
                        TextColor="{DynamicResource Text_light}"
                        Margin="10,0" />
-                <Label Text="9ИСП-33-18"
+                <Label Text=""
                        MaxLines="2"
                        x:Name="Prepod"
                        FontFamily="Montserrat.ttf"

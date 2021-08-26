@@ -1149,6 +1149,48 @@ Function=BrotliEncoderDestroyInstance
 	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/mtouch-cache/1-Link/System.IO.Compression.dll
 Function=BrotliEncoderCompress
 	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/mtouch-cache/1-Link/System.IO.Compression.dll
+ObjectiveCClass=OBJC_CLASS_$_LOTAnimationView
+	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/mtouch-cache/1-Link/Lottie.iOS.dll
+ObjectiveCClass=OBJC_CLASS_$_LOTAnimatedControl
+	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/mtouch-cache/1-Link/Lottie.iOS.dll
+ObjectiveCClass=OBJC_CLASS_$_LOTAnimatedSwitch
+	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/mtouch-cache/1-Link/Lottie.iOS.dll
+ObjectiveCClass=OBJC_CLASS_$_LOTAnimationCache
+	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/mtouch-cache/1-Link/Lottie.iOS.dll
+ObjectiveCClass=OBJC_CLASS_$_LOTAnimationTransitionController
+	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/mtouch-cache/1-Link/Lottie.iOS.dll
+ObjectiveCClass=OBJC_CLASS_$_LOTCacheProvider
+	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/mtouch-cache/1-Link/Lottie.iOS.dll
+ObjectiveCClass=OBJC_CLASS_$_LOTColorBlockCallback
+	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/mtouch-cache/1-Link/Lottie.iOS.dll
+ObjectiveCClass=OBJC_CLASS_$_LOTColorValueCallback
+	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/mtouch-cache/1-Link/Lottie.iOS.dll
+ObjectiveCClass=OBJC_CLASS_$_LOTComposition
+	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/mtouch-cache/1-Link/Lottie.iOS.dll
+ObjectiveCClass=OBJC_CLASS_$_LOTFloatInterpolatorCallback
+	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/mtouch-cache/1-Link/Lottie.iOS.dll
+ObjectiveCClass=OBJC_CLASS_$_LOTKeypath
+	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/mtouch-cache/1-Link/Lottie.iOS.dll
+ObjectiveCClass=OBJC_CLASS_$_LOTNumberBlockCallback
+	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/mtouch-cache/1-Link/Lottie.iOS.dll
+ObjectiveCClass=OBJC_CLASS_$_LOTNumberValueCallback
+	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/mtouch-cache/1-Link/Lottie.iOS.dll
+ObjectiveCClass=OBJC_CLASS_$_LOTPathBlockCallback
+	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/mtouch-cache/1-Link/Lottie.iOS.dll
+ObjectiveCClass=OBJC_CLASS_$_LOTPathValueCallback
+	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/mtouch-cache/1-Link/Lottie.iOS.dll
+ObjectiveCClass=OBJC_CLASS_$_LOTPointBlockCallback
+	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/mtouch-cache/1-Link/Lottie.iOS.dll
+ObjectiveCClass=OBJC_CLASS_$_LOTPointInterpolatorCallback
+	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/mtouch-cache/1-Link/Lottie.iOS.dll
+ObjectiveCClass=OBJC_CLASS_$_LOTPointValueCallback
+	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/mtouch-cache/1-Link/Lottie.iOS.dll
+ObjectiveCClass=OBJC_CLASS_$_LOTSizeBlockCallback
+	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/mtouch-cache/1-Link/Lottie.iOS.dll
+ObjectiveCClass=OBJC_CLASS_$_LOTSizeInterpolatorCallback
+	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/mtouch-cache/1-Link/Lottie.iOS.dll
+ObjectiveCClass=OBJC_CLASS_$_LOTSizeValueCallback
+	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/mtouch-cache/1-Link/Lottie.iOS.dll
 Function=mono_pmip
 Function=xamarin_dyn_objc_msgSend
 Function=xamarin_dyn_objc_msgSendSuper

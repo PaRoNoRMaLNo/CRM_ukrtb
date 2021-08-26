@@ -28,6 +28,11 @@
                         iOS="rasp_ios"
                         Android="calen" />
         </ContentPage.IconImageSource>
+            <ContentPage.Padding>
+                    <OnPlatform x:TypeArguments="Thickness"
+                                iOS = "0,30,0,0"
+                                Android = "0"/>
+            </ContentPage.Padding>
         <Grid>
             <StackLayout Margin="20,0" x:Name="Stack_all">
                 <Label Text="Расписание занятий"
@@ -177,8 +182,8 @@
                                  Animation="studload.json"
                                  AutoPlay="True"
                                  IsVisible="false"
-                                 VerticalOptions="Center"
-                                 HorizontalOptions="Center" />
+                                 VerticalOptions="FillAndExpand"
+                                 HorizontalOptions="FillAndExpand" />
         </Grid>
     </ContentPage>
     <ContentPage BackgroundColor="{DynamicResource Primary}"
@@ -188,6 +193,11 @@
                         iOS="ball_ios"
                         Android="ball" />
         </ContentPage.IconImageSource>
+            <ContentPage.Padding>
+                    <OnPlatform x:TypeArguments="Thickness"
+                                iOS = "0,30,0,0"
+                                Android = "0"/>
+            </ContentPage.Padding>
         <yummy:PancakeView Margin="20"
                            BackgroundColor="{DynamicResource Primary_light}"
                            VerticalOptions="Start"
@@ -519,6 +529,11 @@
                         iOS="login_ios"
                         Android="login" />
         </ContentPage.IconImageSource>
+            <ContentPage.Padding>
+                    <OnPlatform x:TypeArguments="Thickness"
+                                iOS = "0,30,0,0"
+                                Android = "0"/>
+            </ContentPage.Padding>
         <Grid>
             <StackLayout IsVisible="false"
                          x:Name="User_info_stack">
@@ -730,7 +745,7 @@
                     <Entry Placeholder="Логин"
                            ClearButtonVisibility="WhileEditing"
                            x:Name="User_login"
-                           Text="timur_loh"
+                           Text=""
                            FontFamily="Montserrat.ttf"
                            TextColor="{DynamicResource Text_light}"
                            PlaceholderColor="{DynamicResource Text_dark}"
@@ -740,7 +755,7 @@
                                    Margin="20,0">
                     <Entry Placeholder="Пароль"
                            x:Name="User_password"
-                           Text="123456"
+                           Text=""
                            IsPassword="True"
                            ClearButtonVisibility="WhileEditing"
                            FontFamily="Montserrat.ttf"

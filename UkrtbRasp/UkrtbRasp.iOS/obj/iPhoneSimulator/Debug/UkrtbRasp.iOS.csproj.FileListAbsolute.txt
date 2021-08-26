@@ -58,7 +58,15 @@
 /Users/macbook/Projects/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/UkrtbRasp.iOS.pdb
 /Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/bin/iPhoneSimulator/Debug/UkrtbRasp.iOS.exe
 /Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/bin/iPhoneSimulator/Debug/UkrtbRasp.iOS.pdb
+/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/bin/iPhoneSimulator/Debug/Lottie.iOS.dll
+/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/bin/iPhoneSimulator/Debug/Lottie.iOS.pdb
+/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/bin/iPhoneSimulator/Debug/Lottie.Forms.dll
+/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/bin/iPhoneSimulator/Debug/Lottie.Forms.pdb
+/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/bin/iPhoneSimulator/Debug/MySqlConnector.dll
 /Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/bin/iPhoneSimulator/Debug/Newtonsoft.Json.dll
+/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/bin/iPhoneSimulator/Debug/Plugin.Settings.Abstractions.dll
+/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/bin/iPhoneSimulator/Debug/Plugin.Settings.Abstractions.pdb
+/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/bin/iPhoneSimulator/Debug/Plugin.Settings.dll
 /Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/bin/iPhoneSimulator/Debug/Xamarin.Essentials.dll
 /Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/bin/iPhoneSimulator/Debug/Xamarin.Essentials.pdb
 /Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/bin/iPhoneSimulator/Debug/Xamarin.Forms.Core.dll
@@ -105,19 +113,17 @@
 /Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/bin/iPhoneSimulator/Debug/Xamarin.Forms.PancakeView.dll
 /Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/bin/iPhoneSimulator/Debug/UkrtbRasp.dll
 /Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/bin/iPhoneSimulator/Debug/UkrtbRasp.pdb
+/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/UkrtbRasp.iOS.csproj.AssemblyReference.cache
+/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/UkrtbRasp.iOS.csproj.CoreCompileInputs.cache
+/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/UkrtbRasp.iOS.csproj.CopyComplete
+/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/UkrtbRasp.iOS.exe
+/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/UkrtbRasp.iOS.pdb
 /Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/actool/_PartialAppManifest.items
 /Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/actool/_BundleResourceWithLogicalName.items
 /Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/ibtool/_BundleResourceWithLogicalName.items
 /Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/coremlc/_PartialAppManifest.items
 /Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/coremlc/_BundleResourceWithLogicalName.items
 /Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/optimized/logo.png
-/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/optimized/
-/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/UkrtbRasp.iOS.csproj.AssemblyReference.cache
-/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/UkrtbRasp.iOS.csproj.CoreCompileInputs.cache
-/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/UkrtbRasp.iOS.csproj.CopyComplete
-/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/UkrtbRasp.iOS.exe
-/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/UkrtbRasp.iOS.pdb
-/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/bin/iPhoneSimulator/Debug/MySqlConnector.dll
 /Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/optimized/ball_ios.png
 /Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/optimized/cabs_ios.png
 /Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/optimized/demand_ios.png
@@ -126,3 +132,4 @@
 /Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/optimized/prepods_ios.png
 /Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/optimized/arrow_up_ios.png
 /Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/optimized/rasp_ios.png
+/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone 11 pro-14.5/optimized/
