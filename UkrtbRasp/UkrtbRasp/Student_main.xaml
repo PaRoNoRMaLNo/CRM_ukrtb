@@ -202,6 +202,7 @@
                            BackgroundColor="{DynamicResource Primary_light}"
                            VerticalOptions="Start"
                            CornerRadius="4">
+                <ScrollView>
             <StackLayout VerticalOptions="Start"
                          Margin="10">
                 <Label Text="Расписание звонков (ПН-ПТ)"
@@ -227,19 +228,23 @@
 
                     <Label Text="№ пары"
                            Grid.Column="0"
+                           MaxLines="1"
                            HorizontalOptions="CenterAndExpand"
                            Grid.Row="0" />
                     <Label Text="Начало"
                            HorizontalOptions="CenterAndExpand"
                            Grid.Column="1"
+                           MaxLines="1"
                            Grid.Row="0" />
                     <Label Text="Конец"
                            HorizontalOptions="CenterAndExpand"
                            Grid.Column="2"
+                           MaxLines="1"
                            Grid.Row="0" />
                     <Label Text="Перемена"
                            HorizontalOptions="CenterAndExpand"
                            Grid.Column="3"
+                           MaxLines="1"
                            Grid.Row="0" />
 
                     <Label Text="1 пара"
@@ -520,6 +525,7 @@
                            Grid.Row="7" />
                 </Grid>
             </StackLayout>
+           </ScrollView>
         </yummy:PancakeView>
     </ContentPage>
     <ContentPage BackgroundColor="{DynamicResource Primary}"
@@ -541,10 +547,11 @@
                                    CornerRadius="0">
                     <StackLayout Margin="20"
                                  Orientation="Horizontal">
-                        <yummy:PancakeView CornerRadius="50"
+                        <yummy:PancakeView CornerRadius="25"
                                            VerticalOptions="Start"
                                            HorizontalOptions="Start">
-                            <Image Source="https://study.ukrtb.ru/views/img/photo/no-photo.png" />
+                            <Image Source="https://study.ukrtb.ru/views/img/photo/no-photo.png"
+                                   HeightRequest="50"/>
                         </yummy:PancakeView>
                         <Label Text=""
                                x:Name="User_name"
@@ -554,7 +561,8 @@
 
                     </StackLayout>
                 </yummy:PancakeView>
-
+                    <ScrollView>
+                            <StackLayout>
                 <StackLayout Orientation="Horizontal"
                              Padding="20,10">
                     <StackLayout HorizontalOptions="FillAndExpand">
@@ -711,12 +719,12 @@
                     </StackLayout>
 
                 </StackLayout>
-                <ScrollView>
                     <StackLayout x:Name="Stack_for_balls"
                                  Margin="20,0">
 
                     </StackLayout>
-                </ScrollView>
+                </StackLayout>
+               </ScrollView>
             </StackLayout>
 
             <StackLayout IsVisible="true"
@@ -725,10 +733,11 @@
                                    CornerRadius="0">
                     <StackLayout Margin="20"
                                  Orientation="Horizontal">
-                        <yummy:PancakeView CornerRadius="50"
+                        <yummy:PancakeView CornerRadius="25"
                                            VerticalOptions="Start"
                                            HorizontalOptions="Start">
-                            <Image Source="https://study.ukrtb.ru/views/img/photo/no-photo.png" />
+                            <Image Source="https://study.ukrtb.ru/views/img/photo/no-photo.png"
+                                   HeightRequest="50"/>
                         </yummy:PancakeView>
                         <Label Text="Добро пожаловать в учебный портал"
                                FontFamily="Montserrat_SemiBold.ttf"

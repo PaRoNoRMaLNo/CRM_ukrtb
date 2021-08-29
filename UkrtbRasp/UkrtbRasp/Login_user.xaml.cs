@@ -22,7 +22,7 @@ namespace UkrtbRasp
 
         private void InBtn_Clicked(object sender, EventArgs e)
         {
-            if (User_login.Text == "prepod" && User_password.Text == "prepod")
+            if (User_login.Text == "_ukrtb" && User_password.Text == "_ukrtb")
             {
                 CrossSettings.Current.AddOrUpdateValue("role", "prepod");
                 (Application.Current).MainPage = new NavigationPage(new Prepod_main());

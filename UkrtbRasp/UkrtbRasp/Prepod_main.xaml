@@ -275,6 +275,7 @@
                            BackgroundColor="{DynamicResource Primary_light}"
                            VerticalOptions="Start"
                            CornerRadius="4">
+                <ScrollView>
             <StackLayout VerticalOptions="Start"
                          Margin="10">
                 <Label Text="Расписание звонков (ПН-ПТ)"
@@ -300,19 +301,23 @@
 
                     <Label Text="№ пары"
                            Grid.Column="0"
+                           MaxLines="1"
                            HorizontalOptions="CenterAndExpand"
                            Grid.Row="0" />
                     <Label Text="Начало"
                            HorizontalOptions="CenterAndExpand"
                            Grid.Column="1"
+                           MaxLines="1"
                            Grid.Row="0" />
                     <Label Text="Конец"
                            HorizontalOptions="CenterAndExpand"
                            Grid.Column="2"
+                           MaxLines="1"
                            Grid.Row="0" />
                     <Label Text="Перемена"
                            HorizontalOptions="CenterAndExpand"
                            Grid.Column="3"
+                           MaxLines="1"
                            Grid.Row="0" />
 
                     <Label Text="1 пара"
@@ -592,7 +597,9 @@
                            Grid.Column="3"
                            Grid.Row="7" />
                 </Grid>
+
             </StackLayout>
+                        </ScrollView>
         </yummy:PancakeView>
     </ContentPage>
 </TabbedPage>

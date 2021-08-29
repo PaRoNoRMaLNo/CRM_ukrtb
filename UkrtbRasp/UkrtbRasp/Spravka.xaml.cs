@@ -92,5 +92,10 @@ namespace UkrtbRasp
             if (Device.RuntimePlatform == Device.iOS)
                 this.Navigation.PopAsync();
         }
+
+        private void Spravka_back_Clicked(object sender, EventArgs e)
+        {
+            this.Navigation.PopAsync();
+        }
     }
 }

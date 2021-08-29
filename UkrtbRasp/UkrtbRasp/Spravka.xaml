@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-             x:Class="UkrtbRasp.Spravka">
+             x:Class="UkrtbRasp.Spravka"
+             BackgroundColor="{DynamicResource Primary}">
         <ContentPage.Padding>
                 <OnPlatform x:TypeArguments="Thickness"
                             iOS = "0,20,0,0"
@@ -19,10 +20,10 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout BackgroundColor="{DynamicResource Primary}">
-                <StackLayout.GestureRecognizers>
+                <!--<StackLayout.GestureRecognizers>
                     <PanGestureRecognizer x:Name="Swipe_back"
                                           PanUpdated="Swipe_back_PanUpdated" />
-                </StackLayout.GestureRecognizers>
+                </StackLayout.GestureRecognizers>-->
                 <yummy:PancakeView BackgroundColor="{DynamicResource Primary_light}"
                                    CornerRadius="0">
 
@@ -56,6 +57,7 @@
                            HorizontalTextAlignment="Start" />
                     <Picker TextColor="{DynamicResource Text_light}"
                             x:Name="Spravka_type"
+                             BackgroundColor="{DynamicResource Primary_light}"
                             SelectedIndexChanged="Spravka_type_SelectedIndexChanged">
                         <Picker.Items>
                             <x:String>Справка об обучении в колледже</x:String>
@@ -68,25 +70,30 @@
                         <!--Для справки об обучении в колледже-->
                         <Entry Placeholder="ФИО студента"
                                x:Name="Spravka_type1_fio"
+                                BackgroundColor="{DynamicResource Primary_light}"
                                PlaceholderColor="{DynamicResource Text_dark}"
                                TextColor="{DynamicResource Text_light}" />
                         <Entry Placeholder="Место требования (например, В школу)"
                                x:Name="Spravka_type1_demont"
+                               BackgroundColor="{DynamicResource Primary_light}"
                                PlaceholderColor="{DynamicResource Text_dark}"
                                TextColor="{DynamicResource Text_light}" />
                         <Entry Placeholder="Телефон"
                                x:Name="Spravka_type1_telephone"
                                Keyboard="Telephone"
+                                BackgroundColor="{DynamicResource Primary_light}"
                                PlaceholderColor="{DynamicResource Text_dark}"
                                TextColor="{DynamicResource Text_light}" />
                         <Entry Placeholder="Количество"
                                x:Name="Spravka_type1_count"
                                Keyboard="Numeric"
+                                BackgroundColor="{DynamicResource Primary_light}"
                                PlaceholderColor="{DynamicResource Text_dark}"
                                TextColor="{DynamicResource Text_light}" />
                         <Entry Placeholder="Email (не обязательно)"
                                x:Name="Spravka_type1_email"
                                Keyboard="Default"
+                                BackgroundColor="{DynamicResource Primary_light}"
                                PlaceholderColor="{DynamicResource Text_dark}"
                                TextColor="{DynamicResource Text_light}" />
                         <Button Text="Отправить"
@@ -96,6 +103,7 @@
                                 Padding="10"
                                 TextColor="{DynamicResource Text_light}"
                                 BackgroundColor="{DynamicResource Secondary}" />
+                            
                     </StackLayout>
 
                     <StackLayout IsVisible="false"
@@ -103,6 +111,7 @@
                         <!--Архивная справка-->
                         <Entry Placeholder="ФИО студента"
                                x:Name="Spravka_type2_fio"
+                                BackgroundColor="{DynamicResource Primary_light}" 
                                PlaceholderColor="{DynamicResource Text_dark}"
                                TextColor="{DynamicResource Text_light}" />
                         <!--<Entry Placeholder="Место требования (например, В школу)"
@@ -111,21 +120,25 @@
                         <Entry Placeholder="Телефон"
                                x:Name="Spravka_type2_telephone"
                                Keyboard="Telephone"
+                                BackgroundColor="{DynamicResource Primary_light}" 
                                PlaceholderColor="{DynamicResource Text_dark}"
                                TextColor="{DynamicResource Text_light}" />
                         <Entry Placeholder="Год начала обучения"
                                x:Name="Spravka_type2_year_start"
                                Keyboard="Numeric"
+                                BackgroundColor="{DynamicResource Primary_light}" 
                                PlaceholderColor="{DynamicResource Text_dark}"
                                TextColor="{DynamicResource Text_light}" />
                         <Entry Placeholder="Год окончания обучения"
                                x:Name="Spravka_type2_year_end"
                                Keyboard="Numeric"
+                                BackgroundColor="{DynamicResource Primary_light}" 
                                PlaceholderColor="{DynamicResource Text_dark}"
                                TextColor="{DynamicResource Text_light}" />
                         <Entry Placeholder="Email (не обязательно)"
                                x:Name="Spravka_type2_email"
                                Keyboard="Default"
+                                BackgroundColor="{DynamicResource Primary_light}" 
                                PlaceholderColor="{DynamicResource Text_dark}"
                                TextColor="{DynamicResource Text_light}" />
                         <Button Text="Отправить"
@@ -142,6 +155,7 @@
                         <!--Справка о размере стипендии-->
                         <Entry Placeholder="ФИО студента"
                                x:Name="Spravka_type3_fio"
+                                BackgroundColor="{DynamicResource Primary_light}" 
                                PlaceholderColor="{DynamicResource Text_dark}"
                                TextColor="{DynamicResource Text_light}" />
                         <!--<Entry Placeholder="Место требования (например, В школу)"
@@ -150,10 +164,12 @@
                         <Entry Placeholder="Телефон"
                                x:Name="Spravka_type3_telephone"
                                Keyboard="Telephone"
+                                BackgroundColor="{DynamicResource Primary_light}" 
                                PlaceholderColor="{DynamicResource Text_dark}"
                                TextColor="{DynamicResource Text_light}" />
                         <Entry Placeholder="Количество"
                                x:Name="Spravka_type3_count"
+                                BackgroundColor="{DynamicResource Primary_light}" 
                                Keyboard="Numeric"
                                PlaceholderColor="{DynamicResource Text_dark}"
                                TextColor="{DynamicResource Text_light}" />
@@ -164,11 +180,13 @@
                                    TextColor="{DynamicResource Text_dark}" />
                             <DatePicker x:Name="Spravka_type3_edustart"
                                         MinimumDate="10.06.2010"
+                                         BackgroundColor="{DynamicResource Primary_light}" 
                                         MaximumDate="10.08.2050"
                                         TextColor="{DynamicResource Text_light}"
                                         HorizontalOptions="StartAndExpand" />
                             <DatePicker TextColor="{DynamicResource Text_light}"
                                         MinimumDate="10.06.2010"
+                                         BackgroundColor="{DynamicResource Primary_light}" 
                                         MaximumDate="10.08.2050"
                                         x:Name="Spravka_type3_eduend"
                                         HorizontalOptions="EndAndExpand" />
@@ -176,6 +194,7 @@
                         <Entry Placeholder="Email (не обязательно)"
                                x:Name="Spravka_type3_email"
                                Keyboard="Default"
+                                BackgroundColor="{DynamicResource Primary_light}" 
                                PlaceholderColor="{DynamicResource Text_dark}"
                                TextColor="{DynamicResource Text_light}" />
                         <Button Text="Отправить"
@@ -186,7 +205,13 @@
                                 TextColor="{DynamicResource Text_light}"
                                 BackgroundColor="{DynamicResource Secondary}" />
                     </StackLayout>
-
+                        <Button Text="Назад"
+                                x:Name="Spravka_back"
+                                Clicked="Spravka_back_Clicked"
+                                HorizontalOptions="FillAndExpand"
+                                Padding="10"
+                                TextColor="{DynamicResource Text_light}"
+                                BackgroundColor="Red" />
 
                 </StackLayout>
 
