@@ -2539,32 +2539,39 @@
     ]
   },
   "packageFolders": {
-    "/Users/macbook/.nuget/packages/": {}
+    "C:\\Users\\1\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.Android/UkrtbRasp.Android.csproj",
+      "projectUniqueName": "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp.Android\\UkrtbRasp.Android.csproj",
       "projectName": "UkrtbRasp.Android",
-      "projectPath": "/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.Android/UkrtbRasp.Android.csproj",
-      "packagesPath": "/Users/macbook/.nuget/packages/",
-      "outputPath": "/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.Android/obj/",
+      "projectPath": "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp.Android\\UkrtbRasp.Android.csproj",
+      "packagesPath": "C:\\Users\\1\\.nuget\\packages\\",
+      "outputPath": "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp.Android\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+      ],
       "configFilePaths": [
-        "/Users/macbook/.config/NuGet/NuGet.Config"
+        "C:\\Users\\1\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "monoandroid11.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "monoandroid11.0": {
           "projectReferences": {
-            "/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp/UkrtbRasp.csproj": {
-              "projectPath": "/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp/UkrtbRasp.csproj"
+            "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp\\UkrtbRasp.csproj": {
+              "projectPath": "F:\\Github\\CRM_ukrtb\\UkrtbRasp\\UkrtbRasp\\UkrtbRasp.csproj"
             }
           }
         }
