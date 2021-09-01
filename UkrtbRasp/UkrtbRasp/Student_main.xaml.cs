@@ -163,6 +163,12 @@ namespace UkrtbRasp
                     lesson.FindByName<Label>("Cab").Text = item.cab;
                     lesson.FindByName<Label>("Name").Text = item.lesson;
                     lesson.FindByName<Label>("Prepod_or_group").Text = Prepod_isCheck ? item.group : item.teacher ;
+                    if (item.do_group == "1" || item.do_teacher == "1")
+                    {
+                        lesson.Zoom = item.zoom;
+                        lesson.FindByName<Image>("zoomicon").IsVisible = true;
+                        lesson.FindByName<Label>("Cab").IsVisible = false;
+                    }
                     Lessons_stack.Children.Add(lesson);
                 }
             else

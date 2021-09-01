@@ -298,13 +298,24 @@ namespace UkrtbRasp
 
         private async void Load_data_rasp(int a)
         {
-            List<string> items = await System.Threading.Tasks.Task.Run(() => LoadDataASync());
-            Prepod_or_group_picker.Items.Clear();
-            foreach (var item in items)
+            try
             {
-                Prepod_or_group_picker.Items.Add(item);
+                List<string> items = await System.Threading.Tasks.Task.Run(() => LoadDataASync());
+                Prepod_or_group_picker.Items.Clear();
+                foreach (var item in items)
+                {
+                    Prepod_or_group_picker.Items.Add(item);
+                }
+                Prepod_or_group_picker.SelectedIndex = a;
             }
-            Prepod_or_group_picker.SelectedIndex = a;
+            catch (Exception)
+            {
+                Prepod_or_group_picker.Items.Clear();
+                Prepod_or_group_picker.Items.Add("Ошибка получения данных");
+                Prepod_or_group_picker.SelectedIndex = 0;
+
+            }
+            
 
         }
 
@@ -365,6 +376,12 @@ namespace UkrtbRasp
                     lesson.FindByName<Label>("Cab").Text = item.cab;
                     lesson.FindByName<Label>("Name").Text = item.lesson;
                     lesson.FindByName<Label>("Prepod_or_group").Text = What_check == 1 ? item.group : What_check == 2 ? item.teacher : item.group + " " + item.teacher;
+                    if (item.do_group == "1" || item.do_teacher == "1")
+                    {
+                        lesson.Zoom = item.zoom;
+                        lesson.FindByName<Image>("zoomicon").IsVisible = true;
+                        lesson.FindByName<Label>("Cab").IsVisible = false;
+                    }
                     Lessons_stack.Children.Add(lesson);
                 }
             else

@@ -176,4 +176,7 @@
   <ItemGroup>
     <BundleResource Include="rasp_ios.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="zoom.png" />
+  </ItemGroup>
 </Project>

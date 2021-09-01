@@ -172,7 +172,7 @@
                         </Picker.Items>
                     </Picker>
                 </yummy:PancakeView>
-                <ScrollView Margin="0,10">
+                <ScrollView Margin="0,10" VerticalScrollBarVisibility="Never">
                     <StackLayout x:Name="Lessons_stack">
 
                     </StackLayout>

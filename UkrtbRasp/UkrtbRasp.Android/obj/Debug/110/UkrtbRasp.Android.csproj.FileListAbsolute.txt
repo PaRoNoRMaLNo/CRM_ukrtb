@@ -1200,3 +1200,4 @@ F:\Github\CRM_ukrtb\UkrtbRasp\UkrtbRasp.Android\obj\Debug\110\android\src\mono\c
 F:\Github\CRM_ukrtb\UkrtbRasp\UkrtbRasp.Android\obj\Debug\110\android\src\mono\com\airbnb\lottie\OnCompositionLoadedListenerImplementor.java
 F:\Github\CRM_ukrtb\UkrtbRasp\UkrtbRasp.Android\obj\Debug\110\android\src\mono\com\airbnb\lottie\PerformanceTracker_FrameListenerImplementor.java
 F:\Github\CRM_ukrtb\UkrtbRasp\UkrtbRasp.Android\obj\Debug\110\res\drawable\icon.png
+F:\Github\CRM_ukrtb\UkrtbRasp\UkrtbRasp.Android\obj\Debug\110\res\drawable\zoom.png
