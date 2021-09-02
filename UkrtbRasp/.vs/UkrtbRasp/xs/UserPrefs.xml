@@ -1,36 +1,22 @@
-﻿<Properties StartupConfiguration="{9971E8DD-E49F-4D2D-BF89-D4FE731C1CF1}|Default">
-  <MonoDevelop.Ide.ItemProperties.UkrtbRasp.Android PreferredExecutionTarget="Android.pixel_3_xl_q_10_0_-_api_29" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="UkrtbRasp.iOS/Info.plist">
-    <Files>
-      <File FileName="UkrtbRasp/VC_main.xaml" Line="430" Column="35" />
-      <File FileName="UkrtbRasp/Login_user.xaml.cs" Line="25" Column="77" />
-      <File FileName="UkrtbRasp.iOS/Info.plist" />
-    </Files>
+﻿<Properties StartupConfiguration="{11274EDD-D50C-4A4B-84BC-4D7A2444FF5F}|Default">
+  <MonoDevelop.Ide.ItemProperties.UkrtbRasp.Android AndroidDesignerPreferredTheme="MainTheme" PreferredExecutionTarget="Android.pixel_3_xl_q_10_0_-_api_29" />
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="UkrtbRasp" expanded="True">
             <Node name="UkrtbRasp" expanded="True">
               <Node name="Login_user.xaml" expanded="True" />
-              <Node name="Prepod_main.xaml" expanded="True" />
-              <Node name="Spravka.xaml" expanded="True" />
-              <Node name="VC_main.xaml" expanded="True" />
             </Node>
-            <Node name="UkrtbRasp.Android" expanded="True">
-              <Node name="Resources" expanded="True">
-                <Node name="mipmap-hdpi" expanded="True" />
-                <Node name="values" expanded="True" />
-              </Node>
-            </Node>
-            <Node name="UkrtbRasp.iOS" expanded="True" selected="True" />
+            <Node name="UkrtbRasp.Android" expanded="True" selected="True" />
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.UkrtbRasp.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.EF174718-6FB5-4900-8BBF-012B72D19B6B" />
+  <MonoDevelop.Ide.ItemProperties.UkrtbRasp.iOS automaticSigning="False" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

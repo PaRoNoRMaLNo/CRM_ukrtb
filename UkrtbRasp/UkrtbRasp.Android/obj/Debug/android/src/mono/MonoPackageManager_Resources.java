@@ -4,6 +4,13 @@ public class MonoPackageManager_Resources {
 		/* We need to ensure that "UkrtbRasp.Android.dll" comes first in this list. */
 		"UkrtbRasp.Android.dll",
 		"FormsViewGroup.dll",
+		"Lottie.Android.dll",
+		"Lottie.Forms.dll",
+		"MySqlConnector.dll",
+		"Newtonsoft.Json.dll",
+		"Plugin.Settings.Abstractions.dll",
+		"Plugin.Settings.dll",
+		"Square.OkIO.dll",
 		"UkrtbRasp.dll",
 		"Xamarin.AndroidX.Activity.dll",
 		"Xamarin.AndroidX.Annotation.dll",
