@@ -4,6 +4,7 @@ using Plugin.Settings;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
@@ -13,11 +14,13 @@ namespace UkrtbRasp
     public partial class Prepod_main : TabbedPage
     {
         byte What_check = 1;
+        List<Time> Times = new List<Time>();
         public Prepod_main()
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
             DateTime dateTim = DateTime.Now;
+            Times = TimesLessons.GetTimes(dateTim);
             Select_date_today.Text = $"{dateTim.Day}.{dateTim.Month}";
             dateTim = dateTim.AddDays(1);
             Select_date_tomorow.Text = $"{dateTim.Day}.{dateTim.Month}";
@@ -299,6 +302,9 @@ namespace UkrtbRasp
                 {
                     Lesson lesson = new Lesson();
                     lesson.FindByName<Label>("Number").Text = item.num;
+                    Time time = Times.Find(tme => tme.NumberLesson == item.num);
+                    if(time.Begin != "")
+                        lesson.FindByName<Label>("Time").Text = $"{time.Begin.Substring(0,5)} - {time.End.Substring(0,5)}";
                     lesson.FindByName<Label>("Cab").Text = item.cab;
                     lesson.FindByName<Label>("Name").Text = item.lesson;
                     lesson.FindByName<Label>("Prepod_or_group").Text = What_check == 1 ? item.group : What_check == 2 ? item.teacher : item.group + " " + item.teacher;
@@ -318,6 +324,7 @@ namespace UkrtbRasp
 
         private void Date_hide_DateSelected(object sender, DateChangedEventArgs e)
         {
+           Times = TimesLessons.GetTimes(Date_hide.Date);
             Load_lessons();
         }
 
@@ -326,5 +333,23 @@ namespace UkrtbRasp
             CrossSettings.Current.AddOrUpdateValue("what_check", Prepod_or_group_picker.SelectedIndex);
             Load_lessons();
         }
+
+        //private void GetTimes(DateTime datetimereg)
+        //{
+
+        //    #region Date 
+        //    string year, mounth, day;
+        //    DateTime dateTime = datetimereg;
+        //    year = dateTime.Year.ToString();
+        //    mounth = dateTime.Month.ToString();
+        //    mounth = mounth.Length == 1 ? "0" + mounth : mounth;
+        //    day = dateTime.Day.ToString();
+        //    day = day.Length == 1 ? "0" + day : day;
+        //    #endregion
+        //    var param = new NameValueCollection();
+        //    param["date"] = $"{year}-{mounth}-{day}";
+        //    var json = Post.GetJson("getTime", param);
+        //    Times = JsonConvert.DeserializeObject<List<Time>>(json);
+        //}
     }
 }

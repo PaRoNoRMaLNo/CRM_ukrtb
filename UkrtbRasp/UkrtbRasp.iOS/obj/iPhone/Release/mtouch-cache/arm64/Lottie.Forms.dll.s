@@ -22,7 +22,7 @@ Ldebug_info_begin:
 	.short 2
 	.long 0
 	.byte 8,1
-	.asciz "Mono AOT Compiler 6.12.0 (2020-02/b4a385816ed Tue Mar 30 19:54:56 EDT 2021)"
+	.asciz "Mono AOT Compiler 6.12.0 (2020-02/3cf59ad33da Thu Aug 19 11:06:27 EDT 2021)"
 	.asciz "Lottie.Forms.dll"
 	.asciz ""
 
@@ -9223,84 +9223,6 @@ bl _p_2
 Lme_97:
 .text
 	.align 4
-	.no_dead_strip wrapper_delegate_invoke_System_Action_1_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs_invoke_void_T_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs
-wrapper_delegate_invoke_System_Action_1_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs_invoke_void_T_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs:
-.word 0xa9bb7bfd
-.word 0x910003fd
-.word 0xa9015fb6
-.word 0xa90267b8
-.word 0xf9001bba
-.word 0xaa0003f9
-.word 0xaa0103fa
-
-adrp x16, mono_aot_Lottie_Forms_got@PAGE+0
-add x16, x16, mono_aot_Lottie_Forms_got@PAGEOFF
-ldr x0, [x16, #48]
-.word 0xb9400000
-.word 0x350006a0
-.word 0x14000001
-.word 0xf9403f38
-.word 0xaa1803e0
-.word 0xb50001e0
-.word 0xf9401338
-.word 0xaa1803e0
-.word 0xb40000e0
-.word 0xf9401f20
-.word 0xf9400b22
-.word 0xaa1803e0
-.word 0xaa1a03e1
-.word 0xd63f0040
-.word 0x1400001d
-.word 0xf9401f20
-.word 0xf9400b21
-.word 0xaa1a03e0
-.word 0xd63f0020
-.word 0x14000018
-.word 0xb9801b00
-.word 0xaa0003f9
-.word 0xd2800017
-.word 0x93407ee0
-.word 0xb9801b01
-.word 0xeb00003f
-.word 0x10000011
-.word 0x540003e9
-.word 0xd37df000
-.word 0x8b000300
-.word 0x91008000
-.word 0xf9400016
-.word 0xaa1603e2
-.word 0xaa0203e0
-.word 0xaa1a03e1
-.word 0xf90023a2
-.word 0xf9400c50
-.word 0xd63f0200
-.word 0xf94023a0
-.word 0x110006f7
-.word 0xaa1703e0
-.word 0x6b19001f
-.word 0x54fffdab
-.word 0xa9415fb6
-.word 0xa94267b8
-.word 0xf9401bba
-.word 0x910003bf
-.word 0xa8c57bfd
-.word 0xd65f03c0
-.word 0x91022300
-.word 0xd280003e
-.word 0xb900001e
-.word 0xaa1803e0
-bl _p_82
-bl _p_83
-.word 0xaa0003f8
-.word 0xb5ffff20
-.word 0x17ffffca
-.word 0xd28019e0
-.word 0xaa1103e1
-bl _p_2
-
-Lme_a0:
-.text
-	.align 4
 	.no_dead_strip wrapper_delegate_invoke_System_Predicate_1_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs_invoke_bool_T_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs
 wrapper_delegate_invoke_System_Predicate_1_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs_invoke_bool_T_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs:
 .word 0xa9bb7bfd
@@ -9377,6 +9299,84 @@ bl _p_83
 .word 0xaa0003f8
 .word 0xb5ffff20
 .word 0x17ffffc5
+.word 0xd28019e0
+.word 0xaa1103e1
+bl _p_2
+
+Lme_a0:
+.text
+	.align 4
+	.no_dead_strip wrapper_delegate_invoke_System_Action_1_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs_invoke_void_T_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs
+wrapper_delegate_invoke_System_Action_1_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs_invoke_void_T_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs:
+.word 0xa9bb7bfd
+.word 0x910003fd
+.word 0xa9015fb6
+.word 0xa90267b8
+.word 0xf9001bba
+.word 0xaa0003f9
+.word 0xaa0103fa
+
+adrp x16, mono_aot_Lottie_Forms_got@PAGE+0
+add x16, x16, mono_aot_Lottie_Forms_got@PAGEOFF
+ldr x0, [x16, #48]
+.word 0xb9400000
+.word 0x350006a0
+.word 0x14000001
+.word 0xf9403f38
+.word 0xaa1803e0
+.word 0xb50001e0
+.word 0xf9401338
+.word 0xaa1803e0
+.word 0xb40000e0
+.word 0xf9401f20
+.word 0xf9400b22
+.word 0xaa1803e0
+.word 0xaa1a03e1
+.word 0xd63f0040
+.word 0x1400001d
+.word 0xf9401f20
+.word 0xf9400b21
+.word 0xaa1a03e0
+.word 0xd63f0020
+.word 0x14000018
+.word 0xb9801b00
+.word 0xaa0003f9
+.word 0xd2800017
+.word 0x93407ee0
+.word 0xb9801b01
+.word 0xeb00003f
+.word 0x10000011
+.word 0x540003e9
+.word 0xd37df000
+.word 0x8b000300
+.word 0x91008000
+.word 0xf9400016
+.word 0xaa1603e2
+.word 0xaa0203e0
+.word 0xaa1a03e1
+.word 0xf90023a2
+.word 0xf9400c50
+.word 0xd63f0200
+.word 0xf94023a0
+.word 0x110006f7
+.word 0xaa1703e0
+.word 0x6b19001f
+.word 0x54fffdab
+.word 0xa9415fb6
+.word 0xa94267b8
+.word 0xf9401bba
+.word 0x910003bf
+.word 0xa8c57bfd
+.word 0xd65f03c0
+.word 0x91022300
+.word 0xd280003e
+.word 0xb900001e
+.word 0xaa1803e0
+bl _p_82
+bl _p_83
+.word 0xaa0003f8
+.word 0xb5ffff20
+.word 0x17ffffca
 .word 0xd28019e0
 .word 0xaa1103e1
 bl _p_2
@@ -13535,8 +13535,8 @@ bl method_addresses
 bl method_addresses
 bl method_addresses
 bl method_addresses
-bl wrapper_delegate_invoke_System_Action_1_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs_invoke_void_T_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs
 bl wrapper_delegate_invoke_System_Predicate_1_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs_invoke_bool_T_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs
+bl wrapper_delegate_invoke_System_Action_1_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs_invoke_void_T_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs
 bl wrapper_delegate_invoke_System_Comparison_1_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs_invoke_int_T_T_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs
 bl System_ValueTuple_2_T1_INT_T2_INT__ctor_T1_INT_T2_INT
 bl System_ValueTuple_2_T1_INT_T2_INT_Equals_object
@@ -15230,7 +15230,7 @@ _mono_aot_file_info:
 	.long 0,0,0,0,0,0,0,0
 	.long 0,0,0,0,0,0,0,0
 	.long 0,0,0,0,0,0,0,0
-	.byte 25,43,161,213,28,31,19,50,115,7,122,132,171,58,16,236
+	.byte 238,235,18,188,148,204,184,31,17,196,204,247,220,241,40,160
 	.globl _mono_aot_module_Lottie_Forms_info
 	.align 3
 _mono_aot_module_Lottie_Forms_info:
@@ -30542,13 +30542,13 @@ Lfde146_end:
 LTDIE_233:
 
 	.byte 5
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 	.byte 128,1,16
 LDIFF_SYM2267=LTDIE_16 - Ldebug_info_start
 	.long LDIFF_SYM2267
 	.byte 2,35,0,0,7
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 LDIFF_SYM2268=LTDIE_233 - Ldebug_info_start
 	.long LDIFF_SYM2268
@@ -30563,11 +30563,11 @@ LTDIE_233_REFERENCE:
 LDIFF_SYM2270=LTDIE_233 - Ldebug_info_start
 	.long LDIFF_SYM2270
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Action`1<System.EventHandler`1<Xamarin.Forms.Platform.iOS.VisualElementChangedEventArgs>>:invoke_void_T"
-	.asciz "wrapper_delegate_invoke_System_Action_1_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs_invoke_void_T_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs"
+	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<System.EventHandler`1<Xamarin.Forms.Platform.iOS.VisualElementChangedEventArgs>>:invoke_bool_T"
+	.asciz "wrapper_delegate_invoke_System_Predicate_1_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs_invoke_bool_T_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Action_1_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs_invoke_void_T_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs
+	.quad wrapper_delegate_invoke_System_Predicate_1_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs_invoke_bool_T_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs
 	.quad Lme_a0
 
 	.byte 2,118,16,3
@@ -30605,20 +30605,25 @@ LDIFF_SYM2276=LTDIE_16_REFERENCE - Ldebug_info_start
 
 LDIFF_SYM2277=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM2277
-	.byte 1,104,0
+	.byte 1,104,11
+	.asciz "V_5"
+
+LDIFF_SYM2278=LDIE_BOOLEAN - Ldebug_info_start
+	.long LDIFF_SYM2278
+	.byte 1,102,0
 
 .section __DWARF, __debug_frame,regular,debug
 
-LDIFF_SYM2278=Lfde147_end - Lfde147_start
-	.long LDIFF_SYM2278
+LDIFF_SYM2279=Lfde147_end - Lfde147_start
+	.long LDIFF_SYM2279
 Lfde147_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Action_1_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs_invoke_void_T_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs
+	.quad wrapper_delegate_invoke_System_Predicate_1_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs_invoke_bool_T_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs
 
-LDIFF_SYM2279=Lme_a0 - wrapper_delegate_invoke_System_Action_1_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs_invoke_void_T_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs
-	.long LDIFF_SYM2279
+LDIFF_SYM2280=Lme_a0 - wrapper_delegate_invoke_System_Predicate_1_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs_invoke_bool_T_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs
+	.long LDIFF_SYM2280
 	.long 0
 	.byte 12,31,0,68,14,80,157,10,158,9,68,13,29,68,150,8,151,7,68,152,6,153,5,68,154,4
 	.align 3
@@ -30628,75 +30633,70 @@ Lfde147_end:
 LTDIE_234:
 
 	.byte 5
-	.asciz "System_Predicate`1"
+	.asciz "System_Action`1"
 
 	.byte 128,1,16
-LDIFF_SYM2280=LTDIE_16 - Ldebug_info_start
-	.long LDIFF_SYM2280
-	.byte 2,35,0,0,7
-	.asciz "System_Predicate`1"
-
-LDIFF_SYM2281=LTDIE_234 - Ldebug_info_start
+LDIFF_SYM2281=LTDIE_16 - Ldebug_info_start
 	.long LDIFF_SYM2281
+	.byte 2,35,0,0,7
+	.asciz "System_Action`1"
+
+LDIFF_SYM2282=LTDIE_234 - Ldebug_info_start
+	.long LDIFF_SYM2282
 LTDIE_234_POINTER:
 
 	.byte 13
-LDIFF_SYM2282=LTDIE_234 - Ldebug_info_start
-	.long LDIFF_SYM2282
+LDIFF_SYM2283=LTDIE_234 - Ldebug_info_start
+	.long LDIFF_SYM2283
 LTDIE_234_REFERENCE:
 
 	.byte 14
-LDIFF_SYM2283=LTDIE_234 - Ldebug_info_start
-	.long LDIFF_SYM2283
+LDIFF_SYM2284=LTDIE_234 - Ldebug_info_start
+	.long LDIFF_SYM2284
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<System.EventHandler`1<Xamarin.Forms.Platform.iOS.VisualElementChangedEventArgs>>:invoke_bool_T"
-	.asciz "wrapper_delegate_invoke_System_Predicate_1_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs_invoke_bool_T_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs"
+	.asciz "(wrapper_delegate-invoke)_System.Action`1<System.EventHandler`1<Xamarin.Forms.Platform.iOS.VisualElementChangedEventArgs>>:invoke_void_T"
+	.asciz "wrapper_delegate_invoke_System_Action_1_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs_invoke_void_T_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Predicate_1_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs_invoke_bool_T_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs
+	.quad wrapper_delegate_invoke_System_Action_1_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs_invoke_void_T_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs
 	.quad Lme_a1
 
 	.byte 2,118,16,3
 	.asciz "this"
 
-LDIFF_SYM2284=LTDIE_234_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM2284
+LDIFF_SYM2285=LTDIE_234_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM2285
 	.byte 1,105,3
 	.asciz "param0"
 
-LDIFF_SYM2285=LTDIE_230_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM2285
+LDIFF_SYM2286=LTDIE_230_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM2286
 	.byte 1,106,11
 	.asciz "V_0"
 
-LDIFF_SYM2286=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM2286
+LDIFF_SYM2287=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM2287
 	.byte 1,103,11
 	.asciz "V_1"
 
-LDIFF_SYM2287=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM2287
+LDIFF_SYM2288=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM2288
 	.byte 1,105,11
 	.asciz "V_2"
 
-LDIFF_SYM2288=LTDIE_226_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM2288
+LDIFF_SYM2289=LTDIE_226_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM2289
 	.byte 1,104,11
 	.asciz "V_3"
 
-LDIFF_SYM2289=LTDIE_16_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM2289
+LDIFF_SYM2290=LTDIE_16_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM2290
 	.byte 1,102,11
 	.asciz "V_4"
 
-LDIFF_SYM2290=LDIE_OBJECT - Ldebug_info_start
-	.long LDIFF_SYM2290
-	.byte 1,104,11
-	.asciz "V_5"
-
-LDIFF_SYM2291=LDIE_BOOLEAN - Ldebug_info_start
+LDIFF_SYM2291=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM2291
-	.byte 1,102,0
+	.byte 1,104,0
 
 .section __DWARF, __debug_frame,regular,debug
 
@@ -30706,9 +30706,9 @@ Lfde148_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Predicate_1_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs_invoke_bool_T_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs
+	.quad wrapper_delegate_invoke_System_Action_1_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs_invoke_void_T_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs
 
-LDIFF_SYM2293=Lme_a1 - wrapper_delegate_invoke_System_Predicate_1_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs_invoke_bool_T_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs
+LDIFF_SYM2293=Lme_a1 - wrapper_delegate_invoke_System_Action_1_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs_invoke_void_T_System_EventHandler_1_Xamarin_Forms_Platform_iOS_VisualElementChangedEventArgs
 	.long LDIFF_SYM2293
 	.long 0
 	.byte 12,31,0,68,14,80,157,10,158,9,68,13,29,68,150,8,151,7,68,152,6,153,5,68,154,4

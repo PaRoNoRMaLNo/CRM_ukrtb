@@ -3,7 +3,7 @@
   <ItemGroup>
     <_AppExtensionDebugSymbolProperties Include="UkrtbRasp.iOS.app">
       <NativeExecutable>UkrtbRasp.iOS</NativeExecutable>
-      <CompiledArchitectures></CompiledArchitectures>
+      <CompiledArchitectures>ARM64</CompiledArchitectures>
       <NoDSymUtil>false</NoDSymUtil>
       <NoSymbolStrip>false</NoSymbolStrip>
       <SymbolsList>/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhone/Release/mtouch-symbols.list</SymbolsList>

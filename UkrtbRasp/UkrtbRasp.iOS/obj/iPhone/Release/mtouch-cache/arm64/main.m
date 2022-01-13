@@ -32,9 +32,9 @@ extern void *mono_aot_module_Xamarin_Forms_PancakeView_info;
 extern void *mono_aot_module_MySqlConnector_info;
 extern void *mono_aot_module_Lottie_Forms_info;
 extern void *mono_aot_module_Lottie_iOS_info;
+extern void *mono_aot_module_Newtonsoft_Json_info;
 extern void *mono_aot_module_Plugin_Settings_info;
 extern void *mono_aot_module_Plugin_Settings_Abstractions_info;
-extern void *mono_aot_module_Newtonsoft_Json_info;
 extern void *mono_aot_module_Xamarin_Essentials_info;
 extern void *mono_aot_module_OpenTK_1_0_info;
 
@@ -65,9 +65,9 @@ void xamarin_register_modules_impl ()
 	mono_aot_register_module (mono_aot_module_MySqlConnector_info);
 	mono_aot_register_module (mono_aot_module_Lottie_Forms_info);
 	mono_aot_register_module (mono_aot_module_Lottie_iOS_info);
+	mono_aot_register_module (mono_aot_module_Newtonsoft_Json_info);
 	mono_aot_register_module (mono_aot_module_Plugin_Settings_info);
 	mono_aot_register_module (mono_aot_module_Plugin_Settings_Abstractions_info);
-	mono_aot_register_module (mono_aot_module_Newtonsoft_Json_info);
 	mono_aot_register_module (mono_aot_module_Xamarin_Essentials_info);
 	mono_aot_register_module (mono_aot_module_OpenTK_1_0_info);
 

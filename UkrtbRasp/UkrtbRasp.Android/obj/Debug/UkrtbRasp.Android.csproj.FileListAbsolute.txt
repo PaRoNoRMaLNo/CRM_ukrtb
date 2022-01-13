@@ -1186,3 +1186,17 @@
 /Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.Android/obj/Debug/stamp/_GenerateJavaStubs.stamp
 /Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.Android/obj/Debug/stamp/_GeneratePackageManagerJava.stamp
 /Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.Android/obj/Debug/stamp/_ResolveLibraryProjectImports.stamp
+/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.Android/obj/Debug/android/typemaps.x86.s
+/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.Android/obj/Debug/android/typemaps.x86_64.s
+/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.Android/obj/Debug/android/environment.x86.s
+/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.Android/obj/Debug/android/environment.x86_64.s
+/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.Android/obj/Debug/android/compressed_assemblies.x86.s
+/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.Android/obj/Debug/android/compressed_assemblies.x86_64.s
+/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.Android/obj/Debug/android/typemaps.x86.o
+/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.Android/obj/Debug/android/typemaps.x86_64.o
+/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.Android/obj/Debug/android/environment.x86.o
+/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.Android/obj/Debug/android/environment.x86_64.o
+/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.Android/obj/Debug/android/compressed_assemblies.x86.o
+/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.Android/obj/Debug/android/compressed_assemblies.x86_64.o
+/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.Android/obj/Debug/app_shared_libraries/x86/libxamarin-app.so
+/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.Android/obj/Debug/app_shared_libraries/x86_64/libxamarin-app.so

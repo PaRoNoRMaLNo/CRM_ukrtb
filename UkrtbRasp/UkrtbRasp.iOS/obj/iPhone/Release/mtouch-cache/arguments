@@ -1,16 +1,16 @@
-# Version: 14.20.0.24 (d16-10: c4b89cddb)
-/Library/Frameworks/Xamarin.iOS.framework/Versions/14.20.0.24/lib/mtouch/mtouch.exe \
+# Version: 15.0.0.6 (xcode13-ios: 2771277e0)
+/Library/Frameworks/Xamarin.iOS.framework/Versions/15.0.0.6/lib/mtouch/mtouch.exe \
 	--sgen-conc \
 	'/target-framework:Xamarin.iOS,Version=v1.0' \
 	--http-message-handler=NSUrlSessionHandler \
 	--cache=/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhone/Release/mtouch-cache \
 	--root-assembly=/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/bin/iPhone/Release/UkrtbRasp.iOS.exe \
-	--sdkroot=/Users/macbook/Downloads/Xcode.app/Contents/Developer \
+	--sdkroot=/Users/macbook/Desktop/Xcode.app/Contents/Developer \
 	--targetver=8.0 \
 	--dev=/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/bin/iPhone/Release/UkrtbRasp.iOS.app \
 	--executable=UkrtbRasp.iOS \
 	--linksdkonly \
-	--sdk=14.5 \
+	--sdk=15.0 \
 	--aot-options=-O=-float32 \
 	--abi=arm64 \
 	--symbollist=/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhone/Release/mtouch-symbols.list \

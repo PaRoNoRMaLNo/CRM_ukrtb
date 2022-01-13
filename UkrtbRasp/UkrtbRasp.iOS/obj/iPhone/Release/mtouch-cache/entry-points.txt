@@ -6,13 +6,7 @@ Function=SystemNative_StrErrorR
 	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhone/Release/mtouch-cache/1-Link/mscorlib.dll
 Function=SystemNative_GetNonCryptographicallySecureRandomBytes
 	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhone/Release/mtouch-cache/1-Link/mscorlib.dll
-Function=SystemNative_OpenDir
-	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhone/Release/mtouch-cache/1-Link/mscorlib.dll
 Function=SystemNative_GetReadDirRBufferSize
-	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhone/Release/mtouch-cache/1-Link/mscorlib.dll
-Function=SystemNative_ReadDirR
-	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhone/Release/mtouch-cache/1-Link/mscorlib.dll
-Function=SystemNative_CloseDir
 	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhone/Release/mtouch-cache/1-Link/mscorlib.dll
 Function=SystemNative_ReadLink
 	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhone/Release/mtouch-cache/1-Link/mscorlib.dll
@@ -36,6 +30,12 @@ Function=SystemNative_Rename
 	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhone/Release/mtouch-cache/1-Link/mscorlib.dll
 Function=SystemNative_Unlink
 	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhone/Release/mtouch-cache/1-Link/mscorlib.dll
+Function=SystemNative_OpenDir
+	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhone/Release/mtouch-cache/1-Link/mscorlib.dll
+Function=SystemNative_ReadDirR
+	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhone/Release/mtouch-cache/1-Link/mscorlib.dll
+Function=SystemNative_CloseDir
+	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhone/Release/mtouch-cache/1-Link/mscorlib.dll
 Function=xamarin_timezone_get_local_name
 	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhone/Release/mtouch-cache/1-Link/mscorlib.dll
 Function=xamarin_timezone_get_data
@@ -51,9 +51,9 @@ Function=xamarin_release_block_on_main_thread
 	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhone/Release/mtouch-cache/1-Link/Xamarin.iOS.dll
 Function=xamarin_get_block_descriptor
 	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhone/Release/mtouch-cache/1-Link/Xamarin.iOS.dll
-Function=xamarin_IntPtr_objc_msgSend_IntPtr
+Function=xamarin_IntPtr_objc_msgSend_IntPtr_exception
 	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhone/Release/mtouch-cache/1-Link/Xamarin.iOS.dll
-Function=xamarin_IntPtr_objc_msgSendSuper_IntPtr
+Function=xamarin_IntPtr_objc_msgSendSuper_IntPtr_exception
 	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhone/Release/mtouch-cache/1-Link/Xamarin.iOS.dll
 Function=UIApplicationMain
 	/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/iPhone/Release/mtouch-cache/1-Link/Xamarin.iOS.dll

@@ -22,7 +22,7 @@ Ldebug_info_begin:
 	.short 2
 	.long 0
 	.byte 8,1
-	.asciz "Mono AOT Compiler 6.12.0 (2020-02/b4a385816ed Tue Mar 30 19:54:56 EDT 2021)"
+	.asciz "Mono AOT Compiler 6.12.0 (2020-02/3cf59ad33da Thu Aug 19 11:06:27 EDT 2021)"
 	.asciz "System.Web.Services.dll"
 	.asciz ""
 
@@ -47545,7 +47545,7 @@ runtime_version:
 .section __TEXT, __const
 	.align 2
 assembly_guid:
-	.asciz "211987B1-CA81-4454-8532-C3230D810F08"
+	.asciz "B19FBBCB-345D-4789-869D-B3C93067B1F6"
 .section __TEXT, __const
 	.align 2
 assembly_name:
@@ -47639,7 +47639,7 @@ _mono_aot_file_info:
 	.long 0,0,0,0,0,0,0,0
 	.long 0,0,0,0,0,0,0,0
 	.long 0,0,0,0,0,0,0,0
-	.byte 201,36,150,120,3,189,72,127,103,39,166,28,65,3,39,197
+	.byte 14,8,228,173,115,171,159,21,243,92,121,143,106,30,31,64
 	.globl _mono_aot_module_System_Web_Services_info
 	.align 3
 _mono_aot_module_System_Web_Services_info:

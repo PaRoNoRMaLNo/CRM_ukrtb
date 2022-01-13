@@ -22,7 +22,7 @@ Ldebug_info_begin:
 	.short 2
 	.long 0
 	.byte 8,1
-	.asciz "Mono AOT Compiler 6.12.0 (2020-02/b4a385816ed Tue Mar 30 19:54:56 EDT 2021)"
+	.asciz "Mono AOT Compiler 6.12.0 (2020-02/3cf59ad33da Thu Aug 19 11:06:27 EDT 2021)"
 	.asciz "Xamarin.Forms.Xaml.dll"
 	.asciz ""
 
@@ -54818,86 +54818,6 @@ ldr x4, [x16, #16]
 Lme_2a9:
 .text
 	.align 4
-	.no_dead_strip wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XmlName_invoke_void_T_Xamarin_Forms_Xaml_XmlName
-wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XmlName_invoke_void_T_Xamarin_Forms_Xaml_XmlName:
-.word 0xa9bb7bfd
-.word 0x910003fd
-.word 0xa90163b7
-.word 0xa9026bb9
-.word 0xaa0003fa
-.word 0xf9001ba1
-.word 0xf9001fa2
-
-adrp x16, mono_aot_Xamarin_Forms_Xaml_got@PAGE+0
-add x16, x16, mono_aot_Xamarin_Forms_Xaml_got@PAGEOFF
-ldr x0, [x16, #48]
-.word 0xb9400000
-.word 0x350006e0
-.word 0x14000001
-.word 0xf9403f59
-.word 0xaa1903e0
-.word 0xb5000220
-.word 0xf9401359
-.word 0xaa1903e0
-.word 0xb4000100
-.word 0xf9401f40
-.word 0xf9400b43
-.word 0xaa1903e0
-.word 0xf9401ba1
-.word 0xf9401fa2
-.word 0xd63f0060
-.word 0x1400001f
-.word 0xf9401f40
-.word 0xf9400b42
-.word 0xf9401ba0
-.word 0xf9401fa1
-.word 0xd63f0040
-.word 0x14000019
-.word 0xb9801b20
-.word 0xaa0003fa
-.word 0xd2800018
-.word 0x93407f00
-.word 0xb9801b21
-.word 0xeb00003f
-.word 0x10000011
-.word 0x540003e9
-.word 0xd37df000
-.word 0x8b000320
-.word 0x91008000
-.word 0xf9400017
-.word 0xaa1703e3
-.word 0xaa0303e0
-.word 0xf9401ba1
-.word 0xf9401fa2
-.word 0xf90023a3
-.word 0xf9400c70
-.word 0xd63f0200
-.word 0xf94023a0
-.word 0x11000718
-.word 0xaa1803e0
-.word 0x6b1a001f
-.word 0x54fffd8b
-.word 0xa94163b7
-.word 0xa9426bb9
-.word 0x910003bf
-.word 0xa8c57bfd
-.word 0xd65f03c0
-.word 0x91022320
-.word 0xd280003e
-.word 0xb900001e
-.word 0xaa1903e0
-bl _p_480
-bl _p_481
-.word 0xaa0003f9
-.word 0xb5ffff20
-.word 0x17ffffc8
-.word 0xd28019e0
-.word 0xaa1103e1
-bl _p_13
-
-Lme_2ae:
-.text
-	.align 4
 	.no_dead_strip wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XmlName_invoke_bool_T_Xamarin_Forms_Xaml_XmlName
 wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XmlName_invoke_bool_T_Xamarin_Forms_Xaml_XmlName:
 .word 0xa9bb7bfd
@@ -54980,7 +54900,87 @@ bl _p_481
 .word 0xaa1103e1
 bl _p_13
 
-Lme_2b4:
+Lme_2ae:
+.text
+	.align 4
+	.no_dead_strip wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XmlName_invoke_void_T_Xamarin_Forms_Xaml_XmlName
+wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XmlName_invoke_void_T_Xamarin_Forms_Xaml_XmlName:
+.word 0xa9bb7bfd
+.word 0x910003fd
+.word 0xa90163b7
+.word 0xa9026bb9
+.word 0xaa0003fa
+.word 0xf9001ba1
+.word 0xf9001fa2
+
+adrp x16, mono_aot_Xamarin_Forms_Xaml_got@PAGE+0
+add x16, x16, mono_aot_Xamarin_Forms_Xaml_got@PAGEOFF
+ldr x0, [x16, #48]
+.word 0xb9400000
+.word 0x350006e0
+.word 0x14000001
+.word 0xf9403f59
+.word 0xaa1903e0
+.word 0xb5000220
+.word 0xf9401359
+.word 0xaa1903e0
+.word 0xb4000100
+.word 0xf9401f40
+.word 0xf9400b43
+.word 0xaa1903e0
+.word 0xf9401ba1
+.word 0xf9401fa2
+.word 0xd63f0060
+.word 0x1400001f
+.word 0xf9401f40
+.word 0xf9400b42
+.word 0xf9401ba0
+.word 0xf9401fa1
+.word 0xd63f0040
+.word 0x14000019
+.word 0xb9801b20
+.word 0xaa0003fa
+.word 0xd2800018
+.word 0x93407f00
+.word 0xb9801b21
+.word 0xeb00003f
+.word 0x10000011
+.word 0x540003e9
+.word 0xd37df000
+.word 0x8b000320
+.word 0x91008000
+.word 0xf9400017
+.word 0xaa1703e3
+.word 0xaa0303e0
+.word 0xf9401ba1
+.word 0xf9401fa2
+.word 0xf90023a3
+.word 0xf9400c70
+.word 0xd63f0200
+.word 0xf94023a0
+.word 0x11000718
+.word 0xaa1803e0
+.word 0x6b1a001f
+.word 0x54fffd8b
+.word 0xa94163b7
+.word 0xa9426bb9
+.word 0x910003bf
+.word 0xa8c57bfd
+.word 0xd65f03c0
+.word 0x91022320
+.word 0xd280003e
+.word 0xb900001e
+.word 0xaa1903e0
+bl _p_480
+bl _p_481
+.word 0xaa0003f9
+.word 0xb5ffff20
+.word 0x17ffffc8
+.word 0xd28019e0
+.word 0xaa1103e1
+bl _p_13
+
+Lme_2b3:
 .text
 	.align 4
 	.no_dead_strip wrapper_delegate_invoke_System_Comparison_1_Xamarin_Forms_Xaml_XmlName_invoke_int_T_T_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_XmlName
@@ -55076,84 +55076,6 @@ bl _p_13
 Lme_2ba:
 .text
 	.align 4
-	.no_dead_strip wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_INode_invoke_void_T_Xamarin_Forms_Xaml_INode
-wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_INode_invoke_void_T_Xamarin_Forms_Xaml_INode:
-.word 0xa9bb7bfd
-.word 0x910003fd
-.word 0xa9015fb6
-.word 0xa90267b8
-.word 0xf9001bba
-.word 0xaa0003f9
-.word 0xaa0103fa
-
-adrp x16, mono_aot_Xamarin_Forms_Xaml_got@PAGE+0
-add x16, x16, mono_aot_Xamarin_Forms_Xaml_got@PAGEOFF
-ldr x0, [x16, #48]
-.word 0xb9400000
-.word 0x350006a0
-.word 0x14000001
-.word 0xf9403f38
-.word 0xaa1803e0
-.word 0xb50001e0
-.word 0xf9401338
-.word 0xaa1803e0
-.word 0xb40000e0
-.word 0xf9401f20
-.word 0xf9400b22
-.word 0xaa1803e0
-.word 0xaa1a03e1
-.word 0xd63f0040
-.word 0x1400001d
-.word 0xf9401f20
-.word 0xf9400b21
-.word 0xaa1a03e0
-.word 0xd63f0020
-.word 0x14000018
-.word 0xb9801b00
-.word 0xaa0003f9
-.word 0xd2800017
-.word 0x93407ee0
-.word 0xb9801b01
-.word 0xeb00003f
-.word 0x10000011
-.word 0x540003e9
-.word 0xd37df000
-.word 0x8b000300
-.word 0x91008000
-.word 0xf9400016
-.word 0xaa1603e2
-.word 0xaa0203e0
-.word 0xaa1a03e1
-.word 0xf90023a2
-.word 0xf9400c50
-.word 0xd63f0200
-.word 0xf94023a0
-.word 0x110006f7
-.word 0xaa1703e0
-.word 0x6b19001f
-.word 0x54fffdab
-.word 0xa9415fb6
-.word 0xa94267b8
-.word 0xf9401bba
-.word 0x910003bf
-.word 0xa8c57bfd
-.word 0xd65f03c0
-.word 0x91022300
-.word 0xd280003e
-.word 0xb900001e
-.word 0xaa1803e0
-bl _p_480
-bl _p_481
-.word 0xaa0003f8
-.word 0xb5ffff20
-.word 0x17ffffca
-.word 0xd28019e0
-.word 0xaa1103e1
-bl _p_13
-
-Lme_2bb:
-.text
-	.align 4
 	.no_dead_strip wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_INode_invoke_bool_T_Xamarin_Forms_Xaml_INode
 wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_INode_invoke_bool_T_Xamarin_Forms_Xaml_INode:
 .word 0xa9bb7bfd
@@ -55230,6 +55152,84 @@ bl _p_481
 .word 0xaa0003f8
 .word 0xb5ffff20
 .word 0x17ffffc5
+.word 0xd28019e0
+.word 0xaa1103e1
+bl _p_13
+
+Lme_2bb:
+.text
+	.align 4
+	.no_dead_strip wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_INode_invoke_void_T_Xamarin_Forms_Xaml_INode
+wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_INode_invoke_void_T_Xamarin_Forms_Xaml_INode:
+.word 0xa9bb7bfd
+.word 0x910003fd
+.word 0xa9015fb6
+.word 0xa90267b8
+.word 0xf9001bba
+.word 0xaa0003f9
+.word 0xaa0103fa
+
+adrp x16, mono_aot_Xamarin_Forms_Xaml_got@PAGE+0
+add x16, x16, mono_aot_Xamarin_Forms_Xaml_got@PAGEOFF
+ldr x0, [x16, #48]
+.word 0xb9400000
+.word 0x350006a0
+.word 0x14000001
+.word 0xf9403f38
+.word 0xaa1803e0
+.word 0xb50001e0
+.word 0xf9401338
+.word 0xaa1803e0
+.word 0xb40000e0
+.word 0xf9401f20
+.word 0xf9400b22
+.word 0xaa1803e0
+.word 0xaa1a03e1
+.word 0xd63f0040
+.word 0x1400001d
+.word 0xf9401f20
+.word 0xf9400b21
+.word 0xaa1a03e0
+.word 0xd63f0020
+.word 0x14000018
+.word 0xb9801b00
+.word 0xaa0003f9
+.word 0xd2800017
+.word 0x93407ee0
+.word 0xb9801b01
+.word 0xeb00003f
+.word 0x10000011
+.word 0x540003e9
+.word 0xd37df000
+.word 0x8b000300
+.word 0x91008000
+.word 0xf9400016
+.word 0xaa1603e2
+.word 0xaa0203e0
+.word 0xaa1a03e1
+.word 0xf90023a2
+.word 0xf9400c50
+.word 0xd63f0200
+.word 0xf94023a0
+.word 0x110006f7
+.word 0xaa1703e0
+.word 0x6b19001f
+.word 0x54fffdab
+.word 0xa9415fb6
+.word 0xa94267b8
+.word 0xf9401bba
+.word 0x910003bf
+.word 0xa8c57bfd
+.word 0xd65f03c0
+.word 0x91022300
+.word 0xd280003e
+.word 0xb900001e
+.word 0xaa1803e0
+bl _p_480
+bl _p_481
+.word 0xaa0003f8
+.word 0xb5ffff20
+.word 0x17ffffca
 .word 0xd28019e0
 .word 0xaa1103e1
 bl _p_13
@@ -63009,103 +63009,6 @@ bl _p_29
 Lme_353:
 .text
 	.align 4
-	.no_dead_strip wrapper_delegate_invoke_System_Action_1_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_void_T_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
-wrapper_delegate_invoke_System_Action_1_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_void_T_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode:
-.word 0xa9b77bfd
-.word 0x910003fd
-.word 0xa90163b7
-.word 0xa9026bb9
-.word 0xaa0003fa
-.word 0xf9001ba1
-
-adrp x16, mono_aot_Xamarin_Forms_Xaml_got@PAGE+0
-add x16, x16, mono_aot_Xamarin_Forms_Xaml_got@PAGEOFF
-ldr x0, [x16, #48]
-.word 0xb9400000
-.word 0x35000920
-.word 0x14000001
-.word 0xf9403f59
-.word 0xaa1903e0
-.word 0xb50003a0
-.word 0xf9401359
-.word 0xaa1903e0
-.word 0xb40001c0
-.word 0xf9401f40
-.word 0xf9400b42
-.word 0xaa1903e0
-.word 0xf9401ba3
-.word 0x9101a3a1
-.word 0xf9400064
-.word 0xf90037a4
-.word 0xf9400464
-.word 0xf9003ba4
-.word 0xf9400863
-.word 0xf9003fa3
-.word 0xd63f0040
-.word 0x1400002b
-.word 0xf9401f40
-.word 0xf9400b41
-.word 0xf9401ba2
-.word 0x910143a0
-.word 0xf9400043
-.word 0xf9002ba3
-.word 0xf9400443
-.word 0xf9002fa3
-.word 0xf9400842
-.word 0xf90033a2
-.word 0xd63f0020
-.word 0x1400001f
-.word 0xb9801b20
-.word 0xaa0003fa
-.word 0xd2800018
-.word 0x93407f00
-.word 0xb9801b21
-.word 0xeb00003f
-.word 0x10000011
-.word 0x540004a9
-.word 0xd37df000
-.word 0x8b000320
-.word 0x91008000
-.word 0xf9400017
-.word 0xaa1703e2
-.word 0xaa0203e0
-.word 0xf9401ba3
-.word 0x9100e3a1
-.word 0xf9400064
-.word 0xf9001fa4
-.word 0xf9400464
-.word 0xf90023a4
-.word 0xf9400863
-.word 0xf90027a3
-.word 0xf90043a2
-.word 0xf9400c50
-.word 0xd63f0200
-.word 0xf94043a0
-.word 0x11000718
-.word 0xaa1803e0
-.word 0x6b1a001f
-.word 0x54fffccb
-.word 0xa94163b7
-.word 0xa9426bb9
-.word 0x910003bf
-.word 0xa8c97bfd
-.word 0xd65f03c0
-.word 0x91022320
-.word 0xd280003e
-.word 0xb900001e
-.word 0xaa1903e0
-bl _p_480
-bl _p_481
-.word 0xaa0003f9
-.word 0xb5ffff20
-.word 0x17ffffb6
-.word 0xd28019e0
-.word 0xaa1103e1
-bl _p_13
-
-Lme_358:
-.text
-	.align 4
 	.no_dead_strip wrapper_delegate_invoke_System_Predicate_1_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_bool_T_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
 wrapper_delegate_invoke_System_Predicate_1_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_bool_T_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode:
 .word 0xa9b77bfd
@@ -63205,7 +63108,104 @@ bl _p_481
 .word 0xaa1103e1
 bl _p_13
 
-Lme_35e:
+Lme_358:
+.text
+	.align 4
+	.no_dead_strip wrapper_delegate_invoke_System_Action_1_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_void_T_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
+wrapper_delegate_invoke_System_Action_1_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_void_T_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode:
+.word 0xa9b77bfd
+.word 0x910003fd
+.word 0xa90163b7
+.word 0xa9026bb9
+.word 0xaa0003fa
+.word 0xf9001ba1
+
+adrp x16, mono_aot_Xamarin_Forms_Xaml_got@PAGE+0
+add x16, x16, mono_aot_Xamarin_Forms_Xaml_got@PAGEOFF
+ldr x0, [x16, #48]
+.word 0xb9400000
+.word 0x35000920
+.word 0x14000001
+.word 0xf9403f59
+.word 0xaa1903e0
+.word 0xb50003a0
+.word 0xf9401359
+.word 0xaa1903e0
+.word 0xb40001c0
+.word 0xf9401f40
+.word 0xf9400b42
+.word 0xaa1903e0
+.word 0xf9401ba3
+.word 0x9101a3a1
+.word 0xf9400064
+.word 0xf90037a4
+.word 0xf9400464
+.word 0xf9003ba4
+.word 0xf9400863
+.word 0xf9003fa3
+.word 0xd63f0040
+.word 0x1400002b
+.word 0xf9401f40
+.word 0xf9400b41
+.word 0xf9401ba2
+.word 0x910143a0
+.word 0xf9400043
+.word 0xf9002ba3
+.word 0xf9400443
+.word 0xf9002fa3
+.word 0xf9400842
+.word 0xf90033a2
+.word 0xd63f0020
+.word 0x1400001f
+.word 0xb9801b20
+.word 0xaa0003fa
+.word 0xd2800018
+.word 0x93407f00
+.word 0xb9801b21
+.word 0xeb00003f
+.word 0x10000011
+.word 0x540004a9
+.word 0xd37df000
+.word 0x8b000320
+.word 0x91008000
+.word 0xf9400017
+.word 0xaa1703e2
+.word 0xaa0203e0
+.word 0xf9401ba3
+.word 0x9100e3a1
+.word 0xf9400064
+.word 0xf9001fa4
+.word 0xf9400464
+.word 0xf90023a4
+.word 0xf9400863
+.word 0xf90027a3
+.word 0xf90043a2
+.word 0xf9400c50
+.word 0xd63f0200
+.word 0xf94043a0
+.word 0x11000718
+.word 0xaa1803e0
+.word 0x6b1a001f
+.word 0x54fffccb
+.word 0xa94163b7
+.word 0xa9426bb9
+.word 0x910003bf
+.word 0xa8c97bfd
+.word 0xd65f03c0
+.word 0x91022320
+.word 0xd280003e
+.word 0xb900001e
+.word 0xaa1903e0
+bl _p_480
+bl _p_481
+.word 0xaa0003f9
+.word 0xb5ffff20
+.word 0x17ffffb6
+.word 0xd28019e0
+.word 0xaa1103e1
+bl _p_13
+
+Lme_35d:
 .text
 	.align 4
 	.no_dead_strip wrapper_delegate_invoke_System_Comparison_1_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_int_T_T_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
@@ -63750,84 +63750,6 @@ bl _p_500
 Lme_36b:
 .text
 	.align 4
-	.no_dead_strip wrapper_delegate_invoke_System_Action_1_object_invoke_void_T_object
-wrapper_delegate_invoke_System_Action_1_object_invoke_void_T_object:
-.word 0xa9bb7bfd
-.word 0x910003fd
-.word 0xa9015fb6
-.word 0xa90267b8
-.word 0xf9001bba
-.word 0xaa0003f9
-.word 0xaa0103fa
-
-adrp x16, mono_aot_Xamarin_Forms_Xaml_got@PAGE+0
-add x16, x16, mono_aot_Xamarin_Forms_Xaml_got@PAGEOFF
-ldr x0, [x16, #48]
-.word 0xb9400000
-.word 0x350006a0
-.word 0x14000001
-.word 0xf9403f38
-.word 0xaa1803e0
-.word 0xb50001e0
-.word 0xf9401338
-.word 0xaa1803e0
-.word 0xb40000e0
-.word 0xf9401f20
-.word 0xf9400b22
-.word 0xaa1803e0
-.word 0xaa1a03e1
-.word 0xd63f0040
-.word 0x1400001d
-.word 0xf9401f20
-.word 0xf9400b21
-.word 0xaa1a03e0
-.word 0xd63f0020
-.word 0x14000018
-.word 0xb9801b00
-.word 0xaa0003f9
-.word 0xd2800017
-.word 0x93407ee0
-.word 0xb9801b01
-.word 0xeb00003f
-.word 0x10000011
-.word 0x540003e9
-.word 0xd37df000
-.word 0x8b000300
-.word 0x91008000
-.word 0xf9400016
-.word 0xaa1603e2
-.word 0xaa0203e0
-.word 0xaa1a03e1
-.word 0xf90023a2
-.word 0xf9400c50
-.word 0xd63f0200
-.word 0xf94023a0
-.word 0x110006f7
-.word 0xaa1703e0
-.word 0x6b19001f
-.word 0x54fffdab
-.word 0xa9415fb6
-.word 0xa94267b8
-.word 0xf9401bba
-.word 0x910003bf
-.word 0xa8c57bfd
-.word 0xd65f03c0
-.word 0x91022300
-.word 0xd280003e
-.word 0xb900001e
-.word 0xaa1803e0
-bl _p_480
-bl _p_481
-.word 0xaa0003f8
-.word 0xb5ffff20
-.word 0x17ffffca
-.word 0xd28019e0
-.word 0xaa1103e1
-bl _p_13
-
-Lme_36c:
-.text
-	.align 4
 	.no_dead_strip wrapper_delegate_invoke_System_Predicate_1_object_invoke_bool_T_object
 wrapper_delegate_invoke_System_Predicate_1_object_invoke_bool_T_object:
 .word 0xa9bb7bfd
@@ -63904,6 +63826,84 @@ bl _p_481
 .word 0xaa0003f8
 .word 0xb5ffff20
 .word 0x17ffffc5
+.word 0xd28019e0
+.word 0xaa1103e1
+bl _p_13
+
+Lme_36c:
+.text
+	.align 4
+	.no_dead_strip wrapper_delegate_invoke_System_Action_1_object_invoke_void_T_object
+wrapper_delegate_invoke_System_Action_1_object_invoke_void_T_object:
+.word 0xa9bb7bfd
+.word 0x910003fd
+.word 0xa9015fb6
+.word 0xa90267b8
+.word 0xf9001bba
+.word 0xaa0003f9
+.word 0xaa0103fa
+
+adrp x16, mono_aot_Xamarin_Forms_Xaml_got@PAGE+0
+add x16, x16, mono_aot_Xamarin_Forms_Xaml_got@PAGEOFF
+ldr x0, [x16, #48]
+.word 0xb9400000
+.word 0x350006a0
+.word 0x14000001
+.word 0xf9403f38
+.word 0xaa1803e0
+.word 0xb50001e0
+.word 0xf9401338
+.word 0xaa1803e0
+.word 0xb40000e0
+.word 0xf9401f20
+.word 0xf9400b22
+.word 0xaa1803e0
+.word 0xaa1a03e1
+.word 0xd63f0040
+.word 0x1400001d
+.word 0xf9401f20
+.word 0xf9400b21
+.word 0xaa1a03e0
+.word 0xd63f0020
+.word 0x14000018
+.word 0xb9801b00
+.word 0xaa0003f9
+.word 0xd2800017
+.word 0x93407ee0
+.word 0xb9801b01
+.word 0xeb00003f
+.word 0x10000011
+.word 0x540003e9
+.word 0xd37df000
+.word 0x8b000300
+.word 0x91008000
+.word 0xf9400016
+.word 0xaa1603e2
+.word 0xaa0203e0
+.word 0xaa1a03e1
+.word 0xf90023a2
+.word 0xf9400c50
+.word 0xd63f0200
+.word 0xf94023a0
+.word 0x110006f7
+.word 0xaa1703e0
+.word 0x6b19001f
+.word 0x54fffdab
+.word 0xa9415fb6
+.word 0xa94267b8
+.word 0xf9401bba
+.word 0x910003bf
+.word 0xa8c57bfd
+.word 0xd65f03c0
+.word 0x91022300
+.word 0xd280003e
+.word 0xb900001e
+.word 0xaa1803e0
+bl _p_480
+bl _p_481
+.word 0xaa0003f8
+.word 0xb5ffff20
+.word 0x17ffffca
 .word 0xd28019e0
 .word 0xaa1103e1
 bl _p_13
@@ -63998,84 +63998,6 @@ bl _p_13
 Lme_36e:
 .text
 	.align 4
-	.no_dead_strip wrapper_delegate_invoke_System_Action_1_string_invoke_void_T_string
-wrapper_delegate_invoke_System_Action_1_string_invoke_void_T_string:
-.word 0xa9bb7bfd
-.word 0x910003fd
-.word 0xa9015fb6
-.word 0xa90267b8
-.word 0xf9001bba
-.word 0xaa0003f9
-.word 0xaa0103fa
-
-adrp x16, mono_aot_Xamarin_Forms_Xaml_got@PAGE+0
-add x16, x16, mono_aot_Xamarin_Forms_Xaml_got@PAGEOFF
-ldr x0, [x16, #48]
-.word 0xb9400000
-.word 0x350006a0
-.word 0x14000001
-.word 0xf9403f38
-.word 0xaa1803e0
-.word 0xb50001e0
-.word 0xf9401338
-.word 0xaa1803e0
-.word 0xb40000e0
-.word 0xf9401f20
-.word 0xf9400b22
-.word 0xaa1803e0
-.word 0xaa1a03e1
-.word 0xd63f0040
-.word 0x1400001d
-.word 0xf9401f20
-.word 0xf9400b21
-.word 0xaa1a03e0
-.word 0xd63f0020
-.word 0x14000018
-.word 0xb9801b00
-.word 0xaa0003f9
-.word 0xd2800017
-.word 0x93407ee0
-.word 0xb9801b01
-.word 0xeb00003f
-.word 0x10000011
-.word 0x540003e9
-.word 0xd37df000
-.word 0x8b000300
-.word 0x91008000
-.word 0xf9400016
-.word 0xaa1603e2
-.word 0xaa0203e0
-.word 0xaa1a03e1
-.word 0xf90023a2
-.word 0xf9400c50
-.word 0xd63f0200
-.word 0xf94023a0
-.word 0x110006f7
-.word 0xaa1703e0
-.word 0x6b19001f
-.word 0x54fffdab
-.word 0xa9415fb6
-.word 0xa94267b8
-.word 0xf9401bba
-.word 0x910003bf
-.word 0xa8c57bfd
-.word 0xd65f03c0
-.word 0x91022300
-.word 0xd280003e
-.word 0xb900001e
-.word 0xaa1803e0
-bl _p_480
-bl _p_481
-.word 0xaa0003f8
-.word 0xb5ffff20
-.word 0x17ffffca
-.word 0xd28019e0
-.word 0xaa1103e1
-bl _p_13
-
-Lme_36f:
-.text
-	.align 4
 	.no_dead_strip wrapper_delegate_invoke_System_Predicate_1_string_invoke_bool_T_string
 wrapper_delegate_invoke_System_Predicate_1_string_invoke_bool_T_string:
 .word 0xa9bb7bfd
@@ -64152,6 +64074,84 @@ bl _p_481
 .word 0xaa0003f8
 .word 0xb5ffff20
 .word 0x17ffffc5
+.word 0xd28019e0
+.word 0xaa1103e1
+bl _p_13
+
+Lme_36f:
+.text
+	.align 4
+	.no_dead_strip wrapper_delegate_invoke_System_Action_1_string_invoke_void_T_string
+wrapper_delegate_invoke_System_Action_1_string_invoke_void_T_string:
+.word 0xa9bb7bfd
+.word 0x910003fd
+.word 0xa9015fb6
+.word 0xa90267b8
+.word 0xf9001bba
+.word 0xaa0003f9
+.word 0xaa0103fa
+
+adrp x16, mono_aot_Xamarin_Forms_Xaml_got@PAGE+0
+add x16, x16, mono_aot_Xamarin_Forms_Xaml_got@PAGEOFF
+ldr x0, [x16, #48]
+.word 0xb9400000
+.word 0x350006a0
+.word 0x14000001
+.word 0xf9403f38
+.word 0xaa1803e0
+.word 0xb50001e0
+.word 0xf9401338
+.word 0xaa1803e0
+.word 0xb40000e0
+.word 0xf9401f20
+.word 0xf9400b22
+.word 0xaa1803e0
+.word 0xaa1a03e1
+.word 0xd63f0040
+.word 0x1400001d
+.word 0xf9401f20
+.word 0xf9400b21
+.word 0xaa1a03e0
+.word 0xd63f0020
+.word 0x14000018
+.word 0xb9801b00
+.word 0xaa0003f9
+.word 0xd2800017
+.word 0x93407ee0
+.word 0xb9801b01
+.word 0xeb00003f
+.word 0x10000011
+.word 0x540003e9
+.word 0xd37df000
+.word 0x8b000300
+.word 0x91008000
+.word 0xf9400016
+.word 0xaa1603e2
+.word 0xaa0203e0
+.word 0xaa1a03e1
+.word 0xf90023a2
+.word 0xf9400c50
+.word 0xd63f0200
+.word 0xf94023a0
+.word 0x110006f7
+.word 0xaa1703e0
+.word 0x6b19001f
+.word 0x54fffdab
+.word 0xa9415fb6
+.word 0xa94267b8
+.word 0xf9401bba
+.word 0x910003bf
+.word 0xa8c57bfd
+.word 0xd65f03c0
+.word 0x91022300
+.word 0xd280003e
+.word 0xb900001e
+.word 0xaa1803e0
+bl _p_480
+bl _p_481
+.word 0xaa0003f8
+.word 0xb5ffff20
+.word 0x17ffffca
 .word 0xd28019e0
 .word 0xaa1103e1
 bl _p_13
@@ -64516,103 +64516,6 @@ bl _p_476
 Lme_37d:
 .text
 	.align 4
-	.no_dead_strip wrapper_delegate_invoke_System_Action_1_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_void_T_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
-wrapper_delegate_invoke_System_Action_1_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_void_T_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode:
-.word 0xa9b77bfd
-.word 0x910003fd
-.word 0xa90163b7
-.word 0xa9026bb9
-.word 0xaa0003fa
-.word 0xf9001ba1
-
-adrp x16, mono_aot_Xamarin_Forms_Xaml_got@PAGE+0
-add x16, x16, mono_aot_Xamarin_Forms_Xaml_got@PAGEOFF
-ldr x0, [x16, #48]
-.word 0xb9400000
-.word 0x35000920
-.word 0x14000001
-.word 0xf9403f59
-.word 0xaa1903e0
-.word 0xb50003a0
-.word 0xf9401359
-.word 0xaa1903e0
-.word 0xb40001c0
-.word 0xf9401f40
-.word 0xf9400b42
-.word 0xaa1903e0
-.word 0xf9401ba3
-.word 0x9101a3a1
-.word 0xf9400064
-.word 0xf90037a4
-.word 0xf9400464
-.word 0xf9003ba4
-.word 0xf9400863
-.word 0xf9003fa3
-.word 0xd63f0040
-.word 0x1400002b
-.word 0xf9401f40
-.word 0xf9400b41
-.word 0xf9401ba2
-.word 0x910143a0
-.word 0xf9400043
-.word 0xf9002ba3
-.word 0xf9400443
-.word 0xf9002fa3
-.word 0xf9400842
-.word 0xf90033a2
-.word 0xd63f0020
-.word 0x1400001f
-.word 0xb9801b20
-.word 0xaa0003fa
-.word 0xd2800018
-.word 0x93407f00
-.word 0xb9801b21
-.word 0xeb00003f
-.word 0x10000011
-.word 0x540004a9
-.word 0xd37df000
-.word 0x8b000320
-.word 0x91008000
-.word 0xf9400017
-.word 0xaa1703e2
-.word 0xaa0203e0
-.word 0xf9401ba3
-.word 0x9100e3a1
-.word 0xf9400064
-.word 0xf9001fa4
-.word 0xf9400464
-.word 0xf90023a4
-.word 0xf9400863
-.word 0xf90027a3
-.word 0xf90043a2
-.word 0xf9400c50
-.word 0xd63f0200
-.word 0xf94043a0
-.word 0x11000718
-.word 0xaa1803e0
-.word 0x6b1a001f
-.word 0x54fffccb
-.word 0xa94163b7
-.word 0xa9426bb9
-.word 0x910003bf
-.word 0xa8c97bfd
-.word 0xd65f03c0
-.word 0x91022320
-.word 0xd280003e
-.word 0xb900001e
-.word 0xaa1903e0
-bl _p_480
-bl _p_481
-.word 0xaa0003f9
-.word 0xb5ffff20
-.word 0x17ffffb6
-.word 0xd28019e0
-.word 0xaa1103e1
-bl _p_13
-
-Lme_382:
-.text
-	.align 4
 	.no_dead_strip wrapper_delegate_invoke_System_Predicate_1_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_bool_T_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
 wrapper_delegate_invoke_System_Predicate_1_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_bool_T_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode:
 .word 0xa9b77bfd
@@ -64708,6 +64611,103 @@ bl _p_481
 .word 0xaa0003f9
 .word 0xb5ffff20
 .word 0x17ffffb1
+.word 0xd28019e0
+.word 0xaa1103e1
+bl _p_13
+
+Lme_382:
+.text
+	.align 4
+	.no_dead_strip wrapper_delegate_invoke_System_Action_1_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_void_T_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
+wrapper_delegate_invoke_System_Action_1_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_void_T_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode:
+.word 0xa9b77bfd
+.word 0x910003fd
+.word 0xa90163b7
+.word 0xa9026bb9
+.word 0xaa0003fa
+.word 0xf9001ba1
+
+adrp x16, mono_aot_Xamarin_Forms_Xaml_got@PAGE+0
+add x16, x16, mono_aot_Xamarin_Forms_Xaml_got@PAGEOFF
+ldr x0, [x16, #48]
+.word 0xb9400000
+.word 0x35000920
+.word 0x14000001
+.word 0xf9403f59
+.word 0xaa1903e0
+.word 0xb50003a0
+.word 0xf9401359
+.word 0xaa1903e0
+.word 0xb40001c0
+.word 0xf9401f40
+.word 0xf9400b42
+.word 0xaa1903e0
+.word 0xf9401ba3
+.word 0x9101a3a1
+.word 0xf9400064
+.word 0xf90037a4
+.word 0xf9400464
+.word 0xf9003ba4
+.word 0xf9400863
+.word 0xf9003fa3
+.word 0xd63f0040
+.word 0x1400002b
+.word 0xf9401f40
+.word 0xf9400b41
+.word 0xf9401ba2
+.word 0x910143a0
+.word 0xf9400043
+.word 0xf9002ba3
+.word 0xf9400443
+.word 0xf9002fa3
+.word 0xf9400842
+.word 0xf90033a2
+.word 0xd63f0020
+.word 0x1400001f
+.word 0xb9801b20
+.word 0xaa0003fa
+.word 0xd2800018
+.word 0x93407f00
+.word 0xb9801b21
+.word 0xeb00003f
+.word 0x10000011
+.word 0x540004a9
+.word 0xd37df000
+.word 0x8b000320
+.word 0x91008000
+.word 0xf9400017
+.word 0xaa1703e2
+.word 0xaa0203e0
+.word 0xf9401ba3
+.word 0x9100e3a1
+.word 0xf9400064
+.word 0xf9001fa4
+.word 0xf9400464
+.word 0xf90023a4
+.word 0xf9400863
+.word 0xf90027a3
+.word 0xf90043a2
+.word 0xf9400c50
+.word 0xd63f0200
+.word 0xf94043a0
+.word 0x11000718
+.word 0xaa1803e0
+.word 0x6b1a001f
+.word 0x54fffccb
+.word 0xa94163b7
+.word 0xa9426bb9
+.word 0x910003bf
+.word 0xa8c97bfd
+.word 0xd65f03c0
+.word 0x91022320
+.word 0xd280003e
+.word 0xb900001e
+.word 0xaa1903e0
+bl _p_480
+bl _p_481
+.word 0xaa0003f9
+.word 0xb5ffff20
+.word 0x17ffffb6
 .word 0xd28019e0
 .word 0xaa1103e1
 bl _p_13
@@ -65336,84 +65336,6 @@ bl _p_13
 Lme_395:
 .text
 	.align 4
-	.no_dead_strip wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XmlType_invoke_void_T_Xamarin_Forms_Xaml_XmlType
-wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XmlType_invoke_void_T_Xamarin_Forms_Xaml_XmlType:
-.word 0xa9bb7bfd
-.word 0x910003fd
-.word 0xa9015fb6
-.word 0xa90267b8
-.word 0xf9001bba
-.word 0xaa0003f9
-.word 0xaa0103fa
-
-adrp x16, mono_aot_Xamarin_Forms_Xaml_got@PAGE+0
-add x16, x16, mono_aot_Xamarin_Forms_Xaml_got@PAGEOFF
-ldr x0, [x16, #48]
-.word 0xb9400000
-.word 0x350006a0
-.word 0x14000001
-.word 0xf9403f38
-.word 0xaa1803e0
-.word 0xb50001e0
-.word 0xf9401338
-.word 0xaa1803e0
-.word 0xb40000e0
-.word 0xf9401f20
-.word 0xf9400b22
-.word 0xaa1803e0
-.word 0xaa1a03e1
-.word 0xd63f0040
-.word 0x1400001d
-.word 0xf9401f20
-.word 0xf9400b21
-.word 0xaa1a03e0
-.word 0xd63f0020
-.word 0x14000018
-.word 0xb9801b00
-.word 0xaa0003f9
-.word 0xd2800017
-.word 0x93407ee0
-.word 0xb9801b01
-.word 0xeb00003f
-.word 0x10000011
-.word 0x540003e9
-.word 0xd37df000
-.word 0x8b000300
-.word 0x91008000
-.word 0xf9400016
-.word 0xaa1603e2
-.word 0xaa0203e0
-.word 0xaa1a03e1
-.word 0xf90023a2
-.word 0xf9400c50
-.word 0xd63f0200
-.word 0xf94023a0
-.word 0x110006f7
-.word 0xaa1703e0
-.word 0x6b19001f
-.word 0x54fffdab
-.word 0xa9415fb6
-.word 0xa94267b8
-.word 0xf9401bba
-.word 0x910003bf
-.word 0xa8c57bfd
-.word 0xd65f03c0
-.word 0x91022300
-.word 0xd280003e
-.word 0xb900001e
-.word 0xaa1803e0
-bl _p_480
-bl _p_481
-.word 0xaa0003f8
-.word 0xb5ffff20
-.word 0x17ffffca
-.word 0xd28019e0
-.word 0xaa1103e1
-bl _p_13
-
-Lme_396:
-.text
-	.align 4
 	.no_dead_strip wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XmlType_invoke_bool_T_Xamarin_Forms_Xaml_XmlType
 wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XmlType_invoke_bool_T_Xamarin_Forms_Xaml_XmlType:
 .word 0xa9bb7bfd
@@ -65490,6 +65412,84 @@ bl _p_481
 .word 0xaa0003f8
 .word 0xb5ffff20
 .word 0x17ffffc5
+.word 0xd28019e0
+.word 0xaa1103e1
+bl _p_13
+
+Lme_396:
+.text
+	.align 4
+	.no_dead_strip wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XmlType_invoke_void_T_Xamarin_Forms_Xaml_XmlType
+wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XmlType_invoke_void_T_Xamarin_Forms_Xaml_XmlType:
+.word 0xa9bb7bfd
+.word 0x910003fd
+.word 0xa9015fb6
+.word 0xa90267b8
+.word 0xf9001bba
+.word 0xaa0003f9
+.word 0xaa0103fa
+
+adrp x16, mono_aot_Xamarin_Forms_Xaml_got@PAGE+0
+add x16, x16, mono_aot_Xamarin_Forms_Xaml_got@PAGEOFF
+ldr x0, [x16, #48]
+.word 0xb9400000
+.word 0x350006a0
+.word 0x14000001
+.word 0xf9403f38
+.word 0xaa1803e0
+.word 0xb50001e0
+.word 0xf9401338
+.word 0xaa1803e0
+.word 0xb40000e0
+.word 0xf9401f20
+.word 0xf9400b22
+.word 0xaa1803e0
+.word 0xaa1a03e1
+.word 0xd63f0040
+.word 0x1400001d
+.word 0xf9401f20
+.word 0xf9400b21
+.word 0xaa1a03e0
+.word 0xd63f0020
+.word 0x14000018
+.word 0xb9801b00
+.word 0xaa0003f9
+.word 0xd2800017
+.word 0x93407ee0
+.word 0xb9801b01
+.word 0xeb00003f
+.word 0x10000011
+.word 0x540003e9
+.word 0xd37df000
+.word 0x8b000300
+.word 0x91008000
+.word 0xf9400016
+.word 0xaa1603e2
+.word 0xaa0203e0
+.word 0xaa1a03e1
+.word 0xf90023a2
+.word 0xf9400c50
+.word 0xd63f0200
+.word 0xf94023a0
+.word 0x110006f7
+.word 0xaa1703e0
+.word 0x6b19001f
+.word 0x54fffdab
+.word 0xa9415fb6
+.word 0xa94267b8
+.word 0xf9401bba
+.word 0x910003bf
+.word 0xa8c57bfd
+.word 0xd65f03c0
+.word 0x91022300
+.word 0xd280003e
+.word 0xb900001e
+.word 0xaa1803e0
+bl _p_480
+bl _p_481
+.word 0xaa0003f8
+.word 0xb5ffff20
+.word 0x17ffffca
 .word 0xd28019e0
 .word 0xaa1103e1
 bl _p_13
@@ -66351,86 +66351,6 @@ bl _p_476
 Lme_3b5:
 .text
 	.align 4
-	.no_dead_strip wrapper_delegate_invoke_System_Action_1_System_Collections_Generic_KeyValuePair_2_string_string_invoke_void_T_System_Collections_Generic_KeyValuePair_2_string_string
-wrapper_delegate_invoke_System_Action_1_System_Collections_Generic_KeyValuePair_2_string_string_invoke_void_T_System_Collections_Generic_KeyValuePair_2_string_string:
-.word 0xa9bb7bfd
-.word 0x910003fd
-.word 0xa90163b7
-.word 0xa9026bb9
-.word 0xaa0003fa
-.word 0xf9001ba1
-.word 0xf9001fa2
-
-adrp x16, mono_aot_Xamarin_Forms_Xaml_got@PAGE+0
-add x16, x16, mono_aot_Xamarin_Forms_Xaml_got@PAGEOFF
-ldr x0, [x16, #48]
-.word 0xb9400000
-.word 0x350006e0
-.word 0x14000001
-.word 0xf9403f59
-.word 0xaa1903e0
-.word 0xb5000220
-.word 0xf9401359
-.word 0xaa1903e0
-.word 0xb4000100
-.word 0xf9401f40
-.word 0xf9400b43
-.word 0xaa1903e0
-.word 0xf9401ba1
-.word 0xf9401fa2
-.word 0xd63f0060
-.word 0x1400001f
-.word 0xf9401f40
-.word 0xf9400b42
-.word 0xf9401ba0
-.word 0xf9401fa1
-.word 0xd63f0040
-.word 0x14000019
-.word 0xb9801b20
-.word 0xaa0003fa
-.word 0xd2800018
-.word 0x93407f00
-.word 0xb9801b21
-.word 0xeb00003f
-.word 0x10000011
-.word 0x540003e9
-.word 0xd37df000
-.word 0x8b000320
-.word 0x91008000
-.word 0xf9400017
-.word 0xaa1703e3
-.word 0xaa0303e0
-.word 0xf9401ba1
-.word 0xf9401fa2
-.word 0xf90023a3
-.word 0xf9400c70
-.word 0xd63f0200
-.word 0xf94023a0
-.word 0x11000718
-.word 0xaa1803e0
-.word 0x6b1a001f
-.word 0x54fffd8b
-.word 0xa94163b7
-.word 0xa9426bb9
-.word 0x910003bf
-.word 0xa8c57bfd
-.word 0xd65f03c0
-.word 0x91022320
-.word 0xd280003e
-.word 0xb900001e
-.word 0xaa1903e0
-bl _p_480
-bl _p_481
-.word 0xaa0003f9
-.word 0xb5ffff20
-.word 0x17ffffc8
-.word 0xd28019e0
-.word 0xaa1103e1
-bl _p_13
-
-Lme_3ba:
-.text
-	.align 4
 	.no_dead_strip wrapper_delegate_invoke_System_Predicate_1_System_Collections_Generic_KeyValuePair_2_string_string_invoke_bool_T_System_Collections_Generic_KeyValuePair_2_string_string
 wrapper_delegate_invoke_System_Predicate_1_System_Collections_Generic_KeyValuePair_2_string_string_invoke_bool_T_System_Collections_Generic_KeyValuePair_2_string_string:
 .word 0xa9bb7bfd
@@ -66509,6 +66429,86 @@ bl _p_481
 .word 0xaa0003f9
 .word 0xb5ffff20
 .word 0x17ffffc3
+.word 0xd28019e0
+.word 0xaa1103e1
+bl _p_13
+
+Lme_3ba:
+.text
+	.align 4
+	.no_dead_strip wrapper_delegate_invoke_System_Action_1_System_Collections_Generic_KeyValuePair_2_string_string_invoke_void_T_System_Collections_Generic_KeyValuePair_2_string_string
+wrapper_delegate_invoke_System_Action_1_System_Collections_Generic_KeyValuePair_2_string_string_invoke_void_T_System_Collections_Generic_KeyValuePair_2_string_string:
+.word 0xa9bb7bfd
+.word 0x910003fd
+.word 0xa90163b7
+.word 0xa9026bb9
+.word 0xaa0003fa
+.word 0xf9001ba1
+.word 0xf9001fa2
+
+adrp x16, mono_aot_Xamarin_Forms_Xaml_got@PAGE+0
+add x16, x16, mono_aot_Xamarin_Forms_Xaml_got@PAGEOFF
+ldr x0, [x16, #48]
+.word 0xb9400000
+.word 0x350006e0
+.word 0x14000001
+.word 0xf9403f59
+.word 0xaa1903e0
+.word 0xb5000220
+.word 0xf9401359
+.word 0xaa1903e0
+.word 0xb4000100
+.word 0xf9401f40
+.word 0xf9400b43
+.word 0xaa1903e0
+.word 0xf9401ba1
+.word 0xf9401fa2
+.word 0xd63f0060
+.word 0x1400001f
+.word 0xf9401f40
+.word 0xf9400b42
+.word 0xf9401ba0
+.word 0xf9401fa1
+.word 0xd63f0040
+.word 0x14000019
+.word 0xb9801b20
+.word 0xaa0003fa
+.word 0xd2800018
+.word 0x93407f00
+.word 0xb9801b21
+.word 0xeb00003f
+.word 0x10000011
+.word 0x540003e9
+.word 0xd37df000
+.word 0x8b000320
+.word 0x91008000
+.word 0xf9400017
+.word 0xaa1703e3
+.word 0xaa0303e0
+.word 0xf9401ba1
+.word 0xf9401fa2
+.word 0xf90023a3
+.word 0xf9400c70
+.word 0xd63f0200
+.word 0xf94023a0
+.word 0x11000718
+.word 0xaa1803e0
+.word 0x6b1a001f
+.word 0x54fffd8b
+.word 0xa94163b7
+.word 0xa9426bb9
+.word 0x910003bf
+.word 0xa8c57bfd
+.word 0xd65f03c0
+.word 0x91022320
+.word 0xd280003e
+.word 0xb900001e
+.word 0xaa1903e0
+bl _p_480
+bl _p_481
+.word 0xaa0003f9
+.word 0xb5ffff20
+.word 0x17ffffc8
 .word 0xd28019e0
 .word 0xaa1103e1
 bl _p_13
@@ -66609,84 +66609,6 @@ bl _p_13
 Lme_3c5:
 .text
 	.align 4
-	.no_dead_strip wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_XmlnsDefinitionAttribute_invoke_void_T_Xamarin_Forms_XmlnsDefinitionAttribute
-wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_XmlnsDefinitionAttribute_invoke_void_T_Xamarin_Forms_XmlnsDefinitionAttribute:
-.word 0xa9bb7bfd
-.word 0x910003fd
-.word 0xa9015fb6
-.word 0xa90267b8
-.word 0xf9001bba
-.word 0xaa0003f9
-.word 0xaa0103fa
-
-adrp x16, mono_aot_Xamarin_Forms_Xaml_got@PAGE+0
-add x16, x16, mono_aot_Xamarin_Forms_Xaml_got@PAGEOFF
-ldr x0, [x16, #48]
-.word 0xb9400000
-.word 0x350006a0
-.word 0x14000001
-.word 0xf9403f38
-.word 0xaa1803e0
-.word 0xb50001e0
-.word 0xf9401338
-.word 0xaa1803e0
-.word 0xb40000e0
-.word 0xf9401f20
-.word 0xf9400b22
-.word 0xaa1803e0
-.word 0xaa1a03e1
-.word 0xd63f0040
-.word 0x1400001d
-.word 0xf9401f20
-.word 0xf9400b21
-.word 0xaa1a03e0
-.word 0xd63f0020
-.word 0x14000018
-.word 0xb9801b00
-.word 0xaa0003f9
-.word 0xd2800017
-.word 0x93407ee0
-.word 0xb9801b01
-.word 0xeb00003f
-.word 0x10000011
-.word 0x540003e9
-.word 0xd37df000
-.word 0x8b000300
-.word 0x91008000
-.word 0xf9400016
-.word 0xaa1603e2
-.word 0xaa0203e0
-.word 0xaa1a03e1
-.word 0xf90023a2
-.word 0xf9400c50
-.word 0xd63f0200
-.word 0xf94023a0
-.word 0x110006f7
-.word 0xaa1703e0
-.word 0x6b19001f
-.word 0x54fffdab
-.word 0xa9415fb6
-.word 0xa94267b8
-.word 0xf9401bba
-.word 0x910003bf
-.word 0xa8c57bfd
-.word 0xd65f03c0
-.word 0x91022300
-.word 0xd280003e
-.word 0xb900001e
-.word 0xaa1803e0
-bl _p_480
-bl _p_481
-.word 0xaa0003f8
-.word 0xb5ffff20
-.word 0x17ffffca
-.word 0xd28019e0
-.word 0xaa1103e1
-bl _p_13
-
-Lme_3c6:
-.text
-	.align 4
 	.no_dead_strip wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_XmlnsDefinitionAttribute_invoke_bool_T_Xamarin_Forms_XmlnsDefinitionAttribute
 wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_XmlnsDefinitionAttribute_invoke_bool_T_Xamarin_Forms_XmlnsDefinitionAttribute:
 .word 0xa9bb7bfd
@@ -66763,6 +66685,84 @@ bl _p_481
 .word 0xaa0003f8
 .word 0xb5ffff20
 .word 0x17ffffc5
+.word 0xd28019e0
+.word 0xaa1103e1
+bl _p_13
+
+Lme_3c6:
+.text
+	.align 4
+	.no_dead_strip wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_XmlnsDefinitionAttribute_invoke_void_T_Xamarin_Forms_XmlnsDefinitionAttribute
+wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_XmlnsDefinitionAttribute_invoke_void_T_Xamarin_Forms_XmlnsDefinitionAttribute:
+.word 0xa9bb7bfd
+.word 0x910003fd
+.word 0xa9015fb6
+.word 0xa90267b8
+.word 0xf9001bba
+.word 0xaa0003f9
+.word 0xaa0103fa
+
+adrp x16, mono_aot_Xamarin_Forms_Xaml_got@PAGE+0
+add x16, x16, mono_aot_Xamarin_Forms_Xaml_got@PAGEOFF
+ldr x0, [x16, #48]
+.word 0xb9400000
+.word 0x350006a0
+.word 0x14000001
+.word 0xf9403f38
+.word 0xaa1803e0
+.word 0xb50001e0
+.word 0xf9401338
+.word 0xaa1803e0
+.word 0xb40000e0
+.word 0xf9401f20
+.word 0xf9400b22
+.word 0xaa1803e0
+.word 0xaa1a03e1
+.word 0xd63f0040
+.word 0x1400001d
+.word 0xf9401f20
+.word 0xf9400b21
+.word 0xaa1a03e0
+.word 0xd63f0020
+.word 0x14000018
+.word 0xb9801b00
+.word 0xaa0003f9
+.word 0xd2800017
+.word 0x93407ee0
+.word 0xb9801b01
+.word 0xeb00003f
+.word 0x10000011
+.word 0x540003e9
+.word 0xd37df000
+.word 0x8b000300
+.word 0x91008000
+.word 0xf9400016
+.word 0xaa1603e2
+.word 0xaa0203e0
+.word 0xaa1a03e1
+.word 0xf90023a2
+.word 0xf9400c50
+.word 0xd63f0200
+.word 0xf94023a0
+.word 0x110006f7
+.word 0xaa1703e0
+.word 0x6b19001f
+.word 0x54fffdab
+.word 0xa9415fb6
+.word 0xa94267b8
+.word 0xf9401bba
+.word 0x910003bf
+.word 0xa8c57bfd
+.word 0xd65f03c0
+.word 0x91022300
+.word 0xd280003e
+.word 0xb900001e
+.word 0xaa1803e0
+bl _p_480
+bl _p_481
+.word 0xaa0003f8
+.word 0xb5ffff20
+.word 0x17ffffca
 .word 0xd28019e0
 .word 0xaa1103e1
 bl _p_13
@@ -68435,109 +68435,6 @@ bl _p_476
 Lme_3eb:
 .text
 	.align 4
-	.no_dead_strip wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo_invoke_void_T_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo
-wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo_invoke_void_T_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo:
-.word 0xa9b57bfd
-.word 0x910003fd
-.word 0xa90163b7
-.word 0xa9026bb9
-.word 0xaa0003fa
-.word 0xf9001ba1
-
-adrp x16, mono_aot_Xamarin_Forms_Xaml_got@PAGE+0
-add x16, x16, mono_aot_Xamarin_Forms_Xaml_got@PAGEOFF
-ldr x0, [x16, #48]
-.word 0xb9400000
-.word 0x350009e0
-.word 0x14000001
-.word 0xf9403f59
-.word 0xaa1903e0
-.word 0xb5000420
-.word 0xf9401359
-.word 0xaa1903e0
-.word 0xb4000200
-.word 0xf9401f40
-.word 0xf9400b42
-.word 0xaa1903e0
-.word 0xf9401ba3
-.word 0x9101e3a1
-.word 0xf9400064
-.word 0xf9003fa4
-.word 0xf9400464
-.word 0xf90043a4
-.word 0xf9400864
-.word 0xf90047a4
-.word 0xf9400c63
-.word 0xf9004ba3
-.word 0xd63f0040
-.word 0x1400002f
-.word 0xf9401f40
-.word 0xf9400b41
-.word 0xf9401ba2
-.word 0x910163a0
-.word 0xf9400043
-.word 0xf9002fa3
-.word 0xf9400443
-.word 0xf90033a3
-.word 0xf9400843
-.word 0xf90037a3
-.word 0xf9400c42
-.word 0xf9003ba2
-.word 0xd63f0020
-.word 0x14000021
-.word 0xb9801b20
-.word 0xaa0003fa
-.word 0xd2800018
-.word 0x93407f00
-.word 0xb9801b21
-.word 0xeb00003f
-.word 0x10000011
-.word 0x540004e9
-.word 0xd37df000
-.word 0x8b000320
-.word 0x91008000
-.word 0xf9400017
-.word 0xaa1703e2
-.word 0xaa0203e0
-.word 0xf9401ba3
-.word 0x9100e3a1
-.word 0xf9400064
-.word 0xf9001fa4
-.word 0xf9400464
-.word 0xf90023a4
-.word 0xf9400864
-.word 0xf90027a4
-.word 0xf9400c63
-.word 0xf9002ba3
-.word 0xf90053a2
-.word 0xf9400c50
-.word 0xd63f0200
-.word 0xf94053a0
-.word 0x11000718
-.word 0xaa1803e0
-.word 0x6b1a001f
-.word 0x54fffc8b
-.word 0xa94163b7
-.word 0xa9426bb9
-.word 0x910003bf
-.word 0xa8cb7bfd
-.word 0xd65f03c0
-.word 0x91022320
-.word 0xd280003e
-.word 0xb900001e
-.word 0xaa1903e0
-bl _p_480
-bl _p_481
-.word 0xaa0003f9
-.word 0xb5ffff20
-.word 0x17ffffb0
-.word 0xd28019e0
-.word 0xaa1103e1
-bl _p_13
-
-Lme_3f0:
-.text
-	.align 4
 	.no_dead_strip wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo_invoke_bool_T_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo
 wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo_invoke_bool_T_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo:
 .word 0xa9b57bfd
@@ -68643,7 +68540,110 @@ bl _p_481
 .word 0xaa1103e1
 bl _p_13
 
-Lme_3f6:
+Lme_3f0:
+.text
+	.align 4
+	.no_dead_strip wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo_invoke_void_T_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo
+wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo_invoke_void_T_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo:
+.word 0xa9b57bfd
+.word 0x910003fd
+.word 0xa90163b7
+.word 0xa9026bb9
+.word 0xaa0003fa
+.word 0xf9001ba1
+
+adrp x16, mono_aot_Xamarin_Forms_Xaml_got@PAGE+0
+add x16, x16, mono_aot_Xamarin_Forms_Xaml_got@PAGEOFF
+ldr x0, [x16, #48]
+.word 0xb9400000
+.word 0x350009e0
+.word 0x14000001
+.word 0xf9403f59
+.word 0xaa1903e0
+.word 0xb5000420
+.word 0xf9401359
+.word 0xaa1903e0
+.word 0xb4000200
+.word 0xf9401f40
+.word 0xf9400b42
+.word 0xaa1903e0
+.word 0xf9401ba3
+.word 0x9101e3a1
+.word 0xf9400064
+.word 0xf9003fa4
+.word 0xf9400464
+.word 0xf90043a4
+.word 0xf9400864
+.word 0xf90047a4
+.word 0xf9400c63
+.word 0xf9004ba3
+.word 0xd63f0040
+.word 0x1400002f
+.word 0xf9401f40
+.word 0xf9400b41
+.word 0xf9401ba2
+.word 0x910163a0
+.word 0xf9400043
+.word 0xf9002fa3
+.word 0xf9400443
+.word 0xf90033a3
+.word 0xf9400843
+.word 0xf90037a3
+.word 0xf9400c42
+.word 0xf9003ba2
+.word 0xd63f0020
+.word 0x14000021
+.word 0xb9801b20
+.word 0xaa0003fa
+.word 0xd2800018
+.word 0x93407f00
+.word 0xb9801b21
+.word 0xeb00003f
+.word 0x10000011
+.word 0x540004e9
+.word 0xd37df000
+.word 0x8b000320
+.word 0x91008000
+.word 0xf9400017
+.word 0xaa1703e2
+.word 0xaa0203e0
+.word 0xf9401ba3
+.word 0x9100e3a1
+.word 0xf9400064
+.word 0xf9001fa4
+.word 0xf9400464
+.word 0xf90023a4
+.word 0xf9400864
+.word 0xf90027a4
+.word 0xf9400c63
+.word 0xf9002ba3
+.word 0xf90053a2
+.word 0xf9400c50
+.word 0xd63f0200
+.word 0xf94053a0
+.word 0x11000718
+.word 0xaa1803e0
+.word 0x6b1a001f
+.word 0x54fffc8b
+.word 0xa94163b7
+.word 0xa9426bb9
+.word 0x910003bf
+.word 0xa8cb7bfd
+.word 0xd65f03c0
+.word 0x91022320
+.word 0xd280003e
+.word 0xb900001e
+.word 0xaa1903e0
+bl _p_480
+bl _p_481
+.word 0xaa0003f9
+.word 0xb5ffff20
+.word 0x17ffffb0
+.word 0xd28019e0
+.word 0xaa1103e1
+bl _p_13
+
+Lme_3f5:
 .text
 	.align 4
 	.no_dead_strip wrapper_delegate_invoke_System_Comparison_1_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo_invoke_int_T_T_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo
@@ -85476,21 +85476,21 @@ bl method_addresses
 bl method_addresses
 bl method_addresses
 bl method_addresses
+bl wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XmlName_invoke_bool_T_Xamarin_Forms_Xaml_XmlName
+bl method_addresses
+bl method_addresses
+bl method_addresses
+bl method_addresses
 bl wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XmlName_invoke_void_T_Xamarin_Forms_Xaml_XmlName
 bl method_addresses
 bl method_addresses
 bl method_addresses
 bl method_addresses
 bl method_addresses
-bl wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XmlName_invoke_bool_T_Xamarin_Forms_Xaml_XmlName
-bl method_addresses
-bl method_addresses
-bl method_addresses
-bl method_addresses
 bl method_addresses
 bl wrapper_delegate_invoke_System_Comparison_1_Xamarin_Forms_Xaml_XmlName_invoke_int_T_T_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_XmlName
-bl wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_INode_invoke_void_T_Xamarin_Forms_Xaml_INode
 bl wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_INode_invoke_bool_T_Xamarin_Forms_Xaml_INode
+bl wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_INode_invoke_void_T_Xamarin_Forms_Xaml_INode
 bl wrapper_delegate_invoke_System_Comparison_1_Xamarin_Forms_Xaml_INode_invoke_int_T_T_Xamarin_Forms_Xaml_INode_Xamarin_Forms_Xaml_INode
 bl method_addresses
 bl method_addresses
@@ -85646,13 +85646,13 @@ bl method_addresses
 bl method_addresses
 bl method_addresses
 bl method_addresses
+bl wrapper_delegate_invoke_System_Predicate_1_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_bool_T_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
+bl method_addresses
+bl method_addresses
+bl method_addresses
+bl method_addresses
 bl wrapper_delegate_invoke_System_Action_1_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_void_T_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
 bl method_addresses
-bl method_addresses
-bl method_addresses
-bl method_addresses
-bl method_addresses
-bl wrapper_delegate_invoke_System_Predicate_1_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_bool_T_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
 bl method_addresses
 bl method_addresses
 bl method_addresses
@@ -85666,11 +85666,11 @@ bl System_Collections_Generic_List_1_Enumerator_System_ValueTuple_2_Xamarin_Form
 bl System_Collections_Generic_List_1_Enumerator_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_get_Current
 bl System_Collections_Generic_List_1_Enumerator_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_System_Collections_IEnumerator_get_Current
 bl System_Collections_Generic_List_1_Enumerator_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_System_Collections_IEnumerator_Reset
-bl wrapper_delegate_invoke_System_Action_1_object_invoke_void_T_object
 bl wrapper_delegate_invoke_System_Predicate_1_object_invoke_bool_T_object
+bl wrapper_delegate_invoke_System_Action_1_object_invoke_void_T_object
 bl wrapper_delegate_invoke_System_Comparison_1_object_invoke_int_T_T_object_object
-bl wrapper_delegate_invoke_System_Action_1_string_invoke_void_T_string
 bl wrapper_delegate_invoke_System_Predicate_1_string_invoke_bool_T_string
+bl wrapper_delegate_invoke_System_Action_1_string_invoke_void_T_string
 bl wrapper_delegate_invoke_System_Comparison_1_string_invoke_int_T_T_string_string
 bl method_addresses
 bl method_addresses
@@ -85688,12 +85688,12 @@ bl method_addresses
 bl method_addresses
 bl method_addresses
 bl method_addresses
-bl wrapper_delegate_invoke_System_Action_1_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_void_T_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
-bl method_addresses
-bl method_addresses
-bl method_addresses
-bl method_addresses
 bl wrapper_delegate_invoke_System_Predicate_1_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_bool_T_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
+bl method_addresses
+bl method_addresses
+bl method_addresses
+bl method_addresses
+bl wrapper_delegate_invoke_System_Action_1_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_void_T_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
 bl method_addresses
 bl method_addresses
 bl method_addresses
@@ -85708,8 +85708,8 @@ bl System_Collections_Generic_List_1_Enumerator_System_Collections_Generic_KeyVa
 bl System_Collections_Generic_List_1_Enumerator_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_System_Collections_IEnumerator_get_Current
 bl System_Collections_Generic_List_1_Enumerator_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_System_Collections_IEnumerator_Reset
 bl wrapper_delegate_invoke_System_Func_2_Xamarin_Forms_Internals_ResourceLoader_ResourceLoadingQuery_Xamarin_Forms_Internals_ResourceLoader_ResourceLoadingResponse_invoke_TResult_T_Xamarin_Forms_Internals_ResourceLoader_ResourceLoadingQuery
-bl wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XmlType_invoke_void_T_Xamarin_Forms_Xaml_XmlType
 bl wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XmlType_invoke_bool_T_Xamarin_Forms_Xaml_XmlType
+bl wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XmlType_invoke_void_T_Xamarin_Forms_Xaml_XmlType
 bl wrapper_delegate_invoke_System_Comparison_1_Xamarin_Forms_Xaml_XmlType_invoke_int_T_T_Xamarin_Forms_Xaml_XmlType_Xamarin_Forms_Xaml_XmlType
 bl method_addresses
 bl method_addresses
@@ -85744,20 +85744,20 @@ bl method_addresses
 bl method_addresses
 bl method_addresses
 bl method_addresses
-bl wrapper_delegate_invoke_System_Action_1_System_Collections_Generic_KeyValuePair_2_string_string_invoke_void_T_System_Collections_Generic_KeyValuePair_2_string_string
-bl method_addresses
-bl method_addresses
-bl method_addresses
-bl method_addresses
 bl wrapper_delegate_invoke_System_Predicate_1_System_Collections_Generic_KeyValuePair_2_string_string_invoke_bool_T_System_Collections_Generic_KeyValuePair_2_string_string
+bl method_addresses
+bl method_addresses
+bl method_addresses
+bl method_addresses
+bl wrapper_delegate_invoke_System_Action_1_System_Collections_Generic_KeyValuePair_2_string_string_invoke_void_T_System_Collections_Generic_KeyValuePair_2_string_string
 bl method_addresses
 bl method_addresses
 bl method_addresses
 bl method_addresses
 bl method_addresses
 bl wrapper_delegate_invoke_System_Comparison_1_System_Collections_Generic_KeyValuePair_2_string_string_invoke_int_T_T_System_Collections_Generic_KeyValuePair_2_string_string_System_Collections_Generic_KeyValuePair_2_string_string
-bl wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_XmlnsDefinitionAttribute_invoke_void_T_Xamarin_Forms_XmlnsDefinitionAttribute
 bl wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_XmlnsDefinitionAttribute_invoke_bool_T_Xamarin_Forms_XmlnsDefinitionAttribute
+bl wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_XmlnsDefinitionAttribute_invoke_void_T_Xamarin_Forms_XmlnsDefinitionAttribute
 bl wrapper_delegate_invoke_System_Comparison_1_Xamarin_Forms_XmlnsDefinitionAttribute_invoke_int_T_T_Xamarin_Forms_XmlnsDefinitionAttribute_Xamarin_Forms_XmlnsDefinitionAttribute
 bl method_addresses
 bl method_addresses
@@ -85798,13 +85798,13 @@ bl method_addresses
 bl method_addresses
 bl method_addresses
 bl method_addresses
+bl wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo_invoke_bool_T_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo
+bl method_addresses
+bl method_addresses
+bl method_addresses
+bl method_addresses
 bl wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo_invoke_void_T_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo
 bl method_addresses
-bl method_addresses
-bl method_addresses
-bl method_addresses
-bl method_addresses
-bl wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo_invoke_bool_T_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo
 bl method_addresses
 bl method_addresses
 bl method_addresses
@@ -91343,7 +91343,7 @@ _mono_aot_file_info:
 	.long 0,0,0,0,0,0,0,0
 	.long 0,0,0,0,0,0,0,0
 	.long 0,0,0,0,0,0,0,0
-	.byte 165,99,233,63,233,144,214,238,72,138,0,146,163,100,7,126
+	.byte 138,110,138,42,35,210,73,162,176,165,8,153,219,93,30,98
 	.globl _mono_aot_module_Xamarin_Forms_Xaml_info
 	.align 3
 _mono_aot_module_Xamarin_Forms_Xaml_info:
@@ -130872,13 +130872,13 @@ Lfde638_end:
 LTDIE_353:
 
 	.byte 5
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 	.byte 128,1,16
 LDIFF_SYM5175=LTDIE_21 - Ldebug_info_start
 	.long LDIFF_SYM5175
 	.byte 2,35,0,0,7
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 LDIFF_SYM5176=LTDIE_353 - Ldebug_info_start
 	.long LDIFF_SYM5176
@@ -130893,11 +130893,11 @@ LTDIE_353_REFERENCE:
 LDIFF_SYM5178=LTDIE_353 - Ldebug_info_start
 	.long LDIFF_SYM5178
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Action`1<Xamarin.Forms.Xaml.XmlName>:invoke_void_T"
-	.asciz "wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XmlName_invoke_void_T_Xamarin_Forms_Xaml_XmlName"
+	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<Xamarin.Forms.Xaml.XmlName>:invoke_bool_T"
+	.asciz "wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XmlName_invoke_bool_T_Xamarin_Forms_Xaml_XmlName"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XmlName_invoke_void_T_Xamarin_Forms_Xaml_XmlName
+	.quad wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XmlName_invoke_bool_T_Xamarin_Forms_Xaml_XmlName
 	.quad Lme_2ae
 
 	.byte 2,118,16,3
@@ -130935,20 +130935,25 @@ LDIFF_SYM5184=LTDIE_21_REFERENCE - Ldebug_info_start
 
 LDIFF_SYM5185=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM5185
-	.byte 1,105,0
+	.byte 1,105,11
+	.asciz "V_5"
+
+LDIFF_SYM5186=LDIE_BOOLEAN - Ldebug_info_start
+	.long LDIFF_SYM5186
+	.byte 1,103,0
 
 .section __DWARF, __debug_frame,regular,debug
 
-LDIFF_SYM5186=Lfde639_end - Lfde639_start
-	.long LDIFF_SYM5186
+LDIFF_SYM5187=Lfde639_end - Lfde639_start
+	.long LDIFF_SYM5187
 Lfde639_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XmlName_invoke_void_T_Xamarin_Forms_Xaml_XmlName
+	.quad wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XmlName_invoke_bool_T_Xamarin_Forms_Xaml_XmlName
 
-LDIFF_SYM5187=Lme_2ae - wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XmlName_invoke_void_T_Xamarin_Forms_Xaml_XmlName
-	.long LDIFF_SYM5187
+LDIFF_SYM5188=Lme_2ae - wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XmlName_invoke_bool_T_Xamarin_Forms_Xaml_XmlName
+	.long LDIFF_SYM5188
 	.long 0
 	.byte 12,31,0,68,14,80,157,10,158,9,68,13,29,68,151,8,152,7,68,153,6,154,5
 	.align 3
@@ -130958,75 +130963,70 @@ Lfde639_end:
 LTDIE_354:
 
 	.byte 5
-	.asciz "System_Predicate`1"
+	.asciz "System_Action`1"
 
 	.byte 128,1,16
-LDIFF_SYM5188=LTDIE_21 - Ldebug_info_start
-	.long LDIFF_SYM5188
-	.byte 2,35,0,0,7
-	.asciz "System_Predicate`1"
-
-LDIFF_SYM5189=LTDIE_354 - Ldebug_info_start
+LDIFF_SYM5189=LTDIE_21 - Ldebug_info_start
 	.long LDIFF_SYM5189
+	.byte 2,35,0,0,7
+	.asciz "System_Action`1"
+
+LDIFF_SYM5190=LTDIE_354 - Ldebug_info_start
+	.long LDIFF_SYM5190
 LTDIE_354_POINTER:
 
 	.byte 13
-LDIFF_SYM5190=LTDIE_354 - Ldebug_info_start
-	.long LDIFF_SYM5190
+LDIFF_SYM5191=LTDIE_354 - Ldebug_info_start
+	.long LDIFF_SYM5191
 LTDIE_354_REFERENCE:
 
 	.byte 14
-LDIFF_SYM5191=LTDIE_354 - Ldebug_info_start
-	.long LDIFF_SYM5191
+LDIFF_SYM5192=LTDIE_354 - Ldebug_info_start
+	.long LDIFF_SYM5192
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<Xamarin.Forms.Xaml.XmlName>:invoke_bool_T"
-	.asciz "wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XmlName_invoke_bool_T_Xamarin_Forms_Xaml_XmlName"
+	.asciz "(wrapper_delegate-invoke)_System.Action`1<Xamarin.Forms.Xaml.XmlName>:invoke_void_T"
+	.asciz "wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XmlName_invoke_void_T_Xamarin_Forms_Xaml_XmlName"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XmlName_invoke_bool_T_Xamarin_Forms_Xaml_XmlName
-	.quad Lme_2b4
+	.quad wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XmlName_invoke_void_T_Xamarin_Forms_Xaml_XmlName
+	.quad Lme_2b3
 
 	.byte 2,118,16,3
 	.asciz "this"
 
-LDIFF_SYM5192=LTDIE_354_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM5192
+LDIFF_SYM5193=LTDIE_354_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM5193
 	.byte 1,106,3
 	.asciz "param0"
 
-LDIFF_SYM5193=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM5193
+LDIFF_SYM5194=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM5194
 	.byte 2,141,48,11
 	.asciz "V_0"
 
-LDIFF_SYM5194=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM5194
+LDIFF_SYM5195=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM5195
 	.byte 1,104,11
 	.asciz "V_1"
 
-LDIFF_SYM5195=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM5195
+LDIFF_SYM5196=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM5196
 	.byte 1,106,11
 	.asciz "V_2"
 
-LDIFF_SYM5196=LTDIE_201_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM5196
+LDIFF_SYM5197=LTDIE_201_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM5197
 	.byte 1,105,11
 	.asciz "V_3"
 
-LDIFF_SYM5197=LTDIE_21_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM5197
+LDIFF_SYM5198=LTDIE_21_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM5198
 	.byte 1,103,11
 	.asciz "V_4"
 
-LDIFF_SYM5198=LDIE_OBJECT - Ldebug_info_start
-	.long LDIFF_SYM5198
-	.byte 1,105,11
-	.asciz "V_5"
-
-LDIFF_SYM5199=LDIE_BOOLEAN - Ldebug_info_start
+LDIFF_SYM5199=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM5199
-	.byte 1,103,0
+	.byte 1,105,0
 
 .section __DWARF, __debug_frame,regular,debug
 
@@ -131036,9 +131036,9 @@ Lfde640_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XmlName_invoke_bool_T_Xamarin_Forms_Xaml_XmlName
+	.quad wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XmlName_invoke_void_T_Xamarin_Forms_Xaml_XmlName
 
-LDIFF_SYM5201=Lme_2b4 - wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XmlName_invoke_bool_T_Xamarin_Forms_Xaml_XmlName
+LDIFF_SYM5201=Lme_2b3 - wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XmlName_invoke_void_T_Xamarin_Forms_Xaml_XmlName
 	.long LDIFF_SYM5201
 	.long 0
 	.byte 12,31,0,68,14,80,157,10,158,9,68,13,29,68,151,8,152,7,68,153,6,154,5
@@ -131145,13 +131145,13 @@ Lfde641_end:
 LTDIE_356:
 
 	.byte 5
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 	.byte 128,1,16
 LDIFF_SYM5217=LTDIE_21 - Ldebug_info_start
 	.long LDIFF_SYM5217
 	.byte 2,35,0,0,7
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 LDIFF_SYM5218=LTDIE_356 - Ldebug_info_start
 	.long LDIFF_SYM5218
@@ -131166,11 +131166,11 @@ LTDIE_356_REFERENCE:
 LDIFF_SYM5220=LTDIE_356 - Ldebug_info_start
 	.long LDIFF_SYM5220
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Action`1<Xamarin.Forms.Xaml.INode>:invoke_void_T"
-	.asciz "wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_INode_invoke_void_T_Xamarin_Forms_Xaml_INode"
+	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<Xamarin.Forms.Xaml.INode>:invoke_bool_T"
+	.asciz "wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_INode_invoke_bool_T_Xamarin_Forms_Xaml_INode"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_INode_invoke_void_T_Xamarin_Forms_Xaml_INode
+	.quad wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_INode_invoke_bool_T_Xamarin_Forms_Xaml_INode
 	.quad Lme_2bb
 
 	.byte 2,118,16,3
@@ -131208,20 +131208,25 @@ LDIFF_SYM5226=LTDIE_21_REFERENCE - Ldebug_info_start
 
 LDIFF_SYM5227=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM5227
-	.byte 1,104,0
+	.byte 1,104,11
+	.asciz "V_5"
+
+LDIFF_SYM5228=LDIE_BOOLEAN - Ldebug_info_start
+	.long LDIFF_SYM5228
+	.byte 1,102,0
 
 .section __DWARF, __debug_frame,regular,debug
 
-LDIFF_SYM5228=Lfde642_end - Lfde642_start
-	.long LDIFF_SYM5228
+LDIFF_SYM5229=Lfde642_end - Lfde642_start
+	.long LDIFF_SYM5229
 Lfde642_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_INode_invoke_void_T_Xamarin_Forms_Xaml_INode
+	.quad wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_INode_invoke_bool_T_Xamarin_Forms_Xaml_INode
 
-LDIFF_SYM5229=Lme_2bb - wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_INode_invoke_void_T_Xamarin_Forms_Xaml_INode
-	.long LDIFF_SYM5229
+LDIFF_SYM5230=Lme_2bb - wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_INode_invoke_bool_T_Xamarin_Forms_Xaml_INode
+	.long LDIFF_SYM5230
 	.long 0
 	.byte 12,31,0,68,14,80,157,10,158,9,68,13,29,68,150,8,151,7,68,152,6,153,5,68,154,4
 	.align 3
@@ -131231,75 +131236,70 @@ Lfde642_end:
 LTDIE_357:
 
 	.byte 5
-	.asciz "System_Predicate`1"
+	.asciz "System_Action`1"
 
 	.byte 128,1,16
-LDIFF_SYM5230=LTDIE_21 - Ldebug_info_start
-	.long LDIFF_SYM5230
-	.byte 2,35,0,0,7
-	.asciz "System_Predicate`1"
-
-LDIFF_SYM5231=LTDIE_357 - Ldebug_info_start
+LDIFF_SYM5231=LTDIE_21 - Ldebug_info_start
 	.long LDIFF_SYM5231
+	.byte 2,35,0,0,7
+	.asciz "System_Action`1"
+
+LDIFF_SYM5232=LTDIE_357 - Ldebug_info_start
+	.long LDIFF_SYM5232
 LTDIE_357_POINTER:
 
 	.byte 13
-LDIFF_SYM5232=LTDIE_357 - Ldebug_info_start
-	.long LDIFF_SYM5232
+LDIFF_SYM5233=LTDIE_357 - Ldebug_info_start
+	.long LDIFF_SYM5233
 LTDIE_357_REFERENCE:
 
 	.byte 14
-LDIFF_SYM5233=LTDIE_357 - Ldebug_info_start
-	.long LDIFF_SYM5233
+LDIFF_SYM5234=LTDIE_357 - Ldebug_info_start
+	.long LDIFF_SYM5234
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<Xamarin.Forms.Xaml.INode>:invoke_bool_T"
-	.asciz "wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_INode_invoke_bool_T_Xamarin_Forms_Xaml_INode"
+	.asciz "(wrapper_delegate-invoke)_System.Action`1<Xamarin.Forms.Xaml.INode>:invoke_void_T"
+	.asciz "wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_INode_invoke_void_T_Xamarin_Forms_Xaml_INode"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_INode_invoke_bool_T_Xamarin_Forms_Xaml_INode
+	.quad wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_INode_invoke_void_T_Xamarin_Forms_Xaml_INode
 	.quad Lme_2bc
 
 	.byte 2,118,16,3
 	.asciz "this"
 
-LDIFF_SYM5234=LTDIE_357_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM5234
+LDIFF_SYM5235=LTDIE_357_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM5235
 	.byte 1,105,3
 	.asciz "param0"
 
-LDIFF_SYM5235=LTDIE_30_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM5235
+LDIFF_SYM5236=LTDIE_30_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM5236
 	.byte 1,106,11
 	.asciz "V_0"
 
-LDIFF_SYM5236=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM5236
+LDIFF_SYM5237=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM5237
 	.byte 1,103,11
 	.asciz "V_1"
 
-LDIFF_SYM5237=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM5237
+LDIFF_SYM5238=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM5238
 	.byte 1,105,11
 	.asciz "V_2"
 
-LDIFF_SYM5238=LTDIE_201_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM5238
+LDIFF_SYM5239=LTDIE_201_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM5239
 	.byte 1,104,11
 	.asciz "V_3"
 
-LDIFF_SYM5239=LTDIE_21_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM5239
+LDIFF_SYM5240=LTDIE_21_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM5240
 	.byte 1,102,11
 	.asciz "V_4"
 
-LDIFF_SYM5240=LDIE_OBJECT - Ldebug_info_start
-	.long LDIFF_SYM5240
-	.byte 1,104,11
-	.asciz "V_5"
-
-LDIFF_SYM5241=LDIE_BOOLEAN - Ldebug_info_start
+LDIFF_SYM5241=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM5241
-	.byte 1,102,0
+	.byte 1,104,0
 
 .section __DWARF, __debug_frame,regular,debug
 
@@ -131309,9 +131309,9 @@ Lfde643_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_INode_invoke_bool_T_Xamarin_Forms_Xaml_INode
+	.quad wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_INode_invoke_void_T_Xamarin_Forms_Xaml_INode
 
-LDIFF_SYM5243=Lme_2bc - wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_INode_invoke_bool_T_Xamarin_Forms_Xaml_INode
+LDIFF_SYM5243=Lme_2bc - wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_INode_invoke_void_T_Xamarin_Forms_Xaml_INode
 	.long LDIFF_SYM5243
 	.long 0
 	.byte 12,31,0,68,14,80,157,10,158,9,68,13,29,68,150,8,151,7,68,152,6,153,5,68,154,4
@@ -136640,13 +136640,13 @@ Lfde749_end:
 LTDIE_378:
 
 	.byte 5
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 	.byte 128,1,16
 LDIFF_SYM5885=LTDIE_21 - Ldebug_info_start
 	.long LDIFF_SYM5885
 	.byte 2,35,0,0,7
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 LDIFF_SYM5886=LTDIE_378 - Ldebug_info_start
 	.long LDIFF_SYM5886
@@ -136661,11 +136661,11 @@ LTDIE_378_REFERENCE:
 LDIFF_SYM5888=LTDIE_378 - Ldebug_info_start
 	.long LDIFF_SYM5888
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Action`1<System.ValueTuple`2<Xamarin.Forms.Xaml.XmlName,_Xamarin.Forms.Xaml.INode>>:invoke_void_T"
-	.asciz "wrapper_delegate_invoke_System_Action_1_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_void_T_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode"
+	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<System.ValueTuple`2<Xamarin.Forms.Xaml.XmlName,_Xamarin.Forms.Xaml.INode>>:invoke_bool_T"
+	.asciz "wrapper_delegate_invoke_System_Predicate_1_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_bool_T_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Action_1_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_void_T_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
+	.quad wrapper_delegate_invoke_System_Predicate_1_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_bool_T_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
 	.quad Lme_358
 
 	.byte 2,118,16,3
@@ -136703,20 +136703,25 @@ LDIFF_SYM5894=LTDIE_21_REFERENCE - Ldebug_info_start
 
 LDIFF_SYM5895=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM5895
-	.byte 1,105,0
+	.byte 1,105,11
+	.asciz "V_5"
+
+LDIFF_SYM5896=LDIE_BOOLEAN - Ldebug_info_start
+	.long LDIFF_SYM5896
+	.byte 1,103,0
 
 .section __DWARF, __debug_frame,regular,debug
 
-LDIFF_SYM5896=Lfde750_end - Lfde750_start
-	.long LDIFF_SYM5896
+LDIFF_SYM5897=Lfde750_end - Lfde750_start
+	.long LDIFF_SYM5897
 Lfde750_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Action_1_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_void_T_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
+	.quad wrapper_delegate_invoke_System_Predicate_1_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_bool_T_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
 
-LDIFF_SYM5897=Lme_358 - wrapper_delegate_invoke_System_Action_1_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_void_T_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
-	.long LDIFF_SYM5897
+LDIFF_SYM5898=Lme_358 - wrapper_delegate_invoke_System_Predicate_1_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_bool_T_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
+	.long LDIFF_SYM5898
 	.long 0
 	.byte 12,31,0,68,14,144,1,157,18,158,17,68,13,29,68,151,16,152,15,68,153,14,154,13
 	.align 3
@@ -136726,75 +136731,70 @@ Lfde750_end:
 LTDIE_379:
 
 	.byte 5
-	.asciz "System_Predicate`1"
+	.asciz "System_Action`1"
 
 	.byte 128,1,16
-LDIFF_SYM5898=LTDIE_21 - Ldebug_info_start
-	.long LDIFF_SYM5898
-	.byte 2,35,0,0,7
-	.asciz "System_Predicate`1"
-
-LDIFF_SYM5899=LTDIE_379 - Ldebug_info_start
+LDIFF_SYM5899=LTDIE_21 - Ldebug_info_start
 	.long LDIFF_SYM5899
+	.byte 2,35,0,0,7
+	.asciz "System_Action`1"
+
+LDIFF_SYM5900=LTDIE_379 - Ldebug_info_start
+	.long LDIFF_SYM5900
 LTDIE_379_POINTER:
 
 	.byte 13
-LDIFF_SYM5900=LTDIE_379 - Ldebug_info_start
-	.long LDIFF_SYM5900
+LDIFF_SYM5901=LTDIE_379 - Ldebug_info_start
+	.long LDIFF_SYM5901
 LTDIE_379_REFERENCE:
 
 	.byte 14
-LDIFF_SYM5901=LTDIE_379 - Ldebug_info_start
-	.long LDIFF_SYM5901
+LDIFF_SYM5902=LTDIE_379 - Ldebug_info_start
+	.long LDIFF_SYM5902
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<System.ValueTuple`2<Xamarin.Forms.Xaml.XmlName,_Xamarin.Forms.Xaml.INode>>:invoke_bool_T"
-	.asciz "wrapper_delegate_invoke_System_Predicate_1_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_bool_T_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode"
+	.asciz "(wrapper_delegate-invoke)_System.Action`1<System.ValueTuple`2<Xamarin.Forms.Xaml.XmlName,_Xamarin.Forms.Xaml.INode>>:invoke_void_T"
+	.asciz "wrapper_delegate_invoke_System_Action_1_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_void_T_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Predicate_1_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_bool_T_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
-	.quad Lme_35e
+	.quad wrapper_delegate_invoke_System_Action_1_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_void_T_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
+	.quad Lme_35d
 
 	.byte 2,118,16,3
 	.asciz "this"
 
-LDIFF_SYM5902=LTDIE_379_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM5902
+LDIFF_SYM5903=LTDIE_379_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM5903
 	.byte 1,106,3
 	.asciz "param0"
 
-LDIFF_SYM5903=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM5903
+LDIFF_SYM5904=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM5904
 	.byte 1,80,11
 	.asciz "V_0"
 
-LDIFF_SYM5904=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM5904
+LDIFF_SYM5905=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM5905
 	.byte 1,104,11
 	.asciz "V_1"
 
-LDIFF_SYM5905=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM5905
+LDIFF_SYM5906=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM5906
 	.byte 1,106,11
 	.asciz "V_2"
 
-LDIFF_SYM5906=LTDIE_201_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM5906
+LDIFF_SYM5907=LTDIE_201_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM5907
 	.byte 1,105,11
 	.asciz "V_3"
 
-LDIFF_SYM5907=LTDIE_21_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM5907
+LDIFF_SYM5908=LTDIE_21_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM5908
 	.byte 1,103,11
 	.asciz "V_4"
 
-LDIFF_SYM5908=LDIE_OBJECT - Ldebug_info_start
-	.long LDIFF_SYM5908
-	.byte 1,105,11
-	.asciz "V_5"
-
-LDIFF_SYM5909=LDIE_BOOLEAN - Ldebug_info_start
+LDIFF_SYM5909=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM5909
-	.byte 1,103,0
+	.byte 1,105,0
 
 .section __DWARF, __debug_frame,regular,debug
 
@@ -136804,9 +136804,9 @@ Lfde751_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Predicate_1_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_bool_T_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
+	.quad wrapper_delegate_invoke_System_Action_1_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_void_T_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
 
-LDIFF_SYM5911=Lme_35e - wrapper_delegate_invoke_System_Predicate_1_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_bool_T_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
+LDIFF_SYM5911=Lme_35d - wrapper_delegate_invoke_System_Action_1_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_void_T_System_ValueTuple_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
 	.long LDIFF_SYM5911
 	.long 0
 	.byte 12,31,0,68,14,144,1,157,18,158,17,68,13,29,68,151,16,152,15,68,153,14,154,13
@@ -137203,13 +137203,13 @@ Lfde759_end:
 LTDIE_382:
 
 	.byte 5
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 	.byte 128,1,16
 LDIFF_SYM5958=LTDIE_21 - Ldebug_info_start
 	.long LDIFF_SYM5958
 	.byte 2,35,0,0,7
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 LDIFF_SYM5959=LTDIE_382 - Ldebug_info_start
 	.long LDIFF_SYM5959
@@ -137224,11 +137224,11 @@ LTDIE_382_REFERENCE:
 LDIFF_SYM5961=LTDIE_382 - Ldebug_info_start
 	.long LDIFF_SYM5961
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Action`1<object>:invoke_void_T"
-	.asciz "wrapper_delegate_invoke_System_Action_1_object_invoke_void_T_object"
+	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<object>:invoke_bool_T"
+	.asciz "wrapper_delegate_invoke_System_Predicate_1_object_invoke_bool_T_object"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Action_1_object_invoke_void_T_object
+	.quad wrapper_delegate_invoke_System_Predicate_1_object_invoke_bool_T_object
 	.quad Lme_36c
 
 	.byte 2,118,16,3
@@ -137266,20 +137266,25 @@ LDIFF_SYM5967=LTDIE_21_REFERENCE - Ldebug_info_start
 
 LDIFF_SYM5968=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM5968
-	.byte 1,104,0
+	.byte 1,104,11
+	.asciz "V_5"
+
+LDIFF_SYM5969=LDIE_BOOLEAN - Ldebug_info_start
+	.long LDIFF_SYM5969
+	.byte 1,102,0
 
 .section __DWARF, __debug_frame,regular,debug
 
-LDIFF_SYM5969=Lfde760_end - Lfde760_start
-	.long LDIFF_SYM5969
+LDIFF_SYM5970=Lfde760_end - Lfde760_start
+	.long LDIFF_SYM5970
 Lfde760_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Action_1_object_invoke_void_T_object
+	.quad wrapper_delegate_invoke_System_Predicate_1_object_invoke_bool_T_object
 
-LDIFF_SYM5970=Lme_36c - wrapper_delegate_invoke_System_Action_1_object_invoke_void_T_object
-	.long LDIFF_SYM5970
+LDIFF_SYM5971=Lme_36c - wrapper_delegate_invoke_System_Predicate_1_object_invoke_bool_T_object
+	.long LDIFF_SYM5971
 	.long 0
 	.byte 12,31,0,68,14,80,157,10,158,9,68,13,29,68,150,8,151,7,68,152,6,153,5,68,154,4
 	.align 3
@@ -137289,75 +137294,70 @@ Lfde760_end:
 LTDIE_383:
 
 	.byte 5
-	.asciz "System_Predicate`1"
+	.asciz "System_Action`1"
 
 	.byte 128,1,16
-LDIFF_SYM5971=LTDIE_21 - Ldebug_info_start
-	.long LDIFF_SYM5971
-	.byte 2,35,0,0,7
-	.asciz "System_Predicate`1"
-
-LDIFF_SYM5972=LTDIE_383 - Ldebug_info_start
+LDIFF_SYM5972=LTDIE_21 - Ldebug_info_start
 	.long LDIFF_SYM5972
+	.byte 2,35,0,0,7
+	.asciz "System_Action`1"
+
+LDIFF_SYM5973=LTDIE_383 - Ldebug_info_start
+	.long LDIFF_SYM5973
 LTDIE_383_POINTER:
 
 	.byte 13
-LDIFF_SYM5973=LTDIE_383 - Ldebug_info_start
-	.long LDIFF_SYM5973
+LDIFF_SYM5974=LTDIE_383 - Ldebug_info_start
+	.long LDIFF_SYM5974
 LTDIE_383_REFERENCE:
 
 	.byte 14
-LDIFF_SYM5974=LTDIE_383 - Ldebug_info_start
-	.long LDIFF_SYM5974
+LDIFF_SYM5975=LTDIE_383 - Ldebug_info_start
+	.long LDIFF_SYM5975
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<object>:invoke_bool_T"
-	.asciz "wrapper_delegate_invoke_System_Predicate_1_object_invoke_bool_T_object"
+	.asciz "(wrapper_delegate-invoke)_System.Action`1<object>:invoke_void_T"
+	.asciz "wrapper_delegate_invoke_System_Action_1_object_invoke_void_T_object"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Predicate_1_object_invoke_bool_T_object
+	.quad wrapper_delegate_invoke_System_Action_1_object_invoke_void_T_object
 	.quad Lme_36d
 
 	.byte 2,118,16,3
 	.asciz "this"
 
-LDIFF_SYM5975=LTDIE_383_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM5975
+LDIFF_SYM5976=LTDIE_383_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM5976
 	.byte 1,105,3
 	.asciz "param0"
 
-LDIFF_SYM5976=LDIE_OBJECT - Ldebug_info_start
-	.long LDIFF_SYM5976
+LDIFF_SYM5977=LDIE_OBJECT - Ldebug_info_start
+	.long LDIFF_SYM5977
 	.byte 1,106,11
 	.asciz "V_0"
 
-LDIFF_SYM5977=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM5977
+LDIFF_SYM5978=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM5978
 	.byte 1,103,11
 	.asciz "V_1"
 
-LDIFF_SYM5978=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM5978
+LDIFF_SYM5979=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM5979
 	.byte 1,105,11
 	.asciz "V_2"
 
-LDIFF_SYM5979=LTDIE_201_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM5979
+LDIFF_SYM5980=LTDIE_201_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM5980
 	.byte 1,104,11
 	.asciz "V_3"
 
-LDIFF_SYM5980=LTDIE_21_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM5980
+LDIFF_SYM5981=LTDIE_21_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM5981
 	.byte 1,102,11
 	.asciz "V_4"
 
-LDIFF_SYM5981=LDIE_OBJECT - Ldebug_info_start
-	.long LDIFF_SYM5981
-	.byte 1,104,11
-	.asciz "V_5"
-
-LDIFF_SYM5982=LDIE_BOOLEAN - Ldebug_info_start
+LDIFF_SYM5982=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM5982
-	.byte 1,102,0
+	.byte 1,104,0
 
 .section __DWARF, __debug_frame,regular,debug
 
@@ -137367,9 +137367,9 @@ Lfde761_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Predicate_1_object_invoke_bool_T_object
+	.quad wrapper_delegate_invoke_System_Action_1_object_invoke_void_T_object
 
-LDIFF_SYM5984=Lme_36d - wrapper_delegate_invoke_System_Predicate_1_object_invoke_bool_T_object
+LDIFF_SYM5984=Lme_36d - wrapper_delegate_invoke_System_Action_1_object_invoke_void_T_object
 	.long LDIFF_SYM5984
 	.long 0
 	.byte 12,31,0,68,14,80,157,10,158,9,68,13,29,68,150,8,151,7,68,152,6,153,5,68,154,4
@@ -137476,13 +137476,13 @@ Lfde762_end:
 LTDIE_385:
 
 	.byte 5
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 	.byte 128,1,16
 LDIFF_SYM6000=LTDIE_21 - Ldebug_info_start
 	.long LDIFF_SYM6000
 	.byte 2,35,0,0,7
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 LDIFF_SYM6001=LTDIE_385 - Ldebug_info_start
 	.long LDIFF_SYM6001
@@ -137497,11 +137497,11 @@ LTDIE_385_REFERENCE:
 LDIFF_SYM6003=LTDIE_385 - Ldebug_info_start
 	.long LDIFF_SYM6003
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Action`1<string>:invoke_void_T"
-	.asciz "wrapper_delegate_invoke_System_Action_1_string_invoke_void_T_string"
+	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<string>:invoke_bool_T"
+	.asciz "wrapper_delegate_invoke_System_Predicate_1_string_invoke_bool_T_string"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Action_1_string_invoke_void_T_string
+	.quad wrapper_delegate_invoke_System_Predicate_1_string_invoke_bool_T_string
 	.quad Lme_36f
 
 	.byte 2,118,16,3
@@ -137539,20 +137539,25 @@ LDIFF_SYM6009=LTDIE_21_REFERENCE - Ldebug_info_start
 
 LDIFF_SYM6010=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM6010
-	.byte 1,104,0
+	.byte 1,104,11
+	.asciz "V_5"
+
+LDIFF_SYM6011=LDIE_BOOLEAN - Ldebug_info_start
+	.long LDIFF_SYM6011
+	.byte 1,102,0
 
 .section __DWARF, __debug_frame,regular,debug
 
-LDIFF_SYM6011=Lfde763_end - Lfde763_start
-	.long LDIFF_SYM6011
+LDIFF_SYM6012=Lfde763_end - Lfde763_start
+	.long LDIFF_SYM6012
 Lfde763_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Action_1_string_invoke_void_T_string
+	.quad wrapper_delegate_invoke_System_Predicate_1_string_invoke_bool_T_string
 
-LDIFF_SYM6012=Lme_36f - wrapper_delegate_invoke_System_Action_1_string_invoke_void_T_string
-	.long LDIFF_SYM6012
+LDIFF_SYM6013=Lme_36f - wrapper_delegate_invoke_System_Predicate_1_string_invoke_bool_T_string
+	.long LDIFF_SYM6013
 	.long 0
 	.byte 12,31,0,68,14,80,157,10,158,9,68,13,29,68,150,8,151,7,68,152,6,153,5,68,154,4
 	.align 3
@@ -137562,75 +137567,70 @@ Lfde763_end:
 LTDIE_386:
 
 	.byte 5
-	.asciz "System_Predicate`1"
+	.asciz "System_Action`1"
 
 	.byte 128,1,16
-LDIFF_SYM6013=LTDIE_21 - Ldebug_info_start
-	.long LDIFF_SYM6013
-	.byte 2,35,0,0,7
-	.asciz "System_Predicate`1"
-
-LDIFF_SYM6014=LTDIE_386 - Ldebug_info_start
+LDIFF_SYM6014=LTDIE_21 - Ldebug_info_start
 	.long LDIFF_SYM6014
+	.byte 2,35,0,0,7
+	.asciz "System_Action`1"
+
+LDIFF_SYM6015=LTDIE_386 - Ldebug_info_start
+	.long LDIFF_SYM6015
 LTDIE_386_POINTER:
 
 	.byte 13
-LDIFF_SYM6015=LTDIE_386 - Ldebug_info_start
-	.long LDIFF_SYM6015
+LDIFF_SYM6016=LTDIE_386 - Ldebug_info_start
+	.long LDIFF_SYM6016
 LTDIE_386_REFERENCE:
 
 	.byte 14
-LDIFF_SYM6016=LTDIE_386 - Ldebug_info_start
-	.long LDIFF_SYM6016
+LDIFF_SYM6017=LTDIE_386 - Ldebug_info_start
+	.long LDIFF_SYM6017
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<string>:invoke_bool_T"
-	.asciz "wrapper_delegate_invoke_System_Predicate_1_string_invoke_bool_T_string"
+	.asciz "(wrapper_delegate-invoke)_System.Action`1<string>:invoke_void_T"
+	.asciz "wrapper_delegate_invoke_System_Action_1_string_invoke_void_T_string"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Predicate_1_string_invoke_bool_T_string
+	.quad wrapper_delegate_invoke_System_Action_1_string_invoke_void_T_string
 	.quad Lme_370
 
 	.byte 2,118,16,3
 	.asciz "this"
 
-LDIFF_SYM6017=LTDIE_386_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM6017
+LDIFF_SYM6018=LTDIE_386_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM6018
 	.byte 1,105,3
 	.asciz "param0"
 
-LDIFF_SYM6018=LDIE_STRING - Ldebug_info_start
-	.long LDIFF_SYM6018
+LDIFF_SYM6019=LDIE_STRING - Ldebug_info_start
+	.long LDIFF_SYM6019
 	.byte 1,106,11
 	.asciz "V_0"
 
-LDIFF_SYM6019=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM6019
+LDIFF_SYM6020=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM6020
 	.byte 1,103,11
 	.asciz "V_1"
 
-LDIFF_SYM6020=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM6020
+LDIFF_SYM6021=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM6021
 	.byte 1,105,11
 	.asciz "V_2"
 
-LDIFF_SYM6021=LTDIE_201_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM6021
+LDIFF_SYM6022=LTDIE_201_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM6022
 	.byte 1,104,11
 	.asciz "V_3"
 
-LDIFF_SYM6022=LTDIE_21_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM6022
+LDIFF_SYM6023=LTDIE_21_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM6023
 	.byte 1,102,11
 	.asciz "V_4"
 
-LDIFF_SYM6023=LDIE_OBJECT - Ldebug_info_start
-	.long LDIFF_SYM6023
-	.byte 1,104,11
-	.asciz "V_5"
-
-LDIFF_SYM6024=LDIE_BOOLEAN - Ldebug_info_start
+LDIFF_SYM6024=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM6024
-	.byte 1,102,0
+	.byte 1,104,0
 
 .section __DWARF, __debug_frame,regular,debug
 
@@ -137640,9 +137640,9 @@ Lfde764_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Predicate_1_string_invoke_bool_T_string
+	.quad wrapper_delegate_invoke_System_Action_1_string_invoke_void_T_string
 
-LDIFF_SYM6026=Lme_370 - wrapper_delegate_invoke_System_Predicate_1_string_invoke_bool_T_string
+LDIFF_SYM6026=Lme_370 - wrapper_delegate_invoke_System_Action_1_string_invoke_void_T_string
 	.long LDIFF_SYM6026
 	.long 0
 	.byte 12,31,0,68,14,80,157,10,158,9,68,13,29,68,150,8,151,7,68,152,6,153,5,68,154,4
@@ -137925,13 +137925,13 @@ Lfde769_end:
 LTDIE_388:
 
 	.byte 5
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 	.byte 128,1,16
 LDIFF_SYM6062=LTDIE_21 - Ldebug_info_start
 	.long LDIFF_SYM6062
 	.byte 2,35,0,0,7
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 LDIFF_SYM6063=LTDIE_388 - Ldebug_info_start
 	.long LDIFF_SYM6063
@@ -137946,11 +137946,11 @@ LTDIE_388_REFERENCE:
 LDIFF_SYM6065=LTDIE_388 - Ldebug_info_start
 	.long LDIFF_SYM6065
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Action`1<System.Collections.Generic.KeyValuePair`2<Xamarin.Forms.Xaml.XmlName,_Xamarin.Forms.Xaml.INode>>:invoke_void_T"
-	.asciz "wrapper_delegate_invoke_System_Action_1_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_void_T_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode"
+	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<System.Collections.Generic.KeyValuePair`2<Xamarin.Forms.Xaml.XmlName,_Xamarin.Forms.Xaml.INode>>:invoke_bool_T"
+	.asciz "wrapper_delegate_invoke_System_Predicate_1_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_bool_T_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Action_1_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_void_T_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
+	.quad wrapper_delegate_invoke_System_Predicate_1_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_bool_T_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
 	.quad Lme_382
 
 	.byte 2,118,16,3
@@ -137988,20 +137988,25 @@ LDIFF_SYM6071=LTDIE_21_REFERENCE - Ldebug_info_start
 
 LDIFF_SYM6072=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM6072
-	.byte 1,105,0
+	.byte 1,105,11
+	.asciz "V_5"
+
+LDIFF_SYM6073=LDIE_BOOLEAN - Ldebug_info_start
+	.long LDIFF_SYM6073
+	.byte 1,103,0
 
 .section __DWARF, __debug_frame,regular,debug
 
-LDIFF_SYM6073=Lfde770_end - Lfde770_start
-	.long LDIFF_SYM6073
+LDIFF_SYM6074=Lfde770_end - Lfde770_start
+	.long LDIFF_SYM6074
 Lfde770_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Action_1_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_void_T_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
+	.quad wrapper_delegate_invoke_System_Predicate_1_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_bool_T_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
 
-LDIFF_SYM6074=Lme_382 - wrapper_delegate_invoke_System_Action_1_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_void_T_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
-	.long LDIFF_SYM6074
+LDIFF_SYM6075=Lme_382 - wrapper_delegate_invoke_System_Predicate_1_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_bool_T_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
+	.long LDIFF_SYM6075
 	.long 0
 	.byte 12,31,0,68,14,144,1,157,18,158,17,68,13,29,68,151,16,152,15,68,153,14,154,13
 	.align 3
@@ -138011,75 +138016,70 @@ Lfde770_end:
 LTDIE_389:
 
 	.byte 5
-	.asciz "System_Predicate`1"
+	.asciz "System_Action`1"
 
 	.byte 128,1,16
-LDIFF_SYM6075=LTDIE_21 - Ldebug_info_start
-	.long LDIFF_SYM6075
-	.byte 2,35,0,0,7
-	.asciz "System_Predicate`1"
-
-LDIFF_SYM6076=LTDIE_389 - Ldebug_info_start
+LDIFF_SYM6076=LTDIE_21 - Ldebug_info_start
 	.long LDIFF_SYM6076
+	.byte 2,35,0,0,7
+	.asciz "System_Action`1"
+
+LDIFF_SYM6077=LTDIE_389 - Ldebug_info_start
+	.long LDIFF_SYM6077
 LTDIE_389_POINTER:
 
 	.byte 13
-LDIFF_SYM6077=LTDIE_389 - Ldebug_info_start
-	.long LDIFF_SYM6077
+LDIFF_SYM6078=LTDIE_389 - Ldebug_info_start
+	.long LDIFF_SYM6078
 LTDIE_389_REFERENCE:
 
 	.byte 14
-LDIFF_SYM6078=LTDIE_389 - Ldebug_info_start
-	.long LDIFF_SYM6078
+LDIFF_SYM6079=LTDIE_389 - Ldebug_info_start
+	.long LDIFF_SYM6079
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<System.Collections.Generic.KeyValuePair`2<Xamarin.Forms.Xaml.XmlName,_Xamarin.Forms.Xaml.INode>>:invoke_bool_T"
-	.asciz "wrapper_delegate_invoke_System_Predicate_1_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_bool_T_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode"
+	.asciz "(wrapper_delegate-invoke)_System.Action`1<System.Collections.Generic.KeyValuePair`2<Xamarin.Forms.Xaml.XmlName,_Xamarin.Forms.Xaml.INode>>:invoke_void_T"
+	.asciz "wrapper_delegate_invoke_System_Action_1_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_void_T_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Predicate_1_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_bool_T_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
+	.quad wrapper_delegate_invoke_System_Action_1_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_void_T_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
 	.quad Lme_387
 
 	.byte 2,118,16,3
 	.asciz "this"
 
-LDIFF_SYM6079=LTDIE_389_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM6079
+LDIFF_SYM6080=LTDIE_389_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM6080
 	.byte 1,106,3
 	.asciz "param0"
 
-LDIFF_SYM6080=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM6080
+LDIFF_SYM6081=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM6081
 	.byte 1,80,11
 	.asciz "V_0"
 
-LDIFF_SYM6081=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM6081
+LDIFF_SYM6082=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM6082
 	.byte 1,104,11
 	.asciz "V_1"
 
-LDIFF_SYM6082=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM6082
+LDIFF_SYM6083=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM6083
 	.byte 1,106,11
 	.asciz "V_2"
 
-LDIFF_SYM6083=LTDIE_201_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM6083
+LDIFF_SYM6084=LTDIE_201_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM6084
 	.byte 1,105,11
 	.asciz "V_3"
 
-LDIFF_SYM6084=LTDIE_21_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM6084
+LDIFF_SYM6085=LTDIE_21_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM6085
 	.byte 1,103,11
 	.asciz "V_4"
 
-LDIFF_SYM6085=LDIE_OBJECT - Ldebug_info_start
-	.long LDIFF_SYM6085
-	.byte 1,105,11
-	.asciz "V_5"
-
-LDIFF_SYM6086=LDIE_BOOLEAN - Ldebug_info_start
+LDIFF_SYM6086=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM6086
-	.byte 1,103,0
+	.byte 1,105,0
 
 .section __DWARF, __debug_frame,regular,debug
 
@@ -138089,9 +138089,9 @@ Lfde771_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Predicate_1_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_bool_T_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
+	.quad wrapper_delegate_invoke_System_Action_1_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_void_T_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
 
-LDIFF_SYM6088=Lme_387 - wrapper_delegate_invoke_System_Predicate_1_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_bool_T_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
+LDIFF_SYM6088=Lme_387 - wrapper_delegate_invoke_System_Action_1_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode_invoke_void_T_System_Collections_Generic_KeyValuePair_2_Xamarin_Forms_Xaml_XmlName_Xamarin_Forms_Xaml_INode
 	.long LDIFF_SYM6088
 	.long 0
 	.byte 12,31,0,68,14,144,1,157,18,158,17,68,13,29,68,151,16,152,15,68,153,14,154,13
@@ -139948,13 +139948,13 @@ Lfde780_end:
 LTDIE_412:
 
 	.byte 5
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 	.byte 128,1,16
 LDIFF_SYM6393=LTDIE_21 - Ldebug_info_start
 	.long LDIFF_SYM6393
 	.byte 2,35,0,0,7
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 LDIFF_SYM6394=LTDIE_412 - Ldebug_info_start
 	.long LDIFF_SYM6394
@@ -139969,11 +139969,11 @@ LTDIE_412_REFERENCE:
 LDIFF_SYM6396=LTDIE_412 - Ldebug_info_start
 	.long LDIFF_SYM6396
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Action`1<Xamarin.Forms.Xaml.XmlType>:invoke_void_T"
-	.asciz "wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XmlType_invoke_void_T_Xamarin_Forms_Xaml_XmlType"
+	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<Xamarin.Forms.Xaml.XmlType>:invoke_bool_T"
+	.asciz "wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XmlType_invoke_bool_T_Xamarin_Forms_Xaml_XmlType"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XmlType_invoke_void_T_Xamarin_Forms_Xaml_XmlType
+	.quad wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XmlType_invoke_bool_T_Xamarin_Forms_Xaml_XmlType
 	.quad Lme_396
 
 	.byte 2,118,16,3
@@ -140011,20 +140011,25 @@ LDIFF_SYM6402=LTDIE_21_REFERENCE - Ldebug_info_start
 
 LDIFF_SYM6403=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM6403
-	.byte 1,104,0
+	.byte 1,104,11
+	.asciz "V_5"
+
+LDIFF_SYM6404=LDIE_BOOLEAN - Ldebug_info_start
+	.long LDIFF_SYM6404
+	.byte 1,102,0
 
 .section __DWARF, __debug_frame,regular,debug
 
-LDIFF_SYM6404=Lfde781_end - Lfde781_start
-	.long LDIFF_SYM6404
+LDIFF_SYM6405=Lfde781_end - Lfde781_start
+	.long LDIFF_SYM6405
 Lfde781_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XmlType_invoke_void_T_Xamarin_Forms_Xaml_XmlType
+	.quad wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XmlType_invoke_bool_T_Xamarin_Forms_Xaml_XmlType
 
-LDIFF_SYM6405=Lme_396 - wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XmlType_invoke_void_T_Xamarin_Forms_Xaml_XmlType
-	.long LDIFF_SYM6405
+LDIFF_SYM6406=Lme_396 - wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XmlType_invoke_bool_T_Xamarin_Forms_Xaml_XmlType
+	.long LDIFF_SYM6406
 	.long 0
 	.byte 12,31,0,68,14,80,157,10,158,9,68,13,29,68,150,8,151,7,68,152,6,153,5,68,154,4
 	.align 3
@@ -140034,75 +140039,70 @@ Lfde781_end:
 LTDIE_413:
 
 	.byte 5
-	.asciz "System_Predicate`1"
+	.asciz "System_Action`1"
 
 	.byte 128,1,16
-LDIFF_SYM6406=LTDIE_21 - Ldebug_info_start
-	.long LDIFF_SYM6406
-	.byte 2,35,0,0,7
-	.asciz "System_Predicate`1"
-
-LDIFF_SYM6407=LTDIE_413 - Ldebug_info_start
+LDIFF_SYM6407=LTDIE_21 - Ldebug_info_start
 	.long LDIFF_SYM6407
+	.byte 2,35,0,0,7
+	.asciz "System_Action`1"
+
+LDIFF_SYM6408=LTDIE_413 - Ldebug_info_start
+	.long LDIFF_SYM6408
 LTDIE_413_POINTER:
 
 	.byte 13
-LDIFF_SYM6408=LTDIE_413 - Ldebug_info_start
-	.long LDIFF_SYM6408
+LDIFF_SYM6409=LTDIE_413 - Ldebug_info_start
+	.long LDIFF_SYM6409
 LTDIE_413_REFERENCE:
 
 	.byte 14
-LDIFF_SYM6409=LTDIE_413 - Ldebug_info_start
-	.long LDIFF_SYM6409
+LDIFF_SYM6410=LTDIE_413 - Ldebug_info_start
+	.long LDIFF_SYM6410
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<Xamarin.Forms.Xaml.XmlType>:invoke_bool_T"
-	.asciz "wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XmlType_invoke_bool_T_Xamarin_Forms_Xaml_XmlType"
+	.asciz "(wrapper_delegate-invoke)_System.Action`1<Xamarin.Forms.Xaml.XmlType>:invoke_void_T"
+	.asciz "wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XmlType_invoke_void_T_Xamarin_Forms_Xaml_XmlType"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XmlType_invoke_bool_T_Xamarin_Forms_Xaml_XmlType
+	.quad wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XmlType_invoke_void_T_Xamarin_Forms_Xaml_XmlType
 	.quad Lme_397
 
 	.byte 2,118,16,3
 	.asciz "this"
 
-LDIFF_SYM6410=LTDIE_413_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM6410
+LDIFF_SYM6411=LTDIE_413_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM6411
 	.byte 1,105,3
 	.asciz "param0"
 
-LDIFF_SYM6411=LTDIE_41_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM6411
+LDIFF_SYM6412=LTDIE_41_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM6412
 	.byte 1,106,11
 	.asciz "V_0"
 
-LDIFF_SYM6412=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM6412
+LDIFF_SYM6413=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM6413
 	.byte 1,103,11
 	.asciz "V_1"
 
-LDIFF_SYM6413=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM6413
+LDIFF_SYM6414=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM6414
 	.byte 1,105,11
 	.asciz "V_2"
 
-LDIFF_SYM6414=LTDIE_201_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM6414
+LDIFF_SYM6415=LTDIE_201_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM6415
 	.byte 1,104,11
 	.asciz "V_3"
 
-LDIFF_SYM6415=LTDIE_21_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM6415
+LDIFF_SYM6416=LTDIE_21_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM6416
 	.byte 1,102,11
 	.asciz "V_4"
 
-LDIFF_SYM6416=LDIE_OBJECT - Ldebug_info_start
-	.long LDIFF_SYM6416
-	.byte 1,104,11
-	.asciz "V_5"
-
-LDIFF_SYM6417=LDIE_BOOLEAN - Ldebug_info_start
+LDIFF_SYM6417=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM6417
-	.byte 1,102,0
+	.byte 1,104,0
 
 .section __DWARF, __debug_frame,regular,debug
 
@@ -140112,9 +140112,9 @@ Lfde782_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XmlType_invoke_bool_T_Xamarin_Forms_Xaml_XmlType
+	.quad wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XmlType_invoke_void_T_Xamarin_Forms_Xaml_XmlType
 
-LDIFF_SYM6419=Lme_397 - wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XmlType_invoke_bool_T_Xamarin_Forms_Xaml_XmlType
+LDIFF_SYM6419=Lme_397 - wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XmlType_invoke_void_T_Xamarin_Forms_Xaml_XmlType
 	.long LDIFF_SYM6419
 	.long 0
 	.byte 12,31,0,68,14,80,157,10,158,9,68,13,29,68,150,8,151,7,68,152,6,153,5,68,154,4
@@ -140864,13 +140864,13 @@ Lfde796_end:
 LTDIE_418:
 
 	.byte 5
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 	.byte 128,1,16
 LDIFF_SYM6513=LTDIE_21 - Ldebug_info_start
 	.long LDIFF_SYM6513
 	.byte 2,35,0,0,7
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 LDIFF_SYM6514=LTDIE_418 - Ldebug_info_start
 	.long LDIFF_SYM6514
@@ -140885,11 +140885,11 @@ LTDIE_418_REFERENCE:
 LDIFF_SYM6516=LTDIE_418 - Ldebug_info_start
 	.long LDIFF_SYM6516
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Action`1<System.Collections.Generic.KeyValuePair`2<string,_string>>:invoke_void_T"
-	.asciz "wrapper_delegate_invoke_System_Action_1_System_Collections_Generic_KeyValuePair_2_string_string_invoke_void_T_System_Collections_Generic_KeyValuePair_2_string_string"
+	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<System.Collections.Generic.KeyValuePair`2<string,_string>>:invoke_bool_T"
+	.asciz "wrapper_delegate_invoke_System_Predicate_1_System_Collections_Generic_KeyValuePair_2_string_string_invoke_bool_T_System_Collections_Generic_KeyValuePair_2_string_string"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Action_1_System_Collections_Generic_KeyValuePair_2_string_string_invoke_void_T_System_Collections_Generic_KeyValuePair_2_string_string
+	.quad wrapper_delegate_invoke_System_Predicate_1_System_Collections_Generic_KeyValuePair_2_string_string_invoke_bool_T_System_Collections_Generic_KeyValuePair_2_string_string
 	.quad Lme_3ba
 
 	.byte 2,118,16,3
@@ -140927,20 +140927,25 @@ LDIFF_SYM6522=LTDIE_21_REFERENCE - Ldebug_info_start
 
 LDIFF_SYM6523=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM6523
-	.byte 1,105,0
+	.byte 1,105,11
+	.asciz "V_5"
+
+LDIFF_SYM6524=LDIE_BOOLEAN - Ldebug_info_start
+	.long LDIFF_SYM6524
+	.byte 1,103,0
 
 .section __DWARF, __debug_frame,regular,debug
 
-LDIFF_SYM6524=Lfde797_end - Lfde797_start
-	.long LDIFF_SYM6524
+LDIFF_SYM6525=Lfde797_end - Lfde797_start
+	.long LDIFF_SYM6525
 Lfde797_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Action_1_System_Collections_Generic_KeyValuePair_2_string_string_invoke_void_T_System_Collections_Generic_KeyValuePair_2_string_string
+	.quad wrapper_delegate_invoke_System_Predicate_1_System_Collections_Generic_KeyValuePair_2_string_string_invoke_bool_T_System_Collections_Generic_KeyValuePair_2_string_string
 
-LDIFF_SYM6525=Lme_3ba - wrapper_delegate_invoke_System_Action_1_System_Collections_Generic_KeyValuePair_2_string_string_invoke_void_T_System_Collections_Generic_KeyValuePair_2_string_string
-	.long LDIFF_SYM6525
+LDIFF_SYM6526=Lme_3ba - wrapper_delegate_invoke_System_Predicate_1_System_Collections_Generic_KeyValuePair_2_string_string_invoke_bool_T_System_Collections_Generic_KeyValuePair_2_string_string
+	.long LDIFF_SYM6526
 	.long 0
 	.byte 12,31,0,68,14,80,157,10,158,9,68,13,29,68,151,8,152,7,68,153,6,154,5
 	.align 3
@@ -140950,75 +140955,70 @@ Lfde797_end:
 LTDIE_419:
 
 	.byte 5
-	.asciz "System_Predicate`1"
+	.asciz "System_Action`1"
 
 	.byte 128,1,16
-LDIFF_SYM6526=LTDIE_21 - Ldebug_info_start
-	.long LDIFF_SYM6526
-	.byte 2,35,0,0,7
-	.asciz "System_Predicate`1"
-
-LDIFF_SYM6527=LTDIE_419 - Ldebug_info_start
+LDIFF_SYM6527=LTDIE_21 - Ldebug_info_start
 	.long LDIFF_SYM6527
+	.byte 2,35,0,0,7
+	.asciz "System_Action`1"
+
+LDIFF_SYM6528=LTDIE_419 - Ldebug_info_start
+	.long LDIFF_SYM6528
 LTDIE_419_POINTER:
 
 	.byte 13
-LDIFF_SYM6528=LTDIE_419 - Ldebug_info_start
-	.long LDIFF_SYM6528
+LDIFF_SYM6529=LTDIE_419 - Ldebug_info_start
+	.long LDIFF_SYM6529
 LTDIE_419_REFERENCE:
 
 	.byte 14
-LDIFF_SYM6529=LTDIE_419 - Ldebug_info_start
-	.long LDIFF_SYM6529
+LDIFF_SYM6530=LTDIE_419 - Ldebug_info_start
+	.long LDIFF_SYM6530
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<System.Collections.Generic.KeyValuePair`2<string,_string>>:invoke_bool_T"
-	.asciz "wrapper_delegate_invoke_System_Predicate_1_System_Collections_Generic_KeyValuePair_2_string_string_invoke_bool_T_System_Collections_Generic_KeyValuePair_2_string_string"
+	.asciz "(wrapper_delegate-invoke)_System.Action`1<System.Collections.Generic.KeyValuePair`2<string,_string>>:invoke_void_T"
+	.asciz "wrapper_delegate_invoke_System_Action_1_System_Collections_Generic_KeyValuePair_2_string_string_invoke_void_T_System_Collections_Generic_KeyValuePair_2_string_string"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Predicate_1_System_Collections_Generic_KeyValuePair_2_string_string_invoke_bool_T_System_Collections_Generic_KeyValuePair_2_string_string
+	.quad wrapper_delegate_invoke_System_Action_1_System_Collections_Generic_KeyValuePair_2_string_string_invoke_void_T_System_Collections_Generic_KeyValuePair_2_string_string
 	.quad Lme_3bf
 
 	.byte 2,118,16,3
 	.asciz "this"
 
-LDIFF_SYM6530=LTDIE_419_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM6530
+LDIFF_SYM6531=LTDIE_419_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM6531
 	.byte 1,106,3
 	.asciz "param0"
 
-LDIFF_SYM6531=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM6531
+LDIFF_SYM6532=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM6532
 	.byte 2,141,48,11
 	.asciz "V_0"
 
-LDIFF_SYM6532=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM6532
+LDIFF_SYM6533=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM6533
 	.byte 1,104,11
 	.asciz "V_1"
 
-LDIFF_SYM6533=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM6533
+LDIFF_SYM6534=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM6534
 	.byte 1,106,11
 	.asciz "V_2"
 
-LDIFF_SYM6534=LTDIE_201_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM6534
+LDIFF_SYM6535=LTDIE_201_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM6535
 	.byte 1,105,11
 	.asciz "V_3"
 
-LDIFF_SYM6535=LTDIE_21_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM6535
+LDIFF_SYM6536=LTDIE_21_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM6536
 	.byte 1,103,11
 	.asciz "V_4"
 
-LDIFF_SYM6536=LDIE_OBJECT - Ldebug_info_start
-	.long LDIFF_SYM6536
-	.byte 1,105,11
-	.asciz "V_5"
-
-LDIFF_SYM6537=LDIE_BOOLEAN - Ldebug_info_start
+LDIFF_SYM6537=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM6537
-	.byte 1,103,0
+	.byte 1,105,0
 
 .section __DWARF, __debug_frame,regular,debug
 
@@ -141028,9 +141028,9 @@ Lfde798_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Predicate_1_System_Collections_Generic_KeyValuePair_2_string_string_invoke_bool_T_System_Collections_Generic_KeyValuePair_2_string_string
+	.quad wrapper_delegate_invoke_System_Action_1_System_Collections_Generic_KeyValuePair_2_string_string_invoke_void_T_System_Collections_Generic_KeyValuePair_2_string_string
 
-LDIFF_SYM6539=Lme_3bf - wrapper_delegate_invoke_System_Predicate_1_System_Collections_Generic_KeyValuePair_2_string_string_invoke_bool_T_System_Collections_Generic_KeyValuePair_2_string_string
+LDIFF_SYM6539=Lme_3bf - wrapper_delegate_invoke_System_Action_1_System_Collections_Generic_KeyValuePair_2_string_string_invoke_void_T_System_Collections_Generic_KeyValuePair_2_string_string
 	.long LDIFF_SYM6539
 	.long 0
 	.byte 12,31,0,68,14,80,157,10,158,9,68,13,29,68,151,8,152,7,68,153,6,154,5
@@ -141137,13 +141137,13 @@ Lfde799_end:
 LTDIE_421:
 
 	.byte 5
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 	.byte 128,1,16
 LDIFF_SYM6555=LTDIE_21 - Ldebug_info_start
 	.long LDIFF_SYM6555
 	.byte 2,35,0,0,7
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 LDIFF_SYM6556=LTDIE_421 - Ldebug_info_start
 	.long LDIFF_SYM6556
@@ -141158,11 +141158,11 @@ LTDIE_421_REFERENCE:
 LDIFF_SYM6558=LTDIE_421 - Ldebug_info_start
 	.long LDIFF_SYM6558
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Action`1<Xamarin.Forms.XmlnsDefinitionAttribute>:invoke_void_T"
-	.asciz "wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_XmlnsDefinitionAttribute_invoke_void_T_Xamarin_Forms_XmlnsDefinitionAttribute"
+	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<Xamarin.Forms.XmlnsDefinitionAttribute>:invoke_bool_T"
+	.asciz "wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_XmlnsDefinitionAttribute_invoke_bool_T_Xamarin_Forms_XmlnsDefinitionAttribute"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_XmlnsDefinitionAttribute_invoke_void_T_Xamarin_Forms_XmlnsDefinitionAttribute
+	.quad wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_XmlnsDefinitionAttribute_invoke_bool_T_Xamarin_Forms_XmlnsDefinitionAttribute
 	.quad Lme_3c6
 
 	.byte 2,118,16,3
@@ -141200,20 +141200,25 @@ LDIFF_SYM6564=LTDIE_21_REFERENCE - Ldebug_info_start
 
 LDIFF_SYM6565=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM6565
-	.byte 1,104,0
+	.byte 1,104,11
+	.asciz "V_5"
+
+LDIFF_SYM6566=LDIE_BOOLEAN - Ldebug_info_start
+	.long LDIFF_SYM6566
+	.byte 1,102,0
 
 .section __DWARF, __debug_frame,regular,debug
 
-LDIFF_SYM6566=Lfde800_end - Lfde800_start
-	.long LDIFF_SYM6566
+LDIFF_SYM6567=Lfde800_end - Lfde800_start
+	.long LDIFF_SYM6567
 Lfde800_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_XmlnsDefinitionAttribute_invoke_void_T_Xamarin_Forms_XmlnsDefinitionAttribute
+	.quad wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_XmlnsDefinitionAttribute_invoke_bool_T_Xamarin_Forms_XmlnsDefinitionAttribute
 
-LDIFF_SYM6567=Lme_3c6 - wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_XmlnsDefinitionAttribute_invoke_void_T_Xamarin_Forms_XmlnsDefinitionAttribute
-	.long LDIFF_SYM6567
+LDIFF_SYM6568=Lme_3c6 - wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_XmlnsDefinitionAttribute_invoke_bool_T_Xamarin_Forms_XmlnsDefinitionAttribute
+	.long LDIFF_SYM6568
 	.long 0
 	.byte 12,31,0,68,14,80,157,10,158,9,68,13,29,68,150,8,151,7,68,152,6,153,5,68,154,4
 	.align 3
@@ -141223,75 +141228,70 @@ Lfde800_end:
 LTDIE_422:
 
 	.byte 5
-	.asciz "System_Predicate`1"
+	.asciz "System_Action`1"
 
 	.byte 128,1,16
-LDIFF_SYM6568=LTDIE_21 - Ldebug_info_start
-	.long LDIFF_SYM6568
-	.byte 2,35,0,0,7
-	.asciz "System_Predicate`1"
-
-LDIFF_SYM6569=LTDIE_422 - Ldebug_info_start
+LDIFF_SYM6569=LTDIE_21 - Ldebug_info_start
 	.long LDIFF_SYM6569
+	.byte 2,35,0,0,7
+	.asciz "System_Action`1"
+
+LDIFF_SYM6570=LTDIE_422 - Ldebug_info_start
+	.long LDIFF_SYM6570
 LTDIE_422_POINTER:
 
 	.byte 13
-LDIFF_SYM6570=LTDIE_422 - Ldebug_info_start
-	.long LDIFF_SYM6570
+LDIFF_SYM6571=LTDIE_422 - Ldebug_info_start
+	.long LDIFF_SYM6571
 LTDIE_422_REFERENCE:
 
 	.byte 14
-LDIFF_SYM6571=LTDIE_422 - Ldebug_info_start
-	.long LDIFF_SYM6571
+LDIFF_SYM6572=LTDIE_422 - Ldebug_info_start
+	.long LDIFF_SYM6572
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<Xamarin.Forms.XmlnsDefinitionAttribute>:invoke_bool_T"
-	.asciz "wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_XmlnsDefinitionAttribute_invoke_bool_T_Xamarin_Forms_XmlnsDefinitionAttribute"
+	.asciz "(wrapper_delegate-invoke)_System.Action`1<Xamarin.Forms.XmlnsDefinitionAttribute>:invoke_void_T"
+	.asciz "wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_XmlnsDefinitionAttribute_invoke_void_T_Xamarin_Forms_XmlnsDefinitionAttribute"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_XmlnsDefinitionAttribute_invoke_bool_T_Xamarin_Forms_XmlnsDefinitionAttribute
+	.quad wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_XmlnsDefinitionAttribute_invoke_void_T_Xamarin_Forms_XmlnsDefinitionAttribute
 	.quad Lme_3c7
 
 	.byte 2,118,16,3
 	.asciz "this"
 
-LDIFF_SYM6572=LTDIE_422_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM6572
+LDIFF_SYM6573=LTDIE_422_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM6573
 	.byte 1,105,3
 	.asciz "param0"
 
-LDIFF_SYM6573=LTDIE_318_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM6573
+LDIFF_SYM6574=LTDIE_318_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM6574
 	.byte 1,106,11
 	.asciz "V_0"
 
-LDIFF_SYM6574=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM6574
+LDIFF_SYM6575=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM6575
 	.byte 1,103,11
 	.asciz "V_1"
 
-LDIFF_SYM6575=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM6575
+LDIFF_SYM6576=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM6576
 	.byte 1,105,11
 	.asciz "V_2"
 
-LDIFF_SYM6576=LTDIE_201_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM6576
+LDIFF_SYM6577=LTDIE_201_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM6577
 	.byte 1,104,11
 	.asciz "V_3"
 
-LDIFF_SYM6577=LTDIE_21_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM6577
+LDIFF_SYM6578=LTDIE_21_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM6578
 	.byte 1,102,11
 	.asciz "V_4"
 
-LDIFF_SYM6578=LDIE_OBJECT - Ldebug_info_start
-	.long LDIFF_SYM6578
-	.byte 1,104,11
-	.asciz "V_5"
-
-LDIFF_SYM6579=LDIE_BOOLEAN - Ldebug_info_start
+LDIFF_SYM6579=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM6579
-	.byte 1,102,0
+	.byte 1,104,0
 
 .section __DWARF, __debug_frame,regular,debug
 
@@ -141301,9 +141301,9 @@ Lfde801_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_XmlnsDefinitionAttribute_invoke_bool_T_Xamarin_Forms_XmlnsDefinitionAttribute
+	.quad wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_XmlnsDefinitionAttribute_invoke_void_T_Xamarin_Forms_XmlnsDefinitionAttribute
 
-LDIFF_SYM6581=Lme_3c7 - wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_XmlnsDefinitionAttribute_invoke_bool_T_Xamarin_Forms_XmlnsDefinitionAttribute
+LDIFF_SYM6581=Lme_3c7 - wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_XmlnsDefinitionAttribute_invoke_void_T_Xamarin_Forms_XmlnsDefinitionAttribute
 	.long LDIFF_SYM6581
 	.long 0
 	.byte 12,31,0,68,14,80,157,10,158,9,68,13,29,68,150,8,151,7,68,152,6,153,5,68,154,4
@@ -142313,13 +142313,13 @@ Lfde820_end:
 LTDIE_427:
 
 	.byte 5
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 	.byte 128,1,16
 LDIFF_SYM6708=LTDIE_21 - Ldebug_info_start
 	.long LDIFF_SYM6708
 	.byte 2,35,0,0,7
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 LDIFF_SYM6709=LTDIE_427 - Ldebug_info_start
 	.long LDIFF_SYM6709
@@ -142334,11 +142334,11 @@ LTDIE_427_REFERENCE:
 LDIFF_SYM6711=LTDIE_427 - Ldebug_info_start
 	.long LDIFF_SYM6711
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Action`1<Xamarin.Forms.Xaml.XamlLoader/FallbackTypeInfo>:invoke_void_T"
-	.asciz "wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo_invoke_void_T_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo"
+	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<Xamarin.Forms.Xaml.XamlLoader/FallbackTypeInfo>:invoke_bool_T"
+	.asciz "wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo_invoke_bool_T_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo_invoke_void_T_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo
+	.quad wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo_invoke_bool_T_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo
 	.quad Lme_3f0
 
 	.byte 2,118,16,3
@@ -142376,20 +142376,25 @@ LDIFF_SYM6717=LTDIE_21_REFERENCE - Ldebug_info_start
 
 LDIFF_SYM6718=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM6718
-	.byte 1,105,0
+	.byte 1,105,11
+	.asciz "V_5"
+
+LDIFF_SYM6719=LDIE_BOOLEAN - Ldebug_info_start
+	.long LDIFF_SYM6719
+	.byte 1,103,0
 
 .section __DWARF, __debug_frame,regular,debug
 
-LDIFF_SYM6719=Lfde821_end - Lfde821_start
-	.long LDIFF_SYM6719
+LDIFF_SYM6720=Lfde821_end - Lfde821_start
+	.long LDIFF_SYM6720
 Lfde821_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo_invoke_void_T_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo
+	.quad wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo_invoke_bool_T_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo
 
-LDIFF_SYM6720=Lme_3f0 - wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo_invoke_void_T_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo
-	.long LDIFF_SYM6720
+LDIFF_SYM6721=Lme_3f0 - wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo_invoke_bool_T_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo
+	.long LDIFF_SYM6721
 	.long 0
 	.byte 12,31,0,68,14,176,1,157,22,158,21,68,13,29,68,151,20,152,19,68,153,18,154,17
 	.align 3
@@ -142399,75 +142404,70 @@ Lfde821_end:
 LTDIE_428:
 
 	.byte 5
-	.asciz "System_Predicate`1"
+	.asciz "System_Action`1"
 
 	.byte 128,1,16
-LDIFF_SYM6721=LTDIE_21 - Ldebug_info_start
-	.long LDIFF_SYM6721
-	.byte 2,35,0,0,7
-	.asciz "System_Predicate`1"
-
-LDIFF_SYM6722=LTDIE_428 - Ldebug_info_start
+LDIFF_SYM6722=LTDIE_21 - Ldebug_info_start
 	.long LDIFF_SYM6722
+	.byte 2,35,0,0,7
+	.asciz "System_Action`1"
+
+LDIFF_SYM6723=LTDIE_428 - Ldebug_info_start
+	.long LDIFF_SYM6723
 LTDIE_428_POINTER:
 
 	.byte 13
-LDIFF_SYM6723=LTDIE_428 - Ldebug_info_start
-	.long LDIFF_SYM6723
+LDIFF_SYM6724=LTDIE_428 - Ldebug_info_start
+	.long LDIFF_SYM6724
 LTDIE_428_REFERENCE:
 
 	.byte 14
-LDIFF_SYM6724=LTDIE_428 - Ldebug_info_start
-	.long LDIFF_SYM6724
+LDIFF_SYM6725=LTDIE_428 - Ldebug_info_start
+	.long LDIFF_SYM6725
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<Xamarin.Forms.Xaml.XamlLoader/FallbackTypeInfo>:invoke_bool_T"
-	.asciz "wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo_invoke_bool_T_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo"
+	.asciz "(wrapper_delegate-invoke)_System.Action`1<Xamarin.Forms.Xaml.XamlLoader/FallbackTypeInfo>:invoke_void_T"
+	.asciz "wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo_invoke_void_T_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo_invoke_bool_T_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo
-	.quad Lme_3f6
+	.quad wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo_invoke_void_T_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo
+	.quad Lme_3f5
 
 	.byte 2,118,16,3
 	.asciz "this"
 
-LDIFF_SYM6725=LTDIE_428_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM6725
+LDIFF_SYM6726=LTDIE_428_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM6726
 	.byte 1,106,3
 	.asciz "param0"
 
-LDIFF_SYM6726=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM6726
+LDIFF_SYM6727=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM6727
 	.byte 1,80,11
 	.asciz "V_0"
 
-LDIFF_SYM6727=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM6727
+LDIFF_SYM6728=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM6728
 	.byte 1,104,11
 	.asciz "V_1"
 
-LDIFF_SYM6728=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM6728
+LDIFF_SYM6729=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM6729
 	.byte 1,106,11
 	.asciz "V_2"
 
-LDIFF_SYM6729=LTDIE_201_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM6729
+LDIFF_SYM6730=LTDIE_201_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM6730
 	.byte 1,105,11
 	.asciz "V_3"
 
-LDIFF_SYM6730=LTDIE_21_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM6730
+LDIFF_SYM6731=LTDIE_21_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM6731
 	.byte 1,103,11
 	.asciz "V_4"
 
-LDIFF_SYM6731=LDIE_OBJECT - Ldebug_info_start
-	.long LDIFF_SYM6731
-	.byte 1,105,11
-	.asciz "V_5"
-
-LDIFF_SYM6732=LDIE_BOOLEAN - Ldebug_info_start
+LDIFF_SYM6732=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM6732
-	.byte 1,103,0
+	.byte 1,105,0
 
 .section __DWARF, __debug_frame,regular,debug
 
@@ -142477,9 +142477,9 @@ Lfde822_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo_invoke_bool_T_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo
+	.quad wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo_invoke_void_T_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo
 
-LDIFF_SYM6734=Lme_3f6 - wrapper_delegate_invoke_System_Predicate_1_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo_invoke_bool_T_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo
+LDIFF_SYM6734=Lme_3f5 - wrapper_delegate_invoke_System_Action_1_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo_invoke_void_T_Xamarin_Forms_Xaml_XamlLoader_FallbackTypeInfo
 	.long LDIFF_SYM6734
 	.long 0
 	.byte 12,31,0,68,14,176,1,157,22,158,21,68,13,29,68,151,20,152,19,68,153,18,154,17

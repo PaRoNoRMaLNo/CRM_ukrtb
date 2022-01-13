@@ -22,7 +22,7 @@ Ldebug_info_begin:
 	.short 2
 	.long 0
 	.byte 8,1
-	.asciz "Mono AOT Compiler 6.12.0 (2020-02/b4a385816ed Tue Mar 30 19:54:56 EDT 2021)"
+	.asciz "Mono AOT Compiler 6.12.0 (2020-02/3cf59ad33da Thu Aug 19 11:06:27 EDT 2021)"
 	.asciz "UkrtbRasp.iOS.exe"
 	.asciz ""
 
@@ -318,7 +318,7 @@ runtime_version:
 .section __TEXT, __const
 	.align 2
 assembly_guid:
-	.asciz "2F74DE7E-6DAB-4BCD-85F2-D050915C65D6"
+	.asciz "5FD9A91F-99B4-4736-BD92-54B5EA87BBAE"
 .section __TEXT, __const
 	.align 2
 assembly_name:
@@ -412,7 +412,7 @@ _mono_aot_file_info:
 	.long 0,0,0,0,0,0,0,0
 	.long 0,0,0,0,0,0,0,0
 	.long 0,0,0,0,0,0,0,0
-	.byte 14,212,132,183,106,161,232,216,97,12,172,255,28,92,46,184
+	.byte 231,126,62,68,176,214,85,99,140,28,169,87,52,235,117,155
 	.globl _mono_aot_module_UkrtbRasp_iOS_info
 	.align 3
 _mono_aot_module_UkrtbRasp_iOS_info:

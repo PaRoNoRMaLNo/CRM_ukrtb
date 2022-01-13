@@ -18,6 +18,7 @@ namespace UkrtbRasp
     public partial class VC_main : TabbedPage
     {
         byte What_check = 1;
+        List<Time> Times = new List<Time>();
         public VC_main()
         {
             InitializeComponent();
@@ -28,12 +29,28 @@ namespace UkrtbRasp
 
 
             DateTime dateTim = DateTime.Now;
+            Times = TimesLessons.GetTimes(dateTim);
             Select_date_today.Text = $"{dateTim.Day}.{dateTim.Month}";
             dateTim = dateTim.AddDays(1);
             Select_date_tomorow.Text = $"{dateTim.Day}.{dateTim.Month}";
             dateTim = dateTim.AddDays(1);
             Select_date_plustwo.Text = $"{dateTim.Day}.{dateTim.Month}";
-            Load_data_rasp(0);
+            int a = CrossSettings.Current.GetValueOrDefault("what_check", 0);
+            switch (CrossSettings.Current.GetValueOrDefault("type_check", ""))
+            {
+                case "0":
+                    What_check = 1;
+                    break;
+                case "1":
+                    What_check = 2;
+                    break;
+                case "2":
+                    What_check = 3;
+                    break;
+                default:
+                    break;
+            }
+            Load_data_rasp(a);
 
         }
 
@@ -227,18 +244,21 @@ namespace UkrtbRasp
         private void Prep_tap_Tapped(object sender, EventArgs e)
         {
             What_check = 1;
+            CrossSettings.Current.AddOrUpdateValue("type_check", "0");
             Load_data_rasp(0);
         }
 
         private void Group_tap_Tapped(object sender, EventArgs e)
         {
             What_check = 2;
+            CrossSettings.Current.AddOrUpdateValue("type_check", "1");
             Load_data_rasp(0);
         }
 
         private void Cab_tap_Tapped(object sender, EventArgs e)
         {
             What_check = 3;
+            CrossSettings.Current.AddOrUpdateValue("type_check", "2");
             Load_data_rasp(0);
         }
 
@@ -373,15 +393,20 @@ namespace UkrtbRasp
                 {
                     Lesson lesson = new Lesson();
                     lesson.FindByName<Label>("Number").Text = item.num;
+                    Time time = Times.Find(tme => tme.NumberLesson == item.num);
+                    if (time.Begin != "")
+                        lesson.FindByName<Label>("Time").Text = $"{time.Begin.Substring(0, 5)} - {time.End.Substring(0, 5)}";
                     lesson.FindByName<Label>("Cab").Text = item.cab;
                     lesson.FindByName<Label>("Name").Text = item.lesson;
                     lesson.FindByName<Label>("Prepod_or_group").Text = What_check == 1 ? item.group : What_check == 2 ? item.teacher : item.group + " " + item.teacher;
+                    
                     if (item.do_group == "1" || item.do_teacher == "1")
                     {
                         lesson.Zoom = item.zoom;
                         lesson.FindByName<Image>("zoomicon").IsVisible = true;
                         lesson.FindByName<Label>("Cab").IsVisible = false;
                     }
+
                     Lessons_stack.Children.Add(lesson);
                 }
             else
@@ -392,11 +417,13 @@ namespace UkrtbRasp
 
         private void Date_hide_DateSelected(object sender, DateChangedEventArgs e)
         {
+            Times = TimesLessons.GetTimes(Date_hide.Date);
             Load_lessons();
         }
 
         private void Prepod_or_group_picker_SelectedIndexChanged(object sender, EventArgs e)
         {
+            CrossSettings.Current.AddOrUpdateValue("what_check", Prepod_or_group_picker.SelectedIndex);
             Load_lessons();
         }
 

@@ -22,7 +22,7 @@ Ldebug_info_begin:
 	.short 2
 	.long 0
 	.byte 8,1
-	.asciz "Mono AOT Compiler 6.12.0 (2020-02/b4a385816ed Tue Mar 30 19:54:56 EDT 2021)"
+	.asciz "Mono AOT Compiler 6.12.0 (2020-02/3cf59ad33da Thu Aug 19 11:06:27 EDT 2021)"
 	.asciz "OpenTK-1.0.dll"
 	.asciz ""
 
@@ -123,7 +123,7 @@ jit_code_start:
 	.no_dead_strip CoreVideo_CVOpenGLESTexture_get_Handle
 CoreVideo_CVOpenGLESTexture_get_Handle:
 .file 1 "/Users/builder/azdo/_work/1/s/xamarin-macios/src/CoreVideo/CVOpenGLESTexture.cs"
-.loc 1 38 0 prologue_end
+.loc 1 40 0 prologue_end
 .word 0xa9be7bfd
 .word 0x910003fd
 .word 0xf9000ba0
@@ -138,7 +138,7 @@ Lme_1:
 	.align 4
 	.no_dead_strip CoreVideo_CVOpenGLESTexture_Finalize
 CoreVideo_CVOpenGLESTexture_Finalize:
-.loc 1 43 0 prologue_end
+.loc 1 45 0 prologue_end
 .word 0xa9bc7bfd
 .word 0x910003fd
 .word 0xf9000ba0
@@ -154,7 +154,7 @@ bl _p_1
 bl _p_2
 .word 0x14000006
 .word 0xf90017be
-.loc 1 44 0
+.loc 1 46 0
 .word 0xf9400ba0
 .word 0xf90013a0
 .word 0xf94017be
@@ -168,7 +168,7 @@ Lme_2:
 	.align 4
 	.no_dead_strip CoreVideo_CVOpenGLESTexture_Dispose
 CoreVideo_CVOpenGLESTexture_Dispose:
-.loc 1 48 0 prologue_end
+.loc 1 50 0 prologue_end
 .word 0xa9be7bfd
 .word 0x910003fd
 .word 0xf9000bba
@@ -177,10 +177,10 @@ CoreVideo_CVOpenGLESTexture_Dispose:
 .word 0xd2800021
 .word 0x3940035e
 bl _p_1
-.loc 1 49 0
+.loc 1 51 0
 .word 0xaa1a03e0
 bl _p_3
-.loc 1 50 0
+.loc 1 52 0
 .word 0xf9400bba
 .word 0x910003bf
 .word 0xa8c27bfd
@@ -191,7 +191,7 @@ Lme_3:
 	.align 4
 	.no_dead_strip CoreVideo_CVOpenGLESTexture_Dispose_bool
 CoreVideo_CVOpenGLESTexture_Dispose_bool:
-.loc 1 54 0 prologue_end
+.loc 1 56 0 prologue_end
 .word 0xa9be7bfd
 .word 0x910003fd
 .word 0xf9000bba
@@ -206,17 +206,17 @@ ldr x1, [x16, #200]
 bl _p_4
 .word 0x53001c00
 .word 0x34000100
-.loc 1 55 0
+.loc 1 57 0
 .word 0xf9400b40
 bl _p_5
-.loc 1 56 0
+.loc 1 58 0
 
 adrp x16, mono_aot_OpenTK_1_0_got@PAGE+0
 add x16, x16, mono_aot_OpenTK_1_0_got@PAGEOFF
 ldr x0, [x16, #200]
 .word 0xf9400000
 .word 0xf9000b40
-.loc 1 58 0
+.loc 1 60 0
 .word 0xf9400bba
 .word 0x910003bf
 .word 0xa8c27bfd
@@ -227,7 +227,7 @@ Lme_4:
 	.align 4
 	.no_dead_strip CoreVideo_CVOpenGLESTexture__ctor_intptr
 CoreVideo_CVOpenGLESTexture__ctor_intptr:
-.loc 1 62 0 prologue_end
+.loc 1 64 0 prologue_end
 .word 0xa9be7bfd
 .word 0x910003fd
 .word 0xf9000ba0
@@ -235,7 +235,7 @@ CoreVideo_CVOpenGLESTexture__ctor_intptr:
 .word 0xf9400ba0
 .word 0xf9400fa1
 .word 0xf9000801
-.loc 1 63 0
+.loc 1 65 0
 .word 0x910003bf
 .word 0xa8c27bfd
 .word 0xd65f03c0
@@ -245,7 +245,7 @@ Lme_5:
 	.align 4
 	.no_dead_strip CoreVideo_CVOpenGLESTexture_get_Target
 CoreVideo_CVOpenGLESTexture_get_Target:
-.loc 1 87 0 prologue_end
+.loc 1 89 0 prologue_end
 .word 0xa9be7bfd
 .word 0x910003fd
 .word 0xf9000ba0
@@ -262,7 +262,7 @@ Lme_a:
 	.align 4
 	.no_dead_strip CoreVideo_CVOpenGLESTexture_get_Name
 CoreVideo_CVOpenGLESTexture_get_Name:
-.loc 1 93 0 prologue_end
+.loc 1 95 0 prologue_end
 .word 0xa9be7bfd
 .word 0x910003fd
 .word 0xf9000ba0
@@ -279,7 +279,7 @@ Lme_b:
 	.align 4
 	.no_dead_strip CoreVideo_CVOpenGLESTexture_get_IsFlipped
 CoreVideo_CVOpenGLESTexture_get_IsFlipped:
-.loc 1 99 0 prologue_end
+.loc 1 101 0 prologue_end
 .word 0xa9be7bfd
 .word 0x910003fd
 .word 0xf9000ba0
@@ -296,7 +296,7 @@ Lme_c:
 	.align 4
 	.no_dead_strip CoreVideo_CVOpenGLESTexture_GetCleanTexCoords_single____single____single____single___
 CoreVideo_CVOpenGLESTexture_GetCleanTexCoords_single____single____single____single___:
-.loc 1 105 0 prologue_end
+.loc 1 107 0 prologue_end
 .word 0xa9ba7bfd
 .word 0x910003fd
 .word 0xf9000ba0
@@ -326,7 +326,7 @@ ldr x2, [x16, #16]
 .word 0x8b020021
 .word 0xd280003e
 .word 0x3900003e
-.loc 1 106 0
+.loc 1 108 0
 
 adrp x16, mono_aot_OpenTK_1_0_got@PAGE+0
 add x16, x16, mono_aot_OpenTK_1_0_got@PAGEOFF
@@ -349,7 +349,7 @@ ldr x2, [x16, #16]
 .word 0x8b020021
 .word 0xd280003e
 .word 0x3900003e
-.loc 1 107 0
+.loc 1 109 0
 
 adrp x16, mono_aot_OpenTK_1_0_got@PAGE+0
 add x16, x16, mono_aot_OpenTK_1_0_got@PAGEOFF
@@ -372,7 +372,7 @@ ldr x2, [x16, #16]
 .word 0x8b020021
 .word 0xd280003e
 .word 0x3900003e
-.loc 1 108 0
+.loc 1 110 0
 
 adrp x16, mono_aot_OpenTK_1_0_got@PAGE+0
 add x16, x16, mono_aot_OpenTK_1_0_got@PAGEOFF
@@ -394,7 +394,7 @@ ldr x3, [x16, #16]
 .word 0x8b030042
 .word 0xd280003e
 .word 0x3900005e
-.loc 1 110 0
+.loc 1 112 0
 .word 0xf9400fa1
 .word 0xf9400021
 .word 0xd2800002
@@ -405,7 +405,7 @@ ldr x3, [x16, #16]
 .word 0xd37ef442
 .word 0x8b020021
 .word 0x91008021
-.loc 1 111 0
+.loc 1 113 0
 .word 0xf94013a2
 .word 0xf9400042
 .word 0xd2800003
@@ -435,11 +435,11 @@ ldr x3, [x16, #16]
 .word 0xd37ef484
 .word 0x8b040000
 .word 0x91008004
-.loc 1 112 0
+.loc 1 114 0
 .word 0xf9400ba0
 .word 0xf9400800
 bl _p_10
-.loc 1 115 0
+.loc 1 117 0
 .word 0x910003bf
 .word 0xa8c67bfd
 .word 0xd65f03c0
@@ -453,7 +453,7 @@ Lme_d:
 	.no_dead_strip CoreVideo_CVOpenGLESTextureCache_get_Handle
 CoreVideo_CVOpenGLESTextureCache_get_Handle:
 .file 2 "/Users/builder/azdo/_work/1/s/xamarin-macios/src/CoreVideo/CVOpenGLESTextureCache.cs"
-.loc 2 33 0 prologue_end
+.loc 2 35 0 prologue_end
 .word 0xa9be7bfd
 .word 0x910003fd
 .word 0xf9000ba0
@@ -468,7 +468,7 @@ Lme_e:
 	.align 4
 	.no_dead_strip CoreVideo_CVOpenGLESTextureCache_Finalize
 CoreVideo_CVOpenGLESTextureCache_Finalize:
-.loc 2 38 0 prologue_end
+.loc 2 40 0 prologue_end
 .word 0xa9bc7bfd
 .word 0x910003fd
 .word 0xf9000ba0
@@ -484,7 +484,7 @@ bl _p_12
 bl _p_2
 .word 0x14000006
 .word 0xf90017be
-.loc 2 39 0
+.loc 2 41 0
 .word 0xf9400ba0
 .word 0xf90013a0
 .word 0xf94017be
@@ -498,7 +498,7 @@ Lme_f:
 	.align 4
 	.no_dead_strip CoreVideo_CVOpenGLESTextureCache_Dispose
 CoreVideo_CVOpenGLESTextureCache_Dispose:
-.loc 2 43 0 prologue_end
+.loc 2 45 0 prologue_end
 .word 0xa9be7bfd
 .word 0x910003fd
 .word 0xf9000bba
@@ -507,10 +507,10 @@ CoreVideo_CVOpenGLESTextureCache_Dispose:
 .word 0xd2800021
 .word 0x3940035e
 bl _p_12
-.loc 2 44 0
+.loc 2 46 0
 .word 0xaa1a03e0
 bl _p_3
-.loc 2 45 0
+.loc 2 47 0
 .word 0xf9400bba
 .word 0x910003bf
 .word 0xa8c27bfd
@@ -521,7 +521,7 @@ Lme_10:
 	.align 4
 	.no_dead_strip CoreVideo_CVOpenGLESTextureCache_Dispose_bool
 CoreVideo_CVOpenGLESTextureCache_Dispose_bool:
-.loc 2 49 0 prologue_end
+.loc 2 51 0 prologue_end
 .word 0xa9be7bfd
 .word 0x910003fd
 .word 0xf9000bba
@@ -536,17 +536,17 @@ ldr x1, [x16, #200]
 bl _p_4
 .word 0x53001c00
 .word 0x34000100
-.loc 2 50 0
+.loc 2 52 0
 .word 0xf9400b40
 bl _p_5
-.loc 2 51 0
+.loc 2 53 0
 
 adrp x16, mono_aot_OpenTK_1_0_got@PAGE+0
 add x16, x16, mono_aot_OpenTK_1_0_got@PAGEOFF
 ldr x0, [x16, #200]
 .word 0xf9400000
 .word 0xf9000b40
-.loc 2 53 0
+.loc 2 55 0
 .word 0xf9400bba
 .word 0x910003bf
 .word 0xa8c27bfd
@@ -557,7 +557,7 @@ Lme_11:
 	.align 4
 	.no_dead_strip CoreVideo_CVOpenGLESTextureCache__ctor_intptr
 CoreVideo_CVOpenGLESTextureCache__ctor_intptr:
-.loc 2 65 0 prologue_end
+.loc 2 67 0 prologue_end
 .word 0xa9be7bfd
 .word 0x910003fd
 .word 0xf9000ba0
@@ -565,7 +565,7 @@ CoreVideo_CVOpenGLESTextureCache__ctor_intptr:
 .word 0xf9400ba0
 .word 0xf9400fa1
 .word 0xf9000801
-.loc 2 66 0
+.loc 2 68 0
 .word 0x910003bf
 .word 0xa8c27bfd
 .word 0xd65f03c0
@@ -575,14 +575,14 @@ Lme_13:
 	.align 4
 	.no_dead_strip CoreVideo_CVOpenGLESTextureCache__ctor_OpenGLES_EAGLContext
 CoreVideo_CVOpenGLESTextureCache__ctor_OpenGLES_EAGLContext:
-.loc 2 70 0 prologue_end
+.loc 2 72 0 prologue_end
 .word 0xa9be7bfd
 .word 0x910003fd
 .word 0xf9000bba
 .word 0xf9000fa0
 .word 0xaa0103fa
 .word 0xb40004ba
-.loc 2 73 0
+.loc 2 75 0
 
 adrp x16, mono_aot_OpenTK_1_0_got@PAGE+0
 add x16, x16, mono_aot_OpenTK_1_0_got@PAGEOFF
@@ -608,7 +608,7 @@ ldr x3, [x16, #200]
 bl _p_13
 .word 0x93407c00
 .word 0x34000160
-.loc 2 80 0
+.loc 2 82 0
 
 adrp x16, mono_aot_OpenTK_1_0_got@PAGE+0
 add x16, x16, mono_aot_OpenTK_1_0_got@PAGEOFF
@@ -624,7 +624,7 @@ bl _p_15
 .word 0x910003bf
 .word 0xa8c27bfd
 .word 0xd65f03c0
-.loc 2 71 0
+.loc 2 73 0
 
 adrp x16, mono_aot_OpenTK_1_0_got@PAGE+0
 add x16, x16, mono_aot_OpenTK_1_0_got@PAGEOFF
@@ -645,14 +645,14 @@ Lme_14:
 	.align 4
 	.no_dead_strip CoreVideo_CVOpenGLESTextureCache_FromEAGLContext_OpenGLES_EAGLContext
 CoreVideo_CVOpenGLESTextureCache_FromEAGLContext_OpenGLES_EAGLContext:
-.loc 2 85 0 prologue_end
+.loc 2 87 0 prologue_end
 .word 0xa9bd7bfd
 .word 0x910003fd
 .word 0xf9000bba
 .word 0xaa0003fa
 .word 0xf9000fbf
 .word 0xb400043a
-.loc 2 88 0
+.loc 2 90 0
 
 adrp x16, mono_aot_OpenTK_1_0_got@PAGE+0
 add x16, x16, mono_aot_OpenTK_1_0_got@PAGEOFF
@@ -674,7 +674,7 @@ ldr x3, [x16, #200]
 bl _p_13
 .word 0x93407c00
 .word 0x35000140
-.loc 2 93 0
+.loc 2 95 0
 .word 0xf9400fa0
 .word 0xf90013a0
 
@@ -685,13 +685,13 @@ bl _p_16
 .word 0xf94013a1
 .word 0xf9000801
 .word 0x14000002
-.loc 2 94 0
+.loc 2 96 0
 .word 0xd2800000
 .word 0xf9400bba
 .word 0x910003bf
 .word 0xa8c37bfd
 .word 0xd65f03c0
-.loc 2 86 0
+.loc 2 88 0
 
 adrp x16, mono_aot_OpenTK_1_0_got@PAGE+0
 add x16, x16, mono_aot_OpenTK_1_0_got@PAGEOFF
@@ -709,7 +709,7 @@ Lme_15:
 	.align 4
 	.no_dead_strip CoreVideo_CVOpenGLESTextureCache_TextureFromImage_CoreVideo_CVImageBuffer_bool_OpenTK_Graphics_ES20_All_int_int_OpenTK_Graphics_ES20_All_OpenTK_Graphics_ES20_DataType_int_CoreVideo_CVReturn_
 CoreVideo_CVOpenGLESTextureCache_TextureFromImage_CoreVideo_CVImageBuffer_bool_OpenTK_Graphics_ES20_All_int_int_OpenTK_Graphics_ES20_All_OpenTK_Graphics_ES20_DataType_int_CoreVideo_CVReturn_:
-.loc 2 99 0 prologue_end
+.loc 2 101 0 prologue_end
 .word 0xa9b87bfd
 .word 0x910003fd
 .word 0xd2800410
@@ -730,13 +730,13 @@ CoreVideo_CVOpenGLESTextureCache_TextureFromImage_CoreVideo_CVImageBuffer_bool_O
 .word 0xf9002fbf
 .word 0xf94017a0
 .word 0xb40006c0
-.loc 2 102 0
+.loc 2 104 0
 .word 0x35000073
 .word 0xd291a833
 .word 0x14000002
 .word 0xd281bc33
 .word 0xb90063b3
-.loc 2 104 0
+.loc 2 106 0
 
 adrp x16, mono_aot_OpenTK_1_0_got@PAGE+0
 add x16, x16, mono_aot_OpenTK_1_0_got@PAGEOFF
@@ -770,13 +770,13 @@ bl _p_17
 .word 0xaa0003e1
 .word 0xf9400780
 .word 0xb9000001
-.loc 2 112 0
+.loc 2 114 0
 .word 0xb9800000
 .word 0x34000060
-.loc 2 113 0
+.loc 2 115 0
 .word 0xd2800000
 .word 0x14000009
-.loc 2 114 0
+.loc 2 116 0
 .word 0xf9402fa0
 .word 0xf9003ba0
 
@@ -791,7 +791,7 @@ bl _p_16
 .word 0x910003bf
 .word 0xa8c87bfd
 .word 0xd65f03c0
-.loc 2 100 0
+.loc 2 102 0
 
 adrp x16, mono_aot_OpenTK_1_0_got@PAGE+0
 add x16, x16, mono_aot_OpenTK_1_0_got@PAGEOFF
@@ -809,7 +809,7 @@ Lme_16:
 	.align 4
 	.no_dead_strip CoreVideo_CVOpenGLESTextureCache_Flush_CoreVideo_CVOptionFlags
 CoreVideo_CVOpenGLESTextureCache_Flush_CoreVideo_CVOptionFlags:
-.loc 2 130 0 prologue_end
+.loc 2 132 0 prologue_end
 .word 0xa9be7bfd
 .word 0x910003fd
 .word 0xf9000ba0
@@ -818,7 +818,7 @@ CoreVideo_CVOpenGLESTextureCache_Flush_CoreVideo_CVOptionFlags:
 .word 0xf9400800
 .word 0xf9400fa1
 bl _p_18
-.loc 2 131 0
+.loc 2 133 0
 .word 0x910003bf
 .word 0xa8c27bfd
 .word 0xd65f03c0
@@ -28768,7 +28768,7 @@ runtime_version:
 .section __TEXT, __const
 	.align 2
 assembly_guid:
-	.asciz "5E3E079E-BFB6-4CE3-B6A9-B77B7350746D"
+	.asciz "BA5640FE-DD93-4973-8AB7-3D095BB78FFB"
 .section __TEXT, __const
 	.align 2
 assembly_name:
@@ -28862,7 +28862,7 @@ _mono_aot_file_info:
 	.long 0,0,0,0,0,0,0,0
 	.long 0,0,0,0,0,0,0,0
 	.long 0,0,0,0,0,0,0,0
-	.byte 75,149,128,243,6,232,151,215,11,100,24,47,11,91,248,223
+	.byte 111,124,9,137,172,98,200,79,35,53,52,101,167,3,206,164
 	.globl _mono_aot_module_OpenTK_1_0_info
 	.align 3
 _mono_aot_module_OpenTK_1_0_info:
@@ -28921,7 +28921,7 @@ LDIFF_SYM11=LTDIE_0 - Ldebug_info_start
 	.asciz "CoreVideo.CVOpenGLESTexture:get_Handle"
 	.asciz "CoreVideo_CVOpenGLESTexture_get_Handle"
 
-	.byte 1,38
+	.byte 1,40
 	.quad CoreVideo_CVOpenGLESTexture_get_Handle
 	.quad Lme_1
 
@@ -28955,7 +28955,7 @@ Lfde0_end:
 	.asciz "CoreVideo.CVOpenGLESTexture:Finalize"
 	.asciz "CoreVideo_CVOpenGLESTexture_Finalize"
 
-	.byte 1,43
+	.byte 1,45
 	.quad CoreVideo_CVOpenGLESTexture_Finalize
 	.quad Lme_2
 
@@ -28989,7 +28989,7 @@ Lfde1_end:
 	.asciz "CoreVideo.CVOpenGLESTexture:Dispose"
 	.asciz "CoreVideo_CVOpenGLESTexture_Dispose"
 
-	.byte 1,48
+	.byte 1,50
 	.quad CoreVideo_CVOpenGLESTexture_Dispose
 	.quad Lme_3
 
@@ -29073,7 +29073,7 @@ LDIFF_SYM29=LTDIE_2 - Ldebug_info_start
 	.asciz "CoreVideo.CVOpenGLESTexture:Dispose"
 	.asciz "CoreVideo_CVOpenGLESTexture_Dispose_bool"
 
-	.byte 1,54
+	.byte 1,56
 	.quad CoreVideo_CVOpenGLESTexture_Dispose_bool
 	.quad Lme_4
 
@@ -29112,7 +29112,7 @@ Lfde3_end:
 	.asciz "CoreVideo.CVOpenGLESTexture:.ctor"
 	.asciz "CoreVideo_CVOpenGLESTexture__ctor_intptr"
 
-	.byte 1,60
+	.byte 1,62
 	.quad CoreVideo_CVOpenGLESTexture__ctor_intptr
 	.quad Lme_5
 
@@ -29151,7 +29151,7 @@ Lfde4_end:
 	.asciz "CoreVideo.CVOpenGLESTexture:get_Target"
 	.asciz "CoreVideo_CVOpenGLESTexture_get_Target"
 
-	.byte 1,87
+	.byte 1,89
 	.quad CoreVideo_CVOpenGLESTexture_get_Target
 	.quad Lme_a
 
@@ -29185,7 +29185,7 @@ Lfde5_end:
 	.asciz "CoreVideo.CVOpenGLESTexture:get_Name"
 	.asciz "CoreVideo_CVOpenGLESTexture_get_Name"
 
-	.byte 1,93
+	.byte 1,95
 	.quad CoreVideo_CVOpenGLESTexture_get_Name
 	.quad Lme_b
 
@@ -29219,7 +29219,7 @@ Lfde6_end:
 	.asciz "CoreVideo.CVOpenGLESTexture:get_IsFlipped"
 	.asciz "CoreVideo_CVOpenGLESTexture_get_IsFlipped"
 
-	.byte 1,99
+	.byte 1,101
 	.quad CoreVideo_CVOpenGLESTexture_get_IsFlipped
 	.quad Lme_c
 
@@ -29280,7 +29280,7 @@ LDIFF_SYM51=LTDIE_4 - Ldebug_info_start
 	.asciz "CoreVideo.CVOpenGLESTexture:GetCleanTexCoords"
 	.asciz "CoreVideo_CVOpenGLESTexture_GetCleanTexCoords_single____single____single____single___"
 
-	.byte 1,105
+	.byte 1,107
 	.quad CoreVideo_CVOpenGLESTexture_GetCleanTexCoords_single____single____single____single___
 	.quad Lme_d
 
@@ -29401,7 +29401,7 @@ LDIFF_SYM71=LTDIE_5 - Ldebug_info_start
 	.asciz "CoreVideo.CVOpenGLESTextureCache:get_Handle"
 	.asciz "CoreVideo_CVOpenGLESTextureCache_get_Handle"
 
-	.byte 2,33
+	.byte 2,35
 	.quad CoreVideo_CVOpenGLESTextureCache_get_Handle
 	.quad Lme_e
 
@@ -29435,7 +29435,7 @@ Lfde9_end:
 	.asciz "CoreVideo.CVOpenGLESTextureCache:Finalize"
 	.asciz "CoreVideo_CVOpenGLESTextureCache_Finalize"
 
-	.byte 2,38
+	.byte 2,40
 	.quad CoreVideo_CVOpenGLESTextureCache_Finalize
 	.quad Lme_f
 
@@ -29469,7 +29469,7 @@ Lfde10_end:
 	.asciz "CoreVideo.CVOpenGLESTextureCache:Dispose"
 	.asciz "CoreVideo_CVOpenGLESTextureCache_Dispose"
 
-	.byte 2,43
+	.byte 2,45
 	.quad CoreVideo_CVOpenGLESTextureCache_Dispose
 	.quad Lme_10
 
@@ -29503,7 +29503,7 @@ Lfde11_end:
 	.asciz "CoreVideo.CVOpenGLESTextureCache:Dispose"
 	.asciz "CoreVideo_CVOpenGLESTextureCache_Dispose_bool"
 
-	.byte 2,49
+	.byte 2,51
 	.quad CoreVideo_CVOpenGLESTextureCache_Dispose_bool
 	.quad Lme_11
 
@@ -29542,7 +29542,7 @@ Lfde12_end:
 	.asciz "CoreVideo.CVOpenGLESTextureCache:.ctor"
 	.asciz "CoreVideo_CVOpenGLESTextureCache__ctor_intptr"
 
-	.byte 2,63
+	.byte 2,65
 	.quad CoreVideo_CVOpenGLESTextureCache__ctor_intptr
 	.quad Lme_13
 
@@ -29685,7 +29685,7 @@ LDIFF_SYM103=LTDIE_6 - Ldebug_info_start
 	.asciz "CoreVideo.CVOpenGLESTextureCache:.ctor"
 	.asciz "CoreVideo_CVOpenGLESTextureCache__ctor_OpenGLES_EAGLContext"
 
-	.byte 2,68
+	.byte 2,70
 	.quad CoreVideo_CVOpenGLESTextureCache__ctor_OpenGLES_EAGLContext
 	.quad Lme_14
 
@@ -29724,7 +29724,7 @@ Lfde14_end:
 	.asciz "CoreVideo.CVOpenGLESTextureCache:FromEAGLContext"
 	.asciz "CoreVideo_CVOpenGLESTextureCache_FromEAGLContext_OpenGLES_EAGLContext"
 
-	.byte 2,85
+	.byte 2,87
 	.quad CoreVideo_CVOpenGLESTextureCache_FromEAGLContext_OpenGLES_EAGLContext
 	.quad Lme_15
 
@@ -31392,7 +31392,7 @@ LDIFF_SYM137=LTDIE_14 - Ldebug_info_start
 	.asciz "CoreVideo.CVOpenGLESTextureCache:TextureFromImage"
 	.asciz "CoreVideo_CVOpenGLESTextureCache_TextureFromImage_CoreVideo_CVImageBuffer_bool_OpenTK_Graphics_ES20_All_int_int_OpenTK_Graphics_ES20_All_OpenTK_Graphics_ES20_DataType_int_CoreVideo_CVReturn_"
 
-	.byte 2,99
+	.byte 2,101
 	.quad CoreVideo_CVOpenGLESTextureCache_TextureFromImage_CoreVideo_CVImageBuffer_bool_OpenTK_Graphics_ES20_All_int_int_OpenTK_Graphics_ES20_All_OpenTK_Graphics_ES20_DataType_int_CoreVideo_CVReturn_
 	.quad Lme_16
 
@@ -31506,7 +31506,7 @@ LDIFF_SYM155=LTDIE_15 - Ldebug_info_start
 	.asciz "CoreVideo.CVOpenGLESTextureCache:Flush"
 	.asciz "CoreVideo_CVOpenGLESTextureCache_Flush_CoreVideo_CVOptionFlags"
 
-	.byte 2,130,1
+	.byte 2,132,1
 	.quad CoreVideo_CVOpenGLESTextureCache_Flush_CoreVideo_CVOptionFlags
 	.quad Lme_18
 

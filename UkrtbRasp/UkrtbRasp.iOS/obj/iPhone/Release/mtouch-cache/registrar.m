@@ -3,9 +3,11 @@
 extern "C" {
 static id native_to_managed_trampoline_1 (id self, SEL _cmd, MonoMethod **managed_method_ptr, bool* call_super, uint32_t token_ref)
 {
+	MonoClass *declaring_type = NULL;
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [0];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -18,16 +20,22 @@ static id native_to_managed_trampoline_1 (id self, SEL _cmd, MonoMethod **manage
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
-	mthis = xamarin_new_nsobject (self, mono_method_get_class (managed_method), &exception_gchandle);
+	declaring_type = mono_method_get_class (managed_method);
+	mthis = xamarin_new_nsobject (self, declaring_type, &exception_gchandle);
+	xamarin_mono_object_release (&declaring_type);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -42,6 +50,7 @@ static id native_to_managed_trampoline_2 (id self, SEL _cmd, MonoMethod **manage
 	id res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [0];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -52,10 +61,11 @@ static id native_to_managed_trampoline_2 (id self, SEL _cmd, MonoMethod **manage
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -74,7 +84,11 @@ static id native_to_managed_trampoline_2 (id self, SEL _cmd, MonoMethod **manage
 		res = retobj;
 	}
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -91,6 +105,7 @@ static void native_to_managed_trampoline_3 (id self, SEL _cmd, MonoMethod **mana
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -101,10 +116,11 @@ static void native_to_managed_trampoline_3 (id self, SEL _cmd, MonoMethod **mana
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -121,7 +137,12 @@ static void native_to_managed_trampoline_3 (id self, SEL _cmd, MonoMethod **mana
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -139,11 +160,13 @@ static BOOL native_to_managed_trampoline_4 (id self, SEL _cmd, MonoMethod **mana
 	MonoObject *mobj1 = NULL;
 	int32_t created1 = false;
 	MonoType *paramtype1 = NULL;
+	MonoObject *del2 = NULL;
 	MonoObject *retval = NULL;
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	BOOL res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [3];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -154,10 +177,11 @@ static BOOL native_to_managed_trampoline_4 (id self, SEL _cmd, MonoMethod **mana
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -182,7 +206,8 @@ static BOOL native_to_managed_trampoline_4 (id self, SEL _cmd, MonoMethod **mana
 	}
 	arg_ptrs [1] = mobj1;
 	if (p2) {
-		arg_ptrs [2] = (void *) xamarin_get_delegate_for_block_parameter (managed_method, 0x54C04 /* UIKit.UIApplicationRestorationHandler ObjCRuntime.Trampolines/NIDUIApplicationRestorationHandler::Create(System.IntPtr) */ , 2, p2, &exception_gchandle);
+		del2 = xamarin_get_delegate_for_block_parameter (managed_method, 0x54D04 /* UIKit.UIApplicationRestorationHandler ObjCRuntime.Trampolines/NIDUIApplicationRestorationHandler::Create(System.IntPtr) */ , 2, p2, &exception_gchandle);
+		arg_ptrs [2] = del2;
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 	} else {
 		arg_ptrs [2] = NULL;
@@ -192,7 +217,16 @@ static BOOL native_to_managed_trampoline_4 (id self, SEL _cmd, MonoMethod **mana
 
 	res = *(BOOL *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&del2);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -215,6 +249,7 @@ static BOOL native_to_managed_trampoline_5 (id self, SEL _cmd, MonoMethod **mana
 	BOOL res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -225,10 +260,11 @@ static BOOL native_to_managed_trampoline_5 (id self, SEL _cmd, MonoMethod **mana
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -257,7 +293,15 @@ static BOOL native_to_managed_trampoline_5 (id self, SEL _cmd, MonoMethod **mana
 
 	res = *(BOOL *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -278,6 +322,7 @@ static void native_to_managed_trampoline_6 (id self, SEL _cmd, MonoMethod **mana
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -288,10 +333,11 @@ static void native_to_managed_trampoline_6 (id self, SEL _cmd, MonoMethod **mana
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -318,7 +364,14 @@ static void native_to_managed_trampoline_6 (id self, SEL _cmd, MonoMethod **mana
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -334,6 +387,7 @@ static BOOL native_to_managed_trampoline_7 (id self, SEL _cmd, MonoMethod **mana
 	BOOL res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -344,10 +398,11 @@ static BOOL native_to_managed_trampoline_7 (id self, SEL _cmd, MonoMethod **mana
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -357,7 +412,11 @@ static BOOL native_to_managed_trampoline_7 (id self, SEL _cmd, MonoMethod **mana
 
 	res = *(BOOL *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -370,6 +429,7 @@ static void native_to_managed_trampoline_8 (id self, SEL _cmd, MonoMethod **mana
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [0];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -380,16 +440,20 @@ static void native_to_managed_trampoline_8 (id self, SEL _cmd, MonoMethod **mana
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -406,6 +470,7 @@ static void native_to_managed_trampoline_9 (id self, SEL _cmd, MonoMethod **mana
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -416,10 +481,11 @@ static void native_to_managed_trampoline_9 (id self, SEL _cmd, MonoMethod **mana
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -437,7 +503,12 @@ static void native_to_managed_trampoline_9 (id self, SEL _cmd, MonoMethod **mana
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -454,6 +525,7 @@ static void native_to_managed_trampoline_10 (id self, SEL _cmd, MonoMethod **man
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -464,10 +536,11 @@ static void native_to_managed_trampoline_10 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -485,7 +558,12 @@ static void native_to_managed_trampoline_10 (id self, SEL _cmd, MonoMethod **man
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -501,6 +579,7 @@ static id native_to_managed_trampoline_11 (id self, SEL _cmd, MonoMethod **manag
 	id res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -511,10 +590,11 @@ static id native_to_managed_trampoline_11 (id self, SEL _cmd, MonoMethod **manag
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -535,7 +615,11 @@ static id native_to_managed_trampoline_11 (id self, SEL _cmd, MonoMethod **manag
 		res = retobj;
 	}
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -554,6 +638,7 @@ static BOOL native_to_managed_trampoline_12 (id self, SEL _cmd, MonoMethod **man
 	BOOL res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -564,10 +649,11 @@ static BOOL native_to_managed_trampoline_12 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -586,7 +672,13 @@ static BOOL native_to_managed_trampoline_12 (id self, SEL _cmd, MonoMethod **man
 
 	res = *(BOOL *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -601,12 +693,14 @@ static void native_to_managed_trampoline_13 (id self, SEL _cmd, MonoMethod **man
 	int32_t created0 = false;
 	MonoType *paramtype0 = NULL;
 	MonoObject *mobj2 = NULL;
+	MonoObject *mobj_out2 = NULL;
 	NSObject *nsobj2 = NULL;
 	MonoType *paramtype2 = NULL;
 	void * handle2 = NULL;
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [3];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -617,10 +711,11 @@ static void native_to_managed_trampoline_13 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -645,16 +740,26 @@ static void native_to_managed_trampoline_13 (id self, SEL _cmd, MonoMethod **man
 			goto exception_handling;
 		}
 	}
-	arg_ptrs [2] = (int *) &mobj2;
+	mobj_out2 = mobj2;
+	arg_ptrs [2] = (int *) &mobj_out2;
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-	if (mobj2 != NULL)
-	handle2 = xamarin_get_nsobject_handle (mobj2);
+	if (mobj_out2 != NULL) {
+		handle2 = xamarin_get_nsobject_handle (mobj_out2);
+		xamarin_mono_object_release (&mobj_out2);
+	}
 	if (p2 != NULL)
 		*p2 = (id) handle2;
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype2);
+	xamarin_mono_object_release (&mobj2);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -671,6 +776,7 @@ static void native_to_managed_trampoline_14 (id self, SEL _cmd, MonoMethod **man
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -681,10 +787,11 @@ static void native_to_managed_trampoline_14 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -702,7 +809,12 @@ static void native_to_managed_trampoline_14 (id self, SEL _cmd, MonoMethod **man
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -716,11 +828,13 @@ static BOOL native_to_managed_trampoline_15 (id self, SEL _cmd, MonoMethod **man
 	MonoObject *mobj0 = NULL;
 	int32_t created0 = false;
 	MonoType *paramtype0 = NULL;
+	MonoString *a2 = NULL;
 	MonoObject *retval = NULL;
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	BOOL res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [3];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -731,10 +845,11 @@ static BOOL native_to_managed_trampoline_15 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -749,13 +864,21 @@ static BOOL native_to_managed_trampoline_15 (id self, SEL _cmd, MonoMethod **man
 	}
 	arg_ptrs [0] = mobj0;
 	arg_ptrs [1] = &p1;
-	arg_ptrs [2] = xamarin_nsstring_to_string (NULL, p2);
+	a2 = xamarin_nsstring_to_string (NULL, p2);
+	arg_ptrs [2] = a2;
 
 	retval = mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
 	res = *(BOOL *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&a2);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -769,9 +892,11 @@ static void native_to_managed_trampoline_16 (id self, SEL _cmd, MonoMethod **man
 	MonoObject *mobj0 = NULL;
 	int32_t created0 = false;
 	MonoType *paramtype0 = NULL;
+	MonoString *a1 = NULL;
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -782,10 +907,11 @@ static void native_to_managed_trampoline_16 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -799,11 +925,18 @@ static void native_to_managed_trampoline_16 (id self, SEL _cmd, MonoMethod **man
 		}
 	}
 	arg_ptrs [0] = mobj0;
-	arg_ptrs [1] = xamarin_nsstring_to_string (NULL, p1);
+	a1 = xamarin_nsstring_to_string (NULL, p1);
+	arg_ptrs [1] = a1;
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&a1);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -821,6 +954,7 @@ static void native_to_managed_trampoline_17 (id self, SEL _cmd, MonoMethod **man
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -831,10 +965,11 @@ static void native_to_managed_trampoline_17 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -852,7 +987,12 @@ static void native_to_managed_trampoline_17 (id self, SEL _cmd, MonoMethod **man
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -871,6 +1011,7 @@ static id native_to_managed_trampoline_18 (id self, SEL _cmd, MonoMethod **manag
 	id res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -881,10 +1022,11 @@ static id native_to_managed_trampoline_18 (id self, SEL _cmd, MonoMethod **manag
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -914,7 +1056,13 @@ static id native_to_managed_trampoline_18 (id self, SEL _cmd, MonoMethod **manag
 		res = retobj;
 	}
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -931,6 +1079,7 @@ static void native_to_managed_trampoline_19 (id self, SEL _cmd, MonoMethod **man
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [3];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -941,10 +1090,11 @@ static void native_to_managed_trampoline_19 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -963,7 +1113,12 @@ static void native_to_managed_trampoline_19 (id self, SEL _cmd, MonoMethod **man
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -984,6 +1139,7 @@ static void native_to_managed_trampoline_20 (id self, SEL _cmd, MonoMethod **man
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [3];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -994,10 +1150,11 @@ static void native_to_managed_trampoline_20 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -1025,7 +1182,14 @@ static void native_to_managed_trampoline_20 (id self, SEL _cmd, MonoMethod **man
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -1048,6 +1212,7 @@ static BOOL native_to_managed_trampoline_21 (id self, SEL _cmd, MonoMethod **man
 	BOOL res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [3];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -1058,10 +1223,11 @@ static BOOL native_to_managed_trampoline_21 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -1091,7 +1257,15 @@ static BOOL native_to_managed_trampoline_21 (id self, SEL _cmd, MonoMethod **man
 
 	res = *(BOOL *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -1115,6 +1289,7 @@ static BOOL native_to_managed_trampoline_22 (id self, SEL _cmd, MonoMethod **man
 	BOOL res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [4];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -1125,10 +1300,11 @@ static BOOL native_to_managed_trampoline_22 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -1159,7 +1335,15 @@ static BOOL native_to_managed_trampoline_22 (id self, SEL _cmd, MonoMethod **man
 
 	res = *(BOOL *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -1186,6 +1370,7 @@ static BOOL native_to_managed_trampoline_23 (id self, SEL _cmd, MonoMethod **man
 	BOOL res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [3];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -1196,10 +1381,11 @@ static BOOL native_to_managed_trampoline_23 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -1238,7 +1424,17 @@ static BOOL native_to_managed_trampoline_23 (id self, SEL _cmd, MonoMethod **man
 
 	res = *(BOOL *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&paramtype2);
+	xamarin_mono_object_release (&mobj2);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -1258,6 +1454,7 @@ static NSInteger native_to_managed_trampoline_24 (id self, SEL _cmd, MonoMethod 
 	NSInteger res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -1268,10 +1465,11 @@ static NSInteger native_to_managed_trampoline_24 (id self, SEL _cmd, MonoMethod 
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -1291,7 +1489,13 @@ static NSInteger native_to_managed_trampoline_24 (id self, SEL _cmd, MonoMethod 
 
 	res = *(NSInteger *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -1310,6 +1514,7 @@ static NSInteger native_to_managed_trampoline_25 (id self, SEL _cmd, MonoMethod 
 	NSInteger res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -1320,10 +1525,11 @@ static NSInteger native_to_managed_trampoline_25 (id self, SEL _cmd, MonoMethod 
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -1342,7 +1548,13 @@ static NSInteger native_to_managed_trampoline_25 (id self, SEL _cmd, MonoMethod 
 
 	res = *(NSInteger *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -1365,6 +1577,7 @@ static id native_to_managed_trampoline_26 (id self, SEL _cmd, MonoMethod **manag
 	id res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -1375,10 +1588,11 @@ static id native_to_managed_trampoline_26 (id self, SEL _cmd, MonoMethod **manag
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -1418,7 +1632,15 @@ static id native_to_managed_trampoline_26 (id self, SEL _cmd, MonoMethod **manag
 		res = retobj;
 	}
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -1442,6 +1664,7 @@ static BOOL native_to_managed_trampoline_27 (id self, SEL _cmd, MonoMethod **man
 	BOOL res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [3];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -1452,10 +1675,11 @@ static BOOL native_to_managed_trampoline_27 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -1485,7 +1709,15 @@ static BOOL native_to_managed_trampoline_27 (id self, SEL _cmd, MonoMethod **man
 
 	res = *(BOOL *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -1504,6 +1736,7 @@ static NSUInteger native_to_managed_trampoline_28 (id self, SEL _cmd, MonoMethod
 	NSUInteger res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -1514,10 +1747,11 @@ static NSUInteger native_to_managed_trampoline_28 (id self, SEL _cmd, MonoMethod
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -1536,7 +1770,13 @@ static NSUInteger native_to_managed_trampoline_28 (id self, SEL _cmd, MonoMethod
 
 	res = *(NSUInteger *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -1565,6 +1805,7 @@ static void native_to_managed_trampoline_29 (id self, SEL _cmd, MonoMethod **man
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [4];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -1575,10 +1816,11 @@ static void native_to_managed_trampoline_29 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -1625,7 +1867,18 @@ static void native_to_managed_trampoline_29 (id self, SEL _cmd, MonoMethod **man
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&paramtype2);
+	xamarin_mono_object_release (&mobj2);
+	xamarin_mono_object_release (&paramtype3);
+	xamarin_mono_object_release (&mobj3);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -1650,6 +1903,7 @@ static void native_to_managed_trampoline_30 (id self, SEL _cmd, MonoMethod **man
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [3];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -1660,10 +1914,11 @@ static void native_to_managed_trampoline_30 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -1700,7 +1955,16 @@ static void native_to_managed_trampoline_30 (id self, SEL _cmd, MonoMethod **man
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&paramtype2);
+	xamarin_mono_object_release (&mobj2);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -1716,9 +1980,11 @@ static void native_to_managed_trampoline_31 (id self, SEL _cmd, MonoMethod **man
 	MonoType *paramtype0 = NULL;
 	MonoArray *marr1 = NULL;
 	NSArray *arr1 = NULL;
+	MonoType *paramtype1 = NULL;
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [3];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -1729,10 +1995,11 @@ static void native_to_managed_trampoline_31 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -1747,14 +2014,22 @@ static void native_to_managed_trampoline_31 (id self, SEL _cmd, MonoMethod **man
 	}
 	arg_ptrs [0] = mobj0;
 	arr1 = p1;
-	marr1 = xamarin_nsarray_to_managed_nsobject_array (arr1, xamarin_get_parameter_type (managed_method, 1), NULL, &exception_gchandle);
+	paramtype1 = xamarin_get_parameter_type (managed_method, 1);
+	marr1 = xamarin_nsarray_to_managed_nsobject_array (arr1, paramtype1, NULL, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 	arg_ptrs [1] = marr1;
 	arg_ptrs [2] = &p2;
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&marr1);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -1781,6 +2056,7 @@ static id native_to_managed_trampoline_32 (id self, SEL _cmd, MonoMethod **manag
 	id res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [3];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -1791,10 +2067,11 @@ static id native_to_managed_trampoline_32 (id self, SEL _cmd, MonoMethod **manag
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -1845,7 +2122,17 @@ static id native_to_managed_trampoline_32 (id self, SEL _cmd, MonoMethod **manag
 		res = retobj;
 	}
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&paramtype2);
+	xamarin_mono_object_release (&mobj2);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -1859,11 +2146,13 @@ static id native_to_managed_trampoline_33 (id self, SEL _cmd, MonoMethod **manag
 	MonoObject *mobj0 = NULL;
 	int32_t created0 = false;
 	MonoType *paramtype0 = NULL;
+	MonoObject *inobj1 = NULL;
 	MonoObject *retval = NULL;
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	id res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -1874,10 +2163,11 @@ static id native_to_managed_trampoline_33 (id self, SEL _cmd, MonoMethod **manag
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -1891,8 +2181,9 @@ static id native_to_managed_trampoline_33 (id self, SEL _cmd, MonoMethod **manag
 		}
 	}
 	arg_ptrs [0] = mobj0;
-	arg_ptrs [1] = xamarin_get_inative_object_static (p1, false, 0x2A004 /* UIKit.IUIViewControllerAnimatedTransitioning */, 0x2A104 /* UIKit.UIViewControllerAnimatedTransitioningWrapper */, &exception_gchandle);
+	inobj1 = xamarin_get_inative_object_static (p1, false, 0x2A204 /* UIKit.IUIViewControllerAnimatedTransitioning */, 0x2A304 /* UIKit.UIViewControllerAnimatedTransitioningWrapper */, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
+	arg_ptrs [1] = inobj1;
 
 	retval = mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
@@ -1910,7 +2201,14 @@ static id native_to_managed_trampoline_33 (id self, SEL _cmd, MonoMethod **manag
 		res = retobj;
 	}
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&inobj1);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -1926,9 +2224,11 @@ static void native_to_managed_trampoline_34 (id self, SEL _cmd, MonoMethod **man
 	MonoType *paramtype0 = NULL;
 	MonoArray *marr1 = NULL;
 	NSArray *arr1 = NULL;
+	MonoType *paramtype1 = NULL;
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -1939,10 +2239,11 @@ static void native_to_managed_trampoline_34 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -1957,13 +2258,21 @@ static void native_to_managed_trampoline_34 (id self, SEL _cmd, MonoMethod **man
 	}
 	arg_ptrs [0] = mobj0;
 	arr1 = p1;
-	marr1 = xamarin_nsarray_to_managed_nsobject_array (arr1, xamarin_get_parameter_type (managed_method, 1), NULL, &exception_gchandle);
+	paramtype1 = xamarin_get_parameter_type (managed_method, 1);
+	marr1 = xamarin_nsarray_to_managed_nsobject_array (arr1, paramtype1, NULL, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 	arg_ptrs [1] = marr1;
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&marr1);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -1973,11 +2282,13 @@ exception_handling:;
 
 static BOOL native_to_managed_trampoline_35 (id self, SEL _cmd, MonoMethod **managed_method_ptr, SEL p0, uint32_t token_ref)
 {
+	MonoObject *a0 = NULL;
 	MonoObject *retval = NULL;
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	BOOL res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -1988,21 +2299,28 @@ static BOOL native_to_managed_trampoline_35 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
-	arg_ptrs [0] = p0 ? xamarin_get_selector (p0, &exception_gchandle) : NULL;
+	a0 = p0 ? xamarin_get_selector (p0, &exception_gchandle) : NULL;
+	arg_ptrs [0] = a0;
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 
 	retval = mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
 	res = *(BOOL *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&a0);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -2019,15 +2337,17 @@ static void native_to_managed_trampoline_36 (id self, SEL _cmd, MonoMethod **man
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	nsobj0 = (NSObject *) p0;
 	if (nsobj0) {
@@ -2042,7 +2362,11 @@ static void native_to_managed_trampoline_36 (id self, SEL _cmd, MonoMethod **man
 
 	mono_runtime_invoke (managed_method, NULL, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -2068,6 +2392,7 @@ static void native_to_managed_trampoline_37 (id self, SEL _cmd, MonoMethod **man
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [4];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -2078,10 +2403,11 @@ static void native_to_managed_trampoline_37 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -2119,7 +2445,16 @@ static void native_to_managed_trampoline_37 (id self, SEL _cmd, MonoMethod **man
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&paramtype2);
+	xamarin_mono_object_release (&mobj2);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -2134,6 +2469,7 @@ static NSUInteger native_to_managed_trampoline_38 (id self, SEL _cmd, MonoMethod
 	NSUInteger res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [0];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -2144,10 +2480,11 @@ static NSUInteger native_to_managed_trampoline_38 (id self, SEL _cmd, MonoMethod
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -2155,7 +2492,11 @@ static NSUInteger native_to_managed_trampoline_38 (id self, SEL _cmd, MonoMethod
 
 	res = *(NSUInteger *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -2170,6 +2511,7 @@ static NSInteger native_to_managed_trampoline_39 (id self, SEL _cmd, MonoMethod 
 	NSInteger res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [0];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -2180,10 +2522,11 @@ static NSInteger native_to_managed_trampoline_39 (id self, SEL _cmd, MonoMethod 
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -2191,7 +2534,11 @@ static NSInteger native_to_managed_trampoline_39 (id self, SEL _cmd, MonoMethod 
 
 	res = *(NSInteger *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -2206,6 +2553,7 @@ static BOOL native_to_managed_trampoline_40 (id self, SEL _cmd, MonoMethod **man
 	BOOL res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [0];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -2216,10 +2564,11 @@ static BOOL native_to_managed_trampoline_40 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -2227,7 +2576,11 @@ static BOOL native_to_managed_trampoline_40 (id self, SEL _cmd, MonoMethod **man
 
 	res = *(BOOL *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -2243,6 +2596,7 @@ static BOOL native_to_managed_trampoline_41 (id self, SEL _cmd, MonoMethod **man
 	BOOL res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -2253,10 +2607,11 @@ static BOOL native_to_managed_trampoline_41 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -2266,7 +2621,11 @@ static BOOL native_to_managed_trampoline_41 (id self, SEL _cmd, MonoMethod **man
 
 	res = *(BOOL *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -2279,6 +2638,7 @@ static void native_to_managed_trampoline_42 (id self, SEL _cmd, MonoMethod **man
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -2289,10 +2649,11 @@ static void native_to_managed_trampoline_42 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -2300,7 +2661,10 @@ static void native_to_managed_trampoline_42 (id self, SEL _cmd, MonoMethod **man
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -2315,6 +2679,7 @@ static id native_to_managed_trampoline_43 (id self, SEL _cmd, MonoMethod **manag
 	id res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [0];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -2325,10 +2690,11 @@ static id native_to_managed_trampoline_43 (id self, SEL _cmd, MonoMethod **manag
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_generic_method_from_token (mthis, token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -2347,7 +2713,11 @@ static id native_to_managed_trampoline_43 (id self, SEL _cmd, MonoMethod **manag
 		res = retobj;
 	}
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -2364,6 +2734,7 @@ static void native_to_managed_trampoline_44 (id self, SEL _cmd, MonoMethod **man
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -2374,10 +2745,11 @@ static void native_to_managed_trampoline_44 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_generic_method_from_token (mthis, token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -2394,7 +2766,12 @@ static void native_to_managed_trampoline_44 (id self, SEL _cmd, MonoMethod **man
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -2409,6 +2786,7 @@ static BOOL native_to_managed_trampoline_45 (id self, SEL _cmd, MonoMethod **man
 	BOOL res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [0];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -2419,10 +2797,11 @@ static BOOL native_to_managed_trampoline_45 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_generic_method_from_token (mthis, token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -2430,7 +2809,11 @@ static BOOL native_to_managed_trampoline_45 (id self, SEL _cmd, MonoMethod **man
 
 	res = *(BOOL *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -2445,6 +2828,7 @@ static id native_to_managed_trampoline_46 (id self, SEL _cmd, MonoMethod **manag
 	id res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [0];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -2455,10 +2839,11 @@ static id native_to_managed_trampoline_46 (id self, SEL _cmd, MonoMethod **manag
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_generic_method_from_token (mthis, token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -2470,7 +2855,11 @@ static id native_to_managed_trampoline_46 (id self, SEL _cmd, MonoMethod **manag
 	mt_dummy_use (retval);
 	xamarin_framework_peer_unlock ();
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -2485,6 +2874,7 @@ static CGSize native_to_managed_trampoline_47 (id self, SEL _cmd, MonoMethod **m
 	CGSize res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -2495,10 +2885,11 @@ static CGSize native_to_managed_trampoline_47 (id self, SEL _cmd, MonoMethod **m
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_generic_method_from_token (mthis, token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -2508,7 +2899,11 @@ static CGSize native_to_managed_trampoline_47 (id self, SEL _cmd, MonoMethod **m
 
 	res = *(CGSize *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -2521,6 +2916,7 @@ static void native_to_managed_trampoline_48 (id self, SEL _cmd, MonoMethod **man
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [0];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -2531,16 +2927,20 @@ static void native_to_managed_trampoline_48 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_generic_method_from_token (mthis, token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -2556,6 +2956,7 @@ static BOOL native_to_managed_trampoline_49 (id self, SEL _cmd, MonoMethod **man
 	BOOL res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -2566,10 +2967,11 @@ static BOOL native_to_managed_trampoline_49 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_generic_method_from_token (mthis, token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -2579,7 +2981,11 @@ static BOOL native_to_managed_trampoline_49 (id self, SEL _cmd, MonoMethod **man
 
 	res = *(BOOL *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -2592,6 +2998,7 @@ static void native_to_managed_trampoline_50 (id self, SEL _cmd, MonoMethod **man
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -2602,10 +3009,11 @@ static void native_to_managed_trampoline_50 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -2613,7 +3021,10 @@ static void native_to_managed_trampoline_50 (id self, SEL _cmd, MonoMethod **man
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -2628,6 +3039,7 @@ static CGSize native_to_managed_trampoline_51 (id self, SEL _cmd, MonoMethod **m
 	CGSize res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -2638,10 +3050,11 @@ static CGSize native_to_managed_trampoline_51 (id self, SEL _cmd, MonoMethod **m
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -2651,7 +3064,11 @@ static CGSize native_to_managed_trampoline_51 (id self, SEL _cmd, MonoMethod **m
 
 	res = *(CGSize *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -2670,6 +3087,7 @@ static CGRect native_to_managed_trampoline_52 (id self, SEL _cmd, MonoMethod **m
 	CGRect res = {{0}};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -2680,10 +3098,11 @@ static CGRect native_to_managed_trampoline_52 (id self, SEL _cmd, MonoMethod **m
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -2702,7 +3121,13 @@ static CGRect native_to_managed_trampoline_52 (id self, SEL _cmd, MonoMethod **m
 
 	res = *(CGRect *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -2712,6 +3137,7 @@ exception_handling:;
 
 static BOOL native_to_managed_trampoline_53 (id self, SEL _cmd, MonoMethod **managed_method_ptr, SEL p0, id p1, uint32_t token_ref)
 {
+	MonoObject *a0 = NULL;
 	NSObject *nsobj1 = NULL;
 	MonoObject *mobj1 = NULL;
 	int32_t created1 = false;
@@ -2721,6 +3147,7 @@ static BOOL native_to_managed_trampoline_53 (id self, SEL _cmd, MonoMethod **man
 	BOOL res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -2731,14 +3158,16 @@ static BOOL native_to_managed_trampoline_53 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
-	arg_ptrs [0] = p0 ? xamarin_get_selector (p0, &exception_gchandle) : NULL;
+	a0 = p0 ? xamarin_get_selector (p0, &exception_gchandle) : NULL;
+	arg_ptrs [0] = a0;
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 	nsobj1 = (NSObject *) p1;
 	if (nsobj1) {
@@ -2755,7 +3184,14 @@ static BOOL native_to_managed_trampoline_53 (id self, SEL _cmd, MonoMethod **man
 
 	res = *(BOOL *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&a0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -2774,6 +3210,7 @@ static CGFloat native_to_managed_trampoline_54 (id self, SEL _cmd, MonoMethod **
 	CGFloat res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -2784,10 +3221,11 @@ static CGFloat native_to_managed_trampoline_54 (id self, SEL _cmd, MonoMethod **
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -2807,7 +3245,13 @@ static CGFloat native_to_managed_trampoline_54 (id self, SEL _cmd, MonoMethod **
 
 	res = *(CGFloat *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -2826,6 +3270,7 @@ static id native_to_managed_trampoline_55 (id self, SEL _cmd, MonoMethod **manag
 	id res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -2836,10 +3281,11 @@ static id native_to_managed_trampoline_55 (id self, SEL _cmd, MonoMethod **manag
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -2870,7 +3316,13 @@ static id native_to_managed_trampoline_55 (id self, SEL _cmd, MonoMethod **manag
 		res = retobj;
 	}
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -2891,6 +3343,7 @@ static void native_to_managed_trampoline_56 (id self, SEL _cmd, MonoMethod **man
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [3];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -2901,10 +3354,11 @@ static void native_to_managed_trampoline_56 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -2932,7 +3386,14 @@ static void native_to_managed_trampoline_56 (id self, SEL _cmd, MonoMethod **man
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -2951,6 +3412,7 @@ static NSInteger native_to_managed_trampoline_57 (id self, SEL _cmd, MonoMethod 
 	NSInteger res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -2961,10 +3423,11 @@ static NSInteger native_to_managed_trampoline_57 (id self, SEL _cmd, MonoMethod 
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -2984,7 +3447,13 @@ static NSInteger native_to_managed_trampoline_57 (id self, SEL _cmd, MonoMethod 
 
 	res = *(NSInteger *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -3003,6 +3472,7 @@ static NSArray * native_to_managed_trampoline_58 (id self, SEL _cmd, MonoMethod 
 	NSArray * res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -3013,10 +3483,11 @@ static NSArray * native_to_managed_trampoline_58 (id self, SEL _cmd, MonoMethod 
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -3039,7 +3510,13 @@ static NSArray * native_to_managed_trampoline_58 (id self, SEL _cmd, MonoMethod 
 	mt_dummy_use (retval);
 	xamarin_framework_peer_unlock ();
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -3058,6 +3535,7 @@ static id native_to_managed_trampoline_59 (id self, SEL _cmd, MonoMethod **manag
 	id res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -3068,10 +3546,11 @@ static id native_to_managed_trampoline_59 (id self, SEL _cmd, MonoMethod **manag
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -3095,7 +3574,13 @@ static id native_to_managed_trampoline_59 (id self, SEL _cmd, MonoMethod **manag
 		res = xamarin_string_to_nsstring ((MonoString *) retval, false);
 	}
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -3118,6 +3603,7 @@ static CGFloat native_to_managed_trampoline_60 (id self, SEL _cmd, MonoMethod **
 	CGFloat res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -3128,10 +3614,11 @@ static CGFloat native_to_managed_trampoline_60 (id self, SEL _cmd, MonoMethod **
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -3160,7 +3647,15 @@ static CGFloat native_to_managed_trampoline_60 (id self, SEL _cmd, MonoMethod **
 
 	res = *(CGFloat *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -3183,6 +3678,7 @@ static UIEdgeInsets native_to_managed_trampoline_61 (id self, SEL _cmd, MonoMeth
 	UIEdgeInsets res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [3];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -3193,10 +3689,11 @@ static UIEdgeInsets native_to_managed_trampoline_61 (id self, SEL _cmd, MonoMeth
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_generic_method_from_token (mthis, token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -3226,7 +3723,15 @@ static UIEdgeInsets native_to_managed_trampoline_61 (id self, SEL _cmd, MonoMeth
 
 	res = *(UIEdgeInsets *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -3249,6 +3754,7 @@ static CGFloat native_to_managed_trampoline_62 (id self, SEL _cmd, MonoMethod **
 	CGFloat res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [3];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -3259,10 +3765,11 @@ static CGFloat native_to_managed_trampoline_62 (id self, SEL _cmd, MonoMethod **
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_generic_method_from_token (mthis, token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -3292,7 +3799,15 @@ static CGFloat native_to_managed_trampoline_62 (id self, SEL _cmd, MonoMethod **
 
 	res = *(CGFloat *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -3317,6 +3832,7 @@ static void native_to_managed_trampoline_63 (id self, SEL _cmd, MonoMethod **man
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [3];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -3327,10 +3843,11 @@ static void native_to_managed_trampoline_63 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_generic_method_from_token (mthis, token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -3367,7 +3884,16 @@ static void native_to_managed_trampoline_63 (id self, SEL _cmd, MonoMethod **man
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&paramtype2);
+	xamarin_mono_object_release (&mobj2);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -3394,6 +3920,7 @@ static CGSize native_to_managed_trampoline_64 (id self, SEL _cmd, MonoMethod **m
 	CGSize res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [3];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -3404,10 +3931,11 @@ static CGSize native_to_managed_trampoline_64 (id self, SEL _cmd, MonoMethod **m
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_generic_method_from_token (mthis, token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -3446,7 +3974,17 @@ static CGSize native_to_managed_trampoline_64 (id self, SEL _cmd, MonoMethod **m
 
 	res = *(CGSize *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&paramtype2);
+	xamarin_mono_object_release (&mobj2);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -3469,6 +4007,7 @@ static id native_to_managed_trampoline_65 (id self, SEL _cmd, MonoMethod **manag
 	id res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -3479,10 +4018,11 @@ static id native_to_managed_trampoline_65 (id self, SEL _cmd, MonoMethod **manag
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_generic_method_from_token (mthis, token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -3522,7 +4062,15 @@ static id native_to_managed_trampoline_65 (id self, SEL _cmd, MonoMethod **manag
 		res = retobj;
 	}
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -3541,6 +4089,7 @@ static NSInteger native_to_managed_trampoline_66 (id self, SEL _cmd, MonoMethod 
 	NSInteger res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -3551,10 +4100,11 @@ static NSInteger native_to_managed_trampoline_66 (id self, SEL _cmd, MonoMethod 
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_generic_method_from_token (mthis, token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -3574,7 +4124,13 @@ static NSInteger native_to_managed_trampoline_66 (id self, SEL _cmd, MonoMethod 
 
 	res = *(NSInteger *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -3587,6 +4143,7 @@ static void native_to_managed_trampoline_67 (id self, SEL _cmd, MonoMethod **man
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -3597,10 +4154,11 @@ static void native_to_managed_trampoline_67 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_generic_method_from_token (mthis, token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -3608,7 +4166,10 @@ static void native_to_managed_trampoline_67 (id self, SEL _cmd, MonoMethod **man
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -3627,6 +4188,7 @@ static NSInteger native_to_managed_trampoline_68 (id self, SEL _cmd, MonoMethod 
 	NSInteger res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -3637,10 +4199,11 @@ static NSInteger native_to_managed_trampoline_68 (id self, SEL _cmd, MonoMethod 
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_generic_method_from_token (mthis, token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -3659,7 +4222,13 @@ static NSInteger native_to_managed_trampoline_68 (id self, SEL _cmd, MonoMethod 
 
 	res = *(NSInteger *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -3680,6 +4249,7 @@ static void native_to_managed_trampoline_69 (id self, SEL _cmd, MonoMethod **man
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -3690,10 +4260,11 @@ static void native_to_managed_trampoline_69 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_generic_method_from_token (mthis, token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -3720,7 +4291,14 @@ static void native_to_managed_trampoline_69 (id self, SEL _cmd, MonoMethod **man
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -3747,6 +4325,7 @@ static id native_to_managed_trampoline_70 (id self, SEL _cmd, MonoMethod **manag
 	id res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [3];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -3757,10 +4336,11 @@ static id native_to_managed_trampoline_70 (id self, SEL _cmd, MonoMethod **manag
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_generic_method_from_token (mthis, token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -3810,7 +4390,17 @@ static id native_to_managed_trampoline_70 (id self, SEL _cmd, MonoMethod **manag
 		res = retobj;
 	}
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&paramtype2);
+	xamarin_mono_object_release (&mobj2);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -3833,6 +4423,7 @@ static CGSize native_to_managed_trampoline_71 (id self, SEL _cmd, MonoMethod **m
 	CGSize res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [3];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -3843,10 +4434,11 @@ static CGSize native_to_managed_trampoline_71 (id self, SEL _cmd, MonoMethod **m
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_generic_method_from_token (mthis, token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -3876,7 +4468,15 @@ static CGSize native_to_managed_trampoline_71 (id self, SEL _cmd, MonoMethod **m
 
 	res = *(CGSize *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -3886,9 +4486,11 @@ exception_handling:;
 
 static id native_to_managed_trampoline_72 (id self, SEL _cmd, MonoMethod **managed_method_ptr, CGRect p0, bool* call_super, uint32_t token_ref)
 {
+	MonoClass *declaring_type = NULL;
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -3901,18 +4503,24 @@ static id native_to_managed_trampoline_72 (id self, SEL _cmd, MonoMethod **manag
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	arg_ptrs [0] = &p0;
 
-	mthis = xamarin_new_nsobject (self, mono_method_get_class (managed_method), &exception_gchandle);
+	declaring_type = mono_method_get_class (managed_method);
+	mthis = xamarin_new_nsobject (self, declaring_type, &exception_gchandle);
+	xamarin_mono_object_release (&declaring_type);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -3927,6 +4535,7 @@ static CGPoint native_to_managed_trampoline_73 (id self, SEL _cmd, MonoMethod **
 	CGPoint res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -3937,10 +4546,11 @@ static CGPoint native_to_managed_trampoline_73 (id self, SEL _cmd, MonoMethod **
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -3951,7 +4561,11 @@ static CGPoint native_to_managed_trampoline_73 (id self, SEL _cmd, MonoMethod **
 
 	res = *(CGPoint *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -3963,9 +4577,11 @@ static void native_to_managed_trampoline_74 (id self, SEL _cmd, MonoMethod **man
 {
 	MonoArray *marr0 = NULL;
 	NSArray *arr0 = NULL;
+	MonoType *paramtype0 = NULL;
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -3976,21 +4592,28 @@ static void native_to_managed_trampoline_74 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 	arr0 = p0;
-	marr0 = xamarin_nsarray_to_managed_nsobject_array (arr0, xamarin_get_parameter_type (managed_method, 0), NULL, &exception_gchandle);
+	paramtype0 = xamarin_get_parameter_type (managed_method, 0);
+	marr0 = xamarin_nsarray_to_managed_nsobject_array (arr0, paramtype0, NULL, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 	arg_ptrs [0] = marr0;
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&marr0);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -4005,6 +4628,7 @@ static CGPoint native_to_managed_trampoline_75 (id self, SEL _cmd, MonoMethod **
 	CGPoint res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -4015,10 +4639,11 @@ static CGPoint native_to_managed_trampoline_75 (id self, SEL _cmd, MonoMethod **
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -4028,7 +4653,11 @@ static CGPoint native_to_managed_trampoline_75 (id self, SEL _cmd, MonoMethod **
 
 	res = *(CGPoint *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -4043,6 +4672,7 @@ static BOOL native_to_managed_trampoline_76 (id self, SEL _cmd, MonoMethod **man
 	BOOL res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -4053,10 +4683,11 @@ static BOOL native_to_managed_trampoline_76 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -4066,7 +4697,11 @@ static BOOL native_to_managed_trampoline_76 (id self, SEL _cmd, MonoMethod **man
 
 	res = *(BOOL *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -4081,6 +4716,7 @@ static CGSize native_to_managed_trampoline_77 (id self, SEL _cmd, MonoMethod **m
 	CGSize res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [0];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -4091,10 +4727,11 @@ static CGSize native_to_managed_trampoline_77 (id self, SEL _cmd, MonoMethod **m
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -4102,7 +4739,11 @@ static CGSize native_to_managed_trampoline_77 (id self, SEL _cmd, MonoMethod **m
 
 	res = *(CGSize *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -4117,6 +4758,7 @@ static id native_to_managed_trampoline_78 (id self, SEL _cmd, MonoMethod **manag
 	id res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -4127,10 +4769,11 @@ static id native_to_managed_trampoline_78 (id self, SEL _cmd, MonoMethod **manag
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -4144,7 +4787,11 @@ static id native_to_managed_trampoline_78 (id self, SEL _cmd, MonoMethod **manag
 	mt_dummy_use (retval);
 	xamarin_framework_peer_unlock ();
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -4158,6 +4805,7 @@ static void native_to_managed_trampoline_79 (id self, SEL _cmd, MonoMethod **man
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -4168,10 +4816,11 @@ static void native_to_managed_trampoline_79 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -4180,7 +4829,10 @@ static void native_to_managed_trampoline_79 (id self, SEL _cmd, MonoMethod **man
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -4190,9 +4842,11 @@ exception_handling:;
 
 static void native_to_managed_trampoline_80 (id self, SEL _cmd, MonoMethod **managed_method_ptr, CGSize p0, id p1, uint32_t token_ref)
 {
+	MonoObject *inobj1 = NULL;
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -4203,20 +4857,26 @@ static void native_to_managed_trampoline_80 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 	arg_ptrs [0] = &p0;
-	arg_ptrs [1] = xamarin_get_inative_object_static (p1, false, 0x2A604 /* UIKit.IUIViewControllerTransitionCoordinator */, 0x2A804 /* UIKit.UIViewControllerTransitionCoordinatorWrapper */, &exception_gchandle);
+	inobj1 = xamarin_get_inative_object_static (p1, false, 0x2A804 /* UIKit.IUIViewControllerTransitionCoordinator */, 0x2AA04 /* UIKit.UIViewControllerTransitionCoordinatorWrapper */, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
+	arg_ptrs [1] = inobj1;
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&inobj1);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -4237,6 +4897,7 @@ static void native_to_managed_trampoline_81 (id self, SEL _cmd, MonoMethod **man
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [3];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -4247,10 +4908,11 @@ static void native_to_managed_trampoline_81 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -4283,7 +4945,14 @@ static void native_to_managed_trampoline_81 (id self, SEL _cmd, MonoMethod **man
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 	}
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -4294,9 +4963,12 @@ exception_handling:;
 static void native_to_managed_trampoline_82 (id self, SEL _cmd, MonoMethod **managed_method_ptr, id p0, uint32_t token_ref)
 {
 	MonoType *type0;
+	MonoObject *inobj0 = NULL;
+	MonoReflectionType *reflectiontype0 = NULL;
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -4307,20 +4979,29 @@ static void native_to_managed_trampoline_82 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 	type0 = xamarin_get_parameter_type (managed_method, 0);
-	arg_ptrs [0] = xamarin_get_inative_object_dynamic (p0, false, mono_type_get_object (mono_domain_get (), type0), &exception_gchandle);
+	reflectiontype0 = mono_type_get_object (mono_domain_get (), type0);
+	inobj0 = xamarin_get_inative_object_dynamic (p0, false, reflectiontype0, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
+	arg_ptrs [0] = inobj0;
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&type0);
+	xamarin_mono_object_release (&inobj0);
+	xamarin_mono_object_release (&reflectiontype0);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -4339,6 +5020,7 @@ static id native_to_managed_trampoline_83 (id self, SEL _cmd, MonoMethod **manag
 	id res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -4349,10 +5031,11 @@ static id native_to_managed_trampoline_83 (id self, SEL _cmd, MonoMethod **manag
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -4383,7 +5066,13 @@ static id native_to_managed_trampoline_83 (id self, SEL _cmd, MonoMethod **manag
 		res = retobj;
 	}
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -4397,6 +5086,7 @@ static void native_to_managed_trampoline_84 (id self, SEL _cmd, MonoMethod **man
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -4407,10 +5097,11 @@ static void native_to_managed_trampoline_84 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -4418,7 +5109,10 @@ static void native_to_managed_trampoline_84 (id self, SEL _cmd, MonoMethod **man
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -4433,6 +5127,7 @@ static CGRect native_to_managed_trampoline_85 (id self, SEL _cmd, MonoMethod **m
 	CGRect res = {{0}};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [0];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -4443,10 +5138,11 @@ static CGRect native_to_managed_trampoline_85 (id self, SEL _cmd, MonoMethod **m
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_generic_method_from_token (mthis, token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -4454,7 +5150,11 @@ static CGRect native_to_managed_trampoline_85 (id self, SEL _cmd, MonoMethod **m
 
 	res = *(CGRect *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -4467,6 +5167,7 @@ static void native_to_managed_trampoline_86 (id self, SEL _cmd, MonoMethod **man
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -4477,10 +5178,11 @@ static void native_to_managed_trampoline_86 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_generic_method_from_token (mthis, token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -4488,7 +5190,10 @@ static void native_to_managed_trampoline_86 (id self, SEL _cmd, MonoMethod **man
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -4507,6 +5212,7 @@ static BOOL native_to_managed_trampoline_87 (id self, SEL _cmd, MonoMethod **man
 	BOOL res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -4517,10 +5223,11 @@ static BOOL native_to_managed_trampoline_87 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -4540,7 +5247,13 @@ static BOOL native_to_managed_trampoline_87 (id self, SEL _cmd, MonoMethod **man
 
 	res = *(BOOL *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -4555,6 +5268,7 @@ static CGRect native_to_managed_trampoline_88 (id self, SEL _cmd, MonoMethod **m
 	CGRect res = {{0}};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [0];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -4565,10 +5279,11 @@ static CGRect native_to_managed_trampoline_88 (id self, SEL _cmd, MonoMethod **m
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -4576,7 +5291,11 @@ static CGRect native_to_managed_trampoline_88 (id self, SEL _cmd, MonoMethod **m
 
 	res = *(CGRect *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -4591,6 +5310,7 @@ static id native_to_managed_trampoline_89 (id self, SEL _cmd, MonoMethod **manag
 	id res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -4601,10 +5321,11 @@ static id native_to_managed_trampoline_89 (id self, SEL _cmd, MonoMethod **manag
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -4618,7 +5339,11 @@ static id native_to_managed_trampoline_89 (id self, SEL _cmd, MonoMethod **manag
 	mt_dummy_use (retval);
 	xamarin_framework_peer_unlock ();
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -4633,6 +5358,7 @@ static id native_to_managed_trampoline_90 (id self, SEL _cmd, MonoMethod **manag
 	id res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -4643,10 +5369,11 @@ static id native_to_managed_trampoline_90 (id self, SEL _cmd, MonoMethod **manag
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -4667,7 +5394,11 @@ static id native_to_managed_trampoline_90 (id self, SEL _cmd, MonoMethod **manag
 		res = retobj;
 	}
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -4686,6 +5417,7 @@ static id native_to_managed_trampoline_91 (id self, SEL _cmd, MonoMethod **manag
 	id res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [3];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -4696,10 +5428,11 @@ static id native_to_managed_trampoline_91 (id self, SEL _cmd, MonoMethod **manag
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_generic_method_from_token (mthis, token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -4724,7 +5457,13 @@ static id native_to_managed_trampoline_91 (id self, SEL _cmd, MonoMethod **manag
 		res = xamarin_string_to_nsstring ((MonoString *) retval, false);
 	}
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -4741,6 +5480,7 @@ static void native_to_managed_trampoline_92 (id self, SEL _cmd, MonoMethod **man
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [3];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -4751,10 +5491,11 @@ static void native_to_managed_trampoline_92 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_generic_method_from_token (mthis, token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -4773,7 +5514,12 @@ static void native_to_managed_trampoline_92 (id self, SEL _cmd, MonoMethod **man
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -4787,10 +5533,12 @@ static void native_to_managed_trampoline_93 (id self, SEL _cmd, MonoMethod **man
 	MonoObject *mobj0 = NULL;
 	int32_t created0 = false;
 	MonoType *paramtype0 = NULL;
+	MonoObject *inobj1 = NULL;
 	unsigned long long nativeEnum2 = p2;
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [3];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -4801,10 +5549,11 @@ static void native_to_managed_trampoline_93 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -4818,13 +5567,20 @@ static void native_to_managed_trampoline_93 (id self, SEL _cmd, MonoMethod **man
 		}
 	}
 	arg_ptrs [0] = mobj0;
-	arg_ptrs [1] = xamarin_get_inative_object_static (p1, false, 0x1F604 /* UIKit.IUIDragSession */, 0x1F704 /* UIKit.UIDragSessionWrapper */, &exception_gchandle);
+	inobj1 = xamarin_get_inative_object_static (p1, false, 0x1F804 /* UIKit.IUIDragSession */, 0x1F904 /* UIKit.UIDragSessionWrapper */, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
+	arg_ptrs [1] = inobj1;
 	arg_ptrs [2] = &nativeEnum2;
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&inobj1);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -4838,11 +5594,13 @@ static id native_to_managed_trampoline_94 (id self, SEL _cmd, MonoMethod **manag
 	MonoObject *mobj0 = NULL;
 	int32_t created0 = false;
 	MonoType *paramtype0 = NULL;
+	MonoObject *inobj1 = NULL;
 	MonoObject *retval = NULL;
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	id res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -4853,10 +5611,11 @@ static id native_to_managed_trampoline_94 (id self, SEL _cmd, MonoMethod **manag
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -4870,8 +5629,9 @@ static id native_to_managed_trampoline_94 (id self, SEL _cmd, MonoMethod **manag
 		}
 	}
 	arg_ptrs [0] = mobj0;
-	arg_ptrs [1] = xamarin_get_inative_object_static (p1, false, 0x1F604 /* UIKit.IUIDragSession */, 0x1F704 /* UIKit.UIDragSessionWrapper */, &exception_gchandle);
+	inobj1 = xamarin_get_inative_object_static (p1, false, 0x1F804 /* UIKit.IUIDragSession */, 0x1F904 /* UIKit.UIDragSessionWrapper */, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
+	arg_ptrs [1] = inobj1;
 
 	retval = mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
@@ -4881,7 +5641,14 @@ static id native_to_managed_trampoline_94 (id self, SEL _cmd, MonoMethod **manag
 	mt_dummy_use (retval);
 	xamarin_framework_peer_unlock ();
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&inobj1);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -4895,11 +5662,13 @@ static BOOL native_to_managed_trampoline_95 (id self, SEL _cmd, MonoMethod **man
 	MonoObject *mobj0 = NULL;
 	int32_t created0 = false;
 	MonoType *paramtype0 = NULL;
+	MonoObject *inobj1 = NULL;
 	MonoObject *retval = NULL;
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	BOOL res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -4910,10 +5679,11 @@ static BOOL native_to_managed_trampoline_95 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -4927,14 +5697,22 @@ static BOOL native_to_managed_trampoline_95 (id self, SEL _cmd, MonoMethod **man
 		}
 	}
 	arg_ptrs [0] = mobj0;
-	arg_ptrs [1] = xamarin_get_inative_object_static (p1, false, 0x1FD04 /* UIKit.IUIDropSession */, 0x1FE04 /* UIKit.UIDropSessionWrapper */, &exception_gchandle);
+	inobj1 = xamarin_get_inative_object_static (p1, false, 0x1FF04 /* UIKit.IUIDropSession */, 0x20004 /* UIKit.UIDropSessionWrapper */, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
+	arg_ptrs [1] = inobj1;
 
 	retval = mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
 	res = *(BOOL *) mono_object_unbox ((MonoObject *) retval);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&inobj1);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -4948,9 +5726,11 @@ static void native_to_managed_trampoline_96 (id self, SEL _cmd, MonoMethod **man
 	MonoObject *mobj0 = NULL;
 	int32_t created0 = false;
 	MonoType *paramtype0 = NULL;
+	MonoObject *inobj1 = NULL;
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -4961,10 +5741,11 @@ static void native_to_managed_trampoline_96 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -4978,12 +5759,19 @@ static void native_to_managed_trampoline_96 (id self, SEL _cmd, MonoMethod **man
 		}
 	}
 	arg_ptrs [0] = mobj0;
-	arg_ptrs [1] = xamarin_get_inative_object_static (p1, false, 0x1FD04 /* UIKit.IUIDropSession */, 0x1FE04 /* UIKit.UIDropSessionWrapper */, &exception_gchandle);
+	inobj1 = xamarin_get_inative_object_static (p1, false, 0x1FF04 /* UIKit.IUIDropSession */, 0x20004 /* UIKit.UIDropSessionWrapper */, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
+	arg_ptrs [1] = inobj1;
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&inobj1);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -4997,11 +5785,13 @@ static id native_to_managed_trampoline_97 (id self, SEL _cmd, MonoMethod **manag
 	MonoObject *mobj0 = NULL;
 	int32_t created0 = false;
 	MonoType *paramtype0 = NULL;
+	MonoObject *inobj1 = NULL;
 	MonoObject *retval = NULL;
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	id res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -5012,10 +5802,11 @@ static id native_to_managed_trampoline_97 (id self, SEL _cmd, MonoMethod **manag
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -5029,8 +5820,9 @@ static id native_to_managed_trampoline_97 (id self, SEL _cmd, MonoMethod **manag
 		}
 	}
 	arg_ptrs [0] = mobj0;
-	arg_ptrs [1] = xamarin_get_inative_object_static (p1, false, 0x1FD04 /* UIKit.IUIDropSession */, 0x1FE04 /* UIKit.UIDropSessionWrapper */, &exception_gchandle);
+	inobj1 = xamarin_get_inative_object_static (p1, false, 0x1FF04 /* UIKit.IUIDropSession */, 0x20004 /* UIKit.UIDropSessionWrapper */, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
+	arg_ptrs [1] = inobj1;
 
 	retval = mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
@@ -5047,7 +5839,14 @@ static id native_to_managed_trampoline_97 (id self, SEL _cmd, MonoMethod **manag
 		res = retobj;
 	}
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&inobj1);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -5057,9 +5856,11 @@ exception_handling:;
 
 static void native_to_managed_trampoline_98 (id self, SEL _cmd, MonoMethod **managed_method_ptr, BOOL p0, id p1, uint32_t token_ref)
 {
+	MonoObject *del1 = NULL;
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -5070,16 +5871,18 @@ static void native_to_managed_trampoline_98 (id self, SEL _cmd, MonoMethod **man
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 	arg_ptrs [0] = &p0;
 	if (p1) {
-		arg_ptrs [1] = (void *) xamarin_get_delegate_for_block_parameter (managed_method, 0x4CE04 /* System.Action ObjCRuntime.Trampolines/NIDAction::Create(System.IntPtr) */ , 1, p1, &exception_gchandle);
+		del1 = xamarin_get_delegate_for_block_parameter (managed_method, 0x4CF04 /* System.Action ObjCRuntime.Trampolines/NIDAction::Create(System.IntPtr) */ , 1, p1, &exception_gchandle);
+		arg_ptrs [1] = del1;
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 	} else {
 		arg_ptrs [1] = NULL;
@@ -5087,7 +5890,11 @@ static void native_to_managed_trampoline_98 (id self, SEL _cmd, MonoMethod **man
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&del1);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -5102,6 +5909,7 @@ static id native_to_managed_trampoline_99 (id self, SEL _cmd, MonoMethod **manag
 	id res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [0];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -5112,10 +5920,11 @@ static id native_to_managed_trampoline_99 (id self, SEL _cmd, MonoMethod **manag
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -5127,7 +5936,11 @@ static id native_to_managed_trampoline_99 (id self, SEL _cmd, MonoMethod **manag
 	mt_dummy_use (retval);
 	xamarin_framework_peer_unlock ();
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -5155,6 +5968,7 @@ static id native_to_managed_trampoline_100 (id self, SEL _cmd, MonoMethod **mana
 	id res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [4];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -5165,10 +5979,11 @@ static id native_to_managed_trampoline_100 (id self, SEL _cmd, MonoMethod **mana
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -5220,7 +6035,17 @@ static id native_to_managed_trampoline_100 (id self, SEL _cmd, MonoMethod **mana
 		res = retobj;
 	}
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype2);
+	xamarin_mono_object_release (&mobj2);
+	xamarin_mono_object_release (&paramtype3);
+	xamarin_mono_object_release (&mobj3);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -5238,9 +6063,11 @@ static void native_to_managed_trampoline_101 (id self, SEL _cmd, MonoMethod **ma
 	MonoObject *mobj1 = NULL;
 	int32_t created1 = false;
 	MonoType *paramtype1 = NULL;
+	MonoObject *del2 = NULL;
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [3];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -5251,10 +6078,11 @@ static void native_to_managed_trampoline_101 (id self, SEL _cmd, MonoMethod **ma
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -5279,7 +6107,8 @@ static void native_to_managed_trampoline_101 (id self, SEL _cmd, MonoMethod **ma
 	}
 	arg_ptrs [1] = mobj1;
 	if (p2) {
-		arg_ptrs [2] = (void *) xamarin_get_delegate_for_block_parameter (managed_method, 0x53A04 /* System.Action`1<WebKit.WKNavigationActionPolicy> ObjCRuntime.Trampolines/NIDActionArity1V252::Create(System.IntPtr) */ , 2, p2, &exception_gchandle);
+		del2 = xamarin_get_delegate_for_block_parameter (managed_method, 0x53B04 /* System.Action`1<WebKit.WKNavigationActionPolicy> ObjCRuntime.Trampolines/NIDActionArity1V259::Create(System.IntPtr) */ , 2, p2, &exception_gchandle);
+		arg_ptrs [2] = del2;
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 	} else {
 		arg_ptrs [2] = NULL;
@@ -5287,7 +6116,15 @@ static void native_to_managed_trampoline_101 (id self, SEL _cmd, MonoMethod **ma
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&del2);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -5301,13 +6138,16 @@ static void native_to_managed_trampoline_102 (id self, SEL _cmd, MonoMethod **ma
 	MonoObject *mobj0 = NULL;
 	int32_t created0 = false;
 	MonoType *paramtype0 = NULL;
+	MonoString *a1 = NULL;
 	NSObject *nsobj2 = NULL;
 	MonoObject *mobj2 = NULL;
 	int32_t created2 = false;
 	MonoType *paramtype2 = NULL;
+	MonoObject *del3 = NULL;
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [4];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -5318,10 +6158,11 @@ static void native_to_managed_trampoline_102 (id self, SEL _cmd, MonoMethod **ma
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -5335,7 +6176,8 @@ static void native_to_managed_trampoline_102 (id self, SEL _cmd, MonoMethod **ma
 		}
 	}
 	arg_ptrs [0] = mobj0;
-	arg_ptrs [1] = xamarin_nsstring_to_string (NULL, p1);
+	a1 = xamarin_nsstring_to_string (NULL, p1);
+	arg_ptrs [1] = a1;
 	nsobj2 = (NSObject *) p2;
 	if (nsobj2) {
 		paramtype2 = xamarin_get_parameter_type (managed_method, 2);
@@ -5347,7 +6189,8 @@ static void native_to_managed_trampoline_102 (id self, SEL _cmd, MonoMethod **ma
 	}
 	arg_ptrs [2] = mobj2;
 	if (p3) {
-		arg_ptrs [3] = (void *) xamarin_get_delegate_for_block_parameter (managed_method, 0x4CE04 /* System.Action ObjCRuntime.Trampolines/NIDAction::Create(System.IntPtr) */ , 3, p3, &exception_gchandle);
+		del3 = xamarin_get_delegate_for_block_parameter (managed_method, 0x4CF04 /* System.Action ObjCRuntime.Trampolines/NIDAction::Create(System.IntPtr) */ , 3, p3, &exception_gchandle);
+		arg_ptrs [3] = del3;
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 	} else {
 		arg_ptrs [3] = NULL;
@@ -5355,7 +6198,16 @@ static void native_to_managed_trampoline_102 (id self, SEL _cmd, MonoMethod **ma
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&a1);
+	xamarin_mono_object_release (&paramtype2);
+	xamarin_mono_object_release (&mobj2);
+	xamarin_mono_object_release (&del3);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -5369,13 +6221,16 @@ static void native_to_managed_trampoline_103 (id self, SEL _cmd, MonoMethod **ma
 	MonoObject *mobj0 = NULL;
 	int32_t created0 = false;
 	MonoType *paramtype0 = NULL;
+	MonoString *a1 = NULL;
 	NSObject *nsobj2 = NULL;
 	MonoObject *mobj2 = NULL;
 	int32_t created2 = false;
 	MonoType *paramtype2 = NULL;
+	MonoObject *del3 = NULL;
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [4];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -5386,10 +6241,11 @@ static void native_to_managed_trampoline_103 (id self, SEL _cmd, MonoMethod **ma
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -5403,7 +6259,8 @@ static void native_to_managed_trampoline_103 (id self, SEL _cmd, MonoMethod **ma
 		}
 	}
 	arg_ptrs [0] = mobj0;
-	arg_ptrs [1] = xamarin_nsstring_to_string (NULL, p1);
+	a1 = xamarin_nsstring_to_string (NULL, p1);
+	arg_ptrs [1] = a1;
 	nsobj2 = (NSObject *) p2;
 	if (nsobj2) {
 		paramtype2 = xamarin_get_parameter_type (managed_method, 2);
@@ -5415,7 +6272,8 @@ static void native_to_managed_trampoline_103 (id self, SEL _cmd, MonoMethod **ma
 	}
 	arg_ptrs [2] = mobj2;
 	if (p3) {
-		arg_ptrs [3] = (void *) xamarin_get_delegate_for_block_parameter (managed_method, 0x4FB04 /* System.Action`1<System.Boolean> ObjCRuntime.Trampolines/NIDActionArity1V4::Create(System.IntPtr) */ , 3, p3, &exception_gchandle);
+		del3 = xamarin_get_delegate_for_block_parameter (managed_method, 0x4FC04 /* System.Action`1<System.Boolean> ObjCRuntime.Trampolines/NIDActionArity1V4::Create(System.IntPtr) */ , 3, p3, &exception_gchandle);
+		arg_ptrs [3] = del3;
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 	} else {
 		arg_ptrs [3] = NULL;
@@ -5423,7 +6281,16 @@ static void native_to_managed_trampoline_103 (id self, SEL _cmd, MonoMethod **ma
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&a1);
+	xamarin_mono_object_release (&paramtype2);
+	xamarin_mono_object_release (&mobj2);
+	xamarin_mono_object_release (&del3);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -5437,13 +6304,17 @@ static void native_to_managed_trampoline_104 (id self, SEL _cmd, MonoMethod **ma
 	MonoObject *mobj0 = NULL;
 	int32_t created0 = false;
 	MonoType *paramtype0 = NULL;
+	MonoString *a1 = NULL;
+	MonoString *a2 = NULL;
 	NSObject *nsobj3 = NULL;
 	MonoObject *mobj3 = NULL;
 	int32_t created3 = false;
 	MonoType *paramtype3 = NULL;
+	MonoObject *del4 = NULL;
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [5];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -5454,10 +6325,11 @@ static void native_to_managed_trampoline_104 (id self, SEL _cmd, MonoMethod **ma
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -5471,8 +6343,10 @@ static void native_to_managed_trampoline_104 (id self, SEL _cmd, MonoMethod **ma
 		}
 	}
 	arg_ptrs [0] = mobj0;
-	arg_ptrs [1] = xamarin_nsstring_to_string (NULL, p1);
-	arg_ptrs [2] = xamarin_nsstring_to_string (NULL, p2);
+	a1 = xamarin_nsstring_to_string (NULL, p1);
+	arg_ptrs [1] = a1;
+	a2 = xamarin_nsstring_to_string (NULL, p2);
+	arg_ptrs [2] = a2;
 	nsobj3 = (NSObject *) p3;
 	if (nsobj3) {
 		paramtype3 = xamarin_get_parameter_type (managed_method, 3);
@@ -5484,7 +6358,8 @@ static void native_to_managed_trampoline_104 (id self, SEL _cmd, MonoMethod **ma
 	}
 	arg_ptrs [3] = mobj3;
 	if (p4) {
-		arg_ptrs [4] = (void *) xamarin_get_delegate_for_block_parameter (managed_method, 0x50404 /* System.Action`1<System.String> ObjCRuntime.Trampolines/NIDActionArity1V60::Create(System.IntPtr) */ , 4, p4, &exception_gchandle);
+		del4 = xamarin_get_delegate_for_block_parameter (managed_method, 0x50504 /* System.Action`1<System.String> ObjCRuntime.Trampolines/NIDActionArity1V61::Create(System.IntPtr) */ , 4, p4, &exception_gchandle);
+		arg_ptrs [4] = del4;
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 	} else {
 		arg_ptrs [4] = NULL;
@@ -5492,7 +6367,17 @@ static void native_to_managed_trampoline_104 (id self, SEL _cmd, MonoMethod **ma
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&a1);
+	xamarin_mono_object_release (&a2);
+	xamarin_mono_object_release (&paramtype3);
+	xamarin_mono_object_release (&mobj3);
+	xamarin_mono_object_release (&del4);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -5515,6 +6400,7 @@ static id native_to_managed_trampoline_105 (id self, SEL _cmd, MonoMethod **mana
 	id res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -5525,10 +6411,11 @@ static id native_to_managed_trampoline_105 (id self, SEL _cmd, MonoMethod **mana
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -5561,7 +6448,15 @@ static id native_to_managed_trampoline_105 (id self, SEL _cmd, MonoMethod **mana
 		res = xamarin_string_to_nsstring ((MonoString *) retval, false);
 	}
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&paramtype1);
+	xamarin_mono_object_release (&mobj1);
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -5578,6 +6473,7 @@ static void native_to_managed_trampoline_106 (id self, SEL _cmd, MonoMethod **ma
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [2];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -5588,10 +6484,11 @@ static void native_to_managed_trampoline_106 (id self, SEL _cmd, MonoMethod **ma
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	xamarin_check_for_gced_object (mthis, _cmd, self, managed_method, &exception_gchandle);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
@@ -5609,7 +6506,12 @@ static void native_to_managed_trampoline_106 (id self, SEL _cmd, MonoMethod **ma
 
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -5624,15 +6526,17 @@ static Class native_to_managed_trampoline_107 (id self, SEL _cmd, MonoMethod **m
 	Class res = {0};
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [0];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	retval = mono_runtime_invoke (managed_method, NULL, arg_ptrs, NULL);
 
@@ -5643,7 +6547,10 @@ static Class native_to_managed_trampoline_107 (id self, SEL _cmd, MonoMethod **m
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 	}
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&retval);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -5657,9 +6564,11 @@ static id native_to_managed_trampoline_108 (id self, SEL _cmd, MonoMethod **mana
 	MonoObject *mobj0 = NULL;
 	int32_t created0 = false;
 	MonoType *paramtype0 = NULL;
+	MonoClass *declaring_type = NULL;
 	GCHandle exception_gchandle = INVALID_GCHANDLE;
 	MonoMethod *managed_method = *managed_method_ptr;
 	void *arg_ptrs [1];
+	MonoReflectionMethod *reflection_method = NULL;
 	MONO_ASSERT_GC_SAFE_OR_DETACHED;
 	MONO_THREAD_ATTACH;
 
@@ -5672,10 +6581,11 @@ static id native_to_managed_trampoline_108 (id self, SEL _cmd, MonoMethod **mana
 	}
 	if (!managed_method) {
 		GCHandle reflection_method_handle = xamarin_get_method_from_token (token_ref, &exception_gchandle);
-		MonoReflectionMethod *reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
+		reflection_method = (MonoReflectionMethod *) xamarin_gchandle_unwrap (reflection_method_handle);
 		if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 		managed_method = xamarin_get_reflection_method_method (reflection_method);
 		*managed_method_ptr = managed_method;
+		xamarin_mono_object_release_at_process_exit (managed_method);
 	}
 	nsobj0 = (NSObject *) p0;
 	if (nsobj0) {
@@ -5688,11 +6598,18 @@ static id native_to_managed_trampoline_108 (id self, SEL _cmd, MonoMethod **mana
 	}
 	arg_ptrs [0] = mobj0;
 
-	mthis = xamarin_new_nsobject (self, mono_method_get_class (managed_method), &exception_gchandle);
+	declaring_type = mono_method_get_class (managed_method);
+	mthis = xamarin_new_nsobject (self, declaring_type, &exception_gchandle);
+	xamarin_mono_object_release (&declaring_type);
 	if (exception_gchandle != INVALID_GCHANDLE) goto exception_handling;
 	mono_runtime_invoke (managed_method, mthis, arg_ptrs, NULL);
 
-exception_handling:;
+exception_handling:
+	xamarin_mono_object_release (&paramtype0);
+	xamarin_mono_object_release (&mobj0);
+	xamarin_mono_object_release (&mthis);
+	xamarin_mono_object_release (&reflection_method);
+
 	MONO_THREAD_DETACH;
 	if (exception_gchandle != INVALID_GCHANDLE)
 		xamarin_process_managed_exception_gchandle (exception_gchandle);
@@ -5713,7 +6630,7 @@ exception_handling:;
 	{
 		static MonoMethod *managed_method = NULL;
 		bool call_super = false;
-		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xE2204);
+		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xE2104);
 		if (call_super && rv) {
 			struct objc_super super = {  rv, [NSObject class] };
 			rv = ((id (*)(objc_super*, SEL)) objc_msgSendSuper) (&super, @selector (init));
@@ -5833,7 +6750,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -5882,7 +6799,7 @@ exception_handling:;
 	{
 		static MonoMethod *managed_method = NULL;
 		bool call_super = false;
-		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0x904);
+		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xA04);
 		if (call_super && rv) {
 			struct objc_super super = {  rv, [NSObject class] };
 			rv = ((id (*)(objc_super*, SEL)) objc_msgSendSuper) (&super, @selector (init));
@@ -5903,7 +6820,7 @@ exception_handling:;
 	{
 		static MonoMethod *managed_method = NULL;
 		bool call_super = false;
-		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xC04);
+		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xD04);
 		if (call_super && rv) {
 			struct objc_super super = {  rv, [NSObject class] };
 			rv = ((id (*)(objc_super*, SEL)) objc_msgSendSuper) (&super, @selector (init));
@@ -5924,7 +6841,7 @@ exception_handling:;
 	{
 		static MonoMethod *managed_method = NULL;
 		bool call_super = false;
-		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0x5AC04);
+		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0x5AD04);
 		if (call_super && rv) {
 			struct objc_super super = {  rv, [NSObject class] };
 			rv = ((id (*)(objc_super*, SEL)) objc_msgSendSuper) (&super, @selector (init));
@@ -5945,7 +6862,7 @@ exception_handling:;
 	{
 		static MonoMethod *managed_method = NULL;
 		bool call_super = false;
-		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0x5EC04);
+		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0x5ED04);
 		if (call_super && rv) {
 			struct objc_super super = {  rv, [NSObject class] };
 			rv = ((id (*)(objc_super*, SEL)) objc_msgSendSuper) (&super, @selector (init));
@@ -6095,13 +7012,13 @@ exception_handling:;
 	-(void) BridgeSelector
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_8 (self, _cmd, &managed_method, 0x9A704);
+		native_to_managed_trampoline_8 (self, _cmd, &managed_method, 0x9A604);
 	}
 
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -6116,7 +7033,7 @@ exception_handling:;
 	{
 		static MonoMethod *managed_method = NULL;
 		bool call_super = false;
-		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xDF704);
+		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xDF604);
 		if (call_super && rv) {
 			struct objc_super super = {  rv, [NSObject class] };
 			rv = ((id (*)(objc_super*, SEL)) objc_msgSendSuper) (&super, @selector (init));
@@ -6137,7 +7054,7 @@ exception_handling:;
 	{
 		static MonoMethod *managed_method = NULL;
 		bool call_super = false;
-		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xE0804);
+		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xE0704);
 		if (call_super && rv) {
 			struct objc_super super = {  rv, [NSObject class] };
 			rv = ((id (*)(objc_super*, SEL)) objc_msgSendSuper) (&super, @selector (init));
@@ -6158,7 +7075,7 @@ exception_handling:;
 	{
 		static MonoMethod *managed_method = NULL;
 		bool call_super = false;
-		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xE7504);
+		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xE7404);
 		if (call_super && rv) {
 			struct objc_super super = {  rv, [NSObject class] };
 			rv = ((id (*)(objc_super*, SEL)) objc_msgSendSuper) (&super, @selector (init));
@@ -6179,7 +7096,7 @@ exception_handling:;
 	{
 		static MonoMethod *managed_method = NULL;
 		bool call_super = false;
-		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xEC504);
+		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xEC404);
 		if (call_super && rv) {
 			struct objc_super super = {  rv, [NSObject class] };
 			rv = ((id (*)(objc_super*, SEL)) objc_msgSendSuper) (&super, @selector (init));
@@ -6200,7 +7117,7 @@ exception_handling:;
 	{
 		static MonoMethod *managed_method = NULL;
 		bool call_super = false;
-		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xF3D04);
+		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xF3C04);
 		if (call_super && rv) {
 			struct objc_super super = {  rv, [NSObject class] };
 			rv = ((id (*)(objc_super*, SEL)) objc_msgSendSuper) (&super, @selector (init));
@@ -6221,7 +7138,7 @@ exception_handling:;
 	{
 		static MonoMethod *managed_method = NULL;
 		bool call_super = false;
-		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xF8E04);
+		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xF8D04);
 		if (call_super && rv) {
 			struct objc_super super = {  rv, [NSObject class] };
 			rv = ((id (*)(objc_super*, SEL)) objc_msgSendSuper) (&super, @selector (init));
@@ -6242,7 +7159,7 @@ exception_handling:;
 	{
 		static MonoMethod *managed_method = NULL;
 		bool call_super = false;
-		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xF5004);
+		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xF4F04);
 		if (call_super && rv) {
 			struct objc_super super = {  rv, [NSObject class] };
 			rv = ((id (*)(objc_super*, SEL)) objc_msgSendSuper) (&super, @selector (init));
@@ -6263,7 +7180,7 @@ exception_handling:;
 	{
 		static MonoMethod *managed_method = NULL;
 		bool call_super = false;
-		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xFB604);
+		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xFB504);
 		if (call_super && rv) {
 			struct objc_super super = {  rv, [NSObject class] };
 			rv = ((id (*)(objc_super*, SEL)) objc_msgSendSuper) (&super, @selector (init));
@@ -6284,7 +7201,7 @@ exception_handling:;
 	{
 		static MonoMethod *managed_method = NULL;
 		bool call_super = false;
-		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0x102C04);
+		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0x102B04);
 		if (call_super && rv) {
 			struct objc_super super = {  rv, [NSObject class] };
 			rv = ((id (*)(objc_super*, SEL)) objc_msgSendSuper) (&super, @selector (init));
@@ -6305,7 +7222,7 @@ exception_handling:;
 	{
 		static MonoMethod *managed_method = NULL;
 		bool call_super = false;
-		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0x103C04);
+		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0x103B04);
 		if (call_super && rv) {
 			struct objc_super super = {  rv, [NSObject class] };
 			rv = ((id (*)(objc_super*, SEL)) objc_msgSendSuper) (&super, @selector (init));
@@ -6326,7 +7243,7 @@ exception_handling:;
 	{
 		static MonoMethod *managed_method = NULL;
 		bool call_super = false;
-		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0x108204);
+		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0x108104);
 		if (call_super && rv) {
 			struct objc_super super = {  rv, [NSObject class] };
 			rv = ((id (*)(objc_super*, SEL)) objc_msgSendSuper) (&super, @selector (init));
@@ -6347,7 +7264,7 @@ exception_handling:;
 	{
 		static MonoMethod *managed_method = NULL;
 		bool call_super = false;
-		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0x110D04);
+		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0x110C04);
 		if (call_super && rv) {
 			struct objc_super super = {  rv, [NSObject class] };
 			rv = ((id (*)(objc_super*, SEL)) objc_msgSendSuper) (&super, @selector (init));
@@ -6413,13 +7330,13 @@ exception_handling:;
 	-(void) post:(NSNotification *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x137404);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x137204);
 	}
 
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -6480,20 +7397,20 @@ exception_handling:;
 	-(void) xamarinApplySelector
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_8 (self, _cmd, &managed_method, 0x141D04);
+		native_to_managed_trampoline_8 (self, _cmd, &managed_method, 0x141B04);
 	}
 
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
 	{
 		static MonoMethod *managed_method = NULL;
 		bool call_super = false;
-		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0x141C04);
+		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0x141A04);
 		if (call_super && rv) {
 			struct objc_super super = {  rv, [NSObject class] };
 			rv = ((id (*)(objc_super*, SEL)) objc_msgSendSuper) (&super, @selector (init));
@@ -6513,7 +7430,7 @@ exception_handling:;
 	-(void) xamarinApplySelector
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_8 (self, _cmd, &managed_method, 0x142004);
+		native_to_managed_trampoline_8 (self, _cmd, &managed_method, 0x141E04);
 	}
 @end
 
@@ -6528,7 +7445,7 @@ exception_handling:;
 	-(void) xamarinApplySelector
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_8 (self, _cmd, &managed_method, 0x142204);
+		native_to_managed_trampoline_8 (self, _cmd, &managed_method, 0x142004);
 	}
 @end
 
@@ -6588,13 +7505,13 @@ exception_handling:;
 	-(void) xamarinFireSelector:(NSTimer *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x142404);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x142204);
 	}
 
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -6610,14 +7527,14 @@ exception_handling:;
 	-(void) xamarinApplySelector
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_8 (self, _cmd, &managed_method, 0x142704);
+		native_to_managed_trampoline_8 (self, _cmd, &managed_method, 0x142504);
 	}
 
 	-(id) init
 	{
 		static MonoMethod *managed_method = NULL;
 		bool call_super = false;
-		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0x142604);
+		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0x142404);
 		if (call_super && rv) {
 			struct objc_super super = {  rv, [Foundation_NSDispatcher class] };
 			rv = ((id (*)(objc_super*, SEL)) objc_msgSendSuper) (&super, @selector (init));
@@ -6637,7 +7554,7 @@ exception_handling:;
 	-(void) xamarinApplySelector
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_8 (self, _cmd, &managed_method, 0x142904);
+		native_to_managed_trampoline_8 (self, _cmd, &managed_method, 0x142704);
 	}
 @end
 
@@ -6652,7 +7569,7 @@ exception_handling:;
 	-(void) xamarinApplySelector
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_8 (self, _cmd, &managed_method, 0x142B04);
+		native_to_managed_trampoline_8 (self, _cmd, &managed_method, 0x142904);
 	}
 @end
 
@@ -6712,13 +7629,13 @@ exception_handling:;
 	-(void) glkView:(GLKView *)p0 drawInRect:(CGRect)p1
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_9 (self, _cmd, &managed_method, p0, p1, 0x5A604);
+		native_to_managed_trampoline_9 (self, _cmd, &managed_method, p0, p1, 0x5A704);
 	}
 
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -6792,7 +7709,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -6865,20 +7782,20 @@ exception_handling:;
 	-(void) InvokeAction:(NSObject *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x8EA04);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x8E904);
 	}
 
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
 	{
 		static MonoMethod *managed_method = NULL;
 		bool call_super = false;
-		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0x8E904);
+		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0x8E804);
 		if (call_super && rv) {
 			struct objc_super super = {  rv, [NSObject class] };
 			rv = ((id (*)(objc_super*, SEL)) objc_msgSendSuper) (&super, @selector (init));
@@ -6931,19 +7848,19 @@ exception_handling:;
 	-(UIColor *) backgroundColor
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_2 (self, _cmd, &managed_method, 0xCCC04);
+		return native_to_managed_trampoline_2 (self, _cmd, &managed_method, 0xCCB04);
 	}
 
 	-(UIColor *) tintColor
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_2 (self, _cmd, &managed_method, 0xCCD04);
+		return native_to_managed_trampoline_2 (self, _cmd, &managed_method, 0xCCC04);
 	}
 
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -6957,19 +7874,19 @@ exception_handling:;
 	-(UIImage *) backgroundImageForState:(NSUInteger)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_11 (self, _cmd, &managed_method, p0, 0x92B04);
+		return native_to_managed_trampoline_11 (self, _cmd, &managed_method, p0, 0x92A04);
 	}
 
 	-(UIColor *) titleColorForState:(NSUInteger)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_11 (self, _cmd, &managed_method, p0, 0x92C04);
+		return native_to_managed_trampoline_11 (self, _cmd, &managed_method, p0, 0x92B04);
 	}
 
 	-(UIColor *) titleShadowColorForState:(NSUInteger)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_11 (self, _cmd, &managed_method, p0, 0x92D04);
+		return native_to_managed_trampoline_11 (self, _cmd, &managed_method, p0, 0x92C04);
 	}
 @end
 
@@ -7017,14 +7934,14 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
 	{
 		static MonoMethod *managed_method = NULL;
 		bool call_super = false;
-		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xA2604);
+		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xA2504);
 		if (call_super && rv) {
 			struct objc_super super = {  rv, [NSObject class] };
 			rv = ((id (*)(objc_super*, SEL)) objc_msgSendSuper) (&super, @selector (init));
@@ -7039,7 +7956,7 @@ exception_handling:;
 	-(void) target
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_8 (self, _cmd, &managed_method, 0xA2804);
+		native_to_managed_trampoline_8 (self, _cmd, &managed_method, 0xA2704);
 	}
 @end
 
@@ -7106,56 +8023,56 @@ exception_handling:;
 	-(BOOL) gestureRecognizer:(UIGestureRecognizer *)p0 shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)p1
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_5 (self, _cmd, &managed_method, p0, p1, 0xA2A04);
+		return native_to_managed_trampoline_5 (self, _cmd, &managed_method, p0, p1, 0xA2904);
 	}
 
 	-(BOOL) gestureRecognizerShouldBegin:(UIGestureRecognizer *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_12 (self, _cmd, &managed_method, p0, 0xA2B04);
+		return native_to_managed_trampoline_12 (self, _cmd, &managed_method, p0, 0xA2A04);
 	}
 
 	-(BOOL) gestureRecognizer:(UIGestureRecognizer *)p0 shouldReceiveEvent:(UIEvent *)p1
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_5 (self, _cmd, &managed_method, p0, p1, 0xA2C04);
+		return native_to_managed_trampoline_5 (self, _cmd, &managed_method, p0, p1, 0xA2B04);
 	}
 
 	-(BOOL) gestureRecognizer:(UIGestureRecognizer *)p0 shouldReceivePress:(UIPress *)p1
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_5 (self, _cmd, &managed_method, p0, p1, 0xA2D04);
+		return native_to_managed_trampoline_5 (self, _cmd, &managed_method, p0, p1, 0xA2C04);
 	}
 
 	-(BOOL) gestureRecognizer:(UIGestureRecognizer *)p0 shouldReceiveTouch:(UITouch *)p1
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_5 (self, _cmd, &managed_method, p0, p1, 0xA2E04);
+		return native_to_managed_trampoline_5 (self, _cmd, &managed_method, p0, p1, 0xA2D04);
 	}
 
 	-(BOOL) gestureRecognizer:(UIGestureRecognizer *)p0 shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)p1
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_5 (self, _cmd, &managed_method, p0, p1, 0xA2F04);
+		return native_to_managed_trampoline_5 (self, _cmd, &managed_method, p0, p1, 0xA2E04);
 	}
 
 	-(BOOL) gestureRecognizer:(UIGestureRecognizer *)p0 shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)p1
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_5 (self, _cmd, &managed_method, p0, p1, 0xA3004);
+		return native_to_managed_trampoline_5 (self, _cmd, &managed_method, p0, p1, 0xA2F04);
 	}
 
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
 	{
 		static MonoMethod *managed_method = NULL;
 		bool call_super = false;
-		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xA2904);
+		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xA2804);
 		if (call_super && rv) {
 			struct objc_super super = {  rv, [NSObject class] };
 			rv = ((id (*)(objc_super*, SEL)) objc_msgSendSuper) (&super, @selector (init));
@@ -7175,7 +8092,7 @@ exception_handling:;
 	-(void) target:(UILongPressGestureRecognizer *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xA3904);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xA3804);
 	}
 @end
 
@@ -7190,7 +8107,7 @@ exception_handling:;
 	-(void) target:(UITapGestureRecognizer *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xA4404);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xA4304);
 	}
 @end
 
@@ -7205,7 +8122,7 @@ exception_handling:;
 	-(void) target:(UIPanGestureRecognizer *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xA4D04);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xA4C04);
 	}
 @end
 
@@ -7220,7 +8137,7 @@ exception_handling:;
 	-(void) target:(UIPinchGestureRecognizer *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xA5404);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xA5304);
 	}
 @end
 
@@ -7230,19 +8147,19 @@ exception_handling:;
 	-(UIColor *) barTintColor
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_2 (self, _cmd, &managed_method, 0xAA704);
+		return native_to_managed_trampoline_2 (self, _cmd, &managed_method, 0xAA604);
 	}
 
 	-(NSDictionary *) largeTitleTextAttributes
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_2 (self, _cmd, &managed_method, 0xAAA04);
+		return native_to_managed_trampoline_2 (self, _cmd, &managed_method, 0xAA904);
 	}
 
 	-(NSDictionary *) titleTextAttributes
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_2 (self, _cmd, &managed_method, 0xAAB04);
+		return native_to_managed_trampoline_2 (self, _cmd, &managed_method, 0xAAA04);
 	}
 @end
 
@@ -7305,31 +8222,31 @@ exception_handling:;
 	-(void) popoverPresentationControllerDidDismissPopover:(UIPopoverPresentationController *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xADC04);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xADB04);
 	}
 
 	-(void) prepareForPopoverPresentation:(UIPopoverPresentationController *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xADD04);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xADC04);
 	}
 
 	-(BOOL) popoverPresentationControllerShouldDismissPopover:(UIPopoverPresentationController *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_12 (self, _cmd, &managed_method, p0, 0xADE04);
+		return native_to_managed_trampoline_12 (self, _cmd, &managed_method, p0, 0xADD04);
 	}
 
 	-(void) popoverPresentationController:(UIPopoverPresentationController *)p0 willRepositionPopoverToRect:(CGRect*)p1 inView:(UIView **)p2
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_13 (self, _cmd, &managed_method, p0, p1, p2, 0xADF04);
+		native_to_managed_trampoline_13 (self, _cmd, &managed_method, p0, p1, p2, 0xADE04);
 	}
 
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -7400,80 +8317,80 @@ exception_handling:;
 	-(void) searchBarBookmarkButtonClicked:(UISearchBar *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xB2504);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xB2404);
 	}
 
 	-(void) searchBarCancelButtonClicked:(UISearchBar *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xB2604);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xB2504);
 	}
 
 	-(void) searchBarResultsListButtonClicked:(UISearchBar *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xB2704);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xB2604);
 	}
 
 	-(void) searchBarTextDidBeginEditing:(UISearchBar *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xB2804);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xB2704);
 	}
 
 	-(void) searchBarTextDidEndEditing:(UISearchBar *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xB2904);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xB2804);
 	}
 
 	-(void) searchBarSearchButtonClicked:(UISearchBar *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xB2A04);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xB2904);
 	}
 
 	-(void) searchBar:(UISearchBar *)p0 selectedScopeButtonIndexDidChange:(NSInteger)p1
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_14 (self, _cmd, &managed_method, p0, p1, 0xB2B04);
+		native_to_managed_trampoline_14 (self, _cmd, &managed_method, p0, p1, 0xB2A04);
 	}
 
 	-(BOOL) searchBarShouldBeginEditing:(UISearchBar *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_12 (self, _cmd, &managed_method, p0, 0xB2C04);
+		return native_to_managed_trampoline_12 (self, _cmd, &managed_method, p0, 0xB2B04);
 	}
 
 	-(BOOL) searchBar:(UISearchBar *)p0 shouldChangeTextInRange:(NSRange)p1 replacementText:(NSString *)p2
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_15 (self, _cmd, &managed_method, p0, p1, p2, 0xB2D04);
+		return native_to_managed_trampoline_15 (self, _cmd, &managed_method, p0, p1, p2, 0xB2C04);
 	}
 
 	-(BOOL) searchBarShouldEndEditing:(UISearchBar *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_12 (self, _cmd, &managed_method, p0, 0xB2E04);
+		return native_to_managed_trampoline_12 (self, _cmd, &managed_method, p0, 0xB2D04);
 	}
 
 	-(void) searchBar:(UISearchBar *)p0 textDidChange:(NSString *)p1
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_16 (self, _cmd, &managed_method, p0, p1, 0xB2F04);
+		native_to_managed_trampoline_16 (self, _cmd, &managed_method, p0, p1, 0xB2E04);
 	}
 
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
 	{
 		static MonoMethod *managed_method = NULL;
 		bool call_super = false;
-		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xB2404);
+		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xB2304);
 		if (call_super && rv) {
 			struct objc_super super = {  rv, [NSObject class] };
 			rv = ((id (*)(objc_super*, SEL)) objc_msgSendSuper) (&super, @selector (init));
@@ -7538,13 +8455,13 @@ exception_handling:;
 	-(void) updateSearchResultsForSearchController:(UISearchController *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xB3C04);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xB3B04);
 	}
 
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -7620,62 +8537,62 @@ exception_handling:;
 	-(void) textFieldDidEndEditing:(UITextField *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xBE204);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xBE104);
 	}
 
 	-(void) textFieldDidEndEditing:(UITextField *)p0 reason:(NSInteger)p1
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_17 (self, _cmd, &managed_method, p0, p1, 0xBE304);
+		native_to_managed_trampoline_17 (self, _cmd, &managed_method, p0, p1, 0xBE204);
 	}
 
 	-(void) textFieldDidBeginEditing:(UITextField *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xBE404);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xBE304);
 	}
 
 	-(BOOL) textFieldShouldBeginEditing:(UITextField *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_12 (self, _cmd, &managed_method, p0, 0xBE504);
+		return native_to_managed_trampoline_12 (self, _cmd, &managed_method, p0, 0xBE404);
 	}
 
 	-(BOOL) textField:(UITextField *)p0 shouldChangeCharactersInRange:(NSRange)p1 replacementString:(NSString *)p2
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_15 (self, _cmd, &managed_method, p0, p1, p2, 0xBE604);
+		return native_to_managed_trampoline_15 (self, _cmd, &managed_method, p0, p1, p2, 0xBE504);
 	}
 
 	-(BOOL) textFieldShouldClear:(UITextField *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_12 (self, _cmd, &managed_method, p0, 0xBE704);
+		return native_to_managed_trampoline_12 (self, _cmd, &managed_method, p0, 0xBE604);
 	}
 
 	-(BOOL) textFieldShouldEndEditing:(UITextField *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_12 (self, _cmd, &managed_method, p0, 0xBE804);
+		return native_to_managed_trampoline_12 (self, _cmd, &managed_method, p0, 0xBE704);
 	}
 
 	-(BOOL) textFieldShouldReturn:(UITextField *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_12 (self, _cmd, &managed_method, p0, 0xBE904);
+		return native_to_managed_trampoline_12 (self, _cmd, &managed_method, p0, 0xBE804);
 	}
 
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
 	{
 		static MonoMethod *managed_method = NULL;
 		bool call_super = false;
-		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xBE104);
+		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xBE004);
 		if (call_super && rv) {
 			struct objc_super super = {  rv, [NSObject class] };
 			rv = ((id (*)(objc_super*, SEL)) objc_msgSendSuper) (&super, @selector (init));
@@ -7754,98 +8671,98 @@ exception_handling:;
 	-(void) scrollViewDidEndDecelerating:(UIScrollView *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x101304);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x101204);
 	}
 
 	-(void) scrollViewWillBeginDecelerating:(UIScrollView *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x101404);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x101304);
 	}
 
 	-(void) scrollViewDidChangeAdjustedContentInset:(UIScrollView *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x101504);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x101404);
 	}
 
 	-(void) scrollViewDidZoom:(UIScrollView *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x101604);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x101504);
 	}
 
 	-(void) scrollViewDidEndDragging:(UIScrollView *)p0 willDecelerate:(BOOL)p1
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_10 (self, _cmd, &managed_method, p0, p1, 0x101704);
+		native_to_managed_trampoline_10 (self, _cmd, &managed_method, p0, p1, 0x101604);
 	}
 
 	-(void) scrollViewWillBeginDragging:(UIScrollView *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x101804);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x101704);
 	}
 
 	-(void) scrollViewDidEndScrollingAnimation:(UIScrollView *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x101904);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x101804);
 	}
 
 	-(void) scrollViewDidScroll:(UIScrollView *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x101A04);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x101904);
 	}
 
 	-(void) scrollViewDidScrollToTop:(UIScrollView *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x101B04);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x101A04);
 	}
 
 	-(BOOL) scrollViewShouldScrollToTop:(UIScrollView *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_12 (self, _cmd, &managed_method, p0, 0x101C04);
+		return native_to_managed_trampoline_12 (self, _cmd, &managed_method, p0, 0x101B04);
 	}
 
 	-(UIView *) viewForZoomingInScrollView:(UIScrollView *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_18 (self, _cmd, &managed_method, p0, 0x101D04);
+		return native_to_managed_trampoline_18 (self, _cmd, &managed_method, p0, 0x101C04);
 	}
 
 	-(void) scrollViewWillEndDragging:(UIScrollView *)p0 withVelocity:(CGPoint)p1 targetContentOffset:(CGPoint*)p2
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_19 (self, _cmd, &managed_method, p0, p1, p2, 0x101E04);
+		native_to_managed_trampoline_19 (self, _cmd, &managed_method, p0, p1, p2, 0x101D04);
 	}
 
 	-(void) scrollViewDidEndZooming:(UIScrollView *)p0 withView:(UIView *)p1 atScale:(CGFloat)p2
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_20 (self, _cmd, &managed_method, p0, p1, p2, 0x101F04);
+		native_to_managed_trampoline_20 (self, _cmd, &managed_method, p0, p1, p2, 0x101E04);
 	}
 
 	-(void) scrollViewWillBeginZooming:(UIScrollView *)p0 withView:(UIView *)p1
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_6 (self, _cmd, &managed_method, p0, p1, 0x102004);
+		native_to_managed_trampoline_6 (self, _cmd, &managed_method, p0, p1, 0x101F04);
 	}
 
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
 	{
 		static MonoMethod *managed_method = NULL;
 		bool call_super = false;
-		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0x101204);
+		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0x101104);
 		if (call_super && rv) {
 			struct objc_super super = {  rv, [NSObject class] };
 			rv = ((id (*)(objc_super*, SEL)) objc_msgSendSuper) (&super, @selector (init));
@@ -7876,74 +8793,74 @@ exception_handling:;
 	-(void) textViewDidChange:(UITextView *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xC3A04);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xC3904);
 	}
 
 	-(void) textViewDidEndEditing:(UITextView *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xC3B04);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xC3A04);
 	}
 
 	-(void) textViewDidBeginEditing:(UITextView *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xC3C04);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xC3B04);
 	}
 
 	-(void) textViewDidChangeSelection:(UITextView *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xC3D04);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0xC3C04);
 	}
 
 	-(BOOL) textViewShouldBeginEditing:(UITextView *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_12 (self, _cmd, &managed_method, p0, 0xC3E04);
+		return native_to_managed_trampoline_12 (self, _cmd, &managed_method, p0, 0xC3D04);
 	}
 
 	-(BOOL) textView:(UITextView *)p0 shouldChangeTextInRange:(NSRange)p1 replacementText:(NSString *)p2
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_15 (self, _cmd, &managed_method, p0, p1, p2, 0xC3F04);
+		return native_to_managed_trampoline_15 (self, _cmd, &managed_method, p0, p1, p2, 0xC3E04);
 	}
 
 	-(BOOL) textViewShouldEndEditing:(UITextView *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_12 (self, _cmd, &managed_method, p0, 0xC4004);
+		return native_to_managed_trampoline_12 (self, _cmd, &managed_method, p0, 0xC3F04);
 	}
 
 	-(BOOL) textView:(UITextView *)p0 shouldInteractWithTextAttachment:(NSTextAttachment *)p1 inRange:(NSRange)p2
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_21 (self, _cmd, &managed_method, p0, p1, p2, 0xC4104);
+		return native_to_managed_trampoline_21 (self, _cmd, &managed_method, p0, p1, p2, 0xC4004);
 	}
 
 	-(BOOL) textView:(UITextView *)p0 shouldInteractWithTextAttachment:(NSTextAttachment *)p1 inRange:(NSRange)p2 interaction:(NSInteger)p3
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_22 (self, _cmd, &managed_method, p0, p1, p2, p3, 0xC4204);
+		return native_to_managed_trampoline_22 (self, _cmd, &managed_method, p0, p1, p2, p3, 0xC4104);
 	}
 
 	-(BOOL) textView:(UITextView *)p0 shouldInteractWithURL:(NSURL *)p1 inRange:(NSRange)p2
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_21 (self, _cmd, &managed_method, p0, p1, p2, 0xC4304);
+		return native_to_managed_trampoline_21 (self, _cmd, &managed_method, p0, p1, p2, 0xC4204);
 	}
 
 	-(BOOL) textView:(UITextView *)p0 shouldInteractWithURL:(NSURL *)p1 inRange:(NSRange)p2 interaction:(NSInteger)p3
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_22 (self, _cmd, &managed_method, p0, p1, p2, p3, 0xC4404);
+		return native_to_managed_trampoline_22 (self, _cmd, &managed_method, p0, p1, p2, p3, 0xC4304);
 	}
 
 	-(id) init
 	{
 		static MonoMethod *managed_method = NULL;
 		bool call_super = false;
-		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xC3904);
+		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0xC3804);
 		if (call_super && rv) {
 			struct objc_super super = {  rv, [UIKit_UIScrollView__UIScrollViewDelegate class] };
 			rv = ((id (*)(objc_super*, SEL)) objc_msgSendSuper) (&super, @selector (init));
@@ -8029,139 +8946,139 @@ exception_handling:;
 	-(BOOL) splitViewController:(UISplitViewController *)p0 collapseSecondaryViewController:(UIViewController *)p1 ontoPrimaryViewController:(UIViewController *)p2
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_23 (self, _cmd, &managed_method, p0, p1, p2, 0x105D04);
+		return native_to_managed_trampoline_23 (self, _cmd, &managed_method, p0, p1, p2, 0x105C04);
 	}
 
 	-(void) splitViewControllerDidCollapse:(UISplitViewController *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x105E04);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x105D04);
 	}
 
 	-(void) splitViewControllerDidExpand:(UISplitViewController *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x105F04);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x105E04);
 	}
 
 	-(BOOL) splitViewController:(UISplitViewController *)p0 showDetailViewController:(UIViewController *)p1 sender:(NSObject *)p2
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_23 (self, _cmd, &managed_method, p0, p1, p2, 0x106004);
+		return native_to_managed_trampoline_23 (self, _cmd, &managed_method, p0, p1, p2, 0x105F04);
 	}
 
 	-(BOOL) splitViewController:(UISplitViewController *)p0 showViewController:(UIViewController *)p1 sender:(NSObject *)p2
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_23 (self, _cmd, &managed_method, p0, p1, p2, 0x106104);
+		return native_to_managed_trampoline_23 (self, _cmd, &managed_method, p0, p1, p2, 0x106004);
 	}
 
 	-(NSInteger) splitViewController:(UISplitViewController *)p0 displayModeForExpandingToProposedDisplayMode:(NSInteger)p1
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_24 (self, _cmd, &managed_method, p0, p1, 0x106204);
+		return native_to_managed_trampoline_24 (self, _cmd, &managed_method, p0, p1, 0x106104);
 	}
 
 	-(NSInteger) splitViewControllerPreferredInterfaceOrientationForPresentation:(UISplitViewController *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_25 (self, _cmd, &managed_method, p0, 0x106304);
+		return native_to_managed_trampoline_25 (self, _cmd, &managed_method, p0, 0x106204);
 	}
 
 	-(UIViewController *) primaryViewControllerForCollapsingSplitViewController:(UISplitViewController *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_18 (self, _cmd, &managed_method, p0, 0x106404);
+		return native_to_managed_trampoline_18 (self, _cmd, &managed_method, p0, 0x106304);
 	}
 
 	-(UIViewController *) primaryViewControllerForExpandingSplitViewController:(UISplitViewController *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_18 (self, _cmd, &managed_method, p0, 0x106504);
+		return native_to_managed_trampoline_18 (self, _cmd, &managed_method, p0, 0x106404);
 	}
 
 	-(NSInteger) targetDisplayModeForActionInSplitViewController:(UISplitViewController *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_25 (self, _cmd, &managed_method, p0, 0x106604);
+		return native_to_managed_trampoline_25 (self, _cmd, &managed_method, p0, 0x106504);
 	}
 
 	-(NSInteger) splitViewController:(UISplitViewController *)p0 topColumnForCollapsingToProposedTopColumn:(NSInteger)p1
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_24 (self, _cmd, &managed_method, p0, p1, 0x106704);
+		return native_to_managed_trampoline_24 (self, _cmd, &managed_method, p0, p1, 0x106604);
 	}
 
 	-(void) splitViewControllerInteractivePresentationGestureDidEnd:(UISplitViewController *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x106804);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x106704);
 	}
 
 	-(void) splitViewControllerInteractivePresentationGestureWillBegin:(UISplitViewController *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x106904);
+		native_to_managed_trampoline_3 (self, _cmd, &managed_method, p0, 0x106804);
 	}
 
 	-(UIViewController *) splitViewController:(UISplitViewController *)p0 separateSecondaryViewControllerFromPrimaryViewController:(UIViewController *)p1
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_26 (self, _cmd, &managed_method, p0, p1, 0x106A04);
+		return native_to_managed_trampoline_26 (self, _cmd, &managed_method, p0, p1, 0x106904);
 	}
 
 	-(BOOL) splitViewController:(UISplitViewController *)p0 shouldHideViewController:(UIViewController *)p1 inOrientation:(NSInteger)p2
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_27 (self, _cmd, &managed_method, p0, p1, p2, 0x106B04);
+		return native_to_managed_trampoline_27 (self, _cmd, &managed_method, p0, p1, p2, 0x106A04);
 	}
 
 	-(NSUInteger) splitViewControllerSupportedInterfaceOrientations:(UISplitViewController *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_28 (self, _cmd, &managed_method, p0, 0x106C04);
+		return native_to_managed_trampoline_28 (self, _cmd, &managed_method, p0, 0x106B04);
 	}
 
 	-(void) splitViewController:(UISplitViewController *)p0 willChangeToDisplayMode:(NSInteger)p1
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_17 (self, _cmd, &managed_method, p0, p1, 0x106D04);
+		native_to_managed_trampoline_17 (self, _cmd, &managed_method, p0, p1, 0x106C04);
 	}
 
 	-(void) splitViewController:(UISplitViewController *)p0 willHideColumn:(NSInteger)p1
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_17 (self, _cmd, &managed_method, p0, p1, 0x106E04);
+		native_to_managed_trampoline_17 (self, _cmd, &managed_method, p0, p1, 0x106D04);
 	}
 
 	-(void) splitViewController:(UISplitViewController *)p0 willHideViewController:(UIViewController *)p1 withBarButtonItem:(UIBarButtonItem *)p2 forPopoverController:(UIPopoverController *)p3
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_29 (self, _cmd, &managed_method, p0, p1, p2, p3, 0x106F04);
+		native_to_managed_trampoline_29 (self, _cmd, &managed_method, p0, p1, p2, p3, 0x106E04);
 	}
 
 	-(void) splitViewController:(UISplitViewController *)p0 popoverController:(UIPopoverController *)p1 willPresentViewController:(UIViewController *)p2
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_30 (self, _cmd, &managed_method, p0, p1, p2, 0x107004);
+		native_to_managed_trampoline_30 (self, _cmd, &managed_method, p0, p1, p2, 0x106F04);
 	}
 
 	-(void) splitViewController:(UISplitViewController *)p0 willShowColumn:(NSInteger)p1
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_17 (self, _cmd, &managed_method, p0, p1, 0x107104);
+		native_to_managed_trampoline_17 (self, _cmd, &managed_method, p0, p1, 0x107004);
 	}
 
 	-(void) splitViewController:(UISplitViewController *)p0 willShowViewController:(UIViewController *)p1 invalidatingBarButtonItem:(UIBarButtonItem *)p2
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_30 (self, _cmd, &managed_method, p0, p1, p2, 0x107204);
+		native_to_managed_trampoline_30 (self, _cmd, &managed_method, p0, p1, p2, 0x107104);
 	}
 
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -8171,13 +9088,13 @@ exception_handling:;
 	-(UIColor *) onTintColor
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_2 (self, _cmd, &managed_method, 0x10AF04);
+		return native_to_managed_trampoline_2 (self, _cmd, &managed_method, 0x10AE04);
 	}
 
 	-(UIColor *) thumbTintColor
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_2 (self, _cmd, &managed_method, 0x10B004);
+		return native_to_managed_trampoline_2 (self, _cmd, &managed_method, 0x10AF04);
 	}
 @end
 
@@ -8187,7 +9104,7 @@ exception_handling:;
 	-(UIColor *) selectedImageTintColor
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_2 (self, _cmd, &managed_method, 0x10C004);
+		return native_to_managed_trampoline_2 (self, _cmd, &managed_method, 0x10BF04);
 	}
 @end
 
@@ -8257,74 +9174,74 @@ exception_handling:;
 	-(void) tabBarController:(UITabBarController *)p0 didEndCustomizingViewControllers:(NSArray *)p1 changed:(BOOL)p2
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_31 (self, _cmd, &managed_method, p0, p1, p2, 0x10D904);
+		native_to_managed_trampoline_31 (self, _cmd, &managed_method, p0, p1, p2, 0x10D804);
 	}
 
 	-(id) tabBarController:(UITabBarController *)p0 animationControllerForTransitionFromViewController:(UIViewController *)p1 toViewController:(UIViewController *)p2
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_32 (self, _cmd, &managed_method, p0, p1, p2, 0x10DA04);
+		return native_to_managed_trampoline_32 (self, _cmd, &managed_method, p0, p1, p2, 0x10D904);
 	}
 
 	-(id) tabBarController:(UITabBarController *)p0 interactionControllerForAnimationController:(id)p1
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_33 (self, _cmd, &managed_method, p0, p1, 0x10DB04);
+		return native_to_managed_trampoline_33 (self, _cmd, &managed_method, p0, p1, 0x10DA04);
 	}
 
 	-(NSInteger) tabBarControllerPreferredInterfaceOrientationForPresentation:(UITabBarController *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_25 (self, _cmd, &managed_method, p0, 0x10DC04);
+		return native_to_managed_trampoline_25 (self, _cmd, &managed_method, p0, 0x10DB04);
 	}
 
 	-(void) tabBarController:(UITabBarController *)p0 willBeginCustomizingViewControllers:(NSArray *)p1
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_34 (self, _cmd, &managed_method, p0, p1, 0x10DD04);
+		native_to_managed_trampoline_34 (self, _cmd, &managed_method, p0, p1, 0x10DC04);
 	}
 
 	-(void) tabBarController:(UITabBarController *)p0 willEndCustomizingViewControllers:(NSArray *)p1 changed:(BOOL)p2
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_31 (self, _cmd, &managed_method, p0, p1, p2, 0x10DE04);
+		native_to_managed_trampoline_31 (self, _cmd, &managed_method, p0, p1, p2, 0x10DD04);
 	}
 
 	-(BOOL) tabBarController:(UITabBarController *)p0 shouldSelectViewController:(UIViewController *)p1
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_5 (self, _cmd, &managed_method, p0, p1, 0x10DF04);
+		return native_to_managed_trampoline_5 (self, _cmd, &managed_method, p0, p1, 0x10DE04);
 	}
 
 	-(NSUInteger) tabBarControllerSupportedInterfaceOrientations:(UITabBarController *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_28 (self, _cmd, &managed_method, p0, 0x10E004);
+		return native_to_managed_trampoline_28 (self, _cmd, &managed_method, p0, 0x10DF04);
 	}
 
 	-(void) tabBarController:(UITabBarController *)p0 didSelectViewController:(UIViewController *)p1
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_6 (self, _cmd, &managed_method, p0, p1, 0x10E104);
+		native_to_managed_trampoline_6 (self, _cmd, &managed_method, p0, p1, 0x10E004);
 	}
 
 	-(BOOL) respondsToSelector:(SEL)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_35 (self, _cmd, &managed_method, p0, 0x10E204);
+		return native_to_managed_trampoline_35 (self, _cmd, &managed_method, p0, 0x10E104);
 	}
 
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
 	{
 		static MonoMethod *managed_method = NULL;
 		bool call_super = false;
-		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0x10D804);
+		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0x10D704);
 		if (call_super && rv) {
 			struct objc_super super = {  rv, [NSObject class] };
 			rv = ((id (*)(objc_super*, SEL)) objc_msgSendSuper) (&super, @selector (init));
@@ -8390,20 +9307,20 @@ exception_handling:;
 	+(void) drain:(NSObject *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_36 (self, _cmd, &managed_method, p0, 0x14A204);
+		native_to_managed_trampoline_36 (self, _cmd, &managed_method, p0, 0x14A104);
 	}
 
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
 	{
 		static MonoMethod *managed_method = NULL;
 		bool call_super = false;
-		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0x14A004);
+		id rv = native_to_managed_trampoline_1 (self, _cmd, &managed_method, &call_super, 0x149F04);
 		if (call_super && rv) {
 			struct objc_super super = {  rv, [NSObject class] };
 			rv = ((id (*)(objc_super*, SEL)) objc_msgSendSuper) (&super, @selector (init));
@@ -8468,13 +9385,13 @@ exception_handling:;
 	-(void) observeValueForKeyPath:(NSString *)p0 ofObject:(NSObject *)p1 change:(NSDictionary *)p2 context:(void *)p3
 	{
 		static MonoMethod *managed_method = NULL;
-		native_to_managed_trampoline_37 (self, _cmd, &managed_method, p0, p1, p2, p3, 0x14A504);
+		native_to_managed_trampoline_37 (self, _cmd, &managed_method, p0, p1, p2, p3, 0x14A404);
 	}
 
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -8540,7 +9457,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -8620,7 +9537,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -8763,7 +9680,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -8859,7 +9776,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_49 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_49 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 	-(id) init
 	{
@@ -8945,7 +9862,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -9005,7 +9922,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -9150,7 +10067,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -9306,7 +10223,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -9372,7 +10289,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -9502,7 +10419,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -9698,7 +10615,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -9846,7 +10763,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_49 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_49 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -10042,7 +10959,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_49 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_49 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -10170,7 +11087,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) initWithFrame:(CGRect)p0
@@ -10502,7 +11419,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -10618,7 +11535,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -10690,7 +11607,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -10786,7 +11703,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -10906,7 +11823,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -11018,7 +11935,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -11113,7 +12030,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -11233,7 +12150,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -11345,7 +12262,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -11417,7 +12334,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -11471,7 +12388,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -11525,7 +12442,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -11585,7 +12502,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -11651,7 +12568,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -11844,7 +12761,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -11914,7 +12831,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -11970,7 +12887,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -12242,7 +13159,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -12328,7 +13245,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -12407,7 +13324,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -12499,7 +13416,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -12579,7 +13496,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -12690,7 +13607,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -12756,7 +13673,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -12846,7 +13763,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -12931,7 +13848,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_49 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_49 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -13005,7 +13922,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -13146,7 +14063,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -13311,7 +14228,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -13427,7 +14344,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -13494,7 +14411,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -13600,7 +14517,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -13714,7 +14631,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -13792,7 +14709,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -13933,7 +14850,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -14032,7 +14949,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_49 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_49 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -14128,7 +15045,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -14200,7 +15117,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -14314,7 +15231,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -14462,7 +15379,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -14529,7 +15446,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -14595,7 +15512,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -14722,7 +15639,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -14782,7 +15699,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -14872,7 +15789,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -14956,7 +15873,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -15062,7 +15979,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -15146,7 +16063,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -15272,7 +16189,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -15356,7 +16273,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -15422,7 +16339,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -15502,7 +16419,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -15580,7 +16497,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -15647,7 +16564,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -15761,7 +16678,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -15888,7 +16805,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -15969,7 +16886,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -16040,7 +16957,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -16121,7 +17038,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -16283,7 +17200,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -16377,7 +17294,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -16458,7 +17375,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -16781,7 +17698,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -16861,7 +17778,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -16935,7 +17852,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -17027,7 +17944,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -17108,7 +18025,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -17187,7 +18104,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -17273,7 +18190,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -17352,7 +18269,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -17431,7 +18348,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -17509,7 +18426,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -17583,7 +18500,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) init
@@ -17661,7 +18578,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 @end
 
@@ -17727,7 +18644,7 @@ exception_handling:;
 	-(BOOL) conformsToProtocol:(void *)p0
 	{
 		static MonoMethod *managed_method = NULL;
-		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146E04);
+		return native_to_managed_trampoline_7 (self, _cmd, &managed_method, p0, 0x146D04);
 	}
 
 	-(id) initWithCoder:(NSCoder *)p0
@@ -17756,258 +18673,258 @@ exception_handling:;
 @end
 
 	static MTClassMap __xamarin_class_map [] = {
-		{ NULL, 0x2F704 /* #0 'NSObject' => 'Foundation.NSObject, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1C004 /* #1 'UIApplicationDelegate' => 'UIKit.UIApplicationDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2F904 /* #0 'NSObject' => 'Foundation.NSObject, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1C204 /* #1 'UIApplicationDelegate' => 'UIKit.UIApplicationDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
 		{ NULL, 0x2D14 /* #2 'Xamarin_Forms_Platform_iOS_FormsApplicationDelegate' => 'Xamarin.Forms.Platform.iOS.FormsApplicationDelegate, Xamarin.Forms.Platform.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
 		{ NULL, 0x300 /* #3 'AppDelegate' => 'UkrtbRasp.iOS.AppDelegate, UkrtbRasp.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
-		{ NULL, 0x23804 /* #4 'UIResponder' => 'UIKit.UIResponder, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x17C04 /* #5 'UIViewController' => 'UIKit.UIViewController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x23A04 /* #4 'UIResponder' => 'UIKit.UIResponder, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x17E04 /* #5 'UIViewController' => 'UIKit.UIViewController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
 		{ NULL, 0x304 /* #6 'SFSafariViewController' => 'SafariServices.SFSafariViewController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
 		{ NULL, 0x404 /* #7 'SFSafariViewControllerDelegate' => 'SafariServices.SFSafariViewControllerDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
 		{ NULL, 0x504 /* #8 'CNContactPickerDelegate' => 'ContactsUI.CNContactPickerDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
 		{ NULL, 0x604 /* #9 'CNContactPickerViewController' => 'ContactsUI.CNContactPickerViewController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0xBC04 /* #10 'EAGLContext' => 'OpenGLES.EAGLContext, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0xC004 /* #11 'EAGLSharegroup' => 'OpenGLES.EAGLSharegroup, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x17704 /* #12 'UIView' => 'UIKit.UIView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0xC104 /* #13 'MPVolumeView' => 'MediaPlayer.MPVolumeView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0xCB04 /* #14 'GLKViewDelegate' => 'GLKit.GLKViewDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0xD304 /* #15 'CSSearchableIndex' => 'CoreSpotlight.CSSearchableIndex, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0xD404 /* #16 'CSSearchableItemAttributeSet' => 'CoreSpotlight.CSSearchableItemAttributeSet, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0xD504 /* #17 'CSSearchableItem' => 'CoreSpotlight.CSSearchableItem, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0xD604 /* #18 'CLLocation' => 'CoreLocation.CLLocation, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0xD704 /* #19 'CLLocationManager' => 'CoreLocation.CLLocationManager, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0xDC04 /* #20 'CLLocationManagerDelegate' => 'CoreLocation.CLLocationManagerDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0xF604 /* #21 'CAAnimation' => 'CoreAnimation.CAAnimation, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x10604 /* #22 'CAPropertyAnimation' => 'CoreAnimation.CAPropertyAnimation, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0xF504 /* #23 'CABasicAnimation' => 'CoreAnimation.CABasicAnimation, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0xFB04 /* #24 'CALayer' => 'CoreAnimation.CALayer, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0xF904 /* #25 'CAGradientLayer' => 'CoreAnimation.CAGradientLayer, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0xFA04 /* #26 'CAKeyframeAnimation' => 'CoreAnimation.CAKeyFrameAnimation, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0xFC04 /* #27 'CADisplayLink' => 'CoreAnimation.CADisplayLink, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0xFD04 /* #28 'CALayerDelegate' => 'CoreAnimation.CALayerDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0xFF04 /* #29 'CAAnimationDelegate' => 'CoreAnimation.CAAnimationDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x10004 /* #30 'CAEAGLLayer' => 'CoreAnimation.CAEAGLLayer, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x10704 /* #31 'CAShapeLayer' => 'CoreAnimation.CAShapeLayer, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x10804 /* #32 'CATransaction' => 'CoreAnimation.CATransaction, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x10904 /* #33 'CNContact' => 'Contacts.CNContact, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x10A04 /* #34 'CNContactProperty' => 'Contacts.CNContactProperty, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x10D04 /* #35 'WKWebsiteDataStore' => 'WebKit.WKWebsiteDataStore, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x10F04 /* #36 'WKFrameInfo' => 'WebKit.WKFrameInfo, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x11404 /* #37 'WKNavigation' => 'WebKit.WKNavigation, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x11504 /* #38 'WKNavigationAction' => 'WebKit.WKNavigationAction, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x11A04 /* #39 'WKNavigationDelegate' => 'WebKit.WKNavigationDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x11C04 /* #40 'WKProcessPool' => 'WebKit.WKProcessPool, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x12004 /* #41 'WKUIDelegate' => 'WebKit.WKUIDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x12104 /* #42 'WKUserContentController' => 'WebKit.WKUserContentController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x12204 /* #43 'WKUserScript' => 'WebKit.WKUserScript, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x12404 /* #44 'WKWebsiteDataRecord' => 'WebKit.WKWebsiteDataRecord, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x12504 /* #45 'WKWebViewConfiguration' => 'WebKit.WKWebViewConfiguration, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x12604 /* #46 'NSLayoutConstraint' => 'UIKit.NSLayoutConstraint, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x12704 /* #47 'UIAdaptivePresentationControllerDelegate' => 'UIKit.UIAdaptivePresentationControllerDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x12804 /* #48 'UIPresentationController' => 'UIKit.UIPresentationController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x12904 /* #49 'NSLayoutManager' => 'UIKit.NSLayoutManager, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x12C04 /* #50 'UIActivityViewController' => 'UIKit.UIActivityViewController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x12D04 /* #51 'UIAppearance' => 'UIKit.UIAppearance, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x13504 /* #52 'UIBarItem' => 'UIKit.UIBarItem, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x13604 /* #53 'UIBezierPath' => 'UIKit.UIBezierPath, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x23A04 /* #54 'UIScrollView' => 'UIKit.UIScrollView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x13904 /* #55 'UICollectionView' => 'UIKit.UICollectionView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x13A04 /* #56 'UICollectionViewLayout' => 'UIKit.UICollectionViewLayout, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x13B04 /* #57 'UICollectionViewLayoutAttributes' => 'UIKit.UICollectionViewLayoutAttributes, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x13C04 /* #58 'UIColor' => 'UIKit.UIColor, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x13D04 /* #59 'UIKit_UIControlEventProxy' => 'UIKit.UIControlEventProxy, Xamarin.iOS' */, (MTTypeFlags) (2) /* UserType */ },
-		{ NULL, 0x14304 /* #60 'UIDocumentPickerViewController' => 'UIKit.UIDocumentPickerViewController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x14404 /* #61 'UIEvent' => 'UIKit.UIEvent, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x14504 /* #62 'UIFont' => 'UIKit.UIFont, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x14604 /* #63 'UIGestureRecognizer' => 'UIKit.UIGestureRecognizer, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x15304 /* #64 'UISwipeGestureRecognizer' => 'UIKit.UISwipeGestureRecognizer, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x15504 /* #65 'UIImage' => 'UIKit.UIImage, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x15E04 /* #66 'UINavigationController' => 'UIKit.UINavigationController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x15604 /* #67 'UIImagePickerController' => 'UIKit.UIImagePickerController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x15F04 /* #68 'UIPickerView' => 'UIKit.UIPickerView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x16004 /* #69 'UIPopoverController' => 'UIKit.UIPopoverController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x16304 /* #70 'UIScreen' => 'UIKit.UIScreen, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x16C04 /* #71 'UITableViewCell' => 'UIKit.UITableViewCell, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x17504 /* #72 'UITraitCollection' => 'UIKit.UITraitCollection, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x17604 /* #73 'UIToolbar' => 'UIKit.UIToolbar, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x18004 /* #74 'UIWindow' => 'UIKit.UIWindow, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x18104 /* #75 'UIFontDescriptor' => 'UIKit.UIFontDescriptor, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x19F04 /* #76 'NSLayoutAnchor' => 'UIKit.NSLayoutAnchor`1, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1A004 /* #77 'NSLayoutDimension' => 'UIKit.NSLayoutDimension, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1A204 /* #78 'NSLayoutXAxisAnchor' => 'UIKit.NSLayoutXAxisAnchor, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1A304 /* #79 'NSLayoutYAxisAnchor' => 'UIKit.NSLayoutYAxisAnchor, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1A504 /* #80 'NSParagraphStyle' => 'UIKit.NSParagraphStyle, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1A404 /* #81 'NSMutableParagraphStyle' => 'UIKit.NSMutableParagraphStyle, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1A604 /* #82 'NSShadow' => 'UIKit.NSShadow, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1A804 /* #83 'NSTextAttachment' => 'UIKit.NSTextAttachment, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1A904 /* #84 'NSTextContainer' => 'UIKit.NSTextContainer, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2B904 /* #85 'NSAttributedString' => 'Foundation.NSAttributedString, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2C904 /* #86 'NSMutableAttributedString' => 'Foundation.NSMutableAttributedString, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1AA04 /* #87 'NSTextStorage' => 'UIKit.NSTextStorage, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1B104 /* #88 'UIActionSheetDelegate' => 'UIKit.UIActionSheetDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1B204 /* #89 'UIActivityIndicatorView' => 'UIKit.UIActivityIndicatorView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1B604 /* #90 'UIActivityItemSource' => 'UIKit.UIActivityItemSource, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1B904 /* #91 'UIAlertAction' => 'UIKit.UIAlertAction, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1BB04 /* #92 'UIAlertController' => 'UIKit.UIAlertController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1C304 /* #93 'UIBarAppearance' => 'UIKit.UIBarAppearance, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1C404 /* #94 'UIBarButtonItemGroup' => 'UIKit.UIBarButtonItemGroup, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2B104 /* #95 'UIVisualEffect' => 'UIKit.UIVisualEffect, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1CA04 /* #96 'UIBlurEffect' => 'UIKit.UIBlurEffect, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1CF04 /* #97 'UICollectionReusableView' => 'UIKit.UICollectionReusableView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1D104 /* #98 'UICollectionViewCell' => 'UIKit.UICollectionViewCell, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1D204 /* #99 'UICollectionViewController' => 'UIKit.UICollectionViewController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1D704 /* #100 'UICollectionViewDelegate' => 'UIKit.UICollectionViewDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1D804 /* #101 'UICollectionViewDelegateFlowLayout' => 'UIKit.UICollectionViewDelegateFlowLayout, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1D904 /* #102 'UICollectionViewFlowLayout' => 'UIKit.UICollectionViewFlowLayout, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1DC04 /* #103 'UICollectionViewLayoutInvalidationContext' => 'UIKit.UICollectionViewLayoutInvalidationContext, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1DA04 /* #104 'UICollectionViewFlowLayoutInvalidationContext' => 'UIKit.UICollectionViewFlowLayoutInvalidationContext, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1DF04 /* #105 'UICollectionViewUpdateItem' => 'UIKit.UICollectionViewUpdateItem, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x22304 /* #106 'UIMenuElement' => 'UIKit.UIMenuElement, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1E004 /* #107 'UICommand' => 'UIKit.UICommand, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x13E04 /* #108 'UIControl' => 'UIKit.UIControl, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1E904 /* #109 'UIDatePicker' => 'UIKit.UIDatePicker, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1EF04 /* #110 'UIDocumentPickerDelegate' => 'UIKit.UIDocumentPickerDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1F204 /* #111 'UIDragInteraction' => 'UIKit.UIDragInteraction, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1F504 /* #112 'UIDragItem' => 'UIKit.UIDragItem, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1F804 /* #113 'UIDropInteraction' => 'UIKit.UIDropInteraction, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x1FC04 /* #114 'UIDropProposal' => 'UIKit.UIDropProposal, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x20D04 /* #115 'UIGestureRecognizerDelegate' => 'UIKit.UIGestureRecognizerDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x21104 /* #116 'UIGraphicsRenderer' => 'UIKit.UIGraphicsRenderer, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x20F04 /* #117 'UIGraphicsImageRenderer' => 'UIKit.UIGraphicsImageRenderer, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x21204 /* #118 'UIGraphicsRendererContext' => 'UIKit.UIGraphicsRendererContext, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x21004 /* #119 'UIGraphicsImageRendererContext' => 'UIKit.UIGraphicsImageRendererContext, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x22804 /* #120 'UINavigationControllerDelegate' => 'UIKit.UINavigationControllerDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x21304 /* #121 'UIImagePickerControllerDelegate' => 'UIKit.UIImagePickerControllerDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x21504 /* #122 'UIImageView' => 'UIKit.UIImageView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x21C04 /* #123 'UIKeyCommand' => 'UIKit.UIKeyCommand, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x21E04 /* #124 'UILabel' => 'UIKit.UILabel, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x22504 /* #125 'UINavigationBarAppearance' => 'UIKit.UINavigationBarAppearance, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x22A04 /* #126 'UINavigationItem' => 'UIKit.UINavigationItem, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x22C04 /* #127 'UIPageControl' => 'UIKit.UIPageControl, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x23004 /* #128 'UIPickerViewModel' => 'UIKit.UIPickerViewModel, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x23304 /* #129 'UIPress' => 'UIKit.UIPress, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x23404 /* #130 'UIProgressView' => 'UIKit.UIProgressView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x23704 /* #131 'UIRefreshControl' => 'UIKit.UIRefreshControl, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x24304 /* #132 'UIScrollViewDelegate' => 'UIKit.UIScrollViewDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x24C04 /* #133 'UISearchResultsUpdating' => 'UIKit.UISearchResultsUpdating, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x24E04 /* #134 'UISlider' => 'UIKit.UISlider, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x25904 /* #135 'UISplitViewControllerDelegate' => 'UIKit.UISplitViewControllerDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x25B04 /* #136 'UIStackView' => 'UIKit.UIStackView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x25E04 /* #137 'UIStepper' => 'UIKit.UIStepper, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x26C04 /* #138 'UITabBarItem' => 'UIKit.UITabBarItem, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x27104 /* #139 'UITableViewController' => 'UIKit.UITableViewController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x27404 /* #140 'UITableViewHeaderFooterView' => 'UIKit.UITableViewHeaderFooterView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x27704 /* #141 'UITableViewSource' => 'UIKit.UITableViewSource, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x28404 /* #142 'UITextInputAssistantItem' => 'UIKit.UITextInputAssistantItem, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x28904 /* #143 'UITextPosition' => 'UIKit.UITextPosition, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x28A04 /* #144 'UITextRange' => 'UIKit.UITextRange, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x28B04 /* #145 'UITextSelectionRect' => 'UIKit.UITextSelectionRect, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x29104 /* #146 'UITouch' => 'UIKit.UITouch, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2B004 /* #147 'UIViewPropertyAnimator' => 'UIKit.UIViewPropertyAnimator, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2B204 /* #148 'UIVisualEffectView' => 'UIKit.UIVisualEffectView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2B604 /* #149 'NSUserActivity' => 'Foundation.NSUserActivity, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2B804 /* #150 'NSArray' => 'Foundation.NSArray, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2BA04 /* #151 'NSBundle' => 'Foundation.NSBundle, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2BB04 /* #152 'NSCoder' => 'Foundation.NSCoder, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2BF04 /* #153 'NSDate' => 'Foundation.NSDate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2C604 /* #154 'NSFormatter' => 'Foundation.NSFormatter, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2C704 /* #155 'NSHTTPCookie' => 'Foundation.NSHttpCookie, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2C804 /* #156 'NSLocale' => 'Foundation.NSLocale, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2CF04 /* #157 'NSURLRequest' => 'Foundation.NSUrlRequest, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2D004 /* #158 'Foundation_InternalNSNotificationHandler' => 'Foundation.InternalNSNotificationHandler, Xamarin.iOS' */, (MTTypeFlags) (2) /* UserType */ },
-		{ NULL, 0x2D404 /* #159 'NSNull' => 'Foundation.NSNull, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2D504 /* #160 'NSProxy' => 'Foundation.NSProxy, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2D604 /* #161 'NSRunLoop' => 'Foundation.NSRunLoop, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2D804 /* #162 'NSSet' => 'Foundation.NSSet, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2DB04 /* #163 'NSString' => 'Foundation.NSString, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2DC04 /* #164 'NSThread' => 'Foundation.NSThread, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2DD04 /* #165 'NSTimer' => 'Foundation.NSTimer, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2DE04 /* #166 'NSTimeZone' => 'Foundation.NSTimeZone, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2DF04 /* #167 'NSUndoManager' => 'Foundation.NSUndoManager, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2E004 /* #168 'NSURL' => 'Foundation.NSUrl, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2E204 /* #169 'NSUserDefaults' => 'Foundation.NSUserDefaults, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2E304 /* #170 'NSItemProvider' => 'Foundation.NSItemProvider, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2EC04 /* #171 'Foundation_NSDispatcher' => 'Foundation.NSDispatcher, Xamarin.iOS' */, (MTTypeFlags) (2) /* UserType */ },
-		{ NULL, 0x2ED04 /* #172 '__MonoMac_NSActionDispatcher' => 'Foundation.NSActionDispatcher, Xamarin.iOS' */, (MTTypeFlags) (2) /* UserType */ },
-		{ NULL, 0x2EE04 /* #173 '__MonoMac_NSSynchronizationContextDispatcher' => 'Foundation.NSSynchronizationContextDispatcher, Xamarin.iOS' */, (MTTypeFlags) (2) /* UserType */ },
-		{ NULL, 0x2EF04 /* #174 '__Xamarin_NSTimerActionDispatcher' => 'Foundation.NSTimerActionDispatcher, Xamarin.iOS' */, (MTTypeFlags) (2) /* UserType */ },
-		{ NULL, 0x2F004 /* #175 'Foundation_NSAsyncDispatcher' => 'Foundation.NSAsyncDispatcher, Xamarin.iOS' */, (MTTypeFlags) (2) /* UserType */ },
-		{ NULL, 0x2F104 /* #176 '__MonoMac_NSAsyncActionDispatcher' => 'Foundation.NSAsyncActionDispatcher, Xamarin.iOS' */, (MTTypeFlags) (2) /* UserType */ },
-		{ NULL, 0x2F204 /* #177 '__MonoMac_NSAsyncSynchronizationContextDispatcher' => 'Foundation.NSAsyncSynchronizationContextDispatcher, Xamarin.iOS' */, (MTTypeFlags) (2) /* UserType */ },
-		{ NULL, 0x2F304 /* #178 'NSAutoreleasePool' => 'Foundation.NSAutoreleasePool, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2F404 /* #179 'NSError' => 'Foundation.NSError, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x30004 /* #180 'NSValue' => 'Foundation.NSValue, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2F504 /* #181 'NSNumber' => 'Foundation.NSNumber, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2FE04 /* #182 'NSProgress' => 'Foundation.NSProgress, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x30704 /* #183 'NSCache' => 'Foundation.NSCache, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x30904 /* #184 'NSDateFormatter' => 'Foundation.NSDateFormatter, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x30C04 /* #185 'NSEnumerator' => 'Foundation.NSEnumerator, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x30D04 /* #186 'NSException' => 'Foundation.NSException, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x30E04 /* #187 'NSIndexSet' => 'Foundation.NSIndexSet, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x31404 /* #188 'NSJSONSerialization' => 'Foundation.NSJsonSerialization, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x31704 /* #189 'NSNotification' => 'Foundation.NSNotification, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x31B04 /* #190 'NSStringDrawingContext' => 'Foundation.NSStringDrawingContext, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x33604 /* #191 'ASAuthorization' => 'AuthenticationServices.ASAuthorization, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x33704 /* #192 'ASAuthorizationAppleIDCredential' => 'AuthenticationServices.ASAuthorizationAppleIdCredential, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x33804 /* #193 'ASAuthorizationController' => 'AuthenticationServices.ASAuthorizationController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x33F04 /* #194 'ASWebAuthenticationSession' => 'AuthenticationServices.ASWebAuthenticationSession, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0xC704 /* #195 'GLKit_GLKView__GLKViewDelegate' => 'GLKit.GLKView+_GLKViewDelegate, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
-		{ NULL, 0xC604 /* #196 'GLKView' => 'GLKit.GLKView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0xF704 /* #197 'CoreAnimation_CAAnimation__CAAnimationDelegate' => 'CoreAnimation.CAAnimation+_CAAnimationDelegate, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
-		{ NULL, 0x10B04 /* #198 'WKWebView' => 'WebKit.WKWebView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x11004 /* #199 'WKHTTPCookieStore' => 'WebKit.WKHttpCookieStore, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x12A04 /* #200 'UIActionSheet' => 'UIKit.UIActionSheet, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x12E04 /* #201 'UIApplication' => 'UIKit.UIApplication, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x13404 /* #202 'UIKit_UIBarButtonItem_Callback' => 'UIKit.UIBarButtonItem+Callback, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
-		{ NULL, 0x13304 /* #203 'UIBarButtonItem' => 'UIKit.UIBarButtonItem, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x17804 /* #204 'UIKit_UIView_UIViewAppearance' => 'UIKit.UIView+UIViewAppearance, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
-		{ NULL, 0x13F04 /* #205 'UIKit_UIControl_UIControlAppearance' => 'UIKit.UIControl+UIControlAppearance, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
-		{ NULL, 0x13804 /* #206 'UIKit_UIButton_UIButtonAppearance' => 'UIKit.UIButton+UIButtonAppearance, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
-		{ NULL, 0x13704 /* #207 'UIButton' => 'UIKit.UIButton, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x14004 /* #208 'UIDevice' => 'UIKit.UIDevice, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x14704 /* #209 '__UIGestureRecognizerToken' => 'UIKit.UIGestureRecognizer+Token, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
-		{ NULL, 0x14804 /* #210 '__UIGestureRecognizerParameterlessToken' => 'UIKit.UIGestureRecognizer+ParameterlessDispatch, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
-		{ NULL, 0x14904 /* #211 'UIKit_UIGestureRecognizer__UIGestureRecognizerDelegate' => 'UIKit.UIGestureRecognizer+_UIGestureRecognizerDelegate, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
-		{ NULL, 0x14C04 /* #212 '__UILongPressGestureRecognizer' => 'UIKit.UILongPressGestureRecognizer+Callback, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
-		{ NULL, 0x14B04 /* #213 'UILongPressGestureRecognizer' => 'UIKit.UILongPressGestureRecognizer, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x14E04 /* #214 '__UITapGestureRecognizer' => 'UIKit.UITapGestureRecognizer+Callback, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
-		{ NULL, 0x14D04 /* #215 'UITapGestureRecognizer' => 'UIKit.UITapGestureRecognizer, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x15004 /* #216 '__UIPanGestureRecognizer' => 'UIKit.UIPanGestureRecognizer+Callback, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
-		{ NULL, 0x14F04 /* #217 'UIPanGestureRecognizer' => 'UIKit.UIPanGestureRecognizer, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x15204 /* #218 '__UIPinchGestureRecognizer' => 'UIKit.UIPinchGestureRecognizer+Callback, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
-		{ NULL, 0x15104 /* #219 'UIPinchGestureRecognizer' => 'UIKit.UIPinchGestureRecognizer, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x15D04 /* #220 'UIKit_UINavigationBar_UINavigationBarAppearance' => 'UIKit.UINavigationBar+UINavigationBarAppearance, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
-		{ NULL, 0x15C04 /* #221 'UINavigationBar' => 'UIKit.UINavigationBar, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x16204 /* #222 'UIKit_UIPopoverPresentationController__UIPopoverPresentationControllerDelegate' => 'UIKit.UIPopoverPresentationController+_UIPopoverPresentationControllerDelegate, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
-		{ NULL, 0x16104 /* #223 'UIPopoverPresentationController' => 'UIKit.UIPopoverPresentationController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x16604 /* #224 'UIKit_UISearchBar__UISearchBarDelegate' => 'UIKit.UISearchBar+_UISearchBarDelegate, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
-		{ NULL, 0x16504 /* #225 'UISearchBar' => 'UIKit.UISearchBar, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x16804 /* #226 'UIKit_UISearchController___Xamarin_UISearchResultsUpdating' => 'UIKit.UISearchController+__Xamarin_UISearchResultsUpdating, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
-		{ NULL, 0x16704 /* #227 'UISearchController' => 'UIKit.UISearchController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x23C04 /* #228 'UIKit_UIScrollView_UIScrollViewAppearance' => 'UIKit.UIScrollView+UIScrollViewAppearance, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
-		{ NULL, 0x16B04 /* #229 'UIKit_UITableView_UITableViewAppearance' => 'UIKit.UITableView+UITableViewAppearance, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
-		{ NULL, 0x16A04 /* #230 'UITableView' => 'UIKit.UITableView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x17204 /* #231 'UIKit_UITextField__UITextFieldDelegate' => 'UIKit.UITextField+_UITextFieldDelegate, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
-		{ NULL, 0x17104 /* #232 'UITextField' => 'UIKit.UITextField, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x23B04 /* #233 'UIKit_UIScrollView__UIScrollViewDelegate' => 'UIKit.UIScrollView+_UIScrollViewDelegate, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
-		{ NULL, 0x17404 /* #234 'UIKit_UITextView__UITextViewDelegate' => 'UIKit.UITextView+_UITextViewDelegate, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
-		{ NULL, 0x17304 /* #235 'UITextView' => 'UIKit.UITextView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x25004 /* #236 'UIKit_UISplitViewController__UISplitViewControllerDelegate' => 'UIKit.UISplitViewController+_UISplitViewControllerDelegate, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
-		{ NULL, 0x24F04 /* #237 'UISplitViewController' => 'UIKit.UISplitViewController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x26204 /* #238 'UIKit_UISwitch_UISwitchAppearance' => 'UIKit.UISwitch+UISwitchAppearance, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
-		{ NULL, 0x26104 /* #239 'UISwitch' => 'UIKit.UISwitch, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x26404 /* #240 'UIKit_UITabBar_UITabBarAppearance' => 'UIKit.UITabBar+UITabBarAppearance, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
-		{ NULL, 0x26304 /* #241 'UITabBar' => 'UIKit.UITabBar, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x26604 /* #242 'UIKit_UITabBarController__UITabBarControllerDelegate' => 'UIKit.UITabBarController+_UITabBarControllerDelegate, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
-		{ NULL, 0x26504 /* #243 'UITabBarController' => 'UIKit.UITabBarController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2B404 /* #244 'NSIndexPath' => 'Foundation.NSIndexPath, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2BC04 /* #245 'NSData' => 'Foundation.NSData, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2C004 /* #246 'NSDictionary' => 'Foundation.NSDictionary, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2CA04 /* #247 'NSMutableData' => 'Foundation.NSMutableData, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2CD04 /* #248 'NSMutableDictionary' => 'Foundation.NSMutableDictionary, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2D104 /* #249 'NSNotificationCenter' => 'Foundation.NSNotificationCenter, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
-		{ NULL, 0x2FB04 /* #250 '__NSObject_Disposer' => 'Foundation.NSObject+NSObject_Disposer, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
-		{ NULL, 0x2FC04 /* #251 '__XamarinObjectObserver' => 'Foundation.NSObject+Observer, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
+		{ NULL, 0xBE04 /* #10 'EAGLContext' => 'OpenGLES.EAGLContext, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0xC204 /* #11 'EAGLSharegroup' => 'OpenGLES.EAGLSharegroup, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x17904 /* #12 'UIView' => 'UIKit.UIView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0xC304 /* #13 'MPVolumeView' => 'MediaPlayer.MPVolumeView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0xCD04 /* #14 'GLKViewDelegate' => 'GLKit.GLKViewDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0xD504 /* #15 'CSSearchableIndex' => 'CoreSpotlight.CSSearchableIndex, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0xD604 /* #16 'CSSearchableItemAttributeSet' => 'CoreSpotlight.CSSearchableItemAttributeSet, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0xD704 /* #17 'CSSearchableItem' => 'CoreSpotlight.CSSearchableItem, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0xD804 /* #18 'CLLocation' => 'CoreLocation.CLLocation, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0xD904 /* #19 'CLLocationManager' => 'CoreLocation.CLLocationManager, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0xDE04 /* #20 'CLLocationManagerDelegate' => 'CoreLocation.CLLocationManagerDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0xF804 /* #21 'CAAnimation' => 'CoreAnimation.CAAnimation, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x10804 /* #22 'CAPropertyAnimation' => 'CoreAnimation.CAPropertyAnimation, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0xF704 /* #23 'CABasicAnimation' => 'CoreAnimation.CABasicAnimation, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0xFD04 /* #24 'CALayer' => 'CoreAnimation.CALayer, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0xFB04 /* #25 'CAGradientLayer' => 'CoreAnimation.CAGradientLayer, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0xFC04 /* #26 'CAKeyframeAnimation' => 'CoreAnimation.CAKeyFrameAnimation, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0xFE04 /* #27 'CADisplayLink' => 'CoreAnimation.CADisplayLink, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0xFF04 /* #28 'CALayerDelegate' => 'CoreAnimation.CALayerDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x10104 /* #29 'CAAnimationDelegate' => 'CoreAnimation.CAAnimationDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x10204 /* #30 'CAEAGLLayer' => 'CoreAnimation.CAEAGLLayer, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x10904 /* #31 'CAShapeLayer' => 'CoreAnimation.CAShapeLayer, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x10A04 /* #32 'CATransaction' => 'CoreAnimation.CATransaction, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x10B04 /* #33 'CNContact' => 'Contacts.CNContact, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x10C04 /* #34 'CNContactProperty' => 'Contacts.CNContactProperty, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x10F04 /* #35 'WKWebsiteDataStore' => 'WebKit.WKWebsiteDataStore, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x11104 /* #36 'WKFrameInfo' => 'WebKit.WKFrameInfo, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x11604 /* #37 'WKNavigation' => 'WebKit.WKNavigation, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x11704 /* #38 'WKNavigationAction' => 'WebKit.WKNavigationAction, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x11C04 /* #39 'WKNavigationDelegate' => 'WebKit.WKNavigationDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x11E04 /* #40 'WKProcessPool' => 'WebKit.WKProcessPool, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x12204 /* #41 'WKUIDelegate' => 'WebKit.WKUIDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x12304 /* #42 'WKUserContentController' => 'WebKit.WKUserContentController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x12404 /* #43 'WKUserScript' => 'WebKit.WKUserScript, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x12604 /* #44 'WKWebsiteDataRecord' => 'WebKit.WKWebsiteDataRecord, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x12704 /* #45 'WKWebViewConfiguration' => 'WebKit.WKWebViewConfiguration, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x12804 /* #46 'NSLayoutConstraint' => 'UIKit.NSLayoutConstraint, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x12904 /* #47 'UIAdaptivePresentationControllerDelegate' => 'UIKit.UIAdaptivePresentationControllerDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x12A04 /* #48 'UIPresentationController' => 'UIKit.UIPresentationController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x12B04 /* #49 'NSLayoutManager' => 'UIKit.NSLayoutManager, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x12E04 /* #50 'UIActivityViewController' => 'UIKit.UIActivityViewController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x12F04 /* #51 'UIAppearance' => 'UIKit.UIAppearance, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x13704 /* #52 'UIBarItem' => 'UIKit.UIBarItem, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x13804 /* #53 'UIBezierPath' => 'UIKit.UIBezierPath, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x23C04 /* #54 'UIScrollView' => 'UIKit.UIScrollView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x13B04 /* #55 'UICollectionView' => 'UIKit.UICollectionView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x13C04 /* #56 'UICollectionViewLayout' => 'UIKit.UICollectionViewLayout, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x13D04 /* #57 'UICollectionViewLayoutAttributes' => 'UIKit.UICollectionViewLayoutAttributes, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x13E04 /* #58 'UIColor' => 'UIKit.UIColor, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x13F04 /* #59 'UIKit_UIControlEventProxy' => 'UIKit.UIControlEventProxy, Xamarin.iOS' */, (MTTypeFlags) (2) /* UserType */ },
+		{ NULL, 0x14504 /* #60 'UIDocumentPickerViewController' => 'UIKit.UIDocumentPickerViewController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x14604 /* #61 'UIEvent' => 'UIKit.UIEvent, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x14704 /* #62 'UIFont' => 'UIKit.UIFont, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x14804 /* #63 'UIGestureRecognizer' => 'UIKit.UIGestureRecognizer, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x15504 /* #64 'UISwipeGestureRecognizer' => 'UIKit.UISwipeGestureRecognizer, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x15704 /* #65 'UIImage' => 'UIKit.UIImage, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x16004 /* #66 'UINavigationController' => 'UIKit.UINavigationController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x15804 /* #67 'UIImagePickerController' => 'UIKit.UIImagePickerController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x16104 /* #68 'UIPickerView' => 'UIKit.UIPickerView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x16204 /* #69 'UIPopoverController' => 'UIKit.UIPopoverController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x16504 /* #70 'UIScreen' => 'UIKit.UIScreen, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x16E04 /* #71 'UITableViewCell' => 'UIKit.UITableViewCell, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x17704 /* #72 'UITraitCollection' => 'UIKit.UITraitCollection, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x17804 /* #73 'UIToolbar' => 'UIKit.UIToolbar, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x18204 /* #74 'UIWindow' => 'UIKit.UIWindow, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x18304 /* #75 'UIFontDescriptor' => 'UIKit.UIFontDescriptor, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1A104 /* #76 'NSLayoutAnchor' => 'UIKit.NSLayoutAnchor`1, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1A204 /* #77 'NSLayoutDimension' => 'UIKit.NSLayoutDimension, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1A404 /* #78 'NSLayoutXAxisAnchor' => 'UIKit.NSLayoutXAxisAnchor, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1A504 /* #79 'NSLayoutYAxisAnchor' => 'UIKit.NSLayoutYAxisAnchor, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1A704 /* #80 'NSParagraphStyle' => 'UIKit.NSParagraphStyle, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1A604 /* #81 'NSMutableParagraphStyle' => 'UIKit.NSMutableParagraphStyle, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1A804 /* #82 'NSShadow' => 'UIKit.NSShadow, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1AA04 /* #83 'NSTextAttachment' => 'UIKit.NSTextAttachment, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1AB04 /* #84 'NSTextContainer' => 'UIKit.NSTextContainer, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2BB04 /* #85 'NSAttributedString' => 'Foundation.NSAttributedString, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2CB04 /* #86 'NSMutableAttributedString' => 'Foundation.NSMutableAttributedString, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1AC04 /* #87 'NSTextStorage' => 'UIKit.NSTextStorage, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1B304 /* #88 'UIActionSheetDelegate' => 'UIKit.UIActionSheetDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1B404 /* #89 'UIActivityIndicatorView' => 'UIKit.UIActivityIndicatorView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1B804 /* #90 'UIActivityItemSource' => 'UIKit.UIActivityItemSource, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1BB04 /* #91 'UIAlertAction' => 'UIKit.UIAlertAction, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1BD04 /* #92 'UIAlertController' => 'UIKit.UIAlertController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1C504 /* #93 'UIBarAppearance' => 'UIKit.UIBarAppearance, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1C604 /* #94 'UIBarButtonItemGroup' => 'UIKit.UIBarButtonItemGroup, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2B304 /* #95 'UIVisualEffect' => 'UIKit.UIVisualEffect, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1CC04 /* #96 'UIBlurEffect' => 'UIKit.UIBlurEffect, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1D104 /* #97 'UICollectionReusableView' => 'UIKit.UICollectionReusableView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1D304 /* #98 'UICollectionViewCell' => 'UIKit.UICollectionViewCell, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1D404 /* #99 'UICollectionViewController' => 'UIKit.UICollectionViewController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1D904 /* #100 'UICollectionViewDelegate' => 'UIKit.UICollectionViewDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1DA04 /* #101 'UICollectionViewDelegateFlowLayout' => 'UIKit.UICollectionViewDelegateFlowLayout, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1DB04 /* #102 'UICollectionViewFlowLayout' => 'UIKit.UICollectionViewFlowLayout, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1DE04 /* #103 'UICollectionViewLayoutInvalidationContext' => 'UIKit.UICollectionViewLayoutInvalidationContext, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1DC04 /* #104 'UICollectionViewFlowLayoutInvalidationContext' => 'UIKit.UICollectionViewFlowLayoutInvalidationContext, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1E104 /* #105 'UICollectionViewUpdateItem' => 'UIKit.UICollectionViewUpdateItem, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x22504 /* #106 'UIMenuElement' => 'UIKit.UIMenuElement, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1E204 /* #107 'UICommand' => 'UIKit.UICommand, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x14004 /* #108 'UIControl' => 'UIKit.UIControl, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1EB04 /* #109 'UIDatePicker' => 'UIKit.UIDatePicker, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1F104 /* #110 'UIDocumentPickerDelegate' => 'UIKit.UIDocumentPickerDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1F404 /* #111 'UIDragInteraction' => 'UIKit.UIDragInteraction, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1F704 /* #112 'UIDragItem' => 'UIKit.UIDragItem, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1FA04 /* #113 'UIDropInteraction' => 'UIKit.UIDropInteraction, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x1FE04 /* #114 'UIDropProposal' => 'UIKit.UIDropProposal, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x20F04 /* #115 'UIGestureRecognizerDelegate' => 'UIKit.UIGestureRecognizerDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x21304 /* #116 'UIGraphicsRenderer' => 'UIKit.UIGraphicsRenderer, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x21104 /* #117 'UIGraphicsImageRenderer' => 'UIKit.UIGraphicsImageRenderer, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x21404 /* #118 'UIGraphicsRendererContext' => 'UIKit.UIGraphicsRendererContext, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x21204 /* #119 'UIGraphicsImageRendererContext' => 'UIKit.UIGraphicsImageRendererContext, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x22A04 /* #120 'UINavigationControllerDelegate' => 'UIKit.UINavigationControllerDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x21504 /* #121 'UIImagePickerControllerDelegate' => 'UIKit.UIImagePickerControllerDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x21704 /* #122 'UIImageView' => 'UIKit.UIImageView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x21E04 /* #123 'UIKeyCommand' => 'UIKit.UIKeyCommand, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x22004 /* #124 'UILabel' => 'UIKit.UILabel, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x22704 /* #125 'UINavigationBarAppearance' => 'UIKit.UINavigationBarAppearance, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x22C04 /* #126 'UINavigationItem' => 'UIKit.UINavigationItem, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x22E04 /* #127 'UIPageControl' => 'UIKit.UIPageControl, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x23204 /* #128 'UIPickerViewModel' => 'UIKit.UIPickerViewModel, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x23504 /* #129 'UIPress' => 'UIKit.UIPress, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x23604 /* #130 'UIProgressView' => 'UIKit.UIProgressView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x23904 /* #131 'UIRefreshControl' => 'UIKit.UIRefreshControl, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x24504 /* #132 'UIScrollViewDelegate' => 'UIKit.UIScrollViewDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x24E04 /* #133 'UISearchResultsUpdating' => 'UIKit.UISearchResultsUpdating, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x25004 /* #134 'UISlider' => 'UIKit.UISlider, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x25B04 /* #135 'UISplitViewControllerDelegate' => 'UIKit.UISplitViewControllerDelegate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x25D04 /* #136 'UIStackView' => 'UIKit.UIStackView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x26004 /* #137 'UIStepper' => 'UIKit.UIStepper, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x26E04 /* #138 'UITabBarItem' => 'UIKit.UITabBarItem, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x27304 /* #139 'UITableViewController' => 'UIKit.UITableViewController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x27604 /* #140 'UITableViewHeaderFooterView' => 'UIKit.UITableViewHeaderFooterView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x27904 /* #141 'UITableViewSource' => 'UIKit.UITableViewSource, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x28604 /* #142 'UITextInputAssistantItem' => 'UIKit.UITextInputAssistantItem, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x28B04 /* #143 'UITextPosition' => 'UIKit.UITextPosition, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x28C04 /* #144 'UITextRange' => 'UIKit.UITextRange, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x28D04 /* #145 'UITextSelectionRect' => 'UIKit.UITextSelectionRect, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x29304 /* #146 'UITouch' => 'UIKit.UITouch, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2B204 /* #147 'UIViewPropertyAnimator' => 'UIKit.UIViewPropertyAnimator, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2B404 /* #148 'UIVisualEffectView' => 'UIKit.UIVisualEffectView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2B804 /* #149 'NSUserActivity' => 'Foundation.NSUserActivity, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2BA04 /* #150 'NSArray' => 'Foundation.NSArray, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2BC04 /* #151 'NSBundle' => 'Foundation.NSBundle, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2BD04 /* #152 'NSCoder' => 'Foundation.NSCoder, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2C104 /* #153 'NSDate' => 'Foundation.NSDate, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2C804 /* #154 'NSFormatter' => 'Foundation.NSFormatter, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2C904 /* #155 'NSHTTPCookie' => 'Foundation.NSHttpCookie, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2CA04 /* #156 'NSLocale' => 'Foundation.NSLocale, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2D104 /* #157 'NSURLRequest' => 'Foundation.NSUrlRequest, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2D204 /* #158 'Foundation_InternalNSNotificationHandler' => 'Foundation.InternalNSNotificationHandler, Xamarin.iOS' */, (MTTypeFlags) (2) /* UserType */ },
+		{ NULL, 0x2D604 /* #159 'NSNull' => 'Foundation.NSNull, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2D704 /* #160 'NSProxy' => 'Foundation.NSProxy, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2D804 /* #161 'NSRunLoop' => 'Foundation.NSRunLoop, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2DA04 /* #162 'NSSet' => 'Foundation.NSSet, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2DD04 /* #163 'NSString' => 'Foundation.NSString, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2DE04 /* #164 'NSThread' => 'Foundation.NSThread, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2DF04 /* #165 'NSTimer' => 'Foundation.NSTimer, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2E004 /* #166 'NSTimeZone' => 'Foundation.NSTimeZone, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2E104 /* #167 'NSUndoManager' => 'Foundation.NSUndoManager, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2E204 /* #168 'NSURL' => 'Foundation.NSUrl, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2E404 /* #169 'NSUserDefaults' => 'Foundation.NSUserDefaults, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2E504 /* #170 'NSItemProvider' => 'Foundation.NSItemProvider, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2EE04 /* #171 'Foundation_NSDispatcher' => 'Foundation.NSDispatcher, Xamarin.iOS' */, (MTTypeFlags) (2) /* UserType */ },
+		{ NULL, 0x2EF04 /* #172 '__MonoMac_NSActionDispatcher' => 'Foundation.NSActionDispatcher, Xamarin.iOS' */, (MTTypeFlags) (2) /* UserType */ },
+		{ NULL, 0x2F004 /* #173 '__MonoMac_NSSynchronizationContextDispatcher' => 'Foundation.NSSynchronizationContextDispatcher, Xamarin.iOS' */, (MTTypeFlags) (2) /* UserType */ },
+		{ NULL, 0x2F104 /* #174 '__Xamarin_NSTimerActionDispatcher' => 'Foundation.NSTimerActionDispatcher, Xamarin.iOS' */, (MTTypeFlags) (2) /* UserType */ },
+		{ NULL, 0x2F204 /* #175 'Foundation_NSAsyncDispatcher' => 'Foundation.NSAsyncDispatcher, Xamarin.iOS' */, (MTTypeFlags) (2) /* UserType */ },
+		{ NULL, 0x2F304 /* #176 '__MonoMac_NSAsyncActionDispatcher' => 'Foundation.NSAsyncActionDispatcher, Xamarin.iOS' */, (MTTypeFlags) (2) /* UserType */ },
+		{ NULL, 0x2F404 /* #177 '__MonoMac_NSAsyncSynchronizationContextDispatcher' => 'Foundation.NSAsyncSynchronizationContextDispatcher, Xamarin.iOS' */, (MTTypeFlags) (2) /* UserType */ },
+		{ NULL, 0x2F504 /* #178 'NSAutoreleasePool' => 'Foundation.NSAutoreleasePool, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2F604 /* #179 'NSError' => 'Foundation.NSError, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x30204 /* #180 'NSValue' => 'Foundation.NSValue, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2F704 /* #181 'NSNumber' => 'Foundation.NSNumber, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x30004 /* #182 'NSProgress' => 'Foundation.NSProgress, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x30904 /* #183 'NSCache' => 'Foundation.NSCache, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x30B04 /* #184 'NSDateFormatter' => 'Foundation.NSDateFormatter, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x30E04 /* #185 'NSEnumerator' => 'Foundation.NSEnumerator, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x30F04 /* #186 'NSException' => 'Foundation.NSException, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x31004 /* #187 'NSIndexSet' => 'Foundation.NSIndexSet, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x31604 /* #188 'NSJSONSerialization' => 'Foundation.NSJsonSerialization, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x31904 /* #189 'NSNotification' => 'Foundation.NSNotification, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x31D04 /* #190 'NSStringDrawingContext' => 'Foundation.NSStringDrawingContext, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x33804 /* #191 'ASAuthorization' => 'AuthenticationServices.ASAuthorization, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x33904 /* #192 'ASAuthorizationAppleIDCredential' => 'AuthenticationServices.ASAuthorizationAppleIdCredential, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x33A04 /* #193 'ASAuthorizationController' => 'AuthenticationServices.ASAuthorizationController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x34104 /* #194 'ASWebAuthenticationSession' => 'AuthenticationServices.ASWebAuthenticationSession, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0xC904 /* #195 'GLKit_GLKView__GLKViewDelegate' => 'GLKit.GLKView+_GLKViewDelegate, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
+		{ NULL, 0xC804 /* #196 'GLKView' => 'GLKit.GLKView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0xF904 /* #197 'CoreAnimation_CAAnimation__CAAnimationDelegate' => 'CoreAnimation.CAAnimation+_CAAnimationDelegate, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
+		{ NULL, 0x10D04 /* #198 'WKWebView' => 'WebKit.WKWebView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x11204 /* #199 'WKHTTPCookieStore' => 'WebKit.WKHttpCookieStore, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x12C04 /* #200 'UIActionSheet' => 'UIKit.UIActionSheet, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x13004 /* #201 'UIApplication' => 'UIKit.UIApplication, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x13604 /* #202 'UIKit_UIBarButtonItem_Callback' => 'UIKit.UIBarButtonItem+Callback, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
+		{ NULL, 0x13504 /* #203 'UIBarButtonItem' => 'UIKit.UIBarButtonItem, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x17A04 /* #204 'UIKit_UIView_UIViewAppearance' => 'UIKit.UIView+UIViewAppearance, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
+		{ NULL, 0x14104 /* #205 'UIKit_UIControl_UIControlAppearance' => 'UIKit.UIControl+UIControlAppearance, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
+		{ NULL, 0x13A04 /* #206 'UIKit_UIButton_UIButtonAppearance' => 'UIKit.UIButton+UIButtonAppearance, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
+		{ NULL, 0x13904 /* #207 'UIButton' => 'UIKit.UIButton, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x14204 /* #208 'UIDevice' => 'UIKit.UIDevice, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x14904 /* #209 '__UIGestureRecognizerToken' => 'UIKit.UIGestureRecognizer+Token, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
+		{ NULL, 0x14A04 /* #210 '__UIGestureRecognizerParameterlessToken' => 'UIKit.UIGestureRecognizer+ParameterlessDispatch, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
+		{ NULL, 0x14B04 /* #211 'UIKit_UIGestureRecognizer__UIGestureRecognizerDelegate' => 'UIKit.UIGestureRecognizer+_UIGestureRecognizerDelegate, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
+		{ NULL, 0x14E04 /* #212 '__UILongPressGestureRecognizer' => 'UIKit.UILongPressGestureRecognizer+Callback, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
+		{ NULL, 0x14D04 /* #213 'UILongPressGestureRecognizer' => 'UIKit.UILongPressGestureRecognizer, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x15004 /* #214 '__UITapGestureRecognizer' => 'UIKit.UITapGestureRecognizer+Callback, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
+		{ NULL, 0x14F04 /* #215 'UITapGestureRecognizer' => 'UIKit.UITapGestureRecognizer, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x15204 /* #216 '__UIPanGestureRecognizer' => 'UIKit.UIPanGestureRecognizer+Callback, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
+		{ NULL, 0x15104 /* #217 'UIPanGestureRecognizer' => 'UIKit.UIPanGestureRecognizer, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x15404 /* #218 '__UIPinchGestureRecognizer' => 'UIKit.UIPinchGestureRecognizer+Callback, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
+		{ NULL, 0x15304 /* #219 'UIPinchGestureRecognizer' => 'UIKit.UIPinchGestureRecognizer, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x15F04 /* #220 'UIKit_UINavigationBar_UINavigationBarAppearance' => 'UIKit.UINavigationBar+UINavigationBarAppearance, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
+		{ NULL, 0x15E04 /* #221 'UINavigationBar' => 'UIKit.UINavigationBar, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x16404 /* #222 'UIKit_UIPopoverPresentationController__UIPopoverPresentationControllerDelegate' => 'UIKit.UIPopoverPresentationController+_UIPopoverPresentationControllerDelegate, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
+		{ NULL, 0x16304 /* #223 'UIPopoverPresentationController' => 'UIKit.UIPopoverPresentationController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x16804 /* #224 'UIKit_UISearchBar__UISearchBarDelegate' => 'UIKit.UISearchBar+_UISearchBarDelegate, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
+		{ NULL, 0x16704 /* #225 'UISearchBar' => 'UIKit.UISearchBar, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x16A04 /* #226 'UIKit_UISearchController___Xamarin_UISearchResultsUpdating' => 'UIKit.UISearchController+__Xamarin_UISearchResultsUpdating, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
+		{ NULL, 0x16904 /* #227 'UISearchController' => 'UIKit.UISearchController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x23E04 /* #228 'UIKit_UIScrollView_UIScrollViewAppearance' => 'UIKit.UIScrollView+UIScrollViewAppearance, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
+		{ NULL, 0x16D04 /* #229 'UIKit_UITableView_UITableViewAppearance' => 'UIKit.UITableView+UITableViewAppearance, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
+		{ NULL, 0x16C04 /* #230 'UITableView' => 'UIKit.UITableView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x17404 /* #231 'UIKit_UITextField__UITextFieldDelegate' => 'UIKit.UITextField+_UITextFieldDelegate, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
+		{ NULL, 0x17304 /* #232 'UITextField' => 'UIKit.UITextField, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x23D04 /* #233 'UIKit_UIScrollView__UIScrollViewDelegate' => 'UIKit.UIScrollView+_UIScrollViewDelegate, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
+		{ NULL, 0x17604 /* #234 'UIKit_UITextView__UITextViewDelegate' => 'UIKit.UITextView+_UITextViewDelegate, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
+		{ NULL, 0x17504 /* #235 'UITextView' => 'UIKit.UITextView, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x25204 /* #236 'UIKit_UISplitViewController__UISplitViewControllerDelegate' => 'UIKit.UISplitViewController+_UISplitViewControllerDelegate, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
+		{ NULL, 0x25104 /* #237 'UISplitViewController' => 'UIKit.UISplitViewController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x26404 /* #238 'UIKit_UISwitch_UISwitchAppearance' => 'UIKit.UISwitch+UISwitchAppearance, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
+		{ NULL, 0x26304 /* #239 'UISwitch' => 'UIKit.UISwitch, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x26604 /* #240 'UIKit_UITabBar_UITabBarAppearance' => 'UIKit.UITabBar+UITabBarAppearance, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
+		{ NULL, 0x26504 /* #241 'UITabBar' => 'UIKit.UITabBar, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x26804 /* #242 'UIKit_UITabBarController__UITabBarControllerDelegate' => 'UIKit.UITabBarController+_UITabBarControllerDelegate, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
+		{ NULL, 0x26704 /* #243 'UITabBarController' => 'UIKit.UITabBarController, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2B604 /* #244 'NSIndexPath' => 'Foundation.NSIndexPath, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2BE04 /* #245 'NSData' => 'Foundation.NSData, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2C204 /* #246 'NSDictionary' => 'Foundation.NSDictionary, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2CC04 /* #247 'NSMutableData' => 'Foundation.NSMutableData, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2CF04 /* #248 'NSMutableDictionary' => 'Foundation.NSMutableDictionary, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2D304 /* #249 'NSNotificationCenter' => 'Foundation.NSNotificationCenter, Xamarin.iOS' */, (MTTypeFlags) (0) /* None */ },
+		{ NULL, 0x2FD04 /* #250 '__NSObject_Disposer' => 'Foundation.NSObject+NSObject_Disposer, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
+		{ NULL, 0x2FE04 /* #251 '__XamarinObjectObserver' => 'Foundation.NSObject+Observer, Xamarin.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
 		{ NULL, 0x1A14 /* #252 'Xamarin_Forms_Platform_iOS_iOS7ButtonContainer' => 'Xamarin.Forms.Platform.iOS.iOS7ButtonContainer, Xamarin.Forms.Platform.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
 		{ NULL, 0x1E14 /* #253 'Xamarin_Forms_Platform_iOS_GlobalCloseContextGestureRecognizer' => 'Xamarin.Forms.Platform.iOS.GlobalCloseContextGestureRecognizer, Xamarin.Forms.Platform.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
 		{ NULL, 0x3C14 /* #254 'Xamarin_Forms_Platform_iOS_PlatformRenderer' => 'Xamarin.Forms.Platform.iOS.PlatformRenderer, Xamarin.Forms.Platform.iOS' */, (MTTypeFlags) (3) /* CustomType, UserType */ },
@@ -18219,7 +19136,7 @@ exception_handling:;
 	};
 
 	static const MTManagedClassMap __xamarin_skipped_map [] = {
-		{ 0x2DA04, 0x2D804 /* 'Foundation.NSSet`1' => 'Foundation.NSSet' */ },
+		{ 0x2DC04, 0x2DA04 /* 'Foundation.NSSet`1' => 'Foundation.NSSet' */ },
 	};
 
 	static const char *__xamarin_registration_assemblies []= {
@@ -18248,9 +19165,9 @@ exception_handling:;
 		"MySqlConnector", 
 		"Lottie.Forms", 
 		"Lottie.iOS", 
+		"Newtonsoft.Json", 
 		"Plugin.Settings", 
 		"Plugin.Settings.Abstractions", 
-		"Newtonsoft.Json", 
 		"Xamarin.Essentials", 
 		"OpenTK-1.0"
 	};
@@ -18263,59 +19180,59 @@ exception_handling:;
 		{ 0x4030 /* Airbnb.Lottie.ILOTPointValueDelegate */, 0x4130 /* LOTPointValueDelegateWrapper */ },
 		{ 0x4630 /* Airbnb.Lottie.ILOTSizeValueDelegate */, 0x4730 /* LOTSizeValueDelegateWrapper */ },
 		{ 0x4930 /* Airbnb.Lottie.ILOTValueDelegate */, 0x4A30 /* LOTValueDelegateWrapper */ },
-		{ 0xBD04 /* OpenGLES.IEAGLDrawable */, 0xBE04 /* EAGLDrawableWrapper */ },
-		{ 0xC904 /* GLKit.IGLKViewDelegate */, 0xCA04 /* GLKViewDelegateWrapper */ },
-		{ 0xDA04 /* CoreLocation.ICLLocationManagerDelegate */, 0xDB04 /* CLLocationManagerDelegateWrapper */ },
-		{ 0x10404 /* CoreAnimation.ICAMediaTiming */, 0x10504 /* CAMediaTimingWrapper */ },
-		{ 0x11704 /* WebKit.IWKNavigationDelegate */, 0x11904 /* WKNavigationDelegateWrapper */ },
-		{ 0x11D04 /* WebKit.IWKUIDelegate */, 0x11F04 /* WKUIDelegateWrapper */ },
-		{ 0x1AC04 /* UIKit.IUIAccessibilityIdentification */, 0x1AD04 /* UIAccessibilityIdentificationWrapper */ },
-		{ 0x1AF04 /* UIKit.IUIActionSheetDelegate */, 0x1B004 /* UIActionSheetDelegateWrapper */ },
-		{ 0x1B404 /* UIKit.IUIActivityItemSource */, 0x1B504 /* UIActivityItemSourceWrapper */ },
-		{ 0x1B704 /* UIKit.IUIAdaptivePresentationControllerDelegate */, 0x1B804 /* UIAdaptivePresentationControllerDelegateWrapper */ },
-		{ 0x1BD04 /* UIKit.IUIApplicationDelegate */, 0x1BF04 /* UIApplicationDelegateWrapper */ },
-		{ 0x1D304 /* UIKit.IUICollectionViewDataSource */, 0x1D404 /* UICollectionViewDataSourceWrapper */ },
-		{ 0x1D504 /* UIKit.IUICollectionViewDelegate */, 0x1D604 /* UICollectionViewDelegateWrapper */ },
-		{ 0x1E104 /* UIKit.IUIContentContainer */, 0x1E204 /* UIContentContainerWrapper */ },
-		{ 0x1E704 /* UIKit.IUICoordinateSpace */, 0x1E804 /* UICoordinateSpaceWrapper */ },
-		{ 0x1ED04 /* UIKit.IUIDocumentPickerDelegate */, 0x1EE04 /* UIDocumentPickerDelegateWrapper */ },
-		{ 0x1F004 /* UIKit.IUIDragDropSession */, 0x1F104 /* UIDragDropSessionWrapper */ },
-		{ 0x1F304 /* UIKit.IUIDragInteractionDelegate */, 0x1F404 /* UIDragInteractionDelegateWrapper */ },
-		{ 0x1F604 /* UIKit.IUIDragSession */, 0x1F704 /* UIDragSessionWrapper */ },
-		{ 0x1F904 /* UIKit.IUIDropInteractionDelegate */, 0x1FA04 /* UIDropInteractionDelegateWrapper */ },
-		{ 0x1FD04 /* UIKit.IUIDropSession */, 0x1FE04 /* UIDropSessionWrapper */ },
-		{ 0x20004 /* UIKit.IUIDynamicItem */, 0x20104 /* UIDynamicItemWrapper */ },
-		{ 0x20404 /* UIKit.IUIFocusItemScrollableContainer */, 0x20504 /* UIFocusItemScrollableContainerWrapper */ },
-		{ 0x20B04 /* UIKit.IUIGestureRecognizerDelegate */, 0x20C04 /* UIGestureRecognizerDelegateWrapper */ },
-		{ 0x21604 /* UIKit.IUIInteraction */, 0x21704 /* UIInteractionWrapper */ },
-		{ 0x22004 /* UIKit.IUILayoutSupport */, 0x22104 /* UILayoutSupportWrapper */ },
-		{ 0x22604 /* UIKit.IUINavigationControllerDelegate */, 0x22704 /* UINavigationControllerDelegateWrapper */ },
-		{ 0x22E04 /* UIKit.IUIPickerViewDataSource */, 0x22F04 /* UIPickerViewDataSourceWrapper */ },
-		{ 0x24104 /* UIKit.IUIScrollViewDelegate */, 0x24204 /* UIScrollViewDelegateWrapper */ },
-		{ 0x24604 /* UIKit.IUISearchBarDelegate */, 0x24704 /* UISearchBarDelegateWrapper */ },
-		{ 0x24A04 /* UIKit.IUISearchResultsUpdating */, 0x24B04 /* UISearchResultsUpdatingWrapper */ },
-		{ 0x25704 /* UIKit.IUISplitViewControllerDelegate */, 0x25804 /* UISplitViewControllerDelegateWrapper */ },
-		{ 0x26A04 /* UIKit.IUITabBarControllerDelegate */, 0x26B04 /* UITabBarControllerDelegateWrapper */ },
-		{ 0x27204 /* UIKit.IUITableViewDataSource */, 0x27304 /* UITableViewDataSourceWrapper */ },
-		{ 0x27E04 /* UIKit.IUITextFieldDelegate */, 0x27F04 /* UITextFieldDelegateWrapper */ },
-		{ 0x28204 /* UIKit.IUITextInput */, 0x28304 /* UITextInputWrapper */ },
-		{ 0x28504 /* UIKit.IUITextInputTraits */, 0x28604 /* UITextInputTraitsWrapper */ },
-		{ 0x28E04 /* UIKit.IUITextViewDelegate */, 0x28F04 /* UITextViewDelegateWrapper */ },
-		{ 0x29204 /* UIKit.IUITraitEnvironment */, 0x29304 /* UITraitEnvironmentWrapper */ },
-		{ 0x29804 /* UIKit.IUIViewAnimating */, 0x29904 /* UIViewAnimatingWrapper */ },
-		{ 0x2A004 /* UIKit.IUIViewControllerAnimatedTransitioning */, 0x2A104 /* UIViewControllerAnimatedTransitioningWrapper */ },
-		{ 0x2A204 /* UIKit.IUIViewControllerContextTransitioning */, 0x2A304 /* UIViewControllerContextTransitioningWrapper */ },
-		{ 0x2A404 /* UIKit.IUIViewControllerInteractiveTransitioning */, 0x2A504 /* UIViewControllerInteractiveTransitioningWrapper */ },
-		{ 0x2A604 /* UIKit.IUIViewControllerTransitionCoordinator */, 0x2A804 /* UIViewControllerTransitionCoordinatorWrapper */ },
-		{ 0x2A904 /* UIKit.IUIViewControllerTransitionCoordinatorContext */, 0x2AA04 /* UIViewControllerTransitionCoordinatorContextWrapper */ },
-		{ 0x2AB04 /* UIKit.IUIViewControllerTransitioningDelegate */, 0x2AC04 /* UIViewControllerTransitioningDelegateWrapper */ },
-		{ 0x2AD04 /* UIKit.IUIViewImplicitlyAnimating */, 0x2AF04 /* UIViewImplicitlyAnimatingWrapper */ },
-		{ 0x30F04 /* Foundation.INSItemProviderReading */, 0x31004 /* NSItemProviderReadingWrapper */ },
-		{ 0x31104 /* Foundation.INSItemProviderWriting */, 0x31204 /* NSItemProviderWritingWrapper */ },
-		{ 0x31804 /* Foundation.INSObjectProtocol */, 0x31904 /* NSObjectProtocolWrapper */ },
-		{ 0x33904 /* AuthenticationServices.IASAuthorizationControllerDelegate */, 0x33A04 /* ASAuthorizationControllerDelegateWrapper */ },
-		{ 0x33B04 /* AuthenticationServices.IASAuthorizationControllerPresentationContextProviding */, 0x33C04 /* ASAuthorizationControllerPresentationContextProvidingWrapper */ },
-		{ 0x33D04 /* AuthenticationServices.IASAuthorizationCredential */, 0x33E04 /* ASAuthorizationCredentialWrapper */ },
+		{ 0xBF04 /* OpenGLES.IEAGLDrawable */, 0xC004 /* EAGLDrawableWrapper */ },
+		{ 0xCB04 /* GLKit.IGLKViewDelegate */, 0xCC04 /* GLKViewDelegateWrapper */ },
+		{ 0xDC04 /* CoreLocation.ICLLocationManagerDelegate */, 0xDD04 /* CLLocationManagerDelegateWrapper */ },
+		{ 0x10604 /* CoreAnimation.ICAMediaTiming */, 0x10704 /* CAMediaTimingWrapper */ },
+		{ 0x11904 /* WebKit.IWKNavigationDelegate */, 0x11B04 /* WKNavigationDelegateWrapper */ },
+		{ 0x11F04 /* WebKit.IWKUIDelegate */, 0x12104 /* WKUIDelegateWrapper */ },
+		{ 0x1AE04 /* UIKit.IUIAccessibilityIdentification */, 0x1AF04 /* UIAccessibilityIdentificationWrapper */ },
+		{ 0x1B104 /* UIKit.IUIActionSheetDelegate */, 0x1B204 /* UIActionSheetDelegateWrapper */ },
+		{ 0x1B604 /* UIKit.IUIActivityItemSource */, 0x1B704 /* UIActivityItemSourceWrapper */ },
+		{ 0x1B904 /* UIKit.IUIAdaptivePresentationControllerDelegate */, 0x1BA04 /* UIAdaptivePresentationControllerDelegateWrapper */ },
+		{ 0x1BF04 /* UIKit.IUIApplicationDelegate */, 0x1C104 /* UIApplicationDelegateWrapper */ },
+		{ 0x1D504 /* UIKit.IUICollectionViewDataSource */, 0x1D604 /* UICollectionViewDataSourceWrapper */ },
+		{ 0x1D704 /* UIKit.IUICollectionViewDelegate */, 0x1D804 /* UICollectionViewDelegateWrapper */ },
+		{ 0x1E304 /* UIKit.IUIContentContainer */, 0x1E404 /* UIContentContainerWrapper */ },
+		{ 0x1E904 /* UIKit.IUICoordinateSpace */, 0x1EA04 /* UICoordinateSpaceWrapper */ },
+		{ 0x1EF04 /* UIKit.IUIDocumentPickerDelegate */, 0x1F004 /* UIDocumentPickerDelegateWrapper */ },
+		{ 0x1F204 /* UIKit.IUIDragDropSession */, 0x1F304 /* UIDragDropSessionWrapper */ },
+		{ 0x1F504 /* UIKit.IUIDragInteractionDelegate */, 0x1F604 /* UIDragInteractionDelegateWrapper */ },
+		{ 0x1F804 /* UIKit.IUIDragSession */, 0x1F904 /* UIDragSessionWrapper */ },
+		{ 0x1FB04 /* UIKit.IUIDropInteractionDelegate */, 0x1FC04 /* UIDropInteractionDelegateWrapper */ },
+		{ 0x1FF04 /* UIKit.IUIDropSession */, 0x20004 /* UIDropSessionWrapper */ },
+		{ 0x20204 /* UIKit.IUIDynamicItem */, 0x20304 /* UIDynamicItemWrapper */ },
+		{ 0x20604 /* UIKit.IUIFocusItemScrollableContainer */, 0x20704 /* UIFocusItemScrollableContainerWrapper */ },
+		{ 0x20D04 /* UIKit.IUIGestureRecognizerDelegate */, 0x20E04 /* UIGestureRecognizerDelegateWrapper */ },
+		{ 0x21804 /* UIKit.IUIInteraction */, 0x21904 /* UIInteractionWrapper */ },
+		{ 0x22204 /* UIKit.IUILayoutSupport */, 0x22304 /* UILayoutSupportWrapper */ },
+		{ 0x22804 /* UIKit.IUINavigationControllerDelegate */, 0x22904 /* UINavigationControllerDelegateWrapper */ },
+		{ 0x23004 /* UIKit.IUIPickerViewDataSource */, 0x23104 /* UIPickerViewDataSourceWrapper */ },
+		{ 0x24304 /* UIKit.IUIScrollViewDelegate */, 0x24404 /* UIScrollViewDelegateWrapper */ },
+		{ 0x24804 /* UIKit.IUISearchBarDelegate */, 0x24904 /* UISearchBarDelegateWrapper */ },
+		{ 0x24C04 /* UIKit.IUISearchResultsUpdating */, 0x24D04 /* UISearchResultsUpdatingWrapper */ },
+		{ 0x25904 /* UIKit.IUISplitViewControllerDelegate */, 0x25A04 /* UISplitViewControllerDelegateWrapper */ },
+		{ 0x26C04 /* UIKit.IUITabBarControllerDelegate */, 0x26D04 /* UITabBarControllerDelegateWrapper */ },
+		{ 0x27404 /* UIKit.IUITableViewDataSource */, 0x27504 /* UITableViewDataSourceWrapper */ },
+		{ 0x28004 /* UIKit.IUITextFieldDelegate */, 0x28104 /* UITextFieldDelegateWrapper */ },
+		{ 0x28404 /* UIKit.IUITextInput */, 0x28504 /* UITextInputWrapper */ },
+		{ 0x28704 /* UIKit.IUITextInputTraits */, 0x28804 /* UITextInputTraitsWrapper */ },
+		{ 0x29004 /* UIKit.IUITextViewDelegate */, 0x29104 /* UITextViewDelegateWrapper */ },
+		{ 0x29404 /* UIKit.IUITraitEnvironment */, 0x29504 /* UITraitEnvironmentWrapper */ },
+		{ 0x29A04 /* UIKit.IUIViewAnimating */, 0x29B04 /* UIViewAnimatingWrapper */ },
+		{ 0x2A204 /* UIKit.IUIViewControllerAnimatedTransitioning */, 0x2A304 /* UIViewControllerAnimatedTransitioningWrapper */ },
+		{ 0x2A404 /* UIKit.IUIViewControllerContextTransitioning */, 0x2A504 /* UIViewControllerContextTransitioningWrapper */ },
+		{ 0x2A604 /* UIKit.IUIViewControllerInteractiveTransitioning */, 0x2A704 /* UIViewControllerInteractiveTransitioningWrapper */ },
+		{ 0x2A804 /* UIKit.IUIViewControllerTransitionCoordinator */, 0x2AA04 /* UIViewControllerTransitionCoordinatorWrapper */ },
+		{ 0x2AB04 /* UIKit.IUIViewControllerTransitionCoordinatorContext */, 0x2AC04 /* UIViewControllerTransitionCoordinatorContextWrapper */ },
+		{ 0x2AD04 /* UIKit.IUIViewControllerTransitioningDelegate */, 0x2AE04 /* UIViewControllerTransitioningDelegateWrapper */ },
+		{ 0x2AF04 /* UIKit.IUIViewImplicitlyAnimating */, 0x2B104 /* UIViewImplicitlyAnimatingWrapper */ },
+		{ 0x31104 /* Foundation.INSItemProviderReading */, 0x31204 /* NSItemProviderReadingWrapper */ },
+		{ 0x31304 /* Foundation.INSItemProviderWriting */, 0x31404 /* NSItemProviderWritingWrapper */ },
+		{ 0x31A04 /* Foundation.INSObjectProtocol */, 0x31B04 /* NSObjectProtocolWrapper */ },
+		{ 0x33B04 /* AuthenticationServices.IASAuthorizationControllerDelegate */, 0x33C04 /* ASAuthorizationControllerDelegateWrapper */ },
+		{ 0x33D04 /* AuthenticationServices.IASAuthorizationControllerPresentationContextProviding */, 0x33E04 /* ASAuthorizationControllerPresentationContextProvidingWrapper */ },
+		{ 0x33F04 /* AuthenticationServices.IASAuthorizationCredential */, 0x34004 /* ASAuthorizationCredentialWrapper */ },
 	};
 
 	static struct MTRegistrationMap __xamarin_registration_map = {

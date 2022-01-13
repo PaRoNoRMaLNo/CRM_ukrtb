@@ -1,14 +1,25 @@
-﻿<Properties StartupConfiguration="{11274EDD-D50C-4A4B-84BC-4D7A2444FF5F}|Default">
-  <MonoDevelop.Ide.ItemProperties.UkrtbRasp.Android AndroidDesignerPreferredTheme="MainTheme" PreferredExecutionTarget="Android.pixel_3_xl_q_10_0_-_api_29" />
-  <MonoDevelop.Ide.Workbench>
+﻿<Properties StartupConfiguration="{9971E8DD-E49F-4D2D-BF89-D4FE731C1CF1}|Default">
+  <MonoDevelop.Ide.ItemProperties.UkrtbRasp.Android AndroidDesignerPreferredTheme="MainTheme" PreferredExecutionTarget="Android.4302a11" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="UkrtbRasp/VC_main.xaml.cs">
+    <Files>
+      <File FileName="UkrtbRasp/VC_main.xaml.cs" Line="409" Column="1" />
+      <File FileName="UkrtbRasp.iOS/Info.plist" />
+      <File FileName="UkrtbRasp/AllClasses.cs" Line="1" Column="1" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="UkrtbRasp" expanded="True">
             <Node name="UkrtbRasp" expanded="True">
-              <Node name="Login_user.xaml" expanded="True" />
+              <Node name="Prepod_main.xaml" expanded="True" />
+              <Node name="Spravka.xaml" expanded="True" />
+              <Node name="Student_main.xaml" expanded="True" />
+              <Node name="VC_main.xaml" expanded="True">
+                <Node name="VC_main.xaml.cs" selected="True" />
+              </Node>
             </Node>
-            <Node name="UkrtbRasp.Android" expanded="True" selected="True" />
+            <Node name="UkrtbRasp.Android" expanded="True" />
+            <Node name="UkrtbRasp.iOS" expanded="True" />
           </Node>
         </State>
       </Pad>
@@ -16,7 +27,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.ItemProperties.UkrtbRasp.iOS automaticSigning="False" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|iPhone" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

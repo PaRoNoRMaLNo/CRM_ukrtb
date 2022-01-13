@@ -215,7 +215,7 @@
 
 	/* 23: UkrtbRasp.dll */
 	/* uncompressed_file_size */
-	.word	734720
+	.word	736768
 	/* loaded */
 	.byte	0
 	/* data */

@@ -22,7 +22,7 @@ Ldebug_info_begin:
 	.short 2
 	.long 0
 	.byte 8,1
-	.asciz "Mono AOT Compiler 6.12.0 (2020-02/b4a385816ed Tue Mar 30 19:54:56 EDT 2021)"
+	.asciz "Mono AOT Compiler 6.12.0 (2020-02/3cf59ad33da Thu Aug 19 11:06:27 EDT 2021)"
 	.asciz "System.Drawing.Common.dll"
 	.asciz ""
 
@@ -22738,7 +22738,7 @@ runtime_version:
 .section __TEXT, __const
 	.align 2
 assembly_guid:
-	.asciz "F4D0A1DB-CDDA-428C-9291-6F63C02F0F69"
+	.asciz "E06EA91E-849F-4DD6-AD6A-188CF333CA97"
 .section __TEXT, __const
 	.align 2
 assembly_name:
@@ -22832,7 +22832,7 @@ _mono_aot_file_info:
 	.long 0,0,0,0,0,0,0,0
 	.long 0,0,0,0,0,0,0,0
 	.long 0,0,0,0,0,0,0,0
-	.byte 208,170,182,186,179,159,157,181,228,238,28,96,100,244,154,9
+	.byte 228,1,212,25,74,209,43,145,63,61,40,198,22,100,206,165
 	.globl _mono_aot_module_System_Drawing_Common_info
 	.align 3
 _mono_aot_module_System_Drawing_Common_info:

@@ -22,7 +22,7 @@ Ldebug_info_begin:
 	.short 2
 	.long 0
 	.byte 8,1
-	.asciz "Mono AOT Compiler 6.12.0 (2020-02/b4a385816ed Tue Mar 30 19:54:56 EDT 2021)"
+	.asciz "Mono AOT Compiler 6.12.0 (2020-02/3cf59ad33da Thu Aug 19 11:06:27 EDT 2021)"
 	.asciz "System.Transactions.dll"
 	.asciz ""
 
@@ -969,84 +969,6 @@ ldr x0, [x16, #272]
 Lme_1a:
 .text
 	.align 4
-	.no_dead_strip wrapper_delegate_invoke_System_Action_1_System_Transactions_IEnlistmentNotification_invoke_void_T_System_Transactions_IEnlistmentNotification
-wrapper_delegate_invoke_System_Action_1_System_Transactions_IEnlistmentNotification_invoke_void_T_System_Transactions_IEnlistmentNotification:
-.word 0xa9bb7bfd
-.word 0x910003fd
-.word 0xa9015fb6
-.word 0xa90267b8
-.word 0xf9001bba
-.word 0xaa0003f9
-.word 0xaa0103fa
-
-adrp x16, mono_aot_System_Transactions_got@PAGE+0
-add x16, x16, mono_aot_System_Transactions_got@PAGEOFF
-ldr x0, [x16, #48]
-.word 0xb9400000
-.word 0x350006a0
-.word 0x14000001
-.word 0xf9403f38
-.word 0xaa1803e0
-.word 0xb50001e0
-.word 0xf9401338
-.word 0xaa1803e0
-.word 0xb40000e0
-.word 0xf9401f20
-.word 0xf9400b22
-.word 0xaa1803e0
-.word 0xaa1a03e1
-.word 0xd63f0040
-.word 0x1400001d
-.word 0xf9401f20
-.word 0xf9400b21
-.word 0xaa1a03e0
-.word 0xd63f0020
-.word 0x14000018
-.word 0xb9801b00
-.word 0xaa0003f9
-.word 0xd2800017
-.word 0x93407ee0
-.word 0xb9801b01
-.word 0xeb00003f
-.word 0x10000011
-.word 0x540003e9
-.word 0xd37df000
-.word 0x8b000300
-.word 0x91008000
-.word 0xf9400016
-.word 0xaa1603e2
-.word 0xaa0203e0
-.word 0xaa1a03e1
-.word 0xf90023a2
-.word 0xf9400c50
-.word 0xd63f0200
-.word 0xf94023a0
-.word 0x110006f7
-.word 0xaa1703e0
-.word 0x6b19001f
-.word 0x54fffdab
-.word 0xa9415fb6
-.word 0xa94267b8
-.word 0xf9401bba
-.word 0x910003bf
-.word 0xa8c57bfd
-.word 0xd65f03c0
-.word 0x91022300
-.word 0xd280003e
-.word 0xb900001e
-.word 0xaa1803e0
-bl _p_16
-bl _p_17
-.word 0xaa0003f8
-.word 0xb5ffff20
-.word 0x17ffffca
-.word 0xd28019e0
-.word 0xaa1103e1
-bl _p_2
-
-Lme_1c:
-.text
-	.align 4
 	.no_dead_strip wrapper_delegate_invoke_System_Predicate_1_System_Transactions_IEnlistmentNotification_invoke_bool_T_System_Transactions_IEnlistmentNotification
 wrapper_delegate_invoke_System_Predicate_1_System_Transactions_IEnlistmentNotification_invoke_bool_T_System_Transactions_IEnlistmentNotification:
 .word 0xa9bb7bfd
@@ -1123,6 +1045,84 @@ bl _p_17
 .word 0xaa0003f8
 .word 0xb5ffff20
 .word 0x17ffffc5
+.word 0xd28019e0
+.word 0xaa1103e1
+bl _p_2
+
+Lme_1c:
+.text
+	.align 4
+	.no_dead_strip wrapper_delegate_invoke_System_Action_1_System_Transactions_IEnlistmentNotification_invoke_void_T_System_Transactions_IEnlistmentNotification
+wrapper_delegate_invoke_System_Action_1_System_Transactions_IEnlistmentNotification_invoke_void_T_System_Transactions_IEnlistmentNotification:
+.word 0xa9bb7bfd
+.word 0x910003fd
+.word 0xa9015fb6
+.word 0xa90267b8
+.word 0xf9001bba
+.word 0xaa0003f9
+.word 0xaa0103fa
+
+adrp x16, mono_aot_System_Transactions_got@PAGE+0
+add x16, x16, mono_aot_System_Transactions_got@PAGEOFF
+ldr x0, [x16, #48]
+.word 0xb9400000
+.word 0x350006a0
+.word 0x14000001
+.word 0xf9403f38
+.word 0xaa1803e0
+.word 0xb50001e0
+.word 0xf9401338
+.word 0xaa1803e0
+.word 0xb40000e0
+.word 0xf9401f20
+.word 0xf9400b22
+.word 0xaa1803e0
+.word 0xaa1a03e1
+.word 0xd63f0040
+.word 0x1400001d
+.word 0xf9401f20
+.word 0xf9400b21
+.word 0xaa1a03e0
+.word 0xd63f0020
+.word 0x14000018
+.word 0xb9801b00
+.word 0xaa0003f9
+.word 0xd2800017
+.word 0x93407ee0
+.word 0xb9801b01
+.word 0xeb00003f
+.word 0x10000011
+.word 0x540003e9
+.word 0xd37df000
+.word 0x8b000300
+.word 0x91008000
+.word 0xf9400016
+.word 0xaa1603e2
+.word 0xaa0203e0
+.word 0xaa1a03e1
+.word 0xf90023a2
+.word 0xf9400c50
+.word 0xd63f0200
+.word 0xf94023a0
+.word 0x110006f7
+.word 0xaa1703e0
+.word 0x6b19001f
+.word 0x54fffdab
+.word 0xa9415fb6
+.word 0xa94267b8
+.word 0xf9401bba
+.word 0x910003bf
+.word 0xa8c57bfd
+.word 0xd65f03c0
+.word 0x91022300
+.word 0xd280003e
+.word 0xb900001e
+.word 0xaa1803e0
+bl _p_16
+bl _p_17
+.word 0xaa0003f8
+.word 0xb5ffff20
+.word 0x17ffffca
 .word 0xd28019e0
 .word 0xaa1103e1
 bl _p_2
@@ -1301,8 +1301,8 @@ bl System_Transactions_TransactionOptions_GetHashCode
 bl System_Transactions_TransactionScope_get_IsComplete
 bl System_Transactions_TransactionScope__cctor
 bl method_addresses
-bl wrapper_delegate_invoke_System_Action_1_System_Transactions_IEnlistmentNotification_invoke_void_T_System_Transactions_IEnlistmentNotification
 bl wrapper_delegate_invoke_System_Predicate_1_System_Transactions_IEnlistmentNotification_invoke_bool_T_System_Transactions_IEnlistmentNotification
+bl wrapper_delegate_invoke_System_Action_1_System_Transactions_IEnlistmentNotification_invoke_void_T_System_Transactions_IEnlistmentNotification
 bl wrapper_delegate_invoke_System_Comparison_1_System_Transactions_IEnlistmentNotification_invoke_int_T_T_System_Transactions_IEnlistmentNotification_System_Transactions_IEnlistmentNotification
 bl wrapper_other_System_Transactions_TransactionOptions_StructureToPtr_object_intptr_bool
 bl wrapper_other_System_Transactions_TransactionOptions_PtrToStructure_intptr_object
@@ -1515,7 +1515,7 @@ runtime_version:
 .section __TEXT, __const
 	.align 2
 assembly_guid:
-	.asciz "EAD207FD-AF24-42C7-A877-3837658DE147"
+	.asciz "0B5D0E2E-6F5D-4B4E-9AD2-CC40B60F829A"
 .section __TEXT, __const
 	.align 2
 assembly_name:
@@ -1609,7 +1609,7 @@ _mono_aot_file_info:
 	.long 0,0,0,0,0,0,0,0
 	.long 0,0,0,0,0,0,0,0
 	.long 0,0,0,0,0,0,0,0
-	.byte 187,131,110,33,213,40,187,11,244,244,197,52,131,52,116,22
+	.byte 12,128,81,36,210,171,56,38,192,212,158,242,245,94,147,190
 	.globl _mono_aot_module_System_Transactions_info
 	.align 3
 _mono_aot_module_System_Transactions_info:
@@ -3307,13 +3307,13 @@ LDIFF_SYM228=LTDIE_21 - Ldebug_info_start
 LTDIE_20:
 
 	.byte 5
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 	.byte 128,1,16
 LDIFF_SYM229=LTDIE_21 - Ldebug_info_start
 	.long LDIFF_SYM229
 	.byte 2,35,0,0,7
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 LDIFF_SYM230=LTDIE_20 - Ldebug_info_start
 	.long LDIFF_SYM230
@@ -3351,11 +3351,11 @@ LTDIE_28_REFERENCE:
 LDIFF_SYM236=LTDIE_28 - Ldebug_info_start
 	.long LDIFF_SYM236
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Action`1<System.Transactions.IEnlistmentNotification>:invoke_void_T"
-	.asciz "wrapper_delegate_invoke_System_Action_1_System_Transactions_IEnlistmentNotification_invoke_void_T_System_Transactions_IEnlistmentNotification"
+	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<System.Transactions.IEnlistmentNotification>:invoke_bool_T"
+	.asciz "wrapper_delegate_invoke_System_Predicate_1_System_Transactions_IEnlistmentNotification_invoke_bool_T_System_Transactions_IEnlistmentNotification"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Action_1_System_Transactions_IEnlistmentNotification_invoke_void_T_System_Transactions_IEnlistmentNotification
+	.quad wrapper_delegate_invoke_System_Predicate_1_System_Transactions_IEnlistmentNotification_invoke_bool_T_System_Transactions_IEnlistmentNotification
 	.quad Lme_1c
 
 	.byte 2,118,16,3
@@ -3393,20 +3393,25 @@ LDIFF_SYM242=LTDIE_21_REFERENCE - Ldebug_info_start
 
 LDIFF_SYM243=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM243
-	.byte 1,104,0
+	.byte 1,104,11
+	.asciz "V_5"
+
+LDIFF_SYM244=LDIE_BOOLEAN - Ldebug_info_start
+	.long LDIFF_SYM244
+	.byte 1,102,0
 
 .section __DWARF, __debug_frame,regular,debug
 
-LDIFF_SYM244=Lfde24_end - Lfde24_start
-	.long LDIFF_SYM244
+LDIFF_SYM245=Lfde24_end - Lfde24_start
+	.long LDIFF_SYM245
 Lfde24_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Action_1_System_Transactions_IEnlistmentNotification_invoke_void_T_System_Transactions_IEnlistmentNotification
+	.quad wrapper_delegate_invoke_System_Predicate_1_System_Transactions_IEnlistmentNotification_invoke_bool_T_System_Transactions_IEnlistmentNotification
 
-LDIFF_SYM245=Lme_1c - wrapper_delegate_invoke_System_Action_1_System_Transactions_IEnlistmentNotification_invoke_void_T_System_Transactions_IEnlistmentNotification
-	.long LDIFF_SYM245
+LDIFF_SYM246=Lme_1c - wrapper_delegate_invoke_System_Predicate_1_System_Transactions_IEnlistmentNotification_invoke_bool_T_System_Transactions_IEnlistmentNotification
+	.long LDIFF_SYM246
 	.long 0
 	.byte 12,31,0,68,14,80,157,10,158,9,68,13,29,68,150,8,151,7,68,152,6,153,5,68,154,4
 	.align 3
@@ -3416,75 +3421,70 @@ Lfde24_end:
 LTDIE_29:
 
 	.byte 5
-	.asciz "System_Predicate`1"
+	.asciz "System_Action`1"
 
 	.byte 128,1,16
-LDIFF_SYM246=LTDIE_21 - Ldebug_info_start
-	.long LDIFF_SYM246
-	.byte 2,35,0,0,7
-	.asciz "System_Predicate`1"
-
-LDIFF_SYM247=LTDIE_29 - Ldebug_info_start
+LDIFF_SYM247=LTDIE_21 - Ldebug_info_start
 	.long LDIFF_SYM247
+	.byte 2,35,0,0,7
+	.asciz "System_Action`1"
+
+LDIFF_SYM248=LTDIE_29 - Ldebug_info_start
+	.long LDIFF_SYM248
 LTDIE_29_POINTER:
 
 	.byte 13
-LDIFF_SYM248=LTDIE_29 - Ldebug_info_start
-	.long LDIFF_SYM248
+LDIFF_SYM249=LTDIE_29 - Ldebug_info_start
+	.long LDIFF_SYM249
 LTDIE_29_REFERENCE:
 
 	.byte 14
-LDIFF_SYM249=LTDIE_29 - Ldebug_info_start
-	.long LDIFF_SYM249
+LDIFF_SYM250=LTDIE_29 - Ldebug_info_start
+	.long LDIFF_SYM250
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<System.Transactions.IEnlistmentNotification>:invoke_bool_T"
-	.asciz "wrapper_delegate_invoke_System_Predicate_1_System_Transactions_IEnlistmentNotification_invoke_bool_T_System_Transactions_IEnlistmentNotification"
+	.asciz "(wrapper_delegate-invoke)_System.Action`1<System.Transactions.IEnlistmentNotification>:invoke_void_T"
+	.asciz "wrapper_delegate_invoke_System_Action_1_System_Transactions_IEnlistmentNotification_invoke_void_T_System_Transactions_IEnlistmentNotification"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Predicate_1_System_Transactions_IEnlistmentNotification_invoke_bool_T_System_Transactions_IEnlistmentNotification
+	.quad wrapper_delegate_invoke_System_Action_1_System_Transactions_IEnlistmentNotification_invoke_void_T_System_Transactions_IEnlistmentNotification
 	.quad Lme_1d
 
 	.byte 2,118,16,3
 	.asciz "this"
 
-LDIFF_SYM250=LTDIE_29_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM250
+LDIFF_SYM251=LTDIE_29_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM251
 	.byte 1,105,3
 	.asciz "param0"
 
-LDIFF_SYM251=LTDIE_17_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM251
+LDIFF_SYM252=LTDIE_17_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM252
 	.byte 1,106,11
 	.asciz "V_0"
 
-LDIFF_SYM252=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM252
+LDIFF_SYM253=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM253
 	.byte 1,103,11
 	.asciz "V_1"
 
-LDIFF_SYM253=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM253
+LDIFF_SYM254=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM254
 	.byte 1,105,11
 	.asciz "V_2"
 
-LDIFF_SYM254=LTDIE_28_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM254
+LDIFF_SYM255=LTDIE_28_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM255
 	.byte 1,104,11
 	.asciz "V_3"
 
-LDIFF_SYM255=LTDIE_21_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM255
+LDIFF_SYM256=LTDIE_21_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM256
 	.byte 1,102,11
 	.asciz "V_4"
 
-LDIFF_SYM256=LDIE_OBJECT - Ldebug_info_start
-	.long LDIFF_SYM256
-	.byte 1,104,11
-	.asciz "V_5"
-
-LDIFF_SYM257=LDIE_BOOLEAN - Ldebug_info_start
+LDIFF_SYM257=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM257
-	.byte 1,102,0
+	.byte 1,104,0
 
 .section __DWARF, __debug_frame,regular,debug
 
@@ -3494,9 +3494,9 @@ Lfde25_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Predicate_1_System_Transactions_IEnlistmentNotification_invoke_bool_T_System_Transactions_IEnlistmentNotification
+	.quad wrapper_delegate_invoke_System_Action_1_System_Transactions_IEnlistmentNotification_invoke_void_T_System_Transactions_IEnlistmentNotification
 
-LDIFF_SYM259=Lme_1d - wrapper_delegate_invoke_System_Predicate_1_System_Transactions_IEnlistmentNotification_invoke_bool_T_System_Transactions_IEnlistmentNotification
+LDIFF_SYM259=Lme_1d - wrapper_delegate_invoke_System_Action_1_System_Transactions_IEnlistmentNotification_invoke_void_T_System_Transactions_IEnlistmentNotification
 	.long LDIFF_SYM259
 	.long 0
 	.byte 12,31,0,68,14,80,157,10,158,9,68,13,29,68,150,8,151,7,68,152,6,153,5,68,154,4

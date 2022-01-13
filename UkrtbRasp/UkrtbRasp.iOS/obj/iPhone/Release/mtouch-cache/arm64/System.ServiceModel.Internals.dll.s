@@ -22,7 +22,7 @@ Ldebug_info_begin:
 	.short 2
 	.long 0
 	.byte 8,1
-	.asciz "Mono AOT Compiler 6.12.0 (2020-02/b4a385816ed Tue Mar 30 19:54:56 EDT 2021)"
+	.asciz "Mono AOT Compiler 6.12.0 (2020-02/3cf59ad33da Thu Aug 19 11:06:27 EDT 2021)"
 	.asciz "System.ServiceModel.Internals.dll"
 	.asciz ""
 
@@ -14757,84 +14757,6 @@ bl _p_33
 Lme_d2:
 .text
 	.align 4
-	.no_dead_strip wrapper_delegate_invoke_System_Action_1_System_Tuple_2_string_string_invoke_void_T_System_Tuple_2_string_string
-wrapper_delegate_invoke_System_Action_1_System_Tuple_2_string_string_invoke_void_T_System_Tuple_2_string_string:
-.word 0xa9bb7bfd
-.word 0x910003fd
-.word 0xa9015fb6
-.word 0xa90267b8
-.word 0xf9001bba
-.word 0xaa0003f9
-.word 0xaa0103fa
-
-adrp x16, mono_aot_System_ServiceModel_Internals_got@PAGE+0
-add x16, x16, mono_aot_System_ServiceModel_Internals_got@PAGEOFF
-ldr x0, [x16, #48]
-.word 0xb9400000
-.word 0x350006a0
-.word 0x14000001
-.word 0xf9403f38
-.word 0xaa1803e0
-.word 0xb50001e0
-.word 0xf9401338
-.word 0xaa1803e0
-.word 0xb40000e0
-.word 0xf9401f20
-.word 0xf9400b22
-.word 0xaa1803e0
-.word 0xaa1a03e1
-.word 0xd63f0040
-.word 0x1400001d
-.word 0xf9401f20
-.word 0xf9400b21
-.word 0xaa1a03e0
-.word 0xd63f0020
-.word 0x14000018
-.word 0xb9801b00
-.word 0xaa0003f9
-.word 0xd2800017
-.word 0x93407ee0
-.word 0xb9801b01
-.word 0xeb00003f
-.word 0x10000011
-.word 0x540003e9
-.word 0xd37df000
-.word 0x8b000300
-.word 0x91008000
-.word 0xf9400016
-.word 0xaa1603e2
-.word 0xaa0203e0
-.word 0xaa1a03e1
-.word 0xf90023a2
-.word 0xf9400c50
-.word 0xd63f0200
-.word 0xf94023a0
-.word 0x110006f7
-.word 0xaa1703e0
-.word 0x6b19001f
-.word 0x54fffdab
-.word 0xa9415fb6
-.word 0xa94267b8
-.word 0xf9401bba
-.word 0x910003bf
-.word 0xa8c57bfd
-.word 0xd65f03c0
-.word 0x91022300
-.word 0xd280003e
-.word 0xb900001e
-.word 0xaa1803e0
-bl _p_119
-bl _p_235
-.word 0xaa0003f8
-.word 0xb5ffff20
-.word 0x17ffffca
-.word 0xd28019e0
-.word 0xaa1103e1
-bl _p_33
-
-Lme_d3:
-.text
-	.align 4
 	.no_dead_strip wrapper_delegate_invoke_System_Predicate_1_System_Tuple_2_string_string_invoke_bool_T_System_Tuple_2_string_string
 wrapper_delegate_invoke_System_Predicate_1_System_Tuple_2_string_string_invoke_bool_T_System_Tuple_2_string_string:
 .word 0xa9bb7bfd
@@ -14911,6 +14833,84 @@ bl _p_235
 .word 0xaa0003f8
 .word 0xb5ffff20
 .word 0x17ffffc5
+.word 0xd28019e0
+.word 0xaa1103e1
+bl _p_33
+
+Lme_d3:
+.text
+	.align 4
+	.no_dead_strip wrapper_delegate_invoke_System_Action_1_System_Tuple_2_string_string_invoke_void_T_System_Tuple_2_string_string
+wrapper_delegate_invoke_System_Action_1_System_Tuple_2_string_string_invoke_void_T_System_Tuple_2_string_string:
+.word 0xa9bb7bfd
+.word 0x910003fd
+.word 0xa9015fb6
+.word 0xa90267b8
+.word 0xf9001bba
+.word 0xaa0003f9
+.word 0xaa0103fa
+
+adrp x16, mono_aot_System_ServiceModel_Internals_got@PAGE+0
+add x16, x16, mono_aot_System_ServiceModel_Internals_got@PAGEOFF
+ldr x0, [x16, #48]
+.word 0xb9400000
+.word 0x350006a0
+.word 0x14000001
+.word 0xf9403f38
+.word 0xaa1803e0
+.word 0xb50001e0
+.word 0xf9401338
+.word 0xaa1803e0
+.word 0xb40000e0
+.word 0xf9401f20
+.word 0xf9400b22
+.word 0xaa1803e0
+.word 0xaa1a03e1
+.word 0xd63f0040
+.word 0x1400001d
+.word 0xf9401f20
+.word 0xf9400b21
+.word 0xaa1a03e0
+.word 0xd63f0020
+.word 0x14000018
+.word 0xb9801b00
+.word 0xaa0003f9
+.word 0xd2800017
+.word 0x93407ee0
+.word 0xb9801b01
+.word 0xeb00003f
+.word 0x10000011
+.word 0x540003e9
+.word 0xd37df000
+.word 0x8b000300
+.word 0x91008000
+.word 0xf9400016
+.word 0xaa1603e2
+.word 0xaa0203e0
+.word 0xaa1a03e1
+.word 0xf90023a2
+.word 0xf9400c50
+.word 0xd63f0200
+.word 0xf94023a0
+.word 0x110006f7
+.word 0xaa1703e0
+.word 0x6b19001f
+.word 0x54fffdab
+.word 0xa9415fb6
+.word 0xa94267b8
+.word 0xf9401bba
+.word 0x910003bf
+.word 0xa8c57bfd
+.word 0xd65f03c0
+.word 0x91022300
+.word 0xd280003e
+.word 0xb900001e
+.word 0xaa1803e0
+bl _p_119
+bl _p_235
+.word 0xaa0003f8
+.word 0xb5ffff20
+.word 0x17ffffca
 .word 0xd28019e0
 .word 0xaa1103e1
 bl _p_33
@@ -16147,8 +16147,8 @@ bl method_addresses
 bl System_Runtime_ExceptionTrace_TraceException_TException_GSHAREDVT_TException_GSHAREDVT
 bl System_Runtime_ExceptionTrace_TraceException_TException_GSHAREDVT_TException_GSHAREDVT_string
 bl wrapper_delegate_invoke_System_Func_1_string_invoke_TResult
-bl wrapper_delegate_invoke_System_Action_1_System_Tuple_2_string_string_invoke_void_T_System_Tuple_2_string_string
 bl wrapper_delegate_invoke_System_Predicate_1_System_Tuple_2_string_string_invoke_bool_T_System_Tuple_2_string_string
+bl wrapper_delegate_invoke_System_Action_1_System_Tuple_2_string_string_invoke_void_T_System_Tuple_2_string_string
 bl wrapper_delegate_invoke_System_Comparison_1_System_Tuple_2_string_string_invoke_int_T_T_System_Tuple_2_string_string_System_Tuple_2_string_string
 bl method_addresses
 bl System_Array_InternalEnumerator_1_T_INST__ctor_System_Array
@@ -18298,7 +18298,7 @@ runtime_version:
 .section __TEXT, __const
 	.align 2
 assembly_guid:
-	.asciz "33439CE3-E611-4024-82A4-3E8597F6AEAD"
+	.asciz "9B2C5C58-41F2-4853-84AC-42E9B6A6D14F"
 .section __TEXT, __const
 	.align 2
 assembly_name:
@@ -18392,7 +18392,7 @@ _mono_aot_file_info:
 	.long 0,0,0,0,0,0,0,0
 	.long 0,0,0,0,0,0,0,0
 	.long 0,0,0,0,0,0,0,0
-	.byte 252,147,237,123,4,14,51,234,112,255,249,79,179,239,92,16
+	.byte 154,186,219,207,196,130,247,27,45,77,165,242,59,49,61,181
 	.globl _mono_aot_module_System_ServiceModel_Internals_info
 	.align 3
 _mono_aot_module_System_ServiceModel_Internals_info:
@@ -33625,13 +33625,13 @@ Lfde199_end:
 LTDIE_176:
 
 	.byte 5
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 	.byte 128,1,16
 LDIFF_SYM2133=LTDIE_26 - Ldebug_info_start
 	.long LDIFF_SYM2133
 	.byte 2,35,0,0,7
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 LDIFF_SYM2134=LTDIE_176 - Ldebug_info_start
 	.long LDIFF_SYM2134
@@ -33646,11 +33646,11 @@ LTDIE_176_REFERENCE:
 LDIFF_SYM2136=LTDIE_176 - Ldebug_info_start
 	.long LDIFF_SYM2136
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Action`1<System.Tuple`2<string,_string>>:invoke_void_T"
-	.asciz "wrapper_delegate_invoke_System_Action_1_System_Tuple_2_string_string_invoke_void_T_System_Tuple_2_string_string"
+	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<System.Tuple`2<string,_string>>:invoke_bool_T"
+	.asciz "wrapper_delegate_invoke_System_Predicate_1_System_Tuple_2_string_string_invoke_bool_T_System_Tuple_2_string_string"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Action_1_System_Tuple_2_string_string_invoke_void_T_System_Tuple_2_string_string
+	.quad wrapper_delegate_invoke_System_Predicate_1_System_Tuple_2_string_string_invoke_bool_T_System_Tuple_2_string_string
 	.quad Lme_d3
 
 	.byte 2,118,16,3
@@ -33688,20 +33688,25 @@ LDIFF_SYM2142=LTDIE_26_REFERENCE - Ldebug_info_start
 
 LDIFF_SYM2143=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM2143
-	.byte 1,104,0
+	.byte 1,104,11
+	.asciz "V_5"
+
+LDIFF_SYM2144=LDIE_BOOLEAN - Ldebug_info_start
+	.long LDIFF_SYM2144
+	.byte 1,102,0
 
 .section __DWARF, __debug_frame,regular,debug
 
-LDIFF_SYM2144=Lfde200_end - Lfde200_start
-	.long LDIFF_SYM2144
+LDIFF_SYM2145=Lfde200_end - Lfde200_start
+	.long LDIFF_SYM2145
 Lfde200_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Action_1_System_Tuple_2_string_string_invoke_void_T_System_Tuple_2_string_string
+	.quad wrapper_delegate_invoke_System_Predicate_1_System_Tuple_2_string_string_invoke_bool_T_System_Tuple_2_string_string
 
-LDIFF_SYM2145=Lme_d3 - wrapper_delegate_invoke_System_Action_1_System_Tuple_2_string_string_invoke_void_T_System_Tuple_2_string_string
-	.long LDIFF_SYM2145
+LDIFF_SYM2146=Lme_d3 - wrapper_delegate_invoke_System_Predicate_1_System_Tuple_2_string_string_invoke_bool_T_System_Tuple_2_string_string
+	.long LDIFF_SYM2146
 	.long 0
 	.byte 12,31,0,68,14,80,157,10,158,9,68,13,29,68,150,8,151,7,68,152,6,153,5,68,154,4
 	.align 3
@@ -33711,75 +33716,70 @@ Lfde200_end:
 LTDIE_177:
 
 	.byte 5
-	.asciz "System_Predicate`1"
+	.asciz "System_Action`1"
 
 	.byte 128,1,16
-LDIFF_SYM2146=LTDIE_26 - Ldebug_info_start
-	.long LDIFF_SYM2146
-	.byte 2,35,0,0,7
-	.asciz "System_Predicate`1"
-
-LDIFF_SYM2147=LTDIE_177 - Ldebug_info_start
+LDIFF_SYM2147=LTDIE_26 - Ldebug_info_start
 	.long LDIFF_SYM2147
+	.byte 2,35,0,0,7
+	.asciz "System_Action`1"
+
+LDIFF_SYM2148=LTDIE_177 - Ldebug_info_start
+	.long LDIFF_SYM2148
 LTDIE_177_POINTER:
 
 	.byte 13
-LDIFF_SYM2148=LTDIE_177 - Ldebug_info_start
-	.long LDIFF_SYM2148
+LDIFF_SYM2149=LTDIE_177 - Ldebug_info_start
+	.long LDIFF_SYM2149
 LTDIE_177_REFERENCE:
 
 	.byte 14
-LDIFF_SYM2149=LTDIE_177 - Ldebug_info_start
-	.long LDIFF_SYM2149
+LDIFF_SYM2150=LTDIE_177 - Ldebug_info_start
+	.long LDIFF_SYM2150
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<System.Tuple`2<string,_string>>:invoke_bool_T"
-	.asciz "wrapper_delegate_invoke_System_Predicate_1_System_Tuple_2_string_string_invoke_bool_T_System_Tuple_2_string_string"
+	.asciz "(wrapper_delegate-invoke)_System.Action`1<System.Tuple`2<string,_string>>:invoke_void_T"
+	.asciz "wrapper_delegate_invoke_System_Action_1_System_Tuple_2_string_string_invoke_void_T_System_Tuple_2_string_string"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Predicate_1_System_Tuple_2_string_string_invoke_bool_T_System_Tuple_2_string_string
+	.quad wrapper_delegate_invoke_System_Action_1_System_Tuple_2_string_string_invoke_void_T_System_Tuple_2_string_string
 	.quad Lme_d4
 
 	.byte 2,118,16,3
 	.asciz "this"
 
-LDIFF_SYM2150=LTDIE_177_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM2150
+LDIFF_SYM2151=LTDIE_177_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM2151
 	.byte 1,105,3
 	.asciz "param0"
 
-LDIFF_SYM2151=LTDIE_167_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM2151
+LDIFF_SYM2152=LTDIE_167_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM2152
 	.byte 1,106,11
 	.asciz "V_0"
 
-LDIFF_SYM2152=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM2152
+LDIFF_SYM2153=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM2153
 	.byte 1,103,11
 	.asciz "V_1"
 
-LDIFF_SYM2153=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM2153
+LDIFF_SYM2154=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM2154
 	.byte 1,105,11
 	.asciz "V_2"
 
-LDIFF_SYM2154=LTDIE_175_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM2154
+LDIFF_SYM2155=LTDIE_175_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM2155
 	.byte 1,104,11
 	.asciz "V_3"
 
-LDIFF_SYM2155=LTDIE_26_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM2155
+LDIFF_SYM2156=LTDIE_26_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM2156
 	.byte 1,102,11
 	.asciz "V_4"
 
-LDIFF_SYM2156=LDIE_OBJECT - Ldebug_info_start
-	.long LDIFF_SYM2156
-	.byte 1,104,11
-	.asciz "V_5"
-
-LDIFF_SYM2157=LDIE_BOOLEAN - Ldebug_info_start
+LDIFF_SYM2157=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM2157
-	.byte 1,102,0
+	.byte 1,104,0
 
 .section __DWARF, __debug_frame,regular,debug
 
@@ -33789,9 +33789,9 @@ Lfde201_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Predicate_1_System_Tuple_2_string_string_invoke_bool_T_System_Tuple_2_string_string
+	.quad wrapper_delegate_invoke_System_Action_1_System_Tuple_2_string_string_invoke_void_T_System_Tuple_2_string_string
 
-LDIFF_SYM2159=Lme_d4 - wrapper_delegate_invoke_System_Predicate_1_System_Tuple_2_string_string_invoke_bool_T_System_Tuple_2_string_string
+LDIFF_SYM2159=Lme_d4 - wrapper_delegate_invoke_System_Action_1_System_Tuple_2_string_string_invoke_void_T_System_Tuple_2_string_string
 	.long LDIFF_SYM2159
 	.long 0
 	.byte 12,31,0,68,14,80,157,10,158,9,68,13,29,68,150,8,151,7,68,152,6,153,5,68,154,4

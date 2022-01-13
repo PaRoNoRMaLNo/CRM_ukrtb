@@ -22,7 +22,7 @@ Ldebug_info_begin:
 	.short 2
 	.long 0
 	.byte 8,1
-	.asciz "Mono AOT Compiler 6.12.0 (2020-02/b4a385816ed Tue Mar 30 19:54:56 EDT 2021)"
+	.asciz "Mono AOT Compiler 6.12.0 (2020-02/3cf59ad33da Thu Aug 19 11:06:27 EDT 2021)"
 	.asciz "System.Numerics.dll"
 	.asciz ""
 
@@ -27872,7 +27872,7 @@ runtime_version:
 .section __TEXT, __const
 	.align 2
 assembly_guid:
-	.asciz "F4AE4D7D-FC89-47B6-A6F4-1ABDA3CD949D"
+	.asciz "8A5E4087-231A-478D-8830-D152A29D1F3F"
 .section __TEXT, __const
 	.align 2
 assembly_name:
@@ -27966,7 +27966,7 @@ _mono_aot_file_info:
 	.long 0,0,0,0,0,0,0,0
 	.long 0,0,0,0,0,0,0,0
 	.long 0,0,0,0,0,0,0,0
-	.byte 208,220,98,217,82,234,247,196,41,244,85,13,31,95,167,149
+	.byte 95,204,44,150,111,128,68,214,203,211,45,215,30,150,1,76
 	.globl _mono_aot_module_System_Numerics_info
 	.align 3
 _mono_aot_module_System_Numerics_info:

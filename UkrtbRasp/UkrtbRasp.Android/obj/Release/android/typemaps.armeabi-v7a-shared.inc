@@ -1,38 +1,38 @@
 	.section	.rodata.map_aname.0,"aMS",%progbits,1
 	.type	.L.map_aname.0, %object
 .L.map_aname.0:
-	.asciz	"UkrtbRasp.Android"
-	.size	.L.map_aname.0, 18
+	.asciz	"FormsViewGroup"
+	.size	.L.map_aname.0, 15
 
 	.section	.rodata.map_aname.1,"aMS",%progbits,1
 	.type	.L.map_aname.1, %object
 .L.map_aname.1:
-	.asciz	"FormsViewGroup"
-	.size	.L.map_aname.1, 15
+	.asciz	"Xamarin.Forms.PancakeView"
+	.size	.L.map_aname.1, 26
 
 	.section	.rodata.map_aname.2,"aMS",%progbits,1
 	.type	.L.map_aname.2, %object
 .L.map_aname.2:
-	.asciz	"Xamarin.Forms.PancakeView"
-	.size	.L.map_aname.2, 26
+	.asciz	"Xamarin.AndroidX.Legacy.Support.Core.UI"
+	.size	.L.map_aname.2, 40
 
 	.section	.rodata.map_aname.3,"aMS",%progbits,1
 	.type	.L.map_aname.3, %object
 .L.map_aname.3:
-	.asciz	"Xamarin.AndroidX.Legacy.Support.Core.UI"
-	.size	.L.map_aname.3, 40
+	.asciz	"Square.OkIO"
+	.size	.L.map_aname.3, 12
 
 	.section	.rodata.map_aname.4,"aMS",%progbits,1
 	.type	.L.map_aname.4, %object
 .L.map_aname.4:
-	.asciz	"Square.OkIO"
-	.size	.L.map_aname.4, 12
+	.asciz	"Xamarin.AndroidX.AppCompat"
+	.size	.L.map_aname.4, 27
 
 	.section	.rodata.map_aname.5,"aMS",%progbits,1
 	.type	.L.map_aname.5, %object
 .L.map_aname.5:
-	.asciz	"Xamarin.AndroidX.AppCompat"
-	.size	.L.map_aname.5, 27
+	.asciz	"UkrtbRasp.Android"
+	.size	.L.map_aname.5, 18
 
 	.section	.rodata.map_aname.6,"aMS",%progbits,1
 	.type	.L.map_aname.6, %object

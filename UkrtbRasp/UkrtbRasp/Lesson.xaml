@@ -33,6 +33,13 @@
                                FontFamily="Montserrat_SemiBold.ttf"
                                TextColor="{DynamicResource Text_light}" />
                     </yummy:PancakeView>
+                    <Label Text="10:00"
+                           x:Name="Time"
+                           TextColor="{DynamicResource Text_light}"
+                           VerticalOptions="CenterAndExpand"
+                           Margin="10,0"
+                           FontFamily="Montserrat_SemiBold.ttf"
+                           HorizontalOptions="Start" />
                     <Label Text="303"
                            x:Name="Cab"
                            TextColor="{DynamicResource Text_light}"

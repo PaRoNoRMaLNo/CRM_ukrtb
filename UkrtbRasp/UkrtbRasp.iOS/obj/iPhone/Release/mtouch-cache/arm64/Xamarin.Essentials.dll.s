@@ -22,7 +22,7 @@ Ldebug_info_begin:
 	.short 2
 	.long 0
 	.byte 8,1
-	.asciz "Mono AOT Compiler 6.12.0 (2020-02/b4a385816ed Tue Mar 30 19:54:56 EDT 2021)"
+	.asciz "Mono AOT Compiler 6.12.0 (2020-02/3cf59ad33da Thu Aug 19 11:06:27 EDT 2021)"
 	.asciz "Xamarin.Essentials.dll"
 	.asciz ""
 
@@ -13581,84 +13581,6 @@ bl _p_22
 Lme_cc:
 .text
 	.align 4
-	.no_dead_strip wrapper_delegate_invoke_System_Action_1_string_invoke_void_T_string
-wrapper_delegate_invoke_System_Action_1_string_invoke_void_T_string:
-.word 0xa9bb7bfd
-.word 0x910003fd
-.word 0xa9015fb6
-.word 0xa90267b8
-.word 0xf9001bba
-.word 0xaa0003f9
-.word 0xaa0103fa
-
-adrp x16, mono_aot_Xamarin_Essentials_got@PAGE+0
-add x16, x16, mono_aot_Xamarin_Essentials_got@PAGEOFF
-ldr x0, [x16, #48]
-.word 0xb9400000
-.word 0x350006a0
-.word 0x14000001
-.word 0xf9403f38
-.word 0xaa1803e0
-.word 0xb50001e0
-.word 0xf9401338
-.word 0xaa1803e0
-.word 0xb40000e0
-.word 0xf9401f20
-.word 0xf9400b22
-.word 0xaa1803e0
-.word 0xaa1a03e1
-.word 0xd63f0040
-.word 0x1400001d
-.word 0xf9401f20
-.word 0xf9400b21
-.word 0xaa1a03e0
-.word 0xd63f0020
-.word 0x14000018
-.word 0xb9801b00
-.word 0xaa0003f9
-.word 0xd2800017
-.word 0x93407ee0
-.word 0xb9801b01
-.word 0xeb00003f
-.word 0x10000011
-.word 0x540003e9
-.word 0xd37df000
-.word 0x8b000300
-.word 0x91008000
-.word 0xf9400016
-.word 0xaa1603e2
-.word 0xaa0203e0
-.word 0xaa1a03e1
-.word 0xf90023a2
-.word 0xf9400c50
-.word 0xd63f0200
-.word 0xf94023a0
-.word 0x110006f7
-.word 0xaa1703e0
-.word 0x6b19001f
-.word 0x54fffdab
-.word 0xa9415fb6
-.word 0xa94267b8
-.word 0xf9401bba
-.word 0x910003bf
-.word 0xa8c57bfd
-.word 0xd65f03c0
-.word 0x91022300
-.word 0xd280003e
-.word 0xb900001e
-.word 0xaa1803e0
-bl _p_240
-bl _p_248
-.word 0xaa0003f8
-.word 0xb5ffff20
-.word 0x17ffffca
-.word 0xd28019e0
-.word 0xaa1103e1
-bl _p_65
-
-Lme_cd:
-.text
-	.align 4
 	.no_dead_strip wrapper_delegate_invoke_System_Predicate_1_string_invoke_bool_T_string
 wrapper_delegate_invoke_System_Predicate_1_string_invoke_bool_T_string:
 .word 0xa9bb7bfd
@@ -13735,6 +13657,84 @@ bl _p_248
 .word 0xaa0003f8
 .word 0xb5ffff20
 .word 0x17ffffc5
+.word 0xd28019e0
+.word 0xaa1103e1
+bl _p_65
+
+Lme_cd:
+.text
+	.align 4
+	.no_dead_strip wrapper_delegate_invoke_System_Action_1_string_invoke_void_T_string
+wrapper_delegate_invoke_System_Action_1_string_invoke_void_T_string:
+.word 0xa9bb7bfd
+.word 0x910003fd
+.word 0xa9015fb6
+.word 0xa90267b8
+.word 0xf9001bba
+.word 0xaa0003f9
+.word 0xaa0103fa
+
+adrp x16, mono_aot_Xamarin_Essentials_got@PAGE+0
+add x16, x16, mono_aot_Xamarin_Essentials_got@PAGEOFF
+ldr x0, [x16, #48]
+.word 0xb9400000
+.word 0x350006a0
+.word 0x14000001
+.word 0xf9403f38
+.word 0xaa1803e0
+.word 0xb50001e0
+.word 0xf9401338
+.word 0xaa1803e0
+.word 0xb40000e0
+.word 0xf9401f20
+.word 0xf9400b22
+.word 0xaa1803e0
+.word 0xaa1a03e1
+.word 0xd63f0040
+.word 0x1400001d
+.word 0xf9401f20
+.word 0xf9400b21
+.word 0xaa1a03e0
+.word 0xd63f0020
+.word 0x14000018
+.word 0xb9801b00
+.word 0xaa0003f9
+.word 0xd2800017
+.word 0x93407ee0
+.word 0xb9801b01
+.word 0xeb00003f
+.word 0x10000011
+.word 0x540003e9
+.word 0xd37df000
+.word 0x8b000300
+.word 0x91008000
+.word 0xf9400016
+.word 0xaa1603e2
+.word 0xaa0203e0
+.word 0xaa1a03e1
+.word 0xf90023a2
+.word 0xf9400c50
+.word 0xd63f0200
+.word 0xf94023a0
+.word 0x110006f7
+.word 0xaa1703e0
+.word 0x6b19001f
+.word 0x54fffdab
+.word 0xa9415fb6
+.word 0xa94267b8
+.word 0xf9401bba
+.word 0x910003bf
+.word 0xa8c57bfd
+.word 0xd65f03c0
+.word 0x91022300
+.word 0xd280003e
+.word 0xb900001e
+.word 0xaa1803e0
+bl _p_240
+bl _p_248
+.word 0xaa0003f8
+.word 0xb5ffff20
+.word 0x17ffffca
 .word 0xd28019e0
 .word 0xaa1103e1
 bl _p_65
@@ -15934,84 +15934,6 @@ bl _p_22
 Lme_f2:
 .text
 	.align 4
-	.no_dead_strip wrapper_delegate_invoke_System_Action_1_UIKit_UIWindow_invoke_void_T_UIKit_UIWindow
-wrapper_delegate_invoke_System_Action_1_UIKit_UIWindow_invoke_void_T_UIKit_UIWindow:
-.word 0xa9bb7bfd
-.word 0x910003fd
-.word 0xa9015fb6
-.word 0xa90267b8
-.word 0xf9001bba
-.word 0xaa0003f9
-.word 0xaa0103fa
-
-adrp x16, mono_aot_Xamarin_Essentials_got@PAGE+0
-add x16, x16, mono_aot_Xamarin_Essentials_got@PAGEOFF
-ldr x0, [x16, #48]
-.word 0xb9400000
-.word 0x350006a0
-.word 0x14000001
-.word 0xf9403f38
-.word 0xaa1803e0
-.word 0xb50001e0
-.word 0xf9401338
-.word 0xaa1803e0
-.word 0xb40000e0
-.word 0xf9401f20
-.word 0xf9400b22
-.word 0xaa1803e0
-.word 0xaa1a03e1
-.word 0xd63f0040
-.word 0x1400001d
-.word 0xf9401f20
-.word 0xf9400b21
-.word 0xaa1a03e0
-.word 0xd63f0020
-.word 0x14000018
-.word 0xb9801b00
-.word 0xaa0003f9
-.word 0xd2800017
-.word 0x93407ee0
-.word 0xb9801b01
-.word 0xeb00003f
-.word 0x10000011
-.word 0x540003e9
-.word 0xd37df000
-.word 0x8b000300
-.word 0x91008000
-.word 0xf9400016
-.word 0xaa1603e2
-.word 0xaa0203e0
-.word 0xaa1a03e1
-.word 0xf90023a2
-.word 0xf9400c50
-.word 0xd63f0200
-.word 0xf94023a0
-.word 0x110006f7
-.word 0xaa1703e0
-.word 0x6b19001f
-.word 0x54fffdab
-.word 0xa9415fb6
-.word 0xa94267b8
-.word 0xf9401bba
-.word 0x910003bf
-.word 0xa8c57bfd
-.word 0xd65f03c0
-.word 0x91022300
-.word 0xd280003e
-.word 0xb900001e
-.word 0xaa1803e0
-bl _p_240
-bl _p_248
-.word 0xaa0003f8
-.word 0xb5ffff20
-.word 0x17ffffca
-.word 0xd28019e0
-.word 0xaa1103e1
-bl _p_65
-
-Lme_f4:
-.text
-	.align 4
 	.no_dead_strip wrapper_delegate_invoke_System_Predicate_1_UIKit_UIWindow_invoke_bool_T_UIKit_UIWindow
 wrapper_delegate_invoke_System_Predicate_1_UIKit_UIWindow_invoke_bool_T_UIKit_UIWindow:
 .word 0xa9bb7bfd
@@ -16088,6 +16010,84 @@ bl _p_248
 .word 0xaa0003f8
 .word 0xb5ffff20
 .word 0x17ffffc5
+.word 0xd28019e0
+.word 0xaa1103e1
+bl _p_65
+
+Lme_f4:
+.text
+	.align 4
+	.no_dead_strip wrapper_delegate_invoke_System_Action_1_UIKit_UIWindow_invoke_void_T_UIKit_UIWindow
+wrapper_delegate_invoke_System_Action_1_UIKit_UIWindow_invoke_void_T_UIKit_UIWindow:
+.word 0xa9bb7bfd
+.word 0x910003fd
+.word 0xa9015fb6
+.word 0xa90267b8
+.word 0xf9001bba
+.word 0xaa0003f9
+.word 0xaa0103fa
+
+adrp x16, mono_aot_Xamarin_Essentials_got@PAGE+0
+add x16, x16, mono_aot_Xamarin_Essentials_got@PAGEOFF
+ldr x0, [x16, #48]
+.word 0xb9400000
+.word 0x350006a0
+.word 0x14000001
+.word 0xf9403f38
+.word 0xaa1803e0
+.word 0xb50001e0
+.word 0xf9401338
+.word 0xaa1803e0
+.word 0xb40000e0
+.word 0xf9401f20
+.word 0xf9400b22
+.word 0xaa1803e0
+.word 0xaa1a03e1
+.word 0xd63f0040
+.word 0x1400001d
+.word 0xf9401f20
+.word 0xf9400b21
+.word 0xaa1a03e0
+.word 0xd63f0020
+.word 0x14000018
+.word 0xb9801b00
+.word 0xaa0003f9
+.word 0xd2800017
+.word 0x93407ee0
+.word 0xb9801b01
+.word 0xeb00003f
+.word 0x10000011
+.word 0x540003e9
+.word 0xd37df000
+.word 0x8b000300
+.word 0x91008000
+.word 0xf9400016
+.word 0xaa1603e2
+.word 0xaa0203e0
+.word 0xaa1a03e1
+.word 0xf90023a2
+.word 0xf9400c50
+.word 0xd63f0200
+.word 0xf94023a0
+.word 0x110006f7
+.word 0xaa1703e0
+.word 0x6b19001f
+.word 0x54fffdab
+.word 0xa9415fb6
+.word 0xa94267b8
+.word 0xf9401bba
+.word 0x910003bf
+.word 0xa8c57bfd
+.word 0xd65f03c0
+.word 0x91022300
+.word 0xd280003e
+.word 0xb900001e
+.word 0xaa1803e0
+bl _p_240
+bl _p_248
+.word 0xaa0003f8
+.word 0xb5ffff20
+.word 0x17ffffca
 .word 0xd28019e0
 .word 0xaa1103e1
 bl _p_65
@@ -20937,8 +20937,8 @@ bl System_ValueTuple_5_T1_DOUBLE_T2_DOUBLE_T3_DOUBLE_T4_INT_T5_INT_ToString
 bl System_ValueTuple_5_T1_DOUBLE_T2_DOUBLE_T3_DOUBLE_T4_INT_T5_INT_System_IValueTupleInternal_ToStringEnd
 bl System_ValueTuple_5_T1_DOUBLE_T2_DOUBLE_T3_DOUBLE_T4_INT_T5_INT_System_Runtime_CompilerServices_ITuple_get_Length
 bl System_ValueTuple_5_T1_DOUBLE_T2_DOUBLE_T3_DOUBLE_T4_INT_T5_INT_System_Runtime_CompilerServices_ITuple_get_Item_int
-bl wrapper_delegate_invoke_System_Action_1_string_invoke_void_T_string
 bl wrapper_delegate_invoke_System_Predicate_1_string_invoke_bool_T_string
+bl wrapper_delegate_invoke_System_Action_1_string_invoke_void_T_string
 bl wrapper_delegate_invoke_System_Comparison_1_string_invoke_int_T_T_string_string
 bl method_addresses
 bl System_Array_InternalEnumerator_1_T_INST__ctor_System_Array
@@ -20976,8 +20976,8 @@ bl System_Collections_Generic_Comparer_1_T_DOUBLE_get_Default
 bl System_Array_InternalArray__get_Item_T_INST_int
 bl System_Linq_OrderedEnumerable_2_UIKit_UIWindow_System_nfloat__ctor_System_Collections_Generic_IEnumerable_1_UIKit_UIWindow_System_Func_2_UIKit_UIWindow_System_nfloat_System_Collections_Generic_IComparer_1_System_nfloat_bool_System_Linq_OrderedEnumerable_1_UIKit_UIWindow
 bl method_addresses
-bl wrapper_delegate_invoke_System_Action_1_UIKit_UIWindow_invoke_void_T_UIKit_UIWindow
 bl wrapper_delegate_invoke_System_Predicate_1_UIKit_UIWindow_invoke_bool_T_UIKit_UIWindow
+bl wrapper_delegate_invoke_System_Action_1_UIKit_UIWindow_invoke_void_T_UIKit_UIWindow
 bl wrapper_delegate_invoke_System_Comparison_1_UIKit_UIWindow_invoke_int_T_T_UIKit_UIWindow_UIKit_UIWindow
 bl System_Linq_OrderedEnumerable_2_UIKit_UIWindow_System_nfloat_GetEnumerableSorter_System_Linq_EnumerableSorter_1_UIKit_UIWindow
 bl System_Linq_OrderedEnumerable_2_UIKit_UIWindow_System_nfloat_GetComparer_System_Linq_CachingComparer_1_UIKit_UIWindow
@@ -24564,7 +24564,7 @@ _mono_aot_file_info:
 	.long 0,0,0,0,0,0,0,0
 	.long 0,0,0,0,0,0,0,0
 	.long 0,0,0,0,0,0,0,0
-	.byte 72,76,156,77,205,175,129,59,128,156,194,63,123,53,146,209
+	.byte 246,174,249,155,110,136,100,136,220,5,220,252,83,117,235,170
 	.globl _mono_aot_module_Xamarin_Essentials_info
 	.align 3
 _mono_aot_module_Xamarin_Essentials_info:
@@ -38317,13 +38317,13 @@ Lfde193_end:
 LTDIE_170:
 
 	.byte 5
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 	.byte 128,1,16
 LDIFF_SYM1832=LTDIE_42 - Ldebug_info_start
 	.long LDIFF_SYM1832
 	.byte 2,35,0,0,7
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 LDIFF_SYM1833=LTDIE_170 - Ldebug_info_start
 	.long LDIFF_SYM1833
@@ -38338,11 +38338,11 @@ LTDIE_170_REFERENCE:
 LDIFF_SYM1835=LTDIE_170 - Ldebug_info_start
 	.long LDIFF_SYM1835
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Action`1<string>:invoke_void_T"
-	.asciz "wrapper_delegate_invoke_System_Action_1_string_invoke_void_T_string"
+	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<string>:invoke_bool_T"
+	.asciz "wrapper_delegate_invoke_System_Predicate_1_string_invoke_bool_T_string"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Action_1_string_invoke_void_T_string
+	.quad wrapper_delegate_invoke_System_Predicate_1_string_invoke_bool_T_string
 	.quad Lme_cd
 
 	.byte 2,118,16,3
@@ -38380,20 +38380,25 @@ LDIFF_SYM1841=LTDIE_42_REFERENCE - Ldebug_info_start
 
 LDIFF_SYM1842=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM1842
-	.byte 1,104,0
+	.byte 1,104,11
+	.asciz "V_5"
+
+LDIFF_SYM1843=LDIE_BOOLEAN - Ldebug_info_start
+	.long LDIFF_SYM1843
+	.byte 1,102,0
 
 .section __DWARF, __debug_frame,regular,debug
 
-LDIFF_SYM1843=Lfde194_end - Lfde194_start
-	.long LDIFF_SYM1843
+LDIFF_SYM1844=Lfde194_end - Lfde194_start
+	.long LDIFF_SYM1844
 Lfde194_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Action_1_string_invoke_void_T_string
+	.quad wrapper_delegate_invoke_System_Predicate_1_string_invoke_bool_T_string
 
-LDIFF_SYM1844=Lme_cd - wrapper_delegate_invoke_System_Action_1_string_invoke_void_T_string
-	.long LDIFF_SYM1844
+LDIFF_SYM1845=Lme_cd - wrapper_delegate_invoke_System_Predicate_1_string_invoke_bool_T_string
+	.long LDIFF_SYM1845
 	.long 0
 	.byte 12,31,0,68,14,80,157,10,158,9,68,13,29,68,150,8,151,7,68,152,6,153,5,68,154,4
 	.align 3
@@ -38403,75 +38408,70 @@ Lfde194_end:
 LTDIE_171:
 
 	.byte 5
-	.asciz "System_Predicate`1"
+	.asciz "System_Action`1"
 
 	.byte 128,1,16
-LDIFF_SYM1845=LTDIE_42 - Ldebug_info_start
-	.long LDIFF_SYM1845
-	.byte 2,35,0,0,7
-	.asciz "System_Predicate`1"
-
-LDIFF_SYM1846=LTDIE_171 - Ldebug_info_start
+LDIFF_SYM1846=LTDIE_42 - Ldebug_info_start
 	.long LDIFF_SYM1846
+	.byte 2,35,0,0,7
+	.asciz "System_Action`1"
+
+LDIFF_SYM1847=LTDIE_171 - Ldebug_info_start
+	.long LDIFF_SYM1847
 LTDIE_171_POINTER:
 
 	.byte 13
-LDIFF_SYM1847=LTDIE_171 - Ldebug_info_start
-	.long LDIFF_SYM1847
+LDIFF_SYM1848=LTDIE_171 - Ldebug_info_start
+	.long LDIFF_SYM1848
 LTDIE_171_REFERENCE:
 
 	.byte 14
-LDIFF_SYM1848=LTDIE_171 - Ldebug_info_start
-	.long LDIFF_SYM1848
+LDIFF_SYM1849=LTDIE_171 - Ldebug_info_start
+	.long LDIFF_SYM1849
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<string>:invoke_bool_T"
-	.asciz "wrapper_delegate_invoke_System_Predicate_1_string_invoke_bool_T_string"
+	.asciz "(wrapper_delegate-invoke)_System.Action`1<string>:invoke_void_T"
+	.asciz "wrapper_delegate_invoke_System_Action_1_string_invoke_void_T_string"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Predicate_1_string_invoke_bool_T_string
+	.quad wrapper_delegate_invoke_System_Action_1_string_invoke_void_T_string
 	.quad Lme_ce
 
 	.byte 2,118,16,3
 	.asciz "this"
 
-LDIFF_SYM1849=LTDIE_171_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM1849
+LDIFF_SYM1850=LTDIE_171_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM1850
 	.byte 1,105,3
 	.asciz "param0"
 
-LDIFF_SYM1850=LDIE_STRING - Ldebug_info_start
-	.long LDIFF_SYM1850
+LDIFF_SYM1851=LDIE_STRING - Ldebug_info_start
+	.long LDIFF_SYM1851
 	.byte 1,106,11
 	.asciz "V_0"
 
-LDIFF_SYM1851=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM1851
+LDIFF_SYM1852=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM1852
 	.byte 1,103,11
 	.asciz "V_1"
 
-LDIFF_SYM1852=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM1852
+LDIFF_SYM1853=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM1853
 	.byte 1,105,11
 	.asciz "V_2"
 
-LDIFF_SYM1853=LTDIE_163_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM1853
+LDIFF_SYM1854=LTDIE_163_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM1854
 	.byte 1,104,11
 	.asciz "V_3"
 
-LDIFF_SYM1854=LTDIE_42_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM1854
+LDIFF_SYM1855=LTDIE_42_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM1855
 	.byte 1,102,11
 	.asciz "V_4"
 
-LDIFF_SYM1855=LDIE_OBJECT - Ldebug_info_start
-	.long LDIFF_SYM1855
-	.byte 1,104,11
-	.asciz "V_5"
-
-LDIFF_SYM1856=LDIE_BOOLEAN - Ldebug_info_start
+LDIFF_SYM1856=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM1856
-	.byte 1,102,0
+	.byte 1,104,0
 
 .section __DWARF, __debug_frame,regular,debug
 
@@ -38481,9 +38481,9 @@ Lfde195_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Predicate_1_string_invoke_bool_T_string
+	.quad wrapper_delegate_invoke_System_Action_1_string_invoke_void_T_string
 
-LDIFF_SYM1858=Lme_ce - wrapper_delegate_invoke_System_Predicate_1_string_invoke_bool_T_string
+LDIFF_SYM1858=Lme_ce - wrapper_delegate_invoke_System_Action_1_string_invoke_void_T_string
 	.long LDIFF_SYM1858
 	.long 0
 	.byte 12,31,0,68,14,80,157,10,158,9,68,13,29,68,150,8,151,7,68,152,6,153,5,68,154,4
@@ -40948,13 +40948,13 @@ Lfde230_end:
 LTDIE_200:
 
 	.byte 5
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 	.byte 128,1,16
 LDIFF_SYM2203=LTDIE_42 - Ldebug_info_start
 	.long LDIFF_SYM2203
 	.byte 2,35,0,0,7
-	.asciz "System_Action`1"
+	.asciz "System_Predicate`1"
 
 LDIFF_SYM2204=LTDIE_200 - Ldebug_info_start
 	.long LDIFF_SYM2204
@@ -40969,11 +40969,11 @@ LTDIE_200_REFERENCE:
 LDIFF_SYM2206=LTDIE_200 - Ldebug_info_start
 	.long LDIFF_SYM2206
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Action`1<UIKit.UIWindow>:invoke_void_T"
-	.asciz "wrapper_delegate_invoke_System_Action_1_UIKit_UIWindow_invoke_void_T_UIKit_UIWindow"
+	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<UIKit.UIWindow>:invoke_bool_T"
+	.asciz "wrapper_delegate_invoke_System_Predicate_1_UIKit_UIWindow_invoke_bool_T_UIKit_UIWindow"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Action_1_UIKit_UIWindow_invoke_void_T_UIKit_UIWindow
+	.quad wrapper_delegate_invoke_System_Predicate_1_UIKit_UIWindow_invoke_bool_T_UIKit_UIWindow
 	.quad Lme_f4
 
 	.byte 2,118,16,3
@@ -41011,20 +41011,25 @@ LDIFF_SYM2212=LTDIE_42_REFERENCE - Ldebug_info_start
 
 LDIFF_SYM2213=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM2213
-	.byte 1,104,0
+	.byte 1,104,11
+	.asciz "V_5"
+
+LDIFF_SYM2214=LDIE_BOOLEAN - Ldebug_info_start
+	.long LDIFF_SYM2214
+	.byte 1,102,0
 
 .section __DWARF, __debug_frame,regular,debug
 
-LDIFF_SYM2214=Lfde231_end - Lfde231_start
-	.long LDIFF_SYM2214
+LDIFF_SYM2215=Lfde231_end - Lfde231_start
+	.long LDIFF_SYM2215
 Lfde231_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Action_1_UIKit_UIWindow_invoke_void_T_UIKit_UIWindow
+	.quad wrapper_delegate_invoke_System_Predicate_1_UIKit_UIWindow_invoke_bool_T_UIKit_UIWindow
 
-LDIFF_SYM2215=Lme_f4 - wrapper_delegate_invoke_System_Action_1_UIKit_UIWindow_invoke_void_T_UIKit_UIWindow
-	.long LDIFF_SYM2215
+LDIFF_SYM2216=Lme_f4 - wrapper_delegate_invoke_System_Predicate_1_UIKit_UIWindow_invoke_bool_T_UIKit_UIWindow
+	.long LDIFF_SYM2216
 	.long 0
 	.byte 12,31,0,68,14,80,157,10,158,9,68,13,29,68,150,8,151,7,68,152,6,153,5,68,154,4
 	.align 3
@@ -41034,75 +41039,70 @@ Lfde231_end:
 LTDIE_201:
 
 	.byte 5
-	.asciz "System_Predicate`1"
+	.asciz "System_Action`1"
 
 	.byte 128,1,16
-LDIFF_SYM2216=LTDIE_42 - Ldebug_info_start
-	.long LDIFF_SYM2216
-	.byte 2,35,0,0,7
-	.asciz "System_Predicate`1"
-
-LDIFF_SYM2217=LTDIE_201 - Ldebug_info_start
+LDIFF_SYM2217=LTDIE_42 - Ldebug_info_start
 	.long LDIFF_SYM2217
+	.byte 2,35,0,0,7
+	.asciz "System_Action`1"
+
+LDIFF_SYM2218=LTDIE_201 - Ldebug_info_start
+	.long LDIFF_SYM2218
 LTDIE_201_POINTER:
 
 	.byte 13
-LDIFF_SYM2218=LTDIE_201 - Ldebug_info_start
-	.long LDIFF_SYM2218
+LDIFF_SYM2219=LTDIE_201 - Ldebug_info_start
+	.long LDIFF_SYM2219
 LTDIE_201_REFERENCE:
 
 	.byte 14
-LDIFF_SYM2219=LTDIE_201 - Ldebug_info_start
-	.long LDIFF_SYM2219
+LDIFF_SYM2220=LTDIE_201 - Ldebug_info_start
+	.long LDIFF_SYM2220
 	.byte 2
-	.asciz "(wrapper_delegate-invoke)_System.Predicate`1<UIKit.UIWindow>:invoke_bool_T"
-	.asciz "wrapper_delegate_invoke_System_Predicate_1_UIKit_UIWindow_invoke_bool_T_UIKit_UIWindow"
+	.asciz "(wrapper_delegate-invoke)_System.Action`1<UIKit.UIWindow>:invoke_void_T"
+	.asciz "wrapper_delegate_invoke_System_Action_1_UIKit_UIWindow_invoke_void_T_UIKit_UIWindow"
 
 	.byte 0,0
-	.quad wrapper_delegate_invoke_System_Predicate_1_UIKit_UIWindow_invoke_bool_T_UIKit_UIWindow
+	.quad wrapper_delegate_invoke_System_Action_1_UIKit_UIWindow_invoke_void_T_UIKit_UIWindow
 	.quad Lme_f5
 
 	.byte 2,118,16,3
 	.asciz "this"
 
-LDIFF_SYM2220=LTDIE_201_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM2220
+LDIFF_SYM2221=LTDIE_201_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM2221
 	.byte 1,105,3
 	.asciz "param0"
 
-LDIFF_SYM2221=LTDIE_74_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM2221
+LDIFF_SYM2222=LTDIE_74_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM2222
 	.byte 1,106,11
 	.asciz "V_0"
 
-LDIFF_SYM2222=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM2222
+LDIFF_SYM2223=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM2223
 	.byte 1,103,11
 	.asciz "V_1"
 
-LDIFF_SYM2223=LDIE_I4 - Ldebug_info_start
-	.long LDIFF_SYM2223
+LDIFF_SYM2224=LDIE_I4 - Ldebug_info_start
+	.long LDIFF_SYM2224
 	.byte 1,105,11
 	.asciz "V_2"
 
-LDIFF_SYM2224=LTDIE_163_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM2224
+LDIFF_SYM2225=LTDIE_163_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM2225
 	.byte 1,104,11
 	.asciz "V_3"
 
-LDIFF_SYM2225=LTDIE_42_REFERENCE - Ldebug_info_start
-	.long LDIFF_SYM2225
+LDIFF_SYM2226=LTDIE_42_REFERENCE - Ldebug_info_start
+	.long LDIFF_SYM2226
 	.byte 1,102,11
 	.asciz "V_4"
 
-LDIFF_SYM2226=LDIE_OBJECT - Ldebug_info_start
-	.long LDIFF_SYM2226
-	.byte 1,104,11
-	.asciz "V_5"
-
-LDIFF_SYM2227=LDIE_BOOLEAN - Ldebug_info_start
+LDIFF_SYM2227=LDIE_OBJECT - Ldebug_info_start
 	.long LDIFF_SYM2227
-	.byte 1,102,0
+	.byte 1,104,0
 
 .section __DWARF, __debug_frame,regular,debug
 
@@ -41112,9 +41112,9 @@ Lfde232_start:
 
 	.long 0
 	.align 3
-	.quad wrapper_delegate_invoke_System_Predicate_1_UIKit_UIWindow_invoke_bool_T_UIKit_UIWindow
+	.quad wrapper_delegate_invoke_System_Action_1_UIKit_UIWindow_invoke_void_T_UIKit_UIWindow
 
-LDIFF_SYM2229=Lme_f5 - wrapper_delegate_invoke_System_Predicate_1_UIKit_UIWindow_invoke_bool_T_UIKit_UIWindow
+LDIFF_SYM2229=Lme_f5 - wrapper_delegate_invoke_System_Action_1_UIKit_UIWindow_invoke_void_T_UIKit_UIWindow
 	.long LDIFF_SYM2229
 	.long 0
 	.byte 12,31,0,68,14,80,157,10,158,9,68,13,29,68,150,8,151,7,68,152,6,153,5,68,154,4

@@ -22,7 +22,7 @@ Ldebug_info_begin:
 	.short 2
 	.long 0
 	.byte 8,1
-	.asciz "Mono AOT Compiler 6.12.0 (2020-02/b4a385816ed Tue Mar 30 19:54:56 EDT 2021)"
+	.asciz "Mono AOT Compiler 6.12.0 (2020-02/3cf59ad33da Thu Aug 19 11:06:27 EDT 2021)"
 	.asciz "Lottie.iOS.dll"
 	.asciz ""
 
@@ -41279,7 +41279,7 @@ _mono_aot_file_info:
 	.long 0,0,0,0,0,0,0,0
 	.long 0,0,0,0,0,0,0,0
 	.long 0,0,0,0,0,0,0,0
-	.byte 156,134,47,26,23,8,226,162,133,102,53,191,125,4,238,186
+	.byte 99,169,201,172,195,194,225,207,234,177,63,118,18,100,215,184
 	.globl _mono_aot_module_Lottie_iOS_info
 	.align 3
 _mono_aot_module_Lottie_iOS_info:

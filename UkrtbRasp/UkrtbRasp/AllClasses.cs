@@ -1,6 +1,8 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace UkrtbRasp
 {
@@ -8,6 +10,31 @@ namespace UkrtbRasp
     {
     }
 
+    static class TimesLessons
+    {
+        static public List<Time> GetTimes(DateTime dateTime)
+        {
+            string year, mounth, day;
+            year = dateTime.Year.ToString();
+            mounth = dateTime.Month.ToString();
+            mounth = mounth.Length == 1 ? "0" + mounth : mounth;
+            day = dateTime.Day.ToString();
+            day = day.Length == 1 ? "0" + day : day;
+            var param = new NameValueCollection();
+            param["date"] = $"{year}-{mounth}-{day}";
+            var json = Post.GetJson("getTime", param);
+            List<Time> times = new List<Time>();
+            try
+            {
+                times = JsonConvert.DeserializeObject<List<Time>>(json);
+            }
+            catch
+            {
+
+            }
+            return times;
+        }
+    }
     class Student_in_app
     {
         public static string Login = "";
@@ -71,6 +98,12 @@ namespace UkrtbRasp
         public string lessons { get; set; }
         public string teacher { get; set; }
         public string score { get; set; }
+    }
+    class Time
+    {
+        public string NumberLesson;
+        public string Begin;
+        public string End;
     }
     class Connect
     {
