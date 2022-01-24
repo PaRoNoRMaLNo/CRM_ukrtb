@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using ZXing;
 
 namespace UkrtbRasp
 {
@@ -69,5 +69,7 @@ namespace UkrtbRasp
             CrossSettings.Current.AddOrUpdateValue("role", "student");
             (Application.Current).MainPage = new NavigationPage(new Student_main());
         }
+
+        
     }
 }

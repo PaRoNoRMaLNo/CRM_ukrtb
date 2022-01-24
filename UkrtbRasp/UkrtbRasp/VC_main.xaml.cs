@@ -30,11 +30,11 @@ namespace UkrtbRasp
 
             DateTime dateTim = DateTime.Now;
             Times = TimesLessons.GetTimes(dateTim);
-            Select_date_today.Text = $"{dateTim.Day}.{dateTim.Month}";
+            Select_date_today.Text = $"{(dateTim.Day.ToString().Length == 1 ? "0" + dateTim.Day.ToString() : dateTim.Day.ToString())}.{(dateTim.Month.ToString().Length == 1 ? "0" + dateTim.Month.ToString() : dateTim.Month.ToString())}";
             dateTim = dateTim.AddDays(1);
-            Select_date_tomorow.Text = $"{dateTim.Day}.{dateTim.Month}";
+            Select_date_tomorow.Text = $"{(dateTim.Day.ToString().Length == 1 ? "0" + dateTim.Day.ToString() : dateTim.Day.ToString())}.{(dateTim.Month.ToString().Length == 1 ? "0" + dateTim.Month.ToString() : dateTim.Month.ToString())}";
             dateTim = dateTim.AddDays(1);
-            Select_date_plustwo.Text = $"{dateTim.Day}.{dateTim.Month}";
+            Select_date_plustwo.Text = $"{(dateTim.Day.ToString().Length == 1 ? "0" + dateTim.Day.ToString() : dateTim.Day.ToString())}.{(dateTim.Month.ToString().Length == 1 ? "0" + dateTim.Month.ToString() : dateTim.Month.ToString())}";
             int a = CrossSettings.Current.GetValueOrDefault("what_check", 0);
             switch (CrossSettings.Current.GetValueOrDefault("type_check", ""))
             {
@@ -262,56 +262,56 @@ namespace UkrtbRasp
             Load_data_rasp(0);
         }
 
-        private List<string> LoadDataASync()
-        {
-            // Prepod_or_group_picker.Items.Clear();
-            List<string> items = new List<string>();
-            var param = new NameValueCollection();
-            switch (What_check)
-            {
-                case 1:
-                    List<Teacher> teachers = new List<Teacher>();
-                    var json = Post.GetJson("getTeachers", param);
-                    teachers = JsonConvert.DeserializeObject<List<Teacher>>(json);
+        //private List<string> LoadDataASync()
+        //{
+        //    // Prepod_or_group_picker.Items.Clear();
+        //    List<string> items = new List<string>();
+        //    var param = new NameValueCollection();
+        //    switch (What_check)
+        //    {
+        //        case 1:
+        //            List<Teacher> teachers = new List<Teacher>();
+        //            var json = Post.GetJson("getTeachers", param);
+        //            teachers = JsonConvert.DeserializeObject<List<Teacher>>(json);
 
-                    foreach (var item in teachers)
-                    {
-                        if (item.prepod != null) items.Add(item.prepod);/* Prepod_or_group_picker.Items.Add(item.prepod);*/
-                    }
-                    //Prepod_or_group_picker.SelectedIndex = 0;
-                    break;
+        //            foreach (var item in teachers)
+        //            {
+        //                if (item.fio != null) items.Add(item.fio);/* Prepod_or_group_picker.Items.Add(item.prepod);*/
+        //            }
+        //            //Prepod_or_group_picker.SelectedIndex = 0;
+        //            break;
 
-                case 2:
-                    List<Group> groups = new List<Group>();
-                    json = Post.GetJson("getGroups", param);
-                    groups = JsonConvert.DeserializeObject<List<Group>>(json);
-                    foreach (var item in groups)
-                    {
-                        if (item.group != null) items.Add(item.group);/* Prepod_or_group_picker.Items.Add(item.group);*/
-                    }
-                    //Prepod_or_group_picker.SelectedIndex = 0;
-                    break;
+        //        case 2:
+        //            List<Group> groups = new List<Group>();
+        //            json = Post.GetJson("getGroups", param);
+        //            groups = JsonConvert.DeserializeObject<List<Group>>(json);
+        //            foreach (var item in groups)
+        //            {
+        //                if (item.group != null) items.Add(item.group);/* Prepod_or_group_picker.Items.Add(item.group);*/
+        //            }
+        //            //Prepod_or_group_picker.SelectedIndex = 0;
+        //            break;
 
-                case 3:
-                    List<Cab> cabs = new List<Cab>();
-                    json = Post.GetJson("getCabs", param);
-                    cabs = JsonConvert.DeserializeObject<List<Cab>>(json);
-                    foreach (var item in cabs)
-                    {
-                        if (item.cab != null)
-                        {
-                            items.Add(item.cab);
-                            //Prepod_or_group_picker.Items.Add(item.cab);
-                        }
-                    }
-                    //Prepod_or_group_picker.SelectedIndex = 0;
-                    break;
+        //        case 3:
+        //            List<Cab> cabs = new List<Cab>();
+        //            json = Post.GetJson("getCabs", param);
+        //            cabs = JsonConvert.DeserializeObject<List<Cab>>(json);
+        //            foreach (var item in cabs)
+        //            {
+        //                if (item.cab != null)
+        //                {
+        //                    items.Add(item.cab);
+        //                    //Prepod_or_group_picker.Items.Add(item.cab);
+        //                }
+        //            }
+        //            //Prepod_or_group_picker.SelectedIndex = 0;
+        //            break;
 
-                default:
-                    break;
-            }
-            return items;
-        }
+        //        default:
+        //            break;
+        //    }
+        //    return items;
+        //}
 
 
 
@@ -320,7 +320,7 @@ namespace UkrtbRasp
         {
             try
             {
-                List<string> items = await System.Threading.Tasks.Task.Run(() => LoadDataASync());
+                List<string> items = await System.Threading.Tasks.Task.Run(() => Load.LoadDataASync(What_check));
                 Prepod_or_group_picker.Items.Clear();
                 foreach (var item in items)
                 {
@@ -339,68 +339,99 @@ namespace UkrtbRasp
 
         }
 
-        private List<Lessons> LoadLessonsAsync(int count)
-        {
-            List<Lessons> lesons = new List<Lessons>();
-            if (count != 0)
-            {
-                var param = new NameValueCollection();
-                switch (What_check)
-                {
-                    case 1:
-                        param["teacher"] = Prepod_or_group_picker.SelectedItem.ToString();
-                        param["date"] = $"{Date_hide.Date.Year}-{Date_hide.Date.Month}-{Date_hide.Date.Day}";
-                        var json = Post.GetJson("getRaspTeacher", param);
-                        lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
-                        break;
-                    case 2:
-                        param = new NameValueCollection();
-                        param["group"] = Prepod_or_group_picker.SelectedItem.ToString();
-                        param["date"] = $"{Date_hide.Date.Year}-{Date_hide.Date.Month}-{Date_hide.Date.Day}";
-                        json = Post.GetJson("getRaspGroup", param);
-                        lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
-                        break;
-                    case 3:
-                        param = new NameValueCollection();
-                        param["cab"] = Prepod_or_group_picker.SelectedItem.ToString();
-                        param["date"] = $"{Date_hide.Date.Year}-{Date_hide.Date.Month}-{Date_hide.Date.Day}";
-                        json = Post.GetJson("getRaspCab", param);
-                        lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
-                        break;
-                    default:
-                        break;
-                }
+        //private List<Lessons> LoadLessonsAsync(int count)
+        //{
+        //    List<Lessons> lesons = new List<Lessons>();
+        //    if (count != 0)
+        //    {
+        //        var param = new NameValueCollection();
+        //        switch (What_check)
+        //        {
+        //            case 1:
+        //                param["teacher"] = Prepod_or_group_picker.SelectedItem.ToString();
+        //                param["date"] = $"{Date_hide.Date.Year}-{Date_hide.Date.Month}-{Date_hide.Date.Day}";
+        //                var json = Post.GetJson("getRaspTeacher", param);
+        //                lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
+        //                break;
+        //            case 2:
+        //                param = new NameValueCollection();
+        //                param["group"] = Prepod_or_group_picker.SelectedItem.ToString();
+        //                param["date"] = $"{Date_hide.Date.Year}-{Date_hide.Date.Month}-{Date_hide.Date.Day}";
+        //                json = Post.GetJson("getRaspGroup", param);
+        //                lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
+        //                break;
+        //            case 3:
+        //                param = new NameValueCollection();
+        //                param["cab"] = Prepod_or_group_picker.SelectedItem.ToString();
+        //                param["date"] = $"{Date_hide.Date.Year}-{Date_hide.Date.Month}-{Date_hide.Date.Day}";
+        //                json = Post.GetJson("getRaspCab", param);
+        //                lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
+        //                break;
+        //            default:
+        //                break;
+        //        }
 
 
-            }
-            return lesons;
-        }
+        //    }
+        //    return lesons;
+        //}
 
         private async void Load_lessons()
         {
             anim_rasp.IsVisible = true;
             anim_rasp.RepeatMode = Lottie.Forms.RepeatMode.Infinite;
             anim_rasp.PlayAnimation();
-            List<Lessons> lessons = await Task.Run(() => LoadLessonsAsync(Prepod_or_group_picker.Items.Count));
+            List<Lessons> lessons = await Task.Run(() => Load.LoadLessonsAsync(Prepod_or_group_picker.Items.Count,What_check,Prepod_or_group_picker,Date_hide));
             await Task.Delay(1000);
             anim_rasp.StopAnimation();
             anim_rasp.IsVisible = false;
             anim_rasp.RepeatMode = Lottie.Forms.RepeatMode.Infinite;
             //Stack_all.IsVisible = true;
             Lessons_stack.Children.Clear();
-            if (lessons != null)
+            if (lessons.Count != 0)
                 foreach (var item in lessons)
                 {
                     Lesson lesson = new Lesson();
                     lesson.FindByName<Label>("Number").Text = item.num;
-                    Time time = Times.Find(tme => tme.NumberLesson == item.num);
-                    if (time.Begin != "")
-                        lesson.FindByName<Label>("Time").Text = $"{time.Begin.Substring(0, 5)} - {time.End.Substring(0, 5)}";
+                    if (timeRasp(item.group))
+                    {
+                        Time time = Times.Find(tme => tme.NumberLesson == item.num);
+                        if (time.Begin != "")
+                            lesson.FindByName<Label>("Time").Text = $"{time.Begin.Substring(0, 5)} - {time.End.Substring(0, 5)}";
+                    }
+                    else
+                    {
+                        //Добавить время для инженерки
+                        switch (item.num)
+                        {
+                            case "1":
+                                lesson.FindByName<Label>("Time").Text = $"08:30 - 10:05";
+                                break;
+                            case "2":
+                                lesson.FindByName<Label>("Time").Text = $"10:15 - 11:50";
+                                break;
+                            case "3":
+                                lesson.FindByName<Label>("Time").Text = $"12:00 - 13:35";
+                                break;
+                            case "4":
+                                lesson.FindByName<Label>("Time").Text = $"13:45 - 15:20";
+                                break;
+                            case "5":
+                                lesson.FindByName<Label>("Time").Text = $"15:30 - 17:05";
+                                break;
+                            case "6":
+                                lesson.FindByName<Label>("Time").Text = $"17:15 - 18:50";
+                                break;
+                            default:
+                                lesson.FindByName<Label>("Time").Text = $"Упс";
+                                break;
+                        }
+                    }
                     lesson.FindByName<Label>("Cab").Text = item.cab;
                     lesson.FindByName<Label>("Name").Text = item.lesson;
                     lesson.FindByName<Label>("Prepod_or_group").Text = What_check == 1 ? item.group : What_check == 2 ? item.teacher : item.group + " " + item.teacher;
                     
-                    if (item.do_group == "1" || item.do_teacher == "1")
+                    if (item.dist == "1")
                     {
                         lesson.Zoom = item.zoom;
                         lesson.FindByName<Image>("zoomicon").IsVisible = true;
@@ -482,6 +513,28 @@ namespace UkrtbRasp
             foreach (var item in demands)
             {
                 MyDemond_stack.Children.Add(item);
+            }
+        }
+
+
+        private bool timeRasp(string group)
+        {
+            if (group.IndexOf("Веб") != 0 && group.IndexOf("ИБ") != 0 && group.IndexOf("МР") != 0 && group.IndexOf("РКИ") != 0)
+            {
+                return true;
+            }
+            else
+            {
+
+                if (Date_hide.Date.DayOfWeek == DayOfWeek.Wednesday)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
             }
         }
     }

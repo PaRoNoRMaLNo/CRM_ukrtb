@@ -27,11 +27,11 @@ namespace UkrtbRasp
             Prepod_isCheck = true;
             DateTime dateTim = DateTime.Now;
             Times = TimesLessons.GetTimes(dateTim);
-            Select_date_today.Text = $"{dateTim.Day}.{dateTim.Month}";
+            Select_date_today.Text = $"{(dateTim.Day.ToString().Length == 1 ? "0" + dateTim.Day.ToString() : dateTim.Day.ToString())}.{(dateTim.Month.ToString().Length == 1 ? "0" + dateTim.Month.ToString() : dateTim.Month.ToString())}";
             dateTim = dateTim.AddDays(1);
-            Select_date_tomorow.Text = $"{dateTim.Day}.{dateTim.Month}";
+            Select_date_tomorow.Text = $"{(dateTim.Day.ToString().Length == 1 ? "0" + dateTim.Day.ToString() : dateTim.Day.ToString())}.{(dateTim.Month.ToString().Length == 1 ? "0" + dateTim.Month.ToString() : dateTim.Month.ToString())}";
             dateTim = dateTim.AddDays(1);
-            Select_date_plustwo.Text = $"{dateTim.Day}.{dateTim.Month}";
+            Select_date_plustwo.Text = $"{(dateTim.Day.ToString().Length == 1 ? "0" + dateTim.Day.ToString() : dateTim.Day.ToString())}.{(dateTim.Month.ToString().Length == 1 ? "0" + dateTim.Month.ToString() : dateTim.Month.ToString())}";
             int a = CrossSettings.Current.GetValueOrDefault("what_check", 0);
             switch (CrossSettings.Current.GetValueOrDefault("type_check", ""))
             {
@@ -42,7 +42,7 @@ namespace UkrtbRasp
                     Prepod_isCheck = false;
                     break;
                 default:
-                    Prepod_isCheck = true;  
+                    Prepod_isCheck = true;
                     break;
             }
             Load_data(a);
@@ -72,40 +72,40 @@ namespace UkrtbRasp
             Date_hide.Focus();
         }
 
-        private List<string> LoadDataASync()
-        {
-            List<string> items = new List<string>();
-            if (Prepod_isCheck)
-            {
-                var param = new NameValueCollection();
-                List<Teacher> teachers = new List<Teacher>();
-                var json = Post.GetJson("getTeachers", param);
-                teachers = JsonConvert.DeserializeObject<List<Teacher>>(json);
+        //private List<string> LoadDataASync()
+        //{
+        //    List<string> items = new List<string>();
+        //    if (Prepod_isCheck)
+        //    {
+        //        var param = new NameValueCollection();
+        //        List<Teacher> teachers = new List<Teacher>();
+        //        var json = Post.GetJson("getTeachers", param);
+        //        teachers = JsonConvert.DeserializeObject<List<Teacher>>(json);
 
-                foreach (var item in teachers)
-                {
-                    if (item.prepod != null) items.Add(item.prepod); /*Prepod_or_group_picker.Items.Add(item.prepod);*/
-                }
-            }
-            else
-            {
-                var param = new NameValueCollection();
-                List<Group> groups = new List<Group>();
-                var json = Post.GetJson("getGroups", param);
-                groups = JsonConvert.DeserializeObject<List<Group>>(json);
+        //        foreach (var item in teachers)
+        //        {
+        //            if (item.fio != null) items.Add(item.fio); /*Prepod_or_group_picker.Items.Add(item.prepod);*/
+        //        }
+        //    }
+        //    else
+        //    {
+        //        var param = new NameValueCollection();
+        //        List<Group> groups = new List<Group>();
+        //        var json = Post.GetJson("getGroups", param);
+        //        groups = JsonConvert.DeserializeObject<List<Group>>(json);
 
-                foreach (var item in groups)
-                {
-                    if (item.group != null) items.Add(item.group); /*Prepod_or_group_picker.Items.Add(item.group);*/
-                }
-            }
-            return items;
-        }
+        //        foreach (var item in groups)
+        //        {
+        //            if (item.group != null) items.Add(item.group); /*Prepod_or_group_picker.Items.Add(item.group);*/
+        //        }
+        //    }
+        //    return items;
+        //}
 
         private async void Load_data(int a)
         {
             Prepod_or_group_picker.Items.Clear();
-            List<string> items = await Task.Run(() => LoadDataASync());
+            List<string> items = await Task.Run(() => Load.LoadDataASync(Prepod_isCheck ? (byte)1 : (byte)2));
             foreach (var item in items)
             {
                 Prepod_or_group_picker.Items.Add(item);
@@ -113,35 +113,35 @@ namespace UkrtbRasp
             Prepod_or_group_picker.SelectedIndex = a;
         }
 
-        private List<Lessons> LoadLessonsAsync(int count)
-        {
-            List<Lessons> lesons = new List<Lessons>();
-            if (count != 0)
-            {
-                var param = new NameValueCollection();
-                switch (Prepod_isCheck)
-                {
-                    case true:
-                        param["teacher"] = Prepod_or_group_picker.SelectedItem.ToString();
-                        param["date"] = $"{Date_hide.Date.Year}-{Date_hide.Date.Month}-{Date_hide.Date.Day}";
-                        var json = Post.GetJson("getRaspTeacher", param);
-                        lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
-                        break;
-                    case false:
-                        param = new NameValueCollection();
-                        param["group"] = Prepod_or_group_picker.SelectedItem.ToString();
-                        param["date"] = $"{Date_hide.Date.Year}-{Date_hide.Date.Month}-{Date_hide.Date.Day}";
-                        json = Post.GetJson("getRaspGroup", param);
-                        lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
-                        break;
-                    default:
-                        break;
-                }
+        //private List<Lessons> LoadLessonsAsync(int count)
+        //{
+        //    List<Lessons> lesons = new List<Lessons>();
+        //    if (count != 0)
+        //    {
+        //        var param = new NameValueCollection();
+        //        switch (Prepod_isCheck)
+        //        {
+        //            case true:
+        //                param["teacher"] = Prepod_or_group_picker.SelectedItem.ToString();
+        //                param["date"] = $"{Date_hide.Date.Year}-{Date_hide.Date.Month}-{Date_hide.Date.Day}";
+        //                var json = Post.GetJson("getRaspTeacher", param);
+        //                lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
+        //                break;
+        //            case false:
+        //                param = new NameValueCollection();
+        //                param["group"] = Prepod_or_group_picker.SelectedItem.ToString();
+        //                param["date"] = $"{Date_hide.Date.Year}-{Date_hide.Date.Month}-{Date_hide.Date.Day}";
+        //                json = Post.GetJson("getRaspGroup", param);
+        //                lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
+        //                break;
+        //            default:
+        //                break;
+        //        }
 
 
-            }
-            return lesons;
-        }
+        //    }
+        //    return lesons;
+        //}
 
 
         private async void Load_lessons()
@@ -150,25 +150,56 @@ namespace UkrtbRasp
             anim.IsVisible = true;
             anim.RepeatMode = Lottie.Forms.RepeatMode.Infinite;
             anim.PlayAnimation();
-            List<Lessons> lessons = await Task.Run(() => LoadLessonsAsync(Prepod_or_group_picker.Items.Count));
+            List<Lessons> lessons = await Task.Run(() => Load.LoadLessonsAsync(Prepod_or_group_picker.Items.Count, Prepod_isCheck ? (byte)1 : (byte)2, Prepod_or_group_picker, Date_hide));
             await Task.Delay(500);
             anim.StopAnimation();
             anim.IsVisible = false;
             anim.RepeatMode = Lottie.Forms.RepeatMode.Infinite;
             Stack_all.IsVisible = true;
             Lessons_stack.Children.Clear();
-            if (lessons != null)
+            if (lessons.Count != 0)
                 foreach (var item in lessons)
                 {
                     Lesson lesson = new Lesson();
                     lesson.FindByName<Label>("Number").Text = item.num;
-                    Time time = Times.Find(tme => tme.NumberLesson == item.num);
-                    if (time.Begin != "")
-                        lesson.FindByName<Label>("Time").Text = $"{time.Begin.Substring(0, 5)} - {time.End.Substring(0, 5)}";
+                    if (timeRasp(item.group))
+                    {
+                        Time time = Times.Find(tme => tme.NumberLesson == item.num);
+                        if (time.Begin != "")
+                            lesson.FindByName<Label>("Time").Text = $"{time.Begin.Substring(0, 5)} - {time.End.Substring(0, 5)}";
+                    }
+                    else
+                    {
+                        //Добавить время для инженерки
+                        switch (item.num)
+                        {
+                            case "1":
+                                lesson.FindByName<Label>("Time").Text = $"08:30 - 10:05";
+                                break;
+                            case "2":
+                                lesson.FindByName<Label>("Time").Text = $"10:15 - 11:50";
+                                break;
+                            case "3":
+                                lesson.FindByName<Label>("Time").Text = $"12:00 - 13:35";
+                                break;
+                            case "4":
+                                lesson.FindByName<Label>("Time").Text = $"13:45 - 15:20";
+                                break;
+                            case "5":
+                                lesson.FindByName<Label>("Time").Text = $"15:30 - 17:05";
+                                break;
+                            case "6":
+                                lesson.FindByName<Label>("Time").Text = $"17:15 - 18:50";
+                                break;
+                            default:
+                                lesson.FindByName<Label>("Time").Text = $"Упс";
+                                break;
+                        }
+                    }
                     lesson.FindByName<Label>("Cab").Text = item.cab;
                     lesson.FindByName<Label>("Name").Text = item.lesson;
-                    lesson.FindByName<Label>("Prepod_or_group").Text = Prepod_isCheck ? item.group : item.teacher ;
-                    if (item.do_group == "1" || item.do_teacher == "1")
+                    lesson.FindByName<Label>("Prepod_or_group").Text = Prepod_isCheck ? item.group : item.teacher;
+                    if (item.dist == "1")
                     {
                         lesson.Zoom = item.zoom;
                         lesson.FindByName<Image>("zoomicon").IsVisible = true;
@@ -215,6 +246,7 @@ namespace UkrtbRasp
             Load_lessons();
         }
 
+        public string token;
         private void User_sign_in_Clicked(object sender, EventArgs e)
         {
             if (User_login.Text != "" && User_password.Text != "")
@@ -223,7 +255,12 @@ namespace UkrtbRasp
                 param["login"] = User_login.Text;
                 param["password"] = User_password.Text;
                 List<User> user = new List<User>();
-                var json = Post.GetJson("getUser", param);
+                var json = Post.PostJsonNew("auth", param);
+                token = json.ToString().Trim();
+                token = token.Remove(0, 10);
+                token = token.Remove(token.Length - 2, 2);
+                param = new NameValueCollection();
+                json = Post.GetJsonNew("getUser", param, token);
                 user = JsonConvert.DeserializeObject<List<User>>(json);
                 if (user != null)
                 {
@@ -232,17 +269,17 @@ namespace UkrtbRasp
 
                     foreach (var item in user)
                     {
-                        User_year.Text = item.year;
+                        //User_year.Text = item.year;
                         User_name.Text = item.fio;
                     }
-                    List<Ball> balls = new List<Ball>();
-                    param["diplom"] = "1";
-                    json = Post.GetJson("getProgress", param);
-                    balls = JsonConvert.DeserializeObject<List<Ball>>(json);
+                    List<Progress> balls = new List<Progress>();
+                    //param["diplom"] = "1";
+                    json = Post.GetJsonNew("getProgress", param, token);
+                    balls = JsonConvert.DeserializeObject<List<Progress>>(json);
                     int sum = 0;
                     foreach (var item in balls)
                     {
-                        sum += int.Parse(item.score);
+                        sum += int.Parse(item.ball);
                     }
                     Ball_average.Text = Math.Round((double)sum / balls.Count, 2).ToString();
                     Load_period_lessons();
@@ -261,7 +298,7 @@ namespace UkrtbRasp
             Navigation.PushAsync(new Spravka());
         }
 
-        void Test_group(List<Ball> balls)
+        void Test_group(List<Progress> balls)
         {
             var a = from ball in balls
                     group ball by ball.lessons;
@@ -277,7 +314,7 @@ namespace UkrtbRasp
                     {
                         if (t.period == Progress_period.SelectedItem.ToString())
                         {
-                            test.FindByName<Label>("Number").Text += t.score + " ";
+                            test.FindByName<Label>("Number").Text += t.ball + " ";
                             test.FindByName<Label>("Name").Text = t.lessons;
                             test.FindByName<Label>("Prepod_or_group").Text = t.teacher;
                         }
@@ -288,7 +325,7 @@ namespace UkrtbRasp
                     }
                     else
                     {
-                        test.FindByName<Label>("Number").Text += t.score + " ";
+                        test.FindByName<Label>("Number").Text += t.ball + " ";
                         test.FindByName<Label>("Name").Text = t.lessons;
                         test.FindByName<Label>("Prepod_or_group").Text = t.teacher;
                     }
@@ -304,14 +341,12 @@ namespace UkrtbRasp
             Stack_for_balls.Children.Clear();
             Stack_settings.IsVisible = false;
             var param = new NameValueCollection();
-            param["login"] = Student_in_app.Login;
-            param["password"] = Student_in_app.Password;
             param["lesson"] = Progress_disc.SelectedItem.ToString();
             param["type"] = Progress_type_ball.SelectedItem.ToString();
-            param["diplom"] = Progress_diplom.IsToggled ? "1" : "0";
-            List<Ball> user = new List<Ball>();
-            var json = Post.GetJson("getProgress", param);
-            var balls = JsonConvert.DeserializeObject<List<Ball>>(json);
+            //param["diplom"] = Progress_diplom.IsToggled ? "1" : "0";
+            List<Progress> user = new List<Progress>();
+            var json = Post.GetJsonNew("getProgress", param, token);
+            var balls = JsonConvert.DeserializeObject<List<Progress>>(json);
             if (balls != null)
                 foreach (var item in balls)
                 {
@@ -322,7 +357,7 @@ namespace UkrtbRasp
                             if (item.period == Progress_period.SelectedItem.ToString())
                             {
                                 Lesson test = new Lesson();
-                                test.FindByName<Label>("Number").Text = item.score;
+                                test.FindByName<Label>("Number").Text = item.ball;
                                 test.FindByName<Label>("Cab").Text = item.date;
                                 test.FindByName<Label>("Name").Text = item.lessons + "(" + item.type + ")";
                                 test.FindByName<Label>("Prepod_or_group").Text = item.teacher;
@@ -333,7 +368,7 @@ namespace UkrtbRasp
                         else
                         {
                             Lesson test = new Lesson();
-                            test.FindByName<Label>("Number").Text = item.score;
+                            test.FindByName<Label>("Number").Text = item.ball;
                             test.FindByName<Label>("Cab").Text = item.date;
                             test.FindByName<Label>("Name").Text = item.lessons + "(" + item.type + ")";
                             test.FindByName<Label>("Prepod_or_group").Text = item.teacher;
@@ -470,6 +505,33 @@ namespace UkrtbRasp
         {
             if (Device.RuntimePlatform == Device.iOS)
                 this.Navigation.PopAsync();
+        }
+
+        void QROpen_Tapped(System.Object sender, System.EventArgs e)
+        {
+            Navigation.PushModalAsync(new QRScan("s"));
+        }
+
+        //Проверка на инженерку
+        private bool timeRasp(string group)
+        {
+            if (group.IndexOf("Веб") != 0 && group.IndexOf("ИБ") != 0 && group.IndexOf("МР") != 0 && group.IndexOf("РКИ") != 0)
+            {
+                return true;
+            }
+            else
+            {
+
+                if (Date_hide.Date.DayOfWeek == DayOfWeek.Wednesday)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
         }
     }
 }

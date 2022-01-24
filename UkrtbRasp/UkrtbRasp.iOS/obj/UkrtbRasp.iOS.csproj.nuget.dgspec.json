@@ -1,21 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/UkrtbRasp.iOS.csproj": {}
+    "/Users/aidarmannanov/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/UkrtbRasp.iOS.csproj": {}
   },
   "projects": {
-    "/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/UkrtbRasp.iOS.csproj": {
+    "/Users/aidarmannanov/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/UkrtbRasp.iOS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/UkrtbRasp.iOS.csproj",
+        "projectUniqueName": "/Users/aidarmannanov/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/UkrtbRasp.iOS.csproj",
         "projectName": "UkrtbRasp.iOS",
-        "projectPath": "/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/UkrtbRasp.iOS.csproj",
-        "packagesPath": "/Users/macbook/.nuget/packages/",
-        "outputPath": "/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/",
+        "projectPath": "/Users/aidarmannanov/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/UkrtbRasp.iOS.csproj",
+        "packagesPath": "/Users/aidarmannanov/.nuget/packages/",
+        "outputPath": "/Users/aidarmannanov/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.iOS/obj/",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "configFilePaths": [
-          "/Users/macbook/.config/NuGet/NuGet.Config"
+          "/Users/aidarmannanov/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "xamarinios10"
@@ -26,8 +26,8 @@
         "frameworks": {
           "xamarinios10": {
             "projectReferences": {
-              "/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp/UkrtbRasp.csproj": {
-                "projectPath": "/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp/UkrtbRasp.csproj"
+              "/Users/aidarmannanov/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp/UkrtbRasp.csproj": {
+                "projectPath": "/Users/aidarmannanov/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp/UkrtbRasp.csproj"
               }
             }
           }
@@ -55,6 +55,14 @@
             "Xamarin.Forms.PancakeView": {
               "target": "Package",
               "version": "[2.3.0.759, )"
+            },
+            "ZXing.Net.Mobile": {
+              "target": "Package",
+              "version": "[2.4.1, )"
+            },
+            "ZXing.Net.Mobile.Forms": {
+              "target": "Package",
+              "version": "[2.4.1, )"
             }
           }
         }
@@ -71,17 +79,17 @@
         }
       }
     },
-    "/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp/UkrtbRasp.csproj": {
+    "/Users/aidarmannanov/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp/UkrtbRasp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp/UkrtbRasp.csproj",
+        "projectUniqueName": "/Users/aidarmannanov/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp/UkrtbRasp.csproj",
         "projectName": "UkrtbRasp",
-        "projectPath": "/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp/UkrtbRasp.csproj",
-        "packagesPath": "/Users/macbook/.nuget/packages/",
-        "outputPath": "/Users/macbook/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp/obj/",
+        "projectPath": "/Users/aidarmannanov/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp/UkrtbRasp.csproj",
+        "packagesPath": "/Users/aidarmannanov/.nuget/packages/",
+        "outputPath": "/Users/aidarmannanov/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/macbook/.config/NuGet/NuGet.Config"
+          "/Users/aidarmannanov/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netstandard2.0"
@@ -138,6 +146,14 @@
             "Xamarin.Forms.PancakeView": {
               "target": "Package",
               "version": "[2.3.0.759, )"
+            },
+            "ZXing.Net.Mobile": {
+              "target": "Package",
+              "version": "[2.4.1, )"
+            },
+            "ZXing.Net.Mobile.Forms": {
+              "target": "Package",
+              "version": "[2.4.1, )"
             }
           },
           "imports": [
@@ -150,7 +166,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.401/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/x64/sdk/6.0.101/RuntimeIdentifierGraph.json"
         }
       }
     }

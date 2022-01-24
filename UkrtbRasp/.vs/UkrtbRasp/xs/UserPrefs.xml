@@ -1,25 +1,20 @@
-﻿<Properties StartupConfiguration="{9971E8DD-E49F-4D2D-BF89-D4FE731C1CF1}|Default">
+﻿<Properties StartupConfiguration="{11274EDD-D50C-4A4B-84BC-4D7A2444FF5F}|Default">
   <MonoDevelop.Ide.ItemProperties.UkrtbRasp.Android AndroidDesignerPreferredTheme="MainTheme" PreferredExecutionTarget="Android.4302a11" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="UkrtbRasp/VC_main.xaml.cs">
-    <Files>
-      <File FileName="UkrtbRasp/VC_main.xaml.cs" Line="409" Column="1" />
-      <File FileName="UkrtbRasp.iOS/Info.plist" />
-      <File FileName="UkrtbRasp/AllClasses.cs" Line="1" Column="1" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="UkrtbRasp" expanded="True">
             <Node name="UkrtbRasp" expanded="True">
+              <Node name="Lesson.xaml" expanded="True" />
               <Node name="Prepod_main.xaml" expanded="True" />
-              <Node name="Spravka.xaml" expanded="True" />
+              <Node name="QRScan.xaml" expanded="True" />
               <Node name="Student_main.xaml" expanded="True" />
-              <Node name="VC_main.xaml" expanded="True">
-                <Node name="VC_main.xaml.cs" selected="True" />
-              </Node>
+              <Node name="VC_main.xaml" expanded="True" selected="True" />
             </Node>
-            <Node name="UkrtbRasp.Android" expanded="True" />
-            <Node name="UkrtbRasp.iOS" expanded="True" />
+            <Node name="UkrtbRasp.Android" expanded="True">
+              <Node name="Resources" expanded="True" />
+            </Node>
           </Node>
         </State>
       </Pad>
@@ -27,9 +22,11 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.ItemProperties.UkrtbRasp.iOS automaticSigning="False" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|iPhone" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/aidarmannanov/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp/Student_main.xaml.cs" relfile="UkrtbRasp/Student_main.xaml.cs" line="303" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>

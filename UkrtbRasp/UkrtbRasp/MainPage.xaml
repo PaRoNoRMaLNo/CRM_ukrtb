@@ -59,6 +59,7 @@
                 FontSize="Large"
                 TextColor="{DynamicResource Text_light}">
         </Button>
+        
         <!--<Button
                         BackgroundColor="{DynamicResource Primary_light}"
                         HorizontalOptions="FillAndExpand"

@@ -43,5 +43,6 @@ namespace UkrtbRasp
         {
             await Navigation.PushAsync(new VC_main());
         }
+        
     }
 }

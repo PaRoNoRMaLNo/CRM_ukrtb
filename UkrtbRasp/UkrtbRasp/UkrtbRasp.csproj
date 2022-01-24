@@ -18,12 +18,16 @@
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
     <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
     <PackageReference Include="Xamarin.Forms.PancakeView" Version="2.3.0.759" />
+    <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
+    <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Fonts\" />
     <None Remove="Fonts\Montserrat-Regular.ttf" />
     <None Remove="Fonts\Montserrat-SemiBold.ttf" />
     <None Remove="Xamarin.Forms.PancakeView" />
+    <None Remove="ZXing.Net.Mobile" />
+    <None Remove="ZXing.Net.Mobile.Forms" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Fonts\" />

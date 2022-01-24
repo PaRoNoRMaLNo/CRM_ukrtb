@@ -26,11 +26,11 @@
                         iOS="demand_ios"
                         Android="demond" />
         </ContentPage.IconImageSource>
-            <ContentPage.Padding>
-                    <OnPlatform x:TypeArguments="Thickness"
+        <ContentPage.Padding>
+            <OnPlatform x:TypeArguments="Thickness"
                                 iOS = "0,30,0,0"
                                 Android = "0"/>
-            </ContentPage.Padding>
+        </ContentPage.Padding>
         <Grid>
             <StackLayout>
 
@@ -169,11 +169,11 @@
                         iOS="rasp_ios"
                         Android="calen" />
         </ContentPage.IconImageSource>
-            <ContentPage.Padding>
-                    <OnPlatform x:TypeArguments="Thickness"
+        <ContentPage.Padding>
+            <OnPlatform x:TypeArguments="Thickness"
                                 iOS = "0,30,0,0"
                                 Android = "0"/>
-            </ContentPage.Padding>
+        </ContentPage.Padding>
         <Grid>
             <StackLayout Margin="20,0">
                 <Label Text="Расписание занятий"
@@ -325,7 +325,9 @@
                         </Picker.Items>
                     </Picker>
                 </yummy:PancakeView>
-                <ScrollView Margin="0,10" VerticalScrollBarVisibility="Never">
+                <ScrollView Margin="0,10"
+                            VerticalScrollBarVisibility="Never"
+                            VerticalOptions="FillAndExpand">
                     <StackLayout x:Name="Lessons_stack">
 
                     </StackLayout>
@@ -348,11 +350,11 @@
                         iOS="demand_ios"
                         Android="demond" />
         </ContentPage.IconImageSource>
-            <ContentPage.Padding>
-                    <OnPlatform x:TypeArguments="Thickness"
+        <ContentPage.Padding>
+            <OnPlatform x:TypeArguments="Thickness"
                                 iOS = "0,30,0,0"
                                 Android = "0"/>
-            </ContentPage.Padding>
+        </ContentPage.Padding>
         <Grid>
             <StackLayout>
                 <Label Text="Мои заявки"
@@ -383,11 +385,11 @@
                         iOS="ball_ios"
                         Android="ball" />
         </ContentPage.IconImageSource>
-            <ContentPage.Padding>
-                    <OnPlatform x:TypeArguments="Thickness"
+        <ContentPage.Padding>
+            <OnPlatform x:TypeArguments="Thickness"
                                 iOS = "0,30,0,0"
                                 Android = "0"/>
-            </ContentPage.Padding>
+        </ContentPage.Padding>
         <ScrollView>
             <yummy:PancakeView Margin="20"
                                BackgroundColor="{DynamicResource Primary_light}"
