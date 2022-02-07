@@ -90,59 +90,6 @@ namespace UkrtbRasp
             Load_data(0);
         }
 
-
-        //private List<string> LoadDataASync()
-        //{
-        //    // Prepod_or_group_picker.Items.Clear();
-        //    List<string> items = new List<string>();
-        //    var param = new NameValueCollection();
-        //    switch (What_check)
-        //    {
-        //        case 1:
-        //            List<Teacher> teachers = new List<Teacher>();
-        //            var json = Post.GetJsonNew("getTeachers", param);
-        //            teachers = JsonConvert.DeserializeObject<List<Teacher>>(json);
-
-        //            foreach (var item in teachers)
-        //            {
-        //                if (item.fio != null) items.Add(item.fio);/* Prepod_or_group_picker.Items.Add(item.prepod);*/
-        //            }
-        //            //Prepod_or_group_picker.SelectedIndex = 0;
-        //            break;
-
-        //        case 2:
-        //            List<Group> groups = new List<Group>();
-        //            json = Post.GetJsonNew("getGroups", param);
-        //            groups = JsonConvert.DeserializeObject<List<Group>>(json);
-        //            foreach (var item in groups)
-        //            {
-        //                if (item.group != null) items.Add(item.group);/* Prepod_or_group_picker.Items.Add(item.group);*/
-        //            }
-        //            //Prepod_or_group_picker.SelectedIndex = 0;
-        //            break;
-
-        //        case 3:
-        //            List<Cab> cabs = new List<Cab>();
-        //            json = Post.GetJsonNew("getCabs", param);
-        //            cabs = JsonConvert.DeserializeObject<List<Cab>>(json);
-        //            foreach (var item in cabs)
-        //            {
-        //                if (item.cab != null)
-        //                {
-        //                    items.Add(item.cab);
-        //                    //Prepod_or_group_picker.Items.Add(item.cab);
-        //                }
-        //            }
-        //            //Prepod_or_group_picker.SelectedIndex = 0;
-        //            break;
-
-        //        default:
-        //            break;
-        //    }
-        //    return items;
-        //}
-
-
         private async void Load_data(int a)
         {
             try
@@ -207,11 +154,6 @@ namespace UkrtbRasp
                 Error_text.Text = "Ошибка проверьте данные";
         }
 
-
-
-
-
-
         private void ContentPage_Appearing(object sender, EventArgs e)
         {
             if (Demand_cab.Items.Count == 0)
@@ -246,45 +188,7 @@ namespace UkrtbRasp
             if (Device.RuntimePlatform == Device.iOS)
                 this.Navigation.PopAsync();
         }
-
-
-        //private List<Lessons> LoadLessonsAsync(int count)
-        //{
-        //    List<Lessons> lesons = new List<Lessons>();
-        //    if (count != 0)
-        //    {
-        //        var param = new NameValueCollection();
-        //        switch (What_check)
-        //        {
-        //            case 1:
-        //                param["teacher"] = Prepod_or_group_picker.SelectedItem.ToString();
-        //                param["date"] = $"{Date_hide.Date.Year}-{Date_hide.Date.Month}-{Date_hide.Date.Day}";
-        //                var json = Post.GetJsonNew("getTeacherSchedule", param);
-        //                lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
-        //                break;
-        //            case 2:
-        //                param = new NameValueCollection();
-        //                param["group"] = Prepod_or_group_picker.SelectedItem.ToString();
-        //                param["date"] = $"{Date_hide.Date.Year}-{Date_hide.Date.Month}-{Date_hide.Date.Day}";
-        //                json = Post.GetJsonNew("getGroupSchedule", param);
-        //                lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
-        //                break;
-        //            case 3:
-        //                param = new NameValueCollection();
-        //                param["cab"] = Prepod_or_group_picker.SelectedItem.ToString();
-        //                param["date"] = $"{Date_hide.Date.Year}-{Date_hide.Date.Month}-{Date_hide.Date.Day}";
-        //                json = Post.GetJsonNew("getCabSchedule", param);
-        //                lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
-        //                break;
-        //            default:
-        //                break;
-        //        }
-
-
-        //    }
-        //    return lesons;
-        //}
-
+       
         private async void Load_lessons()
         {
             //Stack_all.IsVisible = false;
@@ -366,33 +270,10 @@ namespace UkrtbRasp
             Load_lessons();
         }
 
-        //private void GetTimes(DateTime datetimereg)
-        //{
-
-        //    #region Date 
-        //    string year, mounth, day;
-        //    DateTime dateTime = datetimereg;
-        //    year = dateTime.Year.ToString();
-        //    mounth = dateTime.Month.ToString();
-        //    mounth = mounth.Length == 1 ? "0" + mounth : mounth;
-        //    day = dateTime.Day.ToString();
-        //    day = day.Length == 1 ? "0" + day : day;
-        //    #endregion
-        //    var param = new NameValueCollection();
-        //    param["date"] = $"{year}-{mounth}-{day}";
-        //    var json = Post.GetJson("getTime", param);
-        //    Times = JsonConvert.DeserializeObject<List<Time>>(json);
-        //}
-
-
-
-
         void QR_Btn_Clicked(System.Object sender, System.EventArgs e)
         {
             Navigation.PushModalAsync(new QRScan("t"));
         }
-
-
 
         private bool timeRasp(string group)
         {

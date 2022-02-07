@@ -32,7 +32,7 @@ namespace UkrtbRasp
                     QRRes res = JsonConvert.DeserializeObject<QRRes>(json);
                     scanView.IsScanning = false;
                     scanView.IsEnabled = false;
-                    await DisplayAlert(res.Result, res.Message, "ОК");
+                    await DisplayAlert(res.Result == "success" ? "Успешно" : "Ошибка", res.Message, "ОК");
                 }
                 catch (Exception ex)
                 {

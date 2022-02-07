@@ -22,8 +22,6 @@ com.google.android.material.bottomnavigation.BottomNavigationView;/Users/aidarma
 com.google.android.material.tabs.TabLayout;/Users/aidarmannanov/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.Android/obj/Release/lp/51/jl/res/layout/fallbacktabbardonotuse.xml
 com.google.android.material.tabs.TabLayout;/Users/aidarmannanov/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.Android/obj/Release/lp/51/jl/res/layout/rootlayout.xml
 com.google.android.material.tabs.TabLayout;/Users/aidarmannanov/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.Android/obj/Release/lp/51/jl/res/layout/tabbar.xml
-crc643f46942d9dd1fff9.ShellFlyoutLayout;/Users/aidarmannanov/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.Android/obj/Release/lp/51/jl/res/layout/flyoutcontent.xml
-crc64720bb2db43a66fe9.FormsViewPager;/Users/aidarmannanov/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.Android/obj/Release/lp/51/jl/res/layout/rootlayout.xml
 declare-styleable;/Users/aidarmannanov/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.Android/obj/Release/lp/2/jl/res/values/values.xml
 declare-styleable;/Users/aidarmannanov/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.Android/obj/Release/lp/51/jl/res/values/attrs.xml
 enum;/Users/aidarmannanov/Documents/GitHub/CRM_ukrtb/UkrtbRasp/UkrtbRasp.Android/obj/Release/lp/2/jl/res/values/values.xml

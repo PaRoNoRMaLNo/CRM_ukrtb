@@ -277,7 +277,7 @@
 
 	/* 30: UkrtbRasp.dll */
 	/* uncompressed_file_size */
-	.long	751104
+	.long	751616
 	/* loaded */
 	.byte	0
 	/* data */

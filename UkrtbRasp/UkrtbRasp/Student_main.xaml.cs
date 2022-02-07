@@ -72,36 +72,6 @@ namespace UkrtbRasp
             Date_hide.Focus();
         }
 
-        //private List<string> LoadDataASync()
-        //{
-        //    List<string> items = new List<string>();
-        //    if (Prepod_isCheck)
-        //    {
-        //        var param = new NameValueCollection();
-        //        List<Teacher> teachers = new List<Teacher>();
-        //        var json = Post.GetJson("getTeachers", param);
-        //        teachers = JsonConvert.DeserializeObject<List<Teacher>>(json);
-
-        //        foreach (var item in teachers)
-        //        {
-        //            if (item.fio != null) items.Add(item.fio); /*Prepod_or_group_picker.Items.Add(item.prepod);*/
-        //        }
-        //    }
-        //    else
-        //    {
-        //        var param = new NameValueCollection();
-        //        List<Group> groups = new List<Group>();
-        //        var json = Post.GetJson("getGroups", param);
-        //        groups = JsonConvert.DeserializeObject<List<Group>>(json);
-
-        //        foreach (var item in groups)
-        //        {
-        //            if (item.group != null) items.Add(item.group); /*Prepod_or_group_picker.Items.Add(item.group);*/
-        //        }
-        //    }
-        //    return items;
-        //}
-
         private async void Load_data(int a)
         {
             Prepod_or_group_picker.Items.Clear();
@@ -112,37 +82,6 @@ namespace UkrtbRasp
             }
             Prepod_or_group_picker.SelectedIndex = a;
         }
-
-        //private List<Lessons> LoadLessonsAsync(int count)
-        //{
-        //    List<Lessons> lesons = new List<Lessons>();
-        //    if (count != 0)
-        //    {
-        //        var param = new NameValueCollection();
-        //        switch (Prepod_isCheck)
-        //        {
-        //            case true:
-        //                param["teacher"] = Prepod_or_group_picker.SelectedItem.ToString();
-        //                param["date"] = $"{Date_hide.Date.Year}-{Date_hide.Date.Month}-{Date_hide.Date.Day}";
-        //                var json = Post.GetJson("getRaspTeacher", param);
-        //                lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
-        //                break;
-        //            case false:
-        //                param = new NameValueCollection();
-        //                param["group"] = Prepod_or_group_picker.SelectedItem.ToString();
-        //                param["date"] = $"{Date_hide.Date.Year}-{Date_hide.Date.Month}-{Date_hide.Date.Day}";
-        //                json = Post.GetJson("getRaspGroup", param);
-        //                lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
-        //                break;
-        //            default:
-        //                break;
-        //        }
-
-
-        //    }
-        //    return lesons;
-        //}
-
 
         private async void Load_lessons()
         {
@@ -170,7 +109,7 @@ namespace UkrtbRasp
                     }
                     else
                     {
-                        //Добавить время для инженерки
+                        //время для инженерки
                         switch (item.num)
                         {
                             case "1":
@@ -212,9 +151,6 @@ namespace UkrtbRasp
                 Lessons_stack.Children.Add(new Label { Text = "Расписание отсутствует" });
             }
         }
-
-
-
 
         private void Date_hide_DateSelected(object sender, DateChangedEventArgs e)
         {

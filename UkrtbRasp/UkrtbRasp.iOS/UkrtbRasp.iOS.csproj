@@ -74,9 +74,9 @@
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <BundleResource Include="studload.json" />
-    <BundleResource Include="prepload.json" />
     <BundleResource Include="vcload.json" />
     <BundleResource Include="prepload_ios.json" />
+    <BundleResource Include="prepload.json" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />

@@ -97,7 +97,6 @@ namespace UkrtbRasp
             return demands;
         }
 
-
         List<Demand> LoadDemand_all()
         {
             List<Demand> demands = new List<Demand>();
@@ -132,8 +131,6 @@ namespace UkrtbRasp
             }
             return demands;
         }
-
-
 
         private void Load_data()
         {
@@ -189,7 +186,6 @@ namespace UkrtbRasp
                 Async_load_demand();
         }
 
-
         private void Demand_date_picker_DateSelected(object sender, DateChangedEventArgs e)
         {
             Async_load_demand();
@@ -218,7 +214,6 @@ namespace UkrtbRasp
                 this.Navigation.PopAsync();
         }
 
-
         void Clear_but()
         {
             Select_date_today.BackgroundColor = Color.FromHex("#242529");
@@ -226,7 +221,6 @@ namespace UkrtbRasp
             Select_date_plustwo.BackgroundColor = Color.FromHex("#242529");
             Open_select_date.BackgroundColor = Color.FromHex("#242529");
         }
-
 
         private void Select_date_today_Clicked(object sender, EventArgs e)
         {
@@ -262,60 +256,6 @@ namespace UkrtbRasp
             Load_data_rasp(0);
         }
 
-        //private List<string> LoadDataASync()
-        //{
-        //    // Prepod_or_group_picker.Items.Clear();
-        //    List<string> items = new List<string>();
-        //    var param = new NameValueCollection();
-        //    switch (What_check)
-        //    {
-        //        case 1:
-        //            List<Teacher> teachers = new List<Teacher>();
-        //            var json = Post.GetJson("getTeachers", param);
-        //            teachers = JsonConvert.DeserializeObject<List<Teacher>>(json);
-
-        //            foreach (var item in teachers)
-        //            {
-        //                if (item.fio != null) items.Add(item.fio);/* Prepod_or_group_picker.Items.Add(item.prepod);*/
-        //            }
-        //            //Prepod_or_group_picker.SelectedIndex = 0;
-        //            break;
-
-        //        case 2:
-        //            List<Group> groups = new List<Group>();
-        //            json = Post.GetJson("getGroups", param);
-        //            groups = JsonConvert.DeserializeObject<List<Group>>(json);
-        //            foreach (var item in groups)
-        //            {
-        //                if (item.group != null) items.Add(item.group);/* Prepod_or_group_picker.Items.Add(item.group);*/
-        //            }
-        //            //Prepod_or_group_picker.SelectedIndex = 0;
-        //            break;
-
-        //        case 3:
-        //            List<Cab> cabs = new List<Cab>();
-        //            json = Post.GetJson("getCabs", param);
-        //            cabs = JsonConvert.DeserializeObject<List<Cab>>(json);
-        //            foreach (var item in cabs)
-        //            {
-        //                if (item.cab != null)
-        //                {
-        //                    items.Add(item.cab);
-        //                    //Prepod_or_group_picker.Items.Add(item.cab);
-        //                }
-        //            }
-        //            //Prepod_or_group_picker.SelectedIndex = 0;
-        //            break;
-
-        //        default:
-        //            break;
-        //    }
-        //    return items;
-        //}
-
-
-
-
         private async void Load_data_rasp(int a)
         {
             try
@@ -338,44 +278,7 @@ namespace UkrtbRasp
             
 
         }
-
-        //private List<Lessons> LoadLessonsAsync(int count)
-        //{
-        //    List<Lessons> lesons = new List<Lessons>();
-        //    if (count != 0)
-        //    {
-        //        var param = new NameValueCollection();
-        //        switch (What_check)
-        //        {
-        //            case 1:
-        //                param["teacher"] = Prepod_or_group_picker.SelectedItem.ToString();
-        //                param["date"] = $"{Date_hide.Date.Year}-{Date_hide.Date.Month}-{Date_hide.Date.Day}";
-        //                var json = Post.GetJson("getRaspTeacher", param);
-        //                lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
-        //                break;
-        //            case 2:
-        //                param = new NameValueCollection();
-        //                param["group"] = Prepod_or_group_picker.SelectedItem.ToString();
-        //                param["date"] = $"{Date_hide.Date.Year}-{Date_hide.Date.Month}-{Date_hide.Date.Day}";
-        //                json = Post.GetJson("getRaspGroup", param);
-        //                lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
-        //                break;
-        //            case 3:
-        //                param = new NameValueCollection();
-        //                param["cab"] = Prepod_or_group_picker.SelectedItem.ToString();
-        //                param["date"] = $"{Date_hide.Date.Year}-{Date_hide.Date.Month}-{Date_hide.Date.Day}";
-        //                json = Post.GetJson("getRaspCab", param);
-        //                lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
-        //                break;
-        //            default:
-        //                break;
-        //        }
-
-
-        //    }
-        //    return lesons;
-        //}
-
+        
         private async void Load_lessons()
         {
             anim_rasp.IsVisible = true;
@@ -515,8 +418,6 @@ namespace UkrtbRasp
                 MyDemond_stack.Children.Add(item);
             }
         }
-
-
         private bool timeRasp(string group)
         {
             if (group.IndexOf("Веб") != 0 && group.IndexOf("ИБ") != 0 && group.IndexOf("МР") != 0 && group.IndexOf("РКИ") != 0)

@@ -1,4 +1,4 @@
-﻿    using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Text;
@@ -22,8 +22,10 @@ namespace UkrtbRasp
                 case 1:
                     List<Teacher> teachers = new List<Teacher>();
                     var json = Post.GetJsonNew("getTeachers", param);
-                    teachers = JsonConvert.DeserializeObject<List<Teacher>>(json);
-
+                    if (json != null)
+                        teachers = JsonConvert.DeserializeObject<List<Teacher>>(json);
+                    else
+                        return null;
                     foreach (var item in teachers)
                     {
                         if (item.fio != null) items.Add(item.fio);/* Prepod_or_group_picker.Items.Add(item.prepod);*/
@@ -34,7 +36,10 @@ namespace UkrtbRasp
                 case 2:
                     List<Group> groups = new List<Group>();
                     json = Post.GetJsonNew("getGroups", param);
-                    groups = JsonConvert.DeserializeObject<List<Group>>(json);
+                    if (json != null)
+                        groups = JsonConvert.DeserializeObject<List<Group>>(json);
+                    else
+                        return null;
                     foreach (var item in groups)
                     {
                         if (item.group != null) items.Add(item.group);/* Prepod_or_group_picker.Items.Add(item.group);*/
@@ -45,7 +50,10 @@ namespace UkrtbRasp
                 case 3:
                     List<Cab> cabs = new List<Cab>();
                     json = Post.GetJsonNew("getCabs", param);
-                    cabs = JsonConvert.DeserializeObject<List<Cab>>(json);
+                    if (json != null)
+                        cabs = JsonConvert.DeserializeObject<List<Cab>>(json);
+                    else
+                        return null;
                     foreach (var item in cabs)
                     {
                         if (item.cab != null)
@@ -62,7 +70,7 @@ namespace UkrtbRasp
             }
             return items;
         }
-        public static List<Lessons> LoadLessonsAsync(int count,byte What_check,Picker Prepod_or_group_picker, DatePicker Date_hide)
+        public static List<Lessons> LoadLessonsAsync(int count, byte What_check, Picker Prepod_or_group_picker, DatePicker Date_hide)
         {
             List<Lessons> lesons = new List<Lessons>();
             if (count != 0)
@@ -74,21 +82,30 @@ namespace UkrtbRasp
                         param["teacher"] = Prepod_or_group_picker.SelectedItem.ToString();
                         param["date"] = $"{Date_hide.Date.Year}-{Date_hide.Date.Month}-{Date_hide.Date.Day}";
                         var json = Post.GetJsonNew("getTeacherSchedule", param);
-                        lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
+                        if (json != null)
+                            lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
+                        else
+                            return null;
                         break;
                     case 2:
                         param = new NameValueCollection();
                         param["group"] = Prepod_or_group_picker.SelectedItem.ToString();
                         param["date"] = $"{Date_hide.Date.Year}-{Date_hide.Date.Month}-{Date_hide.Date.Day}";
                         json = Post.GetJsonNew("getGroupSchedule", param);
-                        lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
+                        if (json != null)
+                            lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
+                        else
+                            return null;
                         break;
                     case 3:
                         param = new NameValueCollection();
                         param["cab"] = Prepod_or_group_picker.SelectedItem.ToString();
                         param["date"] = $"{Date_hide.Date.Year}-{Date_hide.Date.Month}-{Date_hide.Date.Day}";
                         json = Post.GetJsonNew("getCabSchedule", param);
-                        lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
+                        if (json != null)
+                            lesons = JsonConvert.DeserializeObject<List<Lessons>>(json);
+                        else
+                            return null;
                         break;
                     default:
                         break;
@@ -115,15 +132,17 @@ namespace UkrtbRasp
                 var param = new NameValueCollection();
                 param["date"] = $"{year}-{mounth}-{day}";
                 var json = Post.GetJsonNew("getTime", param);
-                
-                try
-                {
-                    times = JsonConvert.DeserializeObject<List<Time>>(json);
-                }
-                catch
-                {
+                if (json != null)
+                    try
+                    {
+                        times = JsonConvert.DeserializeObject<List<Time>>(json);
+                    }
+                    catch
+                    {
 
-                }
+                    }
+                else
+                    return null;
             }
             return times;
         }
@@ -170,7 +189,6 @@ namespace UkrtbRasp
     {
         public string fio { get; set; }
         public string zoom { get; set; }
-        // public string Zoom { get; set; }
     }
 
     class Cab
@@ -199,7 +217,7 @@ namespace UkrtbRasp
     class Connect
     {
         public static string String { get; } = "server=mysql77.hostland.ru;userid=host1821757_manan;database=host1821757_ukrtbrasp;password=Id564876681;";
-       
+
     }
     class QRRes
     {

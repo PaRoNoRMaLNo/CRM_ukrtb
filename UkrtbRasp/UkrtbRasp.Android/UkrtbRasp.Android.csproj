@@ -84,12 +84,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\prepload.json" />
     <AndroidAsset Include="Assets\vcload.json" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />
     <AndroidAsset Include="Assets\studload.json" />
+    <AndroidAsset Include="Assets\prepload.json" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\styles.xml" />

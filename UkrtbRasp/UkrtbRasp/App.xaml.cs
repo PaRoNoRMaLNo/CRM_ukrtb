@@ -26,6 +26,7 @@ namespace UkrtbRasp
                     MainPage = new NavigationPage(new Login_user());
                     break;
             }
+
         }
 
         protected override void OnStart()
